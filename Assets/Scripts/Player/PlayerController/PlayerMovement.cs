@@ -92,19 +92,18 @@ public class PlayerMovement : MonoBehaviour
         {
             if(slopeHit.normal != Vector3.up)
             {
-                rb.useGravity = false;
+                
                 return true;
                 
             }
             else
             {
-                rb.useGravity = true;
+                
                 return false;
             }
         }
         else
         {
-            rb.useGravity = true;
             return false;
         }
     }
