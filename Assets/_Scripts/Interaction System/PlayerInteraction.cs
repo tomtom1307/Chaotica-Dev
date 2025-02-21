@@ -12,7 +12,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F) && currentInteractable )
         {
-            currentInteractable.Interact();
+            currentInteractable.Interact(this.gameObject);
         }
     }
 

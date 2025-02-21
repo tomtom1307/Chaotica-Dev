@@ -9,6 +9,7 @@ public class Interactable : MonoBehaviour
     public string message;
     public bool DoOutline;
 
+    [HideInInspector] public GameObject interactor;
     public UnityEvent onInteraction;
 
 
@@ -19,9 +20,11 @@ public class Interactable : MonoBehaviour
         outline.enabled = false;
     }
 
-    public void Interact()
+    public void Interact(GameObject player)
     {
+        interactor = player;
         onInteraction.Invoke();
+
     }
 
 

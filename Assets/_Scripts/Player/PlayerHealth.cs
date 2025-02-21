@@ -7,16 +7,15 @@ public class PlayerHealth : MonoBehaviour
 
 
     [SerializeField] float health;
-    float maxHealth;
+
+    float maxHealth { get { return stats.GetStat(StatType.MaxHealth) * (1 + 0.01f * stats.GetStat(StatType.MaxHealthIncrease)); } }
 
     PlayerStats stats;
 
     private void Start()
     {
         //GetStats 
-        stats = GetComponent<PlayerStats>();
-        
-        GetMaxHealth();
+        stats = PlayerStats.instance;
         health = maxHealth;
     }
 
@@ -28,27 +27,30 @@ public class PlayerHealth : MonoBehaviour
         {
             TakeDamage(5);
         }
+        if(Input.GetKeyDown(KeyCode.H)) {
+
+            TakeDamage(-10);
+        }
     }
 
     
 
-    public void GetMaxHealth()
-    {
-        //Has MaxHealth increase for when upgrades have been done
-        maxHealth = stats.MaxHealth * (1 + stats.MaxHealthIncrease);
-
-    }
+    
 
     //Take damage with UI handling
     public void TakeDamage(float Amount)
     {
         health -= Amount;
-        UIHealthBarImage.fillAmount = health / maxHealth;
+        UpdateHealthBar();
         if (health <= 0)
         {
             Die();
         }
         
+    }
+
+    public void UpdateHealthBar() {
+        UIHealthBarImage.fillAmount = health / maxHealth;
     }
 
 

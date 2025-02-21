@@ -72,12 +72,17 @@ public class UIManager : MonoBehaviour
         inMenu = x;
 
         //Stop player from moving when in a menu
-        playerMovement.enabled = !x;
-        CamController.enabled = !x;
+        ToggleControls(x);
 
         //TODO: Could pause Timescale????
     }
 
+
+    public void ToggleControls(bool x)
+    {
+        playerMovement.enabled = !x;
+        CamController.enabled = !x;
+    }
 
     public void ShowCursor()
     {
