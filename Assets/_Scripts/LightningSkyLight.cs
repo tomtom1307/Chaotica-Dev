@@ -2,12 +2,14 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Events;
 
 public class LightningSkyLight : MonoBehaviour
 {
     Vector3 StartPos;
-    
 
+
+    public UnityEvent Onthunder;
 
     float timer;
     public float freq;
@@ -42,7 +44,8 @@ public class LightningSkyLight : MonoBehaviour
         {
             triggeredTween = true;
             float angle = 0;
-            DOVirtual.Float(0, 180, speed, angle => {
+            Onthunder.Invoke();
+            DOVirtual.Float(0, 180, speed+Random.Range(-1,1) , angle => {
             light.intensity = Intensity * Mathf.Sin(angle * Mathf.Deg2Rad);}).OnComplete(DoLightningReset);
 
 
@@ -56,7 +59,7 @@ public class LightningSkyLight : MonoBehaviour
 
     void DoLightningReset()
     {
-        randomDelay = Random.Range(0, 5);
+        randomDelay = Random.Range(0, 30);
         transform.position = StartPos + new Vector3(Random.Range(-100, 100), 0, Random.Range(-100, 100));
         triggeredTween = false;
         timer = 0;
