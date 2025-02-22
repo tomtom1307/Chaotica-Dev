@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     bool isGrounded;
-
+    public float MaxSlopeAngle;
     RaycastHit slopeHit;
 
     Vector3 slopeMoveDirection;
@@ -38,13 +38,14 @@ public class PlayerMovement : MonoBehaviour
     {
         isGrounded = Physics.CheckSphere(transform.position+0.3f*Vector3.up, 0.4f, whatisGround);
 
-
         MyInput();
         ControlDrag();
 
         if (OnSlope())
         {
+
             slopeMoveDirection = Vector3.ProjectOnPlane(MoveDir, slopeHit.normal);
+
         }
 
     }
@@ -119,7 +120,17 @@ public class PlayerMovement : MonoBehaviour
         }
         else if(isGrounded && OnSlope())
         {
+            float SlopeAngle = Vector3.Angle(slopeHit.normal, Vector3.up);
+            Debug.Log(SlopeAngle);
+            if (SlopeAngle > MaxSlopeAngle)
+            {
+                
+                return;
+            }
             rb.AddForce(slopeMoveDirection * _moveSpeed * (1 + 0.01f * PlayerStats.instance.GetStat(StatType.MoveSpeedIncrease)) * _moveMultiply, ForceMode.Acceleration);
+            
+            rb.AddForce((1-slopeMoveDirection.magnitude) * -1 * Vector3.ProjectOnPlane(Physics.gravity, slopeHit.normal), ForceMode.Acceleration);
+            
         }
 
     }
