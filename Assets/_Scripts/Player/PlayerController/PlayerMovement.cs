@@ -115,11 +115,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!OnSlope())
         {
-            rb.AddForce(MoveDir * _moveSpeed * _moveMultiply, ForceMode.Acceleration);
+            rb.AddForce(MoveDir * _moveSpeed * (1 + 0.01f*PlayerStats.instance.GetStat(StatType.MoveSpeedIncrease)) * _moveMultiply, ForceMode.Acceleration);
         }
         else if(isGrounded && OnSlope())
         {
-            rb.AddForce(slopeMoveDirection * _moveSpeed * _moveMultiply, ForceMode.Acceleration);
+            rb.AddForce(slopeMoveDirection * _moveSpeed * (1 + 0.01f * PlayerStats.instance.GetStat(StatType.MoveSpeedIncrease)) * _moveMultiply, ForceMode.Acceleration);
         }
 
     }
