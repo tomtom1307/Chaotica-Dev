@@ -48,6 +48,7 @@ public class UIManager : MonoBehaviour
             //Pause Game 
             else
             {
+                ShowCursor();
                 IsMenu(true, PauseMenu);
             }
         }
