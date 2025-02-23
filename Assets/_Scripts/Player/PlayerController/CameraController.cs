@@ -38,6 +38,11 @@ public class CameraController : MonoBehaviour
 
     }
 
+    public void ChangeSens(float val)
+    {
+        sensX = val;
+        sensY = val;
+    }
 
     void myInput()
     {
