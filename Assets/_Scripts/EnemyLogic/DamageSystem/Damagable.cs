@@ -31,7 +31,7 @@ public class Damagable : MonoBehaviour
 
     public virtual void Die()
     {
-
+        Destroy(gameObject);
     }
 
     public virtual void OnDamageTaken(float damage)

@@ -65,7 +65,7 @@ public class WeaponEditor : Editor
                 newAttack = new Weapon_Attack_Data_AOE();
                 break;
             case AttackType.Raycast:
-                //newAttack = new Weapon_Attack_Data_Raycast();
+                newAttack = new Weapon_Attack_Data_Raycast();
                 break;
         }
 

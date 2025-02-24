@@ -6,10 +6,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "WeaponData")]
 public class WeaponDataSO : ScriptableObject
 {
-    public Weapon_Input weaponInput1;
-    public Weapon_Input weaponInput2;
-    public Weapon_Input weaponInput3;
 
+    public float WeaponDamage;
     public AnimatorController Anim_controller;
 
     [SerializeReference] // This enables polymorphic serialization

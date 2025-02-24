@@ -12,21 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f97d5a5f37eac5f4db92ac9fa4e8c399, type: 3}
   m_Name: TestWeaponData
   m_EditorClassIdentifier: 
-  weaponInput1: {fileID: 0}
-  weaponInput2: {fileID: 0}
-  weaponInput3: {fileID: 0}
-  Anim_controller: {fileID: 0}
+  WeaponDamage: 5
+  Anim_controller: {fileID: 9100000, guid: ede1b6340de25a644b77507b0ece97de, type: 2}
   Weapon_Attacks:
   - rid: 3205115419090485444
+  - rid: 3205115430689308961
   references:
     version: 2
     RefIds:
     - rid: 3205115419090485444
       type: {class: Weapon_Attack_Data_Melee, ns: , asm: Assembly-CSharp}
       data:
+        weaponInputLogic: {fileID: 0}
         attackType: 0
         damageType: 0
-        damage: 5
+        damage: 100
         ComboLength: 1
         manaUse: 5
         StaggerDamage: 5
@@ -35,3 +35,17 @@ MonoBehaviour:
         ComboCooldown: 0.1
         attack_range: 3
         MaxViewAngle: 45
+    - rid: 3205115430689308961
+      type: {class: Weapon_Attack_Data_Raycast, ns: , asm: Assembly-CSharp}
+      data:
+        weaponInputLogic: {fileID: 0}
+        attackType: 2
+        damageType: 0
+        damage: 7
+        ComboLength: 1
+        manaUse: 5
+        StaggerDamage: 5
+        hasCooldown: 0
+        cooldown: 0.1
+        ComboCooldown: 0.1
+        Range: 10

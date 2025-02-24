@@ -5,6 +5,7 @@ public class WeaponHolder : MonoBehaviour
 {
 
     int ComboCounter;
+    public Camera cam;
     Weapon_Attack_Data_Base CurrentAttackData;
     [SerializeField]public LayerMask DamagableLayer;
     private enum AttackState
@@ -27,6 +28,7 @@ public class WeaponHolder : MonoBehaviour
 
     private void Start()
     {
+        cam = Camera.main;
         State = AttackState.Ready;
     }
 
@@ -36,6 +38,9 @@ public class WeaponHolder : MonoBehaviour
         if(Input.GetMouseButtonDown(0))
         {
             EnterAttack(data.Weapon_Attacks[0]);
+        }
+        if(Input.GetMouseButtonDown(1)) {
+            EnterAttack(data.Weapon_Attacks[1]);
         }
     }
 
@@ -49,9 +54,8 @@ public class WeaponHolder : MonoBehaviour
         CurrentAttackData = attackData;
         ComboCounter++;
         if(ComboCounter == attackData.ComboLength) ComboCounter = 0;
-
-
-        //Testing for now
+        
+        //Testing
         CurrentAttackData.PerformAttack(this);
 
     }
@@ -70,6 +74,10 @@ public class WeaponHolder : MonoBehaviour
         State = AttackState.Ready;
     }
 
-
+    public GameObject SpawnObject(GameObject go, Vector3 pos, Quaternion rot, Transform parent = null)
+    {
+        GameObject inst = Instantiate(go, pos, rot, parent);
+        return inst;
+    }
     
 }

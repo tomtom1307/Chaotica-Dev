@@ -5,6 +5,7 @@ using UnityEngine;
 [Serializable]
 public class Weapon_Attack_Data_Base
 {
+    public Weapon_Input weaponInputLogic;
     public AttackType attackType;
     public DamageType damageType = DamageType.Standard;
     public float damage = 5;
