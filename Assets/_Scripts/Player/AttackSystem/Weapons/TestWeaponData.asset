@@ -16,7 +16,7 @@ MonoBehaviour:
   Anim_controller: {fileID: 9100000, guid: ede1b6340de25a644b77507b0ece97de, type: 2}
   Weapon_Attacks:
   - rid: 3205115419090485444
-  - rid: 3205115430689308961
+  - rid: 3205115430689308971
   references:
     version: 2
     RefIds:
@@ -26,7 +26,7 @@ MonoBehaviour:
         weaponInputLogic: {fileID: 0}
         attackType: 0
         damageType: 0
-        damage: 100
+        damage: 5
         ComboLength: 1
         manaUse: 5
         StaggerDamage: 5
@@ -35,13 +35,13 @@ MonoBehaviour:
         ComboCooldown: 0.1
         attack_range: 3
         MaxViewAngle: 45
-    - rid: 3205115430689308961
+    - rid: 3205115430689308971
       type: {class: Weapon_Attack_Data_Raycast, ns: , asm: Assembly-CSharp}
       data:
         weaponInputLogic: {fileID: 0}
         attackType: 2
         damageType: 0
-        damage: 7
+        damage: 9
         ComboLength: 1
         manaUse: 5
         StaggerDamage: 5

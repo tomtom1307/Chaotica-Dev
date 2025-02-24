@@ -3585,6 +3585,8 @@ MonoBehaviour:
   DamagableLayer:
     serializedVersion: 2
     m_Bits: 256
+  Weapon_anim: {fileID: 647396074}
+  State: 1
   data: {fileID: 11400000, guid: 116d85b2292f29249bbb2350b2fa2fd4, type: 2}
 --- !u!1 &476461886
 GameObject:
@@ -5939,16 +5941,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7f37b640f6c9054399eb764e53662b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onComboWindow:
+  onComboWindowOpen:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 421630842}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
+      - m_Target: {fileID: 421630852}
+        m_TargetAssemblyTypeName: WeaponHolder, Assembly-CSharp
+        m_MethodName: OpenComboWindow
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5957,13 +5959,13 @@ MonoBehaviour:
   onComboWindowClosed:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 421630842}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
+      - m_Target: {fileID: 421630852}
+        m_TargetAssemblyTypeName: WeaponHolder, Assembly-CSharp
+        m_MethodName: CloseComboWindow
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5972,13 +5974,28 @@ MonoBehaviour:
   onFinishedAttack:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 421630842}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
+      - m_Target: {fileID: 421630852}
+        m_TargetAssemblyTypeName: WeaponHolder, Assembly-CSharp
+        m_MethodName: ExitAttack
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnAttackPerformed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 421630852}
+        m_TargetAssemblyTypeName: WeaponHolder, Assembly-CSharp
+        m_MethodName: AttackPerformed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -15689,13 +15706,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1650755463}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.013173607, y: 0.021433948, z: 0.002810904, w: 0.9996795}
   m_LocalPosition: {x: 0.455, y: -0.174, z: -1.818}
   m_LocalScale: {x: 0.11612, y: 0.11612, z: 0.633214}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 647396072}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -1.516, y: 2.453, z: 0.29}
 --- !u!65 &1650755465
 BoxCollider:
   m_ObjectHideFlags: 0

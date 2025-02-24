@@ -8,6 +8,7 @@ public class WeaponHolder : MonoBehaviour
     public Camera cam;
     Weapon_Attack_Data_Base CurrentAttackData;
     [SerializeField]public LayerMask DamagableLayer;
+    public Animator Weapon_anim; 
     private enum AttackState
     {
         Attacking,
@@ -16,7 +17,7 @@ public class WeaponHolder : MonoBehaviour
         Cooldown
     }
 
-    AttackState State;
+    [SerializeField] AttackState State = AttackState.Ready;
 
     [SerializeField] private WeaponDataSO data;
 
@@ -25,46 +26,89 @@ public class WeaponHolder : MonoBehaviour
         this.data = data;
     }
 
-
     private void Start()
     {
         cam = Camera.main;
         State = AttackState.Ready;
+
+        ComboCounter = 0;
     }
 
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) && (State == AttackState.Ready || State == AttackState.Combo))
         {
-            EnterAttack(data.Weapon_Attacks[0]);
+            EnterAttack(0);
         }
-        if(Input.GetMouseButtonDown(1)) {
-            EnterAttack(data.Weapon_Attacks[1]);
+        if(Input.GetMouseButtonDown(1) && (State == AttackState.Ready || State == AttackState.Combo))
+        {
+            EnterAttack(1);
         }
     }
 
 
     
 
-    public void EnterAttack(Weapon_Attack_Data_Base attackData)
+    public void EnterAttack(int i)
     {
-        Debug.Log("Attacking!");
+        Debug.Log("Enter Attack!");
+
         State = AttackState.Attacking;
-        CurrentAttackData = attackData;
-        ComboCounter++;
-        if(ComboCounter == attackData.ComboLength) ComboCounter = 0;
+        CurrentAttackData = data.Weapon_Attacks[i];
         
+        
+
+        //Handle Animation stuff
+        Weapon_anim.SetBool("Attacking", true);
+
+        Weapon_anim.SetInteger("AttackType", i);
+
+        Weapon_anim.SetInteger("ComboInt", ComboCounter);
+
+
+        ComboCounter++;
+        if (ComboCounter > CurrentAttackData.ComboLength) ComboCounter = 0;
+
         //Testing
-        CurrentAttackData.PerformAttack(this);
+        //CurrentAttackData.PerformAttack(this);
 
     }
 
 
     public void ExitAttack()
     {
+        Debug.Log("AttackExit");
+        StartCoroutine(Cooldown(CurrentAttackData.cooldown));
         CurrentAttackData = null;
+        
         State = AttackState.Cooldown;
+        ComboCounter = 0;
+        //Handle Animation stuff
+        Weapon_anim.SetBool("Attacking", false);
+        Weapon_anim.SetBool("Combo", false);
+
+        
+        
+    }
+
+
+
+    public void AttackPerformed()
+    {
+        CurrentAttackData.PerformAttack(this);
+    }
+
+    public void OpenComboWindow()
+    {
+        State = AttackState.Combo;
+        Weapon_anim.SetBool("Combo", true);
+    }
+
+    public void CloseComboWindow()
+    {
+        State = AttackState.Attacking;
+        Weapon_anim.SetBool("Combo", false);
     }
 
 
