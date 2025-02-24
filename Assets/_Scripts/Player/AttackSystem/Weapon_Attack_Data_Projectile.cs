@@ -13,6 +13,7 @@ public class Weapon_Attack_Data_Projectile : Weapon_Attack_Data_Base
     // Constructor for Weapon_Attack_Melee
     public Weapon_Attack_Data_Projectile()
     {
+
     }
 
     
