@@ -121,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
         else if(isGrounded && OnSlope())
         {
             float SlopeAngle = Vector3.Angle(slopeHit.normal, Vector3.up);
-            Debug.Log(SlopeAngle);
+            //Debug.Log(SlopeAngle);
             if (SlopeAngle > MaxSlopeAngle)
             {
                 
