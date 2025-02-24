@@ -17,11 +17,11 @@ MonoBehaviour:
   weaponInput3: {fileID: 0}
   Anim_controller: {fileID: 0}
   Weapon_Attacks:
-  - rid: 3205115419090485405
+  - rid: 3205115419090485444
   references:
     version: 2
     RefIds:
-    - rid: 3205115419090485405
+    - rid: 3205115419090485444
       type: {class: Weapon_Attack_Data_Melee, ns: , asm: Assembly-CSharp}
       data:
         attackType: 0
@@ -33,5 +33,5 @@ MonoBehaviour:
         hasCooldown: 0
         cooldown: 0.1
         ComboCooldown: 0.1
-        attack_range: 5
+        attack_range: 3
         MaxViewAngle: 45

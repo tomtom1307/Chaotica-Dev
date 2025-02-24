@@ -25,7 +25,7 @@ public class Weapon_Attack_Data_Melee : Weapon_Attack_Data_Base
         foreach (Collider c in col)
         {
             Debug.Log("Detected a homie "+c.name);
-            Vector3 dirVec = c.transform.position  - W.transform.position;
+            Vector3 dirVec = c.transform.position  - Camera.main.transform.position;
             if(Vector3.Angle(dirVec, Camera.main.transform.forward) < MaxViewAngle)
             {
                 Damagable D = c.GetComponent<Damagable>();
