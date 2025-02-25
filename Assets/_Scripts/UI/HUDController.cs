@@ -1,10 +1,11 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HUDController : MonoBehaviour
 {
     public static HUDController instance;
-
+    [SerializeField] Image ChargeMeter;
     private void Awake()
     {
         instance = this;
@@ -22,6 +23,11 @@ public class HUDController : MonoBehaviour
         InteractionText.gameObject.SetActive(false);
     }
 
+
+    public void SetChargeMeterFill(float value)
+    {
+        ChargeMeter.fillAmount = value;
+    }
 
 
 }

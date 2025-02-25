@@ -23,12 +23,14 @@ public class UIManager : MonoBehaviour
         {
             instance = this;
         }
+
+        playerMovement = GetComponent<PlayerMovement>();
+        CamController = Camera.main.GetComponent<CameraController>();
     }
 
     private void Start()
     {
-        playerMovement = GetComponent<PlayerMovement>();
-        CamController = Camera.main.GetComponent<CameraController>();
+        
     }
 
     private void Update()
