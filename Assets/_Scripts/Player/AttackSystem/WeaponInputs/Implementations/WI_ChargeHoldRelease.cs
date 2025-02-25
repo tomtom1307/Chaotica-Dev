@@ -45,9 +45,11 @@ public class ChargeHoldRelease: Weapon_Input
             WH.StartAttackCharging(AttackNum);
             chargeStartTime = Time.time;
             isCharging = true;
+            HUDController.instance.StartFill(ChargeTime);
         }
         else if (ctx.canceled && isCharging) // Button released
         {
+            HUDController.instance.StopFill();
             Debug.Log("Released Hold");
             float totalCharge = Time.time - chargeStartTime;
             isCharging = false;
