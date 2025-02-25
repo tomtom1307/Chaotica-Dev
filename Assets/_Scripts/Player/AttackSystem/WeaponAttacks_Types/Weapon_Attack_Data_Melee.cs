@@ -26,7 +26,7 @@ public class Weapon_Attack_Data_Melee : Weapon_Attack_Data_Base
             if(Vector3.Angle(dirVec, Camera.main.transform.forward) < MaxViewAngle)
             {
                 Damagable D = c.GetComponent<Damagable>();
-                D.TakeDamage(damage);
+                DealDamage(W, D);
             }
         }
 

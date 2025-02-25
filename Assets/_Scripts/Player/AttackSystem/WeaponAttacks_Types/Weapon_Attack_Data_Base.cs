@@ -17,12 +17,18 @@ public class Weapon_Attack_Data_Base
     public float cooldown = 0.1f;
     
 
-    public virtual void EnterAttack(WeaponHolder wh) { }
-    public virtual void PerformAttack(WeaponHolder wh) { }
-    public virtual void ExitAttack(WeaponHolder wh) { }
+    public virtual void EnterAttack(WeaponHolder W) { }
+    public virtual void PerformAttack(WeaponHolder W) { }
+    public virtual void ExitAttack(WeaponHolder W) { }
 
+    public float DamageVal(WeaponHolder W) {
+        float DamageValue = W.ChargeAmount * 0.01f * damage * W.data.WeaponDamage;
+        return DamageValue;
+    }
 
-
+    public void DealDamage(WeaponHolder W, Damagable damagable) {
+        damagable.TakeDamage(DamageVal(W));
+    }
     
 }
 

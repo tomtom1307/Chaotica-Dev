@@ -115,7 +115,7 @@ public class WeaponHolder : MonoBehaviour
         
         
         ComboCounter = 0;
-        ChargeAmount = 0;
+        ChargeAmount = 1;
         
         //Handle Animation stuff
         Weapon_anim.SetBool("Attacking", false);
