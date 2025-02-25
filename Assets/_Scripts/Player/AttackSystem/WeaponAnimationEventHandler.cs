@@ -10,7 +10,6 @@ public class WeaponAnimationEventHandler : MonoBehaviour
 
     public void FinishedAttack()
     {
-        Debug.Log("FinishedAttack");
         onFinishedAttack.Invoke();
     }
 

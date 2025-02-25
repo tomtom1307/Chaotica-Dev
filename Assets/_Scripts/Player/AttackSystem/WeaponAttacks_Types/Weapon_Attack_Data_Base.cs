@@ -15,7 +15,7 @@ public class Weapon_Attack_Data_Base
 
     public bool hasCooldown = false;
     public float cooldown = 0.1f;
-    public float ComboCooldown = 0.1f;
+    
 
     public virtual void EnterAttack(WeaponHolder wh) { }
     public virtual void PerformAttack(WeaponHolder wh) { }
