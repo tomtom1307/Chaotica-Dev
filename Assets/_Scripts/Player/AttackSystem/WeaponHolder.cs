@@ -1,25 +1,32 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class WeaponHolder : MonoBehaviour
 {
+
+    private PlayerInput playerInput;
 
     int ComboCounter;
     public Camera cam;
     Weapon_Attack_Data_Base CurrentAttackData;
     [SerializeField]public LayerMask DamagableLayer;
-    public Animator Weapon_anim; 
-    private enum AttackState
+    public Animator Weapon_anim;
+    public enum AttackState
     {
         Attacking,
         Ready,
         Combo,
-        Cooldown
+        Cooldown,
+        Charging
     }
 
-    [SerializeField] AttackState State = AttackState.Ready;
+    [SerializeField]public AttackState State = AttackState.Ready;
 
     [SerializeField] private WeaponDataSO data;
+
+    public float ChargeAmount;
+
 
     public void SetWeaponData(WeaponDataSO data)
     {
@@ -28,6 +35,7 @@ public class WeaponHolder : MonoBehaviour
 
     private void Start()
     {
+        playerInput = GetComponent<PlayerInput>();
         cam = Camera.main;
         State = AttackState.Ready;
 
@@ -37,17 +45,23 @@ public class WeaponHolder : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0) && (State == AttackState.Ready || State == AttackState.Combo))
-        {
-            EnterAttack(0);
-        }
-        if(Input.GetMouseButtonDown(1) && (State == AttackState.Ready || State == AttackState.Combo))
-        {
-            EnterAttack(1);
-        }
+        
     }
 
+    public void Attack1Input(InputAction.CallbackContext ctx)
+    {
+        data.Weapon_Attacks[0].weaponInputLogic._Input(0, this, ctx);
+    }
 
+    public void Attack2Input(InputAction.CallbackContext ctx)
+    {
+        data.Weapon_Attacks[1].weaponInputLogic._Input(1, this, ctx);
+    }
+
+    public void Attack3Input(InputAction.CallbackContext ctx)
+    {
+        data.Weapon_Attacks[2].weaponInputLogic._Input(2, this, ctx);
+    }
     
 
     public void EnterAttack(int i)
@@ -68,7 +82,7 @@ public class WeaponHolder : MonoBehaviour
 
 
         ComboCounter++;
-        if (ComboCounter > CurrentAttackData.ComboLength) ComboCounter = 0;
+        if (ComboCounter >= CurrentAttackData.ComboLength) ComboCounter = 0;
 
         //Testing
         //CurrentAttackData.PerformAttack(this);
@@ -78,18 +92,19 @@ public class WeaponHolder : MonoBehaviour
 
     public void ExitAttack()
     {
+        //Reset basically
         Debug.Log("AttackExit");
         StartCoroutine(Cooldown(CurrentAttackData.cooldown));
         CurrentAttackData = null;
         
         State = AttackState.Cooldown;
         ComboCounter = 0;
+        ChargeAmount = 0;
+
         //Handle Animation stuff
         Weapon_anim.SetBool("Attacking", false);
         Weapon_anim.SetBool("Combo", false);
-
-        
-        
+        Weapon_anim.SetBool("Charging", false);
     }
 
 
@@ -111,6 +126,14 @@ public class WeaponHolder : MonoBehaviour
         Weapon_anim.SetBool("Combo", false);
     }
 
+    public void StartAttackCharging(int Attack)
+    {
+        State = AttackState.Charging;
+        Weapon_anim.SetBool("Charging", true);
+        Weapon_anim.SetInteger("AttackType", Attack);
+
+    }
+
 
     IEnumerator Cooldown(float t)
     {
@@ -125,3 +148,6 @@ public class WeaponHolder : MonoBehaviour
     }
     
 }
+
+
+

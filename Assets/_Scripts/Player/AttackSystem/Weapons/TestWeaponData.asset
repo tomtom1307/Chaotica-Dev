@@ -16,18 +16,18 @@ MonoBehaviour:
   Anim_controller: {fileID: 9100000, guid: ede1b6340de25a644b77507b0ece97de, type: 2}
   Weapon_Attacks:
   - rid: 3205115419090485444
-  - rid: 3205115430689308971
+  - rid: 3205115430689309103
   references:
     version: 2
     RefIds:
     - rid: 3205115419090485444
       type: {class: Weapon_Attack_Data_Melee, ns: , asm: Assembly-CSharp}
       data:
-        weaponInputLogic: {fileID: 0}
+        weaponInputLogic: {fileID: 11400000, guid: fa62de39fcdf5ac419138ca13612768e, type: 2}
         attackType: 0
         damageType: 0
-        damage: 5
-        ComboLength: 1
+        damage: 100
+        ComboLength: 2
         manaUse: 5
         StaggerDamage: 5
         hasCooldown: 0
@@ -35,17 +35,17 @@ MonoBehaviour:
         ComboCooldown: 0.1
         attack_range: 3
         MaxViewAngle: 45
-    - rid: 3205115430689308971
-      type: {class: Weapon_Attack_Data_Raycast, ns: , asm: Assembly-CSharp}
+    - rid: 3205115430689309103
+      type: {class: Weapon_Attack_Data_AOE, ns: , asm: Assembly-CSharp}
       data:
-        weaponInputLogic: {fileID: 0}
-        attackType: 2
+        weaponInputLogic: {fileID: 11400000, guid: 64e432b799d9359488024441752d2110, type: 2}
+        attackType: 3
         damageType: 0
-        damage: 9
+        damage: 200
         ComboLength: 1
         manaUse: 5
         StaggerDamage: 5
         hasCooldown: 0
         cooldown: 0.1
         ComboCooldown: 0.1
-        Range: 10
+        attack_range: 10
