@@ -15,14 +15,20 @@ public class Weapon_Attack_Data_Base
 
     public bool hasCooldown = false;
     public float cooldown = 0.1f;
-    public float ComboCooldown = 0.1f;
+    
+    //TODO: Store attack chargeup time on here instead of on weapon input (Custom Editor)
+    public virtual void EnterAttack(WeaponHolder W) { }
+    public virtual void PerformAttack(WeaponHolder W) { }
+    public virtual void ExitAttack(WeaponHolder W) { }
 
-    public virtual void EnterAttack(WeaponHolder wh) { }
-    public virtual void PerformAttack(WeaponHolder wh) { }
-    public virtual void ExitAttack(WeaponHolder wh) { }
+    public float DamageVal(WeaponHolder W) {
+        float DamageValue = W.ChargeAmount * 0.01f * damage * W.data.WeaponDamage;
+        return DamageValue;
+    }
 
-
-
+    public void DealDamage(WeaponHolder W, Damagable damagable) {
+        damagable.TakeDamage(DamageVal(W));
+    }
     
 }
 

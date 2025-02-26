@@ -30,7 +30,9 @@ public class DamageNumber : MonoBehaviour
 
     public void SetValue(float value)
     {
-        text.text = value.ToString();
+        float val = Mathf.RoundToInt(value);
+        if (val == 0) val = 1;
+        text.text = val.ToString();
     }
 
     private void Update()

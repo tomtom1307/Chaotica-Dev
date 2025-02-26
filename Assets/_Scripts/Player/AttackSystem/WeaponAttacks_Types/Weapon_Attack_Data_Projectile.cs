@@ -31,11 +31,10 @@ public class Weapon_Attack_Data_Projectile : Weapon_Attack_Data_Base
             Vector3 dir = W.cam.transform.forward;
             dir += W.cam.transform.up * UnityEngine.Random.Range(-spread, spread);
             dir += W.cam.transform.right * UnityEngine.Random.Range(-spread, spread);
-            dir.Normalize(); // Normalize to keep a consistent direction magnitude
+            dir.Normalize(); 
 
-            //Will orient Z axis
             GameObject proj = W.SpawnObject(projectile, W.cam.transform.position, Quaternion.identity);
-            proj.GetComponent<Projectile>().Init(dir, speed, damage, gravity);
+            proj.GetComponent<Projectile>().Init(dir, speed, DamageVal(W), gravity);
         }
 
     }
