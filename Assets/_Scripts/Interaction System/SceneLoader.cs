@@ -24,24 +24,10 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
-    public async void LoadScene(string SceneName) 
+    public void LoadScene(string SceneName) 
     { 
-        var scene  = SceneManager.LoadSceneAsync(SceneName);
-        scene.allowSceneActivation = false;
-
-        _loaderCanvas.SetActive(true);
-
-        do
-        {
-
-
-            progressBar.fillAmount = scene.progress;
-        } while (scene.progress < 0.9);
-
-        scene.allowSceneActivation = true;
-
-        _loaderCanvas.SetActive(false);
-
+        SceneManager.LoadScene(SceneName);
+        
     }
 
 }
