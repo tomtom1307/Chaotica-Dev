@@ -19,14 +19,17 @@ public class Weapon_Attack_Data_Melee : Weapon_Attack_Data_Base
     public override void PerformAttack(WeaponHolder W)
     {
         base.PerformAttack(W);
+        Debug.Log("did the Thing");
         List<Collider> col = Physics.OverlapSphere(W.transform.position, attack_range, W.DamagableLayer).ToList();
+        Debug.Log(col.Count);
         foreach (Collider c in col)
         {
+            Debug.Log("Detected a homie "+c.name);
             Vector3 dirVec = c.transform.position  - Camera.main.transform.position;
             if(Vector3.Angle(dirVec, Camera.main.transform.forward) < MaxViewAngle)
             {
                 Damagable D = c.GetComponent<Damagable>();
-                DealDamage(W, D);
+                D.TakeDamage(damage);
             }
         }
 
