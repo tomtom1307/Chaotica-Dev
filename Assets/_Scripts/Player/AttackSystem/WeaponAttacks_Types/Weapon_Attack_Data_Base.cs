@@ -16,7 +16,7 @@ public class Weapon_Attack_Data_Base
     public bool hasCooldown = false;
     public float cooldown = 0.1f;
     
-
+    //TODO: Store attack chargeup time on here instead of on weapon input (Custom Editor)
     public virtual void EnterAttack(WeaponHolder W) { }
     public virtual void PerformAttack(WeaponHolder W) { }
     public virtual void ExitAttack(WeaponHolder W) { }
