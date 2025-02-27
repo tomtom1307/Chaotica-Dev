@@ -1,8 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class IdleState : EnemyState
 {
-    public IdleState(Damagable damagable, EnemyStateMachine enemyStateMachine) : base(damagable, enemyStateMachine) { }
+    public IdleState(Damagable damagable, EnemyStateMachine enemyStateMachine, List<EnemyBehaviour> enemyBehaviours) : base(damagable, enemyStateMachine, enemyBehaviours) { }
 
 
 
