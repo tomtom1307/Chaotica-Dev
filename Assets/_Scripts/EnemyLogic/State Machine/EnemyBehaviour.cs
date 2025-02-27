@@ -6,8 +6,9 @@ using UnityEngine;
 [Serializable]
 public class EnemyBehaviour
 {
-    public List<B_Action> actionList;
     public Conditions conditions;
+    public List<B_Action> actionList;
+    
 
     public void DoActions()
     {

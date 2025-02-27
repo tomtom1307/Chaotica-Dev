@@ -1,14 +1,16 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[Serializable]
 public class Conditions
 {
     EnemyBrain brain;
-    List<CheckBool> boolChecks;
-    List<CheckFloat> floatChecks;
-    List<CheckInt> intChecks;
+    public List<CheckBool> boolChecks;
+    public List<CheckFloat> floatChecks;
+    public List<CheckInt> intChecks;
     public bool CheckConditions()
     {
         (CheckFloat.Float checkFloat, CheckFloat.Comparison checkComparison, float input) floatTupleCondition;

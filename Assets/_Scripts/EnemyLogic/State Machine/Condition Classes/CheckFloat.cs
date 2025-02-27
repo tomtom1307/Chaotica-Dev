@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
-using static CheckBool;
 
+[Serializable]
 public class CheckFloat
 {
     public float checkTime;
