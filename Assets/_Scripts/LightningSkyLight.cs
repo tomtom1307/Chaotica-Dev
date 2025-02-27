@@ -16,7 +16,7 @@ public class LightningSkyLight : MonoBehaviour
     public float randomDelay;
     public float speed;
     public float Intensity;
-    Light light;
+    new Light light;
     bool triggeredTween;
 
 
@@ -43,7 +43,9 @@ public class LightningSkyLight : MonoBehaviour
         if (timer >= freq + randomDelay && !triggeredTween)
         {
             triggeredTween = true;
+#pragma warning disable CS0219 // Variable is assigned but its value is never used
             float angle = 0;
+#pragma warning restore CS0219 // Variable is assigned but its value is never used
             Onthunder.Invoke();
             DOVirtual.Float(0, 180, speed+Random.Range(-1,1) , angle => {
             light.intensity = Intensity * Mathf.Sin(angle * Mathf.Deg2Rad);}).OnComplete(DoLightningReset);

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyState
+public class EnemyState     
 {
     protected Damagable damagable;
     protected EnemyStateMachine enemyStateMachine;
