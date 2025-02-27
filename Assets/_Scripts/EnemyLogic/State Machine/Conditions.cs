@@ -14,7 +14,7 @@ public class Conditions
     public bool CheckConditions()
     {
         (CheckFloat.Float checkFloat, CheckFloat.Comparison checkComparison, float input) floatTupleCondition;
-        (CheckInt.Int checkInt, CheckInt.Comparison checkComparison, float input) intTupleCondition;
+        (CheckInt.Int checkInt, CheckInt.Comparison checkComparison, int input) intTupleCondition;
         bool condition = true;
         foreach (CheckBool check in boolChecks)
         {
@@ -49,7 +49,42 @@ public class Conditions
         return new List<string> { "lol" };
     }
 
-    private bool DoFloatCheck(float value, CheckFloat.Comparison comparison, float input) { return false; } // do switch case for different comparison methods 
-    private bool DoIntCheck(float value, CheckInt.Comparison comparison, float input) { return false; } // do switch case for different comparison methods 
-
+    private bool DoFloatCheck(float value, CheckFloat.Comparison comparison, float input) 
+    {
+        switch (comparison)
+        {
+            case CheckFloat.Comparison.greaterThan:
+                return value > input;
+            case CheckFloat.Comparison.lessThan:
+                return value < input;
+            case CheckFloat.Comparison.greaterThanOrEqualTo:
+                return value >= input;
+            case CheckFloat.Comparison.lessThanOrEqualTo:
+                return value <= input;
+            default:
+                break;
+        }
+        Debug.LogError("non-existant comparison in enemy behaviour float condition. Returning false comparison.");
+        return false;
+    }
+    private bool DoIntCheck(int value, CheckInt.Comparison comparison, int input)
+    {
+        switch (comparison)
+        {
+            case CheckInt.Comparison.equalTo:
+                return value == input;
+            case CheckInt.Comparison.greaterThan:
+                return value > input;
+            case CheckInt.Comparison.lessThan:
+                return value < input;
+            case CheckInt.Comparison.greaterThanOrEqualTo:
+                return value >= input;
+            case CheckInt.Comparison.lessThanOrEqualTo:
+                return value <= input;
+            default:
+                break;
+        }
+        Debug.LogError("non-existant comparison in enemy behaviour integer condition. Returning false comparison.");
+        return false;
+    }
 }

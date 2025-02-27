@@ -8,10 +8,10 @@ public class CheckInt
     public Int checkInt;
     public Comparison checkComparison;
     public enum Int { numberOfEnemies }
-    public enum Comparison { }
+    public enum Comparison { equalTo, greaterThan, lessThan, greaterThanOrEqualTo, lessThanOrEqualTo }
 
     public int input;
-    public (Int checkFloat, Comparison checkComparison, float input) ReturnCondition() => (checkInt, checkComparison, input);
+    public (Int checkFloat, Comparison checkComparison, int input) ReturnCondition() => (checkInt, checkComparison, input);
 
     public string ReturnFunctionString()
     {

@@ -8,7 +8,7 @@ public class CheckFloat
     public Float checkFloat;
     public Comparison checkComparison;
     public enum Float {playerDistance}
-    public enum Comparison { }
+    public enum Comparison {greaterThan, lessThan, greaterThanOrEqualTo, lessThanOrEqualTo}
     public float input;
     public (Float checkFloat, Comparison checkComparison, float input) ReturnCondition() => (checkFloat, checkComparison, input);
 
