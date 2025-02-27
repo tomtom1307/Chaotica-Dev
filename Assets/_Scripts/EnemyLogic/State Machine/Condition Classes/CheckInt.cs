@@ -17,8 +17,10 @@ public class CheckInt
     {
         switch (checkInt)
         {
+            case Int.numberOfEnemies:
+                return "CountEnemies";
             default:
-                Debug.LogError("You are trying to invoke a time>0 check on a variable for which this has not been implemented" + checkInt);
+                Debug.LogError("You are trying to invoke a function name on a variable for which this has not been implemented" + checkInt);
                 break;
         }
         return "";

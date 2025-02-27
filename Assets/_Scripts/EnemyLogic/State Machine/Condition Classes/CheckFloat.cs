@@ -17,9 +17,9 @@ public class CheckFloat
         switch (checkFloat)
         {
             case Float.playerDistance:
-                return "fname"; // replace "LOS" with actual distancechecking function name
+                return "CheckPlayerDistance";
             default:
-                Debug.LogError("You are trying to invoke a time>0 check on a variable for which this has not been implemented" + checkFloat);
+                Debug.LogError("You are trying to invoke a function name on a variable for which this has not been implemented" + checkFloat);
                 break;
         }
         return "";

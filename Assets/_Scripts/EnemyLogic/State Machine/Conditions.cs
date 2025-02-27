@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Linq;
 
 [Serializable]
 public class Conditions
@@ -36,17 +37,28 @@ public class Conditions
         return condition;
     }
 
-    public List<string> InitialCheck()
+    public ((List<CheckBool> frameBool, List<CheckFloat> frameFloat, List<CheckInt> frameInt),(List<CheckBool> timeBool, List<CheckFloat> timeFloat, List<CheckInt> timeInt)) InitialCheck()
     {
-        List<CheckBool> pseudoBoolChecks = boolChecks;
-        List<CheckFloat> pseudoFloatChecks = floatChecks;
-        List<CheckInt> pseudoIntChecks = intChecks;
+        List<CheckBool> frameBoolChecks = new List<CheckBool>();
+        List<CheckFloat> frameFloatChecks = new List<CheckFloat>();
+        List<CheckInt> frameIntChecks = new List<CheckInt>();
+        List<CheckBool> timeBoolChecks = new List<CheckBool>();
+        List<CheckFloat> timeFloatChecks = new List<CheckFloat>();
+        List<CheckInt> timeIntChecks = new List<CheckInt>();
 
-        foreach (CheckBool check in pseudoBoolChecks)
+        foreach (CheckBool check in boolChecks)
         {
-            if(check.checkTime <= 0);
+            if (check.checkTime <= 0) frameBoolChecks.Add(check); else timeBoolChecks.Add(check);
         }
-        return new List<string> { "lol" };
+        foreach (CheckFloat check in floatChecks)
+        {
+            if (check.checkTime <= 0) frameFloatChecks.Add(check); else timeFloatChecks.Add(check);
+        }
+        foreach (CheckInt check in intChecks)
+        {
+            if (check.checkTime <= 0) frameIntChecks.Add(check); else timeIntChecks.Add(check);
+        } //.Select(x => x.ReturnFunctionString()).ToList()
+        return ((frameBoolChecks, frameFloatChecks, frameIntChecks), (timeBoolChecks, timeFloatChecks, timeIntChecks));
     }
 
     private bool DoFloatCheck(float value, CheckFloat.Comparison comparison, float input) 

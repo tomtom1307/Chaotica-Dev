@@ -9,15 +9,20 @@ public class EnemyBrain : MonoBehaviour
     //add more concrete state classes here
     [SerializeField] List<EnemyBehaviour> behaviours;
     private DamagableEnemy damagableEnemy;
+    public EnemyPerception perception;
 
-    public Dictionary<CheckBool.Bool, bool> conditionBools;
+    public Dictionary<CheckBool.Bool, bool> conditionBools = new Dictionary<CheckBool.Bool, bool>()
+    {
+        // Need to find a way for the dictionary to provide a reference to the variable rather than the value of the variable at the time of this definition
+    };
     public Dictionary<CheckFloat.Float, float> conditionFloats;
     public Dictionary<CheckInt.Int, int> conditionInts;
     private void Start()
     {
+        perception = gameObject.AddComponent<EnemyPerception>();
         damagableEnemy = GetComponent<DamagableEnemy>();
         stateMachine = new EnemyStateMachine();
-        idleState = new IdleState(damagableEnemy, stateMachine, behaviours);
+        idleState = new IdleState(damagableEnemy, stateMachine, behaviours, this);
         stateMachine.Initialize(idleState);
     }
 
@@ -26,22 +31,5 @@ public class EnemyBrain : MonoBehaviour
         stateMachine.CurrentEnemyState.FrameUpdate();
     }
 
-    public void StartRepeatingChecks(List<string> checks)
-    {
-        foreach (string checkmethod in checks)
-        {
-            //InvokeRepeating(checkmethod, );
-        }
-    }
-    public void StopRepeatingChecks(List<string> checks)
-    {
-        foreach (string checkmethod in checks)
-        {
-            //CancelInvoke(checkmethod, );
-        }
-    }
-
-    private bool checkLOS() { return false; }
-    private float checkDistance() { return 0f; }
 
 }
