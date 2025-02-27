@@ -16,9 +16,9 @@ public class CheckBool
         switch (checkBool)
         {
             case Bool.LOS:
-                return "LOS"; // replace "LOS" with actual LOSchecking function name
+                return "CheckLOS";
             default:
-                Debug.LogError("You are trying to invoke a time>0 check on a variable for which this has not been implemented" + checkBool);
+                Debug.LogError("You are trying to invoke a function name on a variable for which this has not been implemented" + checkBool);
                 break;
         }
         return "";

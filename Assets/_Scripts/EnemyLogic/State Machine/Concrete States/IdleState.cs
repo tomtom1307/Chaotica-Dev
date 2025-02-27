@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class IdleState : EnemyState
 {
-    public IdleState(Damagable damagable, EnemyStateMachine enemyStateMachine, List<EnemyBehaviour> enemyBehaviours) : base(damagable, enemyStateMachine, enemyBehaviours) { }
+    public IdleState(Damagable damagable, EnemyStateMachine enemyStateMachine, List<EnemyBehaviour> enemyBehaviours, EnemyBrain brain) : 
+        base(damagable, enemyStateMachine, enemyBehaviours, brain) { }
 
 
 
