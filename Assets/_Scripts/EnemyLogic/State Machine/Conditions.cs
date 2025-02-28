@@ -8,7 +8,7 @@ using System.Linq;
 [Serializable]
 public class Conditions
 {
-    EnemyBrain brain;
+    [HideInInspector] public EnemyBrain brain;
     public List<CheckBool> boolChecks;
     public List<CheckFloat> floatChecks;
     public List<CheckInt> intChecks;
@@ -19,7 +19,7 @@ public class Conditions
         bool condition = true;
         foreach (CheckBool check in boolChecks)
         {
-            condition = condition && brain.conditionBools[check.ReturnCondition()];
+            condition = condition && brain.conditionBools[check.ReturnCondition()]();
         }
         if (!condition) return false;
         foreach (CheckFloat check in floatChecks)
@@ -37,7 +37,7 @@ public class Conditions
         return condition;
     }
 
-    public ((List<CheckBool> frameBool, List<CheckFloat> frameFloat, List<CheckInt> frameInt),(List<CheckBool> timeBool, List<CheckFloat> timeFloat, List<CheckInt> timeInt)) InitialCheck()
+    public void InitialCheck(out (List<CheckBool> frameBool, List<CheckFloat> frameFloat, List<CheckInt> frameInt) frameCheck,out (List<CheckBool> timeBool, List<CheckFloat> timeFloat, List<CheckInt> timeInt) timeCheck)
     {
         List<CheckBool> frameBoolChecks = new List<CheckBool>();
         List<CheckFloat> frameFloatChecks = new List<CheckFloat>();
@@ -58,7 +58,11 @@ public class Conditions
         {
             if (check.checkTime <= 0) frameIntChecks.Add(check); else timeIntChecks.Add(check);
         } //.Select(x => x.ReturnFunctionString()).ToList()
-        return ((frameBoolChecks, frameFloatChecks, frameIntChecks), (timeBoolChecks, timeFloatChecks, timeIntChecks));
+
+        Debug.Log(timeBoolChecks.Count);
+        frameCheck = (frameBoolChecks, frameFloatChecks, frameIntChecks);
+        timeCheck = (timeBoolChecks, timeFloatChecks, timeIntChecks); 
+        return;
     }
 
     private bool DoFloatCheck(float value, CheckFloat.Comparison comparison, float input) 

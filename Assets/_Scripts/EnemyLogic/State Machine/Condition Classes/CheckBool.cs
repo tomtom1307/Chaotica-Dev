@@ -16,11 +16,13 @@ public class CheckBool
         switch (checkBool)
         {
             case Bool.LOS:
-                return "CheckLOS";
+                Debug.Log(nameof(EnemyPerception.CheckLOS) + ": Returned LOS");
+                return nameof(EnemyPerception.CheckLOS);
             default:
-                Debug.LogError("You are trying to invoke a function name on a variable for which this has not been implemented" + checkBool);
+                Debug.LogError(checkBool+" :You are trying to invoke a function name on a variable for which this has not been implemented");
                 break;
         }
+        Debug.LogError("Somehow the checkBool had no defined string");
         return "";
     }
 
