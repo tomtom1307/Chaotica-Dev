@@ -22674,11 +22674,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 0
+  JumpPower: 0.2
   DetectionRange: 100
   ViewAngle: 45
   layerMask:
     serializedVersion: 2
     m_Bits: 1089
+  navMesh: {fileID: 0}
   behaviours:
   - conditions:
       brain: {fileID: 0}
@@ -22687,8 +22689,12 @@ MonoBehaviour:
         checkBool: 1
       floatChecks: []
       intChecks: []
-    actionList: []
+    actionList:
+    - brain: {fileID: 0}
+      B_action: 0
+      Weight: 100
   perception: {fileID: 0}
+  actionHandler: {fileID: 0}
 --- !u!114 &4569633281391185007
 MonoBehaviour:
   m_ObjectHideFlags: 0

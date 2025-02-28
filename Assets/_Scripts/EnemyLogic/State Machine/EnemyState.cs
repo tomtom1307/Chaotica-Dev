@@ -83,6 +83,7 @@ public class EnemyState
             if (behaviour.conditions.CheckConditions())
             {
                 Debug.Log(true);
+                brain.actionHandler.StartAction(behaviour.actionList[0].Func());
             }
             else
             {

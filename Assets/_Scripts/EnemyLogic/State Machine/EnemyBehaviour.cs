@@ -13,6 +13,10 @@ public class EnemyBehaviour
 
     public void InitializeBehaviour(EnemyBrain brain)
     {
+        foreach (var action in actionList)
+        {
+            action.brain = brain;
+        }
         conditions.brain = brain;
     }
 

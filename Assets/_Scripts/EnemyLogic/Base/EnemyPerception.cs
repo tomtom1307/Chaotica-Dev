@@ -9,6 +9,8 @@ public class EnemyPerception : MonoBehaviour
     Vector3 PlayerLastSeenPosition;
 
     public bool LOS;
+    public bool IsAlert;
+
     public float Distance;
 
 

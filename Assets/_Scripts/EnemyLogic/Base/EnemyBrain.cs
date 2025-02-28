@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Experimental.GlobalIllumination;
 
 [RequireComponent(typeof(DamagableEnemy))]
@@ -9,6 +10,7 @@ public class EnemyBrain : MonoBehaviour
 
     [Header("Movement")]
     public float MoveSpeed;
+    public float JumpPower;
 
     [Header("Detection")]
     public float DetectionRange;
@@ -19,8 +21,8 @@ public class EnemyBrain : MonoBehaviour
 
 
 
-
-
+    //Navmesh
+    [HideInInspector] public NavMeshAgent navMesh;
 
     //StateMachine
     EnemyStateMachine stateMachine;
@@ -31,6 +33,7 @@ public class EnemyBrain : MonoBehaviour
     //Behaviours
     [SerializeField] List<EnemyBehaviour> behaviours;
     [HideInInspector] public EnemyPerception perception;
+    [HideInInspector] public EnemyActionHandler actionHandler;
 
     //Health
     private DamagableEnemy damagableEnemy;
@@ -69,6 +72,8 @@ public class EnemyBrain : MonoBehaviour
     private void Start()
     {
         //Get references 
+        actionHandler = gameObject.AddComponent<EnemyActionHandler>();
+        actionHandler.brain = this;
         perception = gameObject.AddComponent<EnemyPerception>();
         perception.brain = this;
         damagableEnemy = GetComponent<DamagableEnemy>();
