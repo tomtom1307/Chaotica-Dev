@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class EnemyPerception : MonoBehaviour
 {
     public EnemyBrain brain;
     Transform player;
-
+    Vector3 PlayerLastSeenPosition;
 
     public bool LOS;
     public float Distance;
@@ -44,11 +45,14 @@ public class EnemyPerception : MonoBehaviour
     {
         Debug.Log("DidLOSCheck!");
         RaycastHit hit;
+        //Vector3.up because enemy transform position is at feet
         if(Physics.Raycast(transform.position + Vector3.up, player.position - transform.position + Vector3.up, out hit, brain.DetectionRange, brain.layerMask))
         {
-            if (hit.collider.gameObject.layer == 10)
+            if (hit.collider.gameObject.layer == 10 && Vector3.Angle(transform.forward, player.position - transform.position + Vector3.up)< brain.ViewAngle)
             {
+
                 LOS = true;
+                
                 return;
             }
             LOS = false;

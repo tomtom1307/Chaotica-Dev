@@ -12,6 +12,7 @@ public class EnemyBrain : MonoBehaviour
 
     [Header("Detection")]
     public float DetectionRange;
+    public float ViewAngle;
     public LayerMask layerMask;
 
 
