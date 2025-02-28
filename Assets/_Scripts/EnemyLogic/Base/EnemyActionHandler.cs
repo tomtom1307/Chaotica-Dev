@@ -21,7 +21,7 @@ public class EnemyActionHandler : MonoBehaviour
         DoingAction = false;
     }
 
-    public void DoAFlip()
+    public void DoLilHops()
     {
         transform.DOJump(transform.position + transform.forward, brain.JumpPower, 7, 1).OnComplete(EndAction);
     }
