@@ -11,13 +11,25 @@ public class EnemyBehaviour
     public (List<CheckBool> boolCheck, List<CheckFloat> floatCheck, List<CheckInt> intCheck) TimeChecks;
     public (List<CheckBool> boolCheck, List<CheckFloat> floatCheck, List<CheckInt> intCheck) FrameChecks;
 
+    public void InitializeBehaviour(EnemyBrain brain)
+    {
+        foreach (var action in actionList)
+        {
+            action.brain = brain;
+        }
+        conditions.brain = brain;
+    }
+
     public void SetCheckTypes()
     {
-        (TimeChecks,FrameChecks) = conditions.InitialCheck();
+        conditions.InitialCheck(out FrameChecks,out TimeChecks);
     }
+
+
+
     public void DoActions()
     {
-        //e.g. chase player during attack state: move to player position
+        
     }
     public void DoAttacks()
     {

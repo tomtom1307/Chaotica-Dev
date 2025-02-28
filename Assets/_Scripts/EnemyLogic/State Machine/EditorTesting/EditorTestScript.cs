@@ -1,13 +1,23 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TestBehaviourEditor : MonoBehaviour
 {
-    List<Yaps> yaps;
+    [Randomize(0, 10)]
+    public float RandomValue;
+    public List<ClassStuff> classList;
 }
 
-public class Yaps
+[Serializable]
+public class ClassStuff
+{
+    public List<SubClassStuff> subclass;
+}
+
+[Serializable]
+public class SubClassStuff
 {
     public List<int> ints;
 }

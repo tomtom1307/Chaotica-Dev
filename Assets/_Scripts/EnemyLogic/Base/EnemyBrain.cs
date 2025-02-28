@@ -1,29 +1,94 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Experimental.GlobalIllumination;
 
 [RequireComponent(typeof(DamagableEnemy))]
 public class EnemyBrain : MonoBehaviour
 {
+
+    [Header("Movement")]
+    public float MoveSpeed;
+    public float JumpPower;
+
+    [Header("Detection")]
+    public float DetectionRange;
+    public float ViewAngle;
+    public LayerMask layerMask;
+
+
+
+
+
+    //Navmesh
+    [HideInInspector] public NavMeshAgent navMesh;
+
+    //StateMachine
     EnemyStateMachine stateMachine;
     IdleState idleState;
     //add more concrete state classes here
-    [SerializeField] List<EnemyBehaviour> behaviours;
-    private DamagableEnemy damagableEnemy;
-    public EnemyPerception perception;
 
-    public Dictionary<CheckBool.Bool, bool> conditionBools = new Dictionary<CheckBool.Bool, bool>()
+
+    //Behaviours
+    [SerializeField] List<EnemyBehaviour> behaviours;
+    [HideInInspector] public EnemyPerception perception;
+    [HideInInspector] public EnemyActionHandler actionHandler;
+
+    //Health
+    private DamagableEnemy damagableEnemy;
+
+
+
+
+
+
+
+    //Stores the CheckBool value
+    public Dictionary<CheckBool.Bool, Func<bool>> conditionBools = new Dictionary<CheckBool.Bool, Func<bool>>() { };
+
+    public void MapBools()
     {
-        // Need to find a way for the dictionary to provide a reference to the variable rather than the value of the variable at the time of this definition
-    };
+        conditionBools[CheckBool.Bool.LOS] = () => perception.LOS;
+    }
+
+
+    //Stores the CheckFloat value
     public Dictionary<CheckFloat.Float, float> conditionFloats;
+
+    public void MapFloats()
+    {
+
+    }
+
+    //Stores the CheckInt value
     public Dictionary<CheckInt.Int, int> conditionInts;
+
+    public void MapInts()
+    {
+
+    }
+
     private void Start()
     {
+        //Get references 
+        actionHandler = gameObject.AddComponent<EnemyActionHandler>();
+        actionHandler.brain = this;
         perception = gameObject.AddComponent<EnemyPerception>();
+        perception.brain = this;
         damagableEnemy = GetComponent<DamagableEnemy>();
+        
+
+        //Initialize State machine + states
         stateMachine = new EnemyStateMachine();
         idleState = new IdleState(damagableEnemy, stateMachine, behaviours, this);
         stateMachine.Initialize(idleState);
+
+        //Do Dict mappings
+        MapBools();
+        MapFloats();
+        MapInts();
+
     }
 
     private void Update()
