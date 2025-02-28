@@ -8,6 +8,7 @@ public class EnemyPerception : MonoBehaviour
 
 
     public bool LOS;
+    public float Distance;
 
 
     //Get reference to player
@@ -43,11 +44,14 @@ public class EnemyPerception : MonoBehaviour
     {
         Debug.Log("DidLOSCheck!");
         RaycastHit hit;
-        Physics.Raycast(transform.position, player.position - transform.position, out hit, brain.DetectionRange, brain.layerMask);
-        if(hit.collider.gameObject.layer == 10)
+        if(Physics.Raycast(transform.position + Vector3.up, player.position - transform.position + Vector3.up, out hit, brain.DetectionRange, brain.layerMask))
         {
-            LOS = true;
-            return;
+            if (hit.collider.gameObject.layer == 10)
+            {
+                LOS = true;
+                return;
+            }
+            LOS = false;
         }
         else
         {

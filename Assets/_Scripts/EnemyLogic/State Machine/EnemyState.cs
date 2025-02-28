@@ -36,7 +36,7 @@ public class EnemyState
             behaviour.SetCheckTypes();
 
             // defining and concatenating lists of function names that need to be called to update condition variables
-            frameFunctionNames = behaviour.TimeChecks.boolCheck.Select(x => x.ReturnFunctionString()).ToList();
+            frameFunctionNames = behaviour.FrameChecks.boolCheck.Select(x => x.ReturnFunctionString()).ToList();
             frameFunctionNames.AddRange(behaviour.FrameChecks.floatCheck.Select(x => x.ReturnFunctionString()).ToList());
             frameFunctionNames.AddRange(behaviour.FrameChecks.intCheck.Select(x => x.ReturnFunctionString()).ToList());
 
@@ -78,6 +78,7 @@ public class EnemyState
         //checking whether current variable values satisfy behaviour conditions
         foreach (EnemyBehaviour behaviour in enemyBehaviours)
         {
+            Debug.Log(frameFunctionNames.Count);
             brain.perception.UpdateFrameVariables(frameFunctionNames);
             if (behaviour.conditions.CheckConditions())
             {

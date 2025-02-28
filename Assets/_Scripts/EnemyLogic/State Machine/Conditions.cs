@@ -59,7 +59,6 @@ public class Conditions
             if (check.checkTime <= 0) frameIntChecks.Add(check); else timeIntChecks.Add(check);
         } //.Select(x => x.ReturnFunctionString()).ToList()
 
-        Debug.Log(timeBoolChecks.Count);
         frameCheck = (frameBoolChecks, frameFloatChecks, frameIntChecks);
         timeCheck = (timeBoolChecks, timeFloatChecks, timeIntChecks); 
         return;
