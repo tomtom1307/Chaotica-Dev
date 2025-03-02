@@ -12,7 +12,6 @@ public class MovementTest : MonoBehaviour
     int maxCounter;
     public int counter = 0;
     private float distancetoNextPoint;
-    public float matchingfactor;
     NavMeshAgent agent;
     private bool chilling;
     new AudioSource audio;
@@ -38,7 +37,7 @@ public class MovementTest : MonoBehaviour
     {
         agent.destination = PatrolPoints[counter].position;
         audio.Play();
-        anim.SetFloat("WalkSpeed", agent.speed * matchingfactor);
+        anim.SetFloat("WalkSpeed", agent.speed);
         anim.SetBool("Walking", true);
     }
 
