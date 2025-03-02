@@ -4,7 +4,7 @@ using UnityEngine;
 [Serializable]
 public class CheckFloat
 {
-    public float checkTime;
+    public float checkTime = 0.1f;
     public Float checkFloat;
     public Comparison checkComparison;
     public enum Float 
