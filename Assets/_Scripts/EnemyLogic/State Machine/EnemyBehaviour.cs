@@ -6,6 +6,8 @@ using UnityEngine;
 [Serializable]
 public class EnemyBehaviour
 {
+    public string Name;
+    public int priority = 1;
     public Conditions conditions;
     public List<B_Action> actionList;
     public (List<CheckBool> boolCheck, List<CheckFloat> floatCheck, List<CheckInt> intCheck) TimeChecks;
@@ -35,5 +37,8 @@ public class EnemyBehaviour
     {
 
     }
+
+
+    [HideInInspector] public string name = "Behaviour";
 
 }

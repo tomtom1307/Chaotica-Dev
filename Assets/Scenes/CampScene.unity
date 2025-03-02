@@ -22675,14 +22675,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 0
   JumpPower: 0.2
-  DetectionRange: 100
+  DetectionRange: 0
   ViewAngle: 45
   layerMask:
     serializedVersion: 2
     m_Bits: 1089
   navMesh: {fileID: 0}
   behaviours:
-  - conditions:
+  - Name: LOS Check
+    priority: 1
+    conditions:
       brain: {fileID: 0}
       boolChecks:
       - checkTime: 0
@@ -22693,6 +22695,23 @@ MonoBehaviour:
     - brain: {fileID: 0}
       B_action: 0
       Weight: 100
+    name: Behaviour
+  - Name: Time Since Last Player Spot Check
+    priority: 2
+    conditions:
+      brain: {fileID: 0}
+      boolChecks: []
+      floatChecks:
+      - checkTime: 0
+        checkFloat: 1
+        checkComparison: 0
+        input: 5
+      intChecks: []
+    actionList:
+    - brain: {fileID: 0}
+      B_action: 0
+      Weight: 100
+    name: Behaviour
   perception: {fileID: 0}
   actionHandler: {fileID: 0}
 --- !u!114 &4569633281391185007

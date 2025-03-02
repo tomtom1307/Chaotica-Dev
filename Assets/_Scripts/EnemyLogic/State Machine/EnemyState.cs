@@ -70,8 +70,17 @@ public class EnemyState
             brain.perception.StopRepeatingChecks();
         }
     }
+
+
+    int HighestPriorityIndex;
+    int HighestPriority;
+
+
     public virtual void FrameUpdate() 
     {
+        HighestPriorityIndex = 0;
+        HighestPriority = 0;
+        int i = 0;
         //here: call functions that update condition variables every frame (wouldnt we do this in perception?)
 
 
@@ -82,17 +91,36 @@ public class EnemyState
             brain.perception.UpdateFrameVariables(frameFunctionNames);
             if (behaviour.conditions.CheckConditions())
             {
-                Debug.Log(true);
-                brain.actionHandler.StartAction(behaviour.actionList[0].Func());
+                if(behaviour.priority > HighestPriority)
+                {
+                    HighestPriority = behaviour.priority;
+                    HighestPriorityIndex = i;
+                }
             }
             else
             {
                 Debug.Log(false);
             }
+            i++;
+        }
+
+        if(HighestPriority > 0)
+        {
+            DoAction(enemyBehaviours[HighestPriorityIndex]);
         }
     }
+
     public virtual void PhysicsUpdate() { }
     public virtual void AnimationTriggerEvent() { }
+
+
+    public void DoAction(EnemyBehaviour EB)
+    {
+        //Consider Weights
+        Debug.Log("DidAction!");
+
+        brain.actionHandler.StartAction(EB.actionList[0].Func());
+    }
 
     private void HandleFunctionDegeneracy()
     {

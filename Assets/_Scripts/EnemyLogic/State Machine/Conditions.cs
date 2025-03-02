@@ -25,13 +25,13 @@ public class Conditions
         foreach (CheckFloat check in floatChecks)
         {
             floatTupleCondition = check.ReturnCondition();
-            condition = condition && DoFloatCheck(brain.conditionFloats[floatTupleCondition.checkFloat], floatTupleCondition.checkComparison, floatTupleCondition.input);
+            condition = condition && DoFloatCheck(brain.conditionFloats[floatTupleCondition.checkFloat](), floatTupleCondition.checkComparison, floatTupleCondition.input);
         }
         if (!condition) return false;
         foreach (CheckInt check in intChecks)
         {
             intTupleCondition = check.ReturnCondition();
-            condition = condition && DoIntCheck(brain.conditionInts[intTupleCondition.checkInt], intTupleCondition.checkComparison, intTupleCondition.input);
+            condition = condition && DoIntCheck(brain.conditionInts[intTupleCondition.checkInt](), intTupleCondition.checkComparison, intTupleCondition.input);
         }
 
         return condition;

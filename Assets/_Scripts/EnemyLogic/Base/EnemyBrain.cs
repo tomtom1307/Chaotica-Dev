@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Experimental.GlobalIllumination;
@@ -54,15 +55,15 @@ public class EnemyBrain : MonoBehaviour
 
 
     //Stores the CheckFloat value
-    public Dictionary<CheckFloat.Float, float> conditionFloats;
+    public Dictionary<CheckFloat.Float, Func<float>> conditionFloats = new Dictionary<CheckFloat.Float, Func<float>>() { };
 
     public void MapFloats()
     {
-
+        conditionFloats[CheckFloat.Float.LSP_time] = () => perception.LSP_time;
     }
 
     //Stores the CheckInt value
-    public Dictionary<CheckInt.Int, int> conditionInts;
+    public Dictionary<CheckInt.Int, Func<int>> conditionInts = new Dictionary<CheckInt.Int, Func<int>>() { };
 
     public void MapInts()
     {

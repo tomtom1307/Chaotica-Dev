@@ -12,7 +12,7 @@ public class EnemyPerception : MonoBehaviour
     public bool IsAlert;
 
     public float Distance;
-
+    public float LSP_time;
 
     //Get reference to player
     private void Start()
@@ -54,7 +54,7 @@ public class EnemyPerception : MonoBehaviour
             {
 
                 LOS = true;
-                
+                LastSpottedTime = Time.time;
                 return;
             }
             LOS = false;
@@ -69,6 +69,15 @@ public class EnemyPerception : MonoBehaviour
     public float CheckPlayerDistance() 
     {
         return Vector3.Distance(transform.position, player.position);
+    }
+
+
+    float LastSpottedTime;
+
+
+    public void CheckLastSeenPlayerTime()
+    {   
+        LSP_time = Time.time - LastSpottedTime;
     }
 
     public int CountEnemies() 
