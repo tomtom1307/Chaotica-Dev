@@ -59,7 +59,7 @@ public class EnemyState
         foreach (EnemyBehaviour behaviour in enemyBehaviours)
         {
             // Invoking repeating function calls every functionTimes seconds for updating condition variables
-            brain.perception.StartRepeatingChecks(timeFunctionNames, functionTimes);
+            brain.perception.StartRepeatingChecks(timeFunctionNames, functionTimes); // TODO: REMOVE DUPLICATE FUNCTION CALLS FROM DIFFERENT BEHAVIOURS AND STATE TRANSITIONS in HandleFunctionDegeneracy()
         }
     }
     public virtual void ExitState() 
@@ -93,4 +93,9 @@ public class EnemyState
     }
     public virtual void PhysicsUpdate() { }
     public virtual void AnimationTriggerEvent() { }
+
+    private void HandleFunctionDegeneracy()
+    {
+
+    }
 }
