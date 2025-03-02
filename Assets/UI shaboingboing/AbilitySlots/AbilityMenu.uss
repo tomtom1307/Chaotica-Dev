@@ -1,0 +1,39 @@
+.TableCloth {
+    background-image: url("project://database/Assets/UI%20shaboingboing/AbilitySlots/Tablecloth2.png?fileID=2800000&guid=8e8943176d367cf4b8700b86b2e371c1&type=3#Tablecloth2");
+    align-self: center;
+    align-items: center;
+    align-content: flex-start;
+    justify-content: center;
+}
+
+.Escape {
+    align-self: flex-end;
+    background-color: rgb(173, 29, 29);
+    -unity-font-definition: url("project://database/Assets/UI%20shaboingboing/MainMenu/bloodcrow.ttf?fileID=12800000&guid=edab7ded42ce4d14fabe8078a789337c&type=3#bloodcrow");
+    -unity-font-style: bold;
+    scale: 0.6 1;
+    transform-origin: right;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    width: 90px;
+    height: 60px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    -unity-background-scale-mode: stretch-to-fill;
+    font-size: 63px;
+    letter-spacing: 0;
+    -unity-text-align: middle-center;
+    overflow: visible;
+    display: flex;
+    opacity: 1;
+}
+
+.unity-scroll-view {
+    width: 500px;
+    height: 500px;
+    background-color: rgb(0, 0, 0);
+}

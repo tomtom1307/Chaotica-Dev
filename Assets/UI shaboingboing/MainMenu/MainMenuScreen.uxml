@@ -1,8 +1,9 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/MainMenu/MainMenuScreen.uss?fileID=7433441132597879392&amp;guid=b1025e2633edf1e4d98e9570691b02b0&amp;type=3#MainMenuScreen" />
+    <Style src="project://database/Assets/UI%20shaboingboing/MainMenu/MainMenuScreen.uss?fileID=7433441132597879392&amp;guid=b1025e2633edf1e4d98e9570691b02b0&amp;type=3#MainMenuScreen" />
+    <Style src="project://database/Assets/UI%20shaboingboing/AbilitySlots/AbilityMenu.uss?fileID=7433441132597879392&amp;guid=2d4401b8edaeccf408eda1a6347795d9&amp;type=3#AbilityMenu" />
     <ui:VisualElement name="Panel" class="panel" style="flex-grow: 1; align-items: center; align-self: auto; align-content: flex-start; justify-content: center;">
         <ui:VisualElement name="Container" class="menu" style="flex-grow: 1;">
-            <ui:VisualElement name="Logo" style="flex-grow: 1; align-self: stretch; justify-content: flex-start; align-items: center; background-image: url(&quot;project://database/Assets/MainMenu/output-onlinepngtools.png?fileID=2800000&amp;guid=0c115579b46b0a64fba0328c6dd58ae4&amp;type=3#output-onlinepngtools&quot;); -unity-background-image-tint-color: rgb(255, 255, 255); align-content: flex-start; flex-shrink: 0; -unity-background-scale-mode: scale-to-fit; height: 100px; max-height: 300px;" />
+            <ui:VisualElement name="Logo" style="flex-grow: 1; align-self: stretch; justify-content: flex-start; align-items: center; background-image: url(&quot;project://database/Assets/UI%20shaboingboing/MainMenu/output-onlinepngtools.png?fileID=2800000&amp;guid=0c115579b46b0a64fba0328c6dd58ae4&amp;type=3#output-onlinepngtools&quot;); -unity-background-image-tint-color: rgb(255, 255, 255); align-content: flex-start; flex-shrink: 0; -unity-background-scale-mode: scale-to-fit; height: 100px; max-height: 300px;" />
             <ui:Button text="Play" name="Play" class="unity-button" />
             <ui:Button text="Quit" name="Quit" />
         </ui:VisualElement>
