@@ -27,25 +27,28 @@ public class EnemyState
     }
     private void InitializeConditions()
     {
-        
+        frameFunctionNames = new List<string>();
+        timeFunctionNames = new List<string>();
+        functionTimes = new List<float>();
 
         foreach (EnemyBehaviour behaviour in enemyBehaviours)
         {
             behaviour.InitializeBehaviour(brain);
             // setting which condition variables need to be updated every frame or every time interval
             behaviour.SetCheckTypes();
+            
 
             // defining and concatenating lists of function names that need to be called to update condition variables
-            frameFunctionNames = behaviour.FrameChecks.boolCheck.Select(x => x.ReturnFunctionString()).ToList();
+            frameFunctionNames.AddRange(behaviour.FrameChecks.boolCheck.Select(x => x.ReturnFunctionString()).ToList());
             frameFunctionNames.AddRange(behaviour.FrameChecks.floatCheck.Select(x => x.ReturnFunctionString()).ToList());
             frameFunctionNames.AddRange(behaviour.FrameChecks.intCheck.Select(x => x.ReturnFunctionString()).ToList());
 
-            timeFunctionNames = behaviour.TimeChecks.boolCheck.Select(x => x.ReturnFunctionString()).ToList();
+            timeFunctionNames.AddRange(behaviour.TimeChecks.boolCheck.Select(x => x.ReturnFunctionString()).ToList());
             timeFunctionNames.AddRange(behaviour.TimeChecks.floatCheck.Select(x => x.ReturnFunctionString()).ToList());
             timeFunctionNames.AddRange(behaviour.TimeChecks.intCheck.Select(x => x.ReturnFunctionString()).ToList());
             
 
-            functionTimes = behaviour.TimeChecks.boolCheck.Select(x => x.checkTime).ToList();
+            functionTimes.AddRange(behaviour.TimeChecks.boolCheck.Select(x => x.checkTime).ToList());
             functionTimes.AddRange(behaviour.TimeChecks.floatCheck.Select(x => x.checkTime).ToList());
             functionTimes.AddRange(behaviour.TimeChecks.intCheck.Select(x => x.checkTime).ToList());
 
