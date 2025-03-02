@@ -28,7 +28,7 @@ public class EnemyActionHandler : MonoBehaviour
 
     public void DoError()
     {
-        Debug.LogError("This action does not exist");
+        Debug.LogError("This action does not exist. Look at EnemyActionHandler.cs");
     }
 
 

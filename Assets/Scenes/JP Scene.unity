@@ -10446,7 +10446,7 @@ AudioSource:
   m_Resource: {fileID: 8300000, guid: 5c477a2545c347746bfaa4d41617f79c, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 1.43
   Loop: 1
   Mute: 0
   Spatialize: 0
@@ -22544,6 +22544,10 @@ PrefabInstance:
       propertyPath: m_Speed
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 3870020995593233394, guid: ce2744065acb73445a6259f819d37148, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6081174915788832513, guid: ce2744065acb73445a6259f819d37148, type: 3}
       propertyPath: Runspeed
       value: 5
@@ -22576,6 +22580,18 @@ PrefabInstance:
       propertyPath: 'PatrolPoints.Array.data[3]'
       value: 
       objectReference: {fileID: 2081756683}
+    - target: {fileID: 7953176507071246033, guid: ce2744065acb73445a6259f819d37148, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.28000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 7953176507071246033, guid: ce2744065acb73445a6259f819d37148, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.28000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 7953176507071246033, guid: ce2744065acb73445a6259f819d37148, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.28000003
+      objectReference: {fileID: 0}
     - target: {fileID: 7953176507071246033, guid: ce2744065acb73445a6259f819d37148, type: 3}
       propertyPath: m_LocalPosition.x
       value: 30.569433
@@ -22639,6 +22655,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Navmesh
       objectReference: {fileID: 0}
+    - target: {fileID: 1554257460454585554, guid: 3a173d1a6ea12644bb4095fd4de9878f, type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: cebceaee27f3a414487ee22eedac44f0, type: 2}
     - target: {fileID: 5642016977074617621, guid: 3a173d1a6ea12644bb4095fd4de9878f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
