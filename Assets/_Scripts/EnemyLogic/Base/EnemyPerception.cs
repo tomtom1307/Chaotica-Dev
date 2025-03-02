@@ -13,6 +13,7 @@ public class EnemyPerception : MonoBehaviour
 
     public float Distance;
     public float LSP_time;
+    public float DetectionMeter;
 
     //Get reference to player
     private void Start()
@@ -42,6 +43,7 @@ public class EnemyPerception : MonoBehaviour
 
     public void StopRepeatingChecks() => CancelInvoke();
 
+
     //Shoots a raycast between the enemy and the player and if it is a direct hit return true
     public void CheckLOS() 
     {
@@ -50,9 +52,8 @@ public class EnemyPerception : MonoBehaviour
         //Vector3.up because enemy transform position is at feet
         if(Physics.Raycast(transform.position + Vector3.up, player.position - transform.position + Vector3.up, out hit, brain.DetectionRange, brain.layerMask))
         {
-            if (hit.collider.gameObject.layer == 10 && Vector3.Angle(transform.forward, player.position - transform.position + Vector3.up)< brain.ViewAngle)
+            if (hit.collider.gameObject.layer == 10 && Vector3.Angle(transform.forward, player.position - transform.position + Vector3.up) < brain.ViewAngle)
             {
-
                 LOS = true;
                 LastSpottedTime = Time.time;
                 return;
@@ -63,18 +64,40 @@ public class EnemyPerception : MonoBehaviour
         {
             LOS = false;
         }
-        
+    }
 
-    }
-    public float CheckPlayerDistance() 
+
+
+
+
+    public void CheckPlayerDistance() 
     {
-        return Vector3.Distance(transform.position, player.position);
+        Distance = Vector3.Distance(transform.position, player.position);
     }
+
+
+    public float TimeSinceCheckedDetection;
+
+    public void CheckDetectionMeter()
+    {
+        float ModifyAmount;
+
+        if (LOS)
+        {
+            ModifyAmount = brain.PerceptionStat* Time.deltaTime;
+        }
+        else
+        {
+            ModifyAmount = - brain.DetectionMeterDecay * Time.deltaTime;
+        }
+
+        DetectionMeter += ModifyAmount;
+        DetectionMeter = Mathf.Clamp01(DetectionMeter);
+    }
+
 
 
     float LastSpottedTime;
-
-
     public void CheckLastSeenPlayerTime()
     {   
         LSP_time = Time.time - LastSpottedTime;

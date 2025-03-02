@@ -15,6 +15,8 @@ public class EnemyBrain : MonoBehaviour
 
     [Header("Detection")]
     public float DetectionRange;
+    public float PerceptionStat;
+    public float DetectionMeterDecay;
     public float ViewAngle;
     public LayerMask layerMask;
 
@@ -60,6 +62,8 @@ public class EnemyBrain : MonoBehaviour
     public void MapFloats()
     {
         conditionFloats[CheckFloat.Float.LSP_time] = () => perception.LSP_time;
+        conditionFloats[CheckFloat.Float.playerDistance] = () => perception.Distance;
+        conditionFloats[CheckFloat.Float.DetectionMeter] = () => perception.DetectionMeter;
     }
 
     //Stores the CheckInt value

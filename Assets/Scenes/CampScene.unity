@@ -22675,37 +22675,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 0
   JumpPower: 0.2
-  DetectionRange: 0
-  ViewAngle: 45
+  DetectionRange: 93.6
+  PerceptionStat: 1
+  DetectionMeterDecay: 0.2
+  ViewAngle: 53.9
   layerMask:
     serializedVersion: 2
     m_Bits: 1089
   navMesh: {fileID: 0}
   behaviours:
-  - Name: LOS Check
-    priority: 1
+  - Name: Detection meter + LOS
+    priority: 2
     conditions:
       brain: {fileID: 0}
       boolChecks:
       - checkTime: 0
         checkBool: 1
-      floatChecks: []
+      floatChecks:
+      - checkTime: 0
+        checkFloat: 2
+        checkComparison: 0
+        input: 0.8
       intChecks: []
     actionList:
     - brain: {fileID: 0}
       B_action: 0
       Weight: 100
     name: Behaviour
-  - Name: Time Since Last Player Spot Check
-    priority: 2
+  - Name: Distance
+    priority: 0
     conditions:
       brain: {fileID: 0}
       boolChecks: []
       floatChecks:
       - checkTime: 0
-        checkFloat: 1
-        checkComparison: 0
-        input: 5
+        checkFloat: 0
+        checkComparison: 1
+        input: 3
       intChecks: []
     actionList:
     - brain: {fileID: 0}

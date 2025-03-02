@@ -104,6 +104,7 @@ public class EnemyState
             i++;
         }
 
+        //Priority Must Be set to larger than 0 for the Behaviour to be considered as valid (Allows for easier debuging for now)
         if(HighestPriority > 0)
         {
             DoAction(enemyBehaviours[HighestPriorityIndex]);

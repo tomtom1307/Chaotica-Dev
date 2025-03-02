@@ -23,7 +23,7 @@ public class EnemyActionHandler : MonoBehaviour
 
     public void DoLilHops()
     {
-        transform.DOJump(transform.position, brain.JumpPower, 7, 9).OnComplete(EndAction);
+        transform.DOJump(transform.position, brain.JumpPower, 7, 1).OnComplete(EndAction);
     }
 
     public void DoError()
