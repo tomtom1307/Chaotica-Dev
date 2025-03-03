@@ -7,5 +7,9 @@ public class WeaponStash : MonoBehaviour
     public void OpenWeaponStashMenu()
     {
         UIManager.instance.IsMenu(true, canvas);
+        UIManager.instance.ShowCursor();
     }
+
+
+
 }
