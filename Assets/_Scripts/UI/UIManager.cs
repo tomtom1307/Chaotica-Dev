@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
         
     PlayerMovement playerMovement;
     CameraController CamController;
-
+    WeaponHolder weaponHolder;
 
 
 
@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
 
         playerMovement = GetComponent<PlayerMovement>();
         CamController = Camera.main.GetComponent<CameraController>();
+        weaponHolder = GetComponent<WeaponHolder>();
     }
 
     private void Start()
@@ -85,6 +86,7 @@ public class UIManager : MonoBehaviour
     {
         playerMovement.enabled = !x;
         CamController.enabled = !x;
+        weaponHolder.enabled = !x;
     }
 
     public void ShowCursor()

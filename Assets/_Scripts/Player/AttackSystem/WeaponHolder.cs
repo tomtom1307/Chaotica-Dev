@@ -83,7 +83,7 @@ public class WeaponHolder : MonoBehaviour
     //Called from weapon Input logic when conditions are met
     public void EnterAttack(int i)
     {
-
+        if (!this.enabled) return;
         //Set State and variables
         State = AttackState.Attacking;
         CurrentAttackData = data.Weapon_Attacks[i];

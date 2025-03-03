@@ -21,9 +21,6 @@ public class EnemyBrain : MonoBehaviour
     public LayerMask layerMask;
 
 
-
-
-
     //Navmesh
     [HideInInspector] public NavMeshAgent navMesh;
 
