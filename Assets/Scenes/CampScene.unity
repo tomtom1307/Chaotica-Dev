@@ -801,10 +801,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1251168404}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 313.25, y: -288.85}
+  m_SizeDelta: {x: 199.43333, y: 537.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &79565850
 MonoBehaviour:
@@ -1896,9 +1896,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1903579858}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 258.25, y: -78}
   m_SizeDelta: {x: 516.5, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &187121653
@@ -4555,7 +4555,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &489062288
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5844,10 +5844,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1251168404}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 519.7833, y: -288.85}
+  m_SizeDelta: {x: 199.43333, y: 537.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &564927267
 MonoBehaviour:
@@ -20677,7 +20677,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0.0028384565, y: -13.533905}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 516.5, y: 128}
   m_Pivot: {x: 0.5, y: 0.98}
 --- !u!114 &1903579859
 MonoBehaviour:
@@ -22419,10 +22419,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1251168404}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 106.71667, y: -288.85}
+  m_SizeDelta: {x: 199.43333, y: 537.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2051324676
 MonoBehaviour:
@@ -24046,57 +24046,62 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1089
   navMesh: {fileID: 0}
-  behaviours:
-  - Name: Distance
-    priority: 2
-    conditions:
-      brain: {fileID: 0}
-      boolChecks: []
-      floatChecks:
-      - checkTime: 0
-        checkFloat: 0
-        checkComparison: 1
-        input: 3
-      intChecks: []
-    actionList:
-    - brain: {fileID: 0}
-      B_action: 0
-      Weight: 100
-    name: Behaviour
-  - Name: Detection meter + LOS
-    priority: 2
-    conditions:
-      brain: {fileID: 0}
-      boolChecks:
-      - checkTime: 0
-        checkBool: 1
-      floatChecks:
-      - checkTime: 0
-        checkFloat: 2
-        checkComparison: 0
-        input: 124
-      intChecks: []
-    actionList:
-    - brain: {fileID: 0}
-      B_action: 0
-      Weight: 100
-    name: Behaviour
-  - Name: LSP_time
-    priority: 2
-    conditions:
-      brain: {fileID: 0}
-      boolChecks: []
-      floatChecks:
-      - checkTime: 0
-        checkFloat: 1
-        checkComparison: 0
-        input: 4
-      intChecks: []
-    actionList:
-    - brain: {fileID: 0}
-      B_action: 0
-      Weight: 100
-    name: Behaviour
+  currentStateName: 
+  stateList:
+  - Name: Idle State
+    enemyBehaviours:
+    - Name: Distance
+      priority: 2
+      conditions:
+        brain: {fileID: 0}
+        boolChecks: []
+        floatChecks:
+        - checkTime: 0
+          checkFloat: 0
+          checkComparison: 1
+          input: 3
+        intChecks: []
+      actionList:
+      - brain: {fileID: 0}
+        B_action: 0
+        Weight: 100
+      name: Behaviour
+    - Name: Detection meter + LOS
+      priority: 2
+      conditions:
+        brain: {fileID: 0}
+        boolChecks:
+        - checkTime: 0
+          checkBool: 1
+        floatChecks:
+        - checkTime: 0
+          checkFloat: 2
+          checkComparison: 0
+          input: 124
+        intChecks: []
+      actionList:
+      - brain: {fileID: 0}
+        B_action: 0
+        Weight: 100
+      name: Behaviour
+    - Name: LSP_time
+      priority: 2
+      conditions:
+        brain: {fileID: 0}
+        boolChecks: []
+        floatChecks:
+        - checkTime: 0
+          checkFloat: 1
+          checkComparison: 0
+          input: 4
+        intChecks: []
+      actionList:
+      - brain: {fileID: 0}
+        B_action: 0
+        Weight: 100
+      name: Behaviour
+  - Name: Patrol State
+    enemyBehaviours: []
   perception: {fileID: 0}
   actionHandler: {fileID: 0}
 --- !u!114 &4569633281391185007

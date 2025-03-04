@@ -32,7 +32,6 @@ public class EnemyPerception : MonoBehaviour
     //triggers a repeating check every t second
     public void StartRepeatingChecks(List<string> functions, List<float> times)
     {
-        Debug.Log("DidRepeating check");
         for (int i = 0; i < functions.Count; i++)
         {
             Debug.Log(functions[i]);
@@ -47,7 +46,6 @@ public class EnemyPerception : MonoBehaviour
     //Shoots a raycast between the enemy and the player and if it is a direct hit return true
     public void CheckLOS() 
     {
-        Debug.Log("DidLOSCheck!");
         RaycastHit hit;
         //Vector3.up because enemy transform position is at feet
         if(Physics.Raycast(transform.position + Vector3.up, player.position - transform.position + Vector3.up, out hit, brain.DetectionRange, brain.layerMask))

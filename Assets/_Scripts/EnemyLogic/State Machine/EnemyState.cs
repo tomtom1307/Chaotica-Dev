@@ -4,25 +4,28 @@ using System.Linq;
 using UnityEngine;
 using static UnityEngine.InputSystem.OnScreen.OnScreenStick;
 
+[Serializable]
 public class EnemyState     
 {
+    public string Name;
     private EnemyBrain brain;
     protected Damagable damagable;
     protected EnemyStateMachine enemyStateMachine;
 
 
-    protected List<EnemyBehaviour> enemyBehaviours;
+    public List<EnemyBehaviour> enemyBehaviours;
     private List<string> frameFunctionNames;
     private List<string> timeFunctionNames;
     private List<float> functionTimes;
 
 
-    public EnemyState(Damagable damagable, EnemyStateMachine enemyStateMachine, List<EnemyBehaviour> enemyBehaviours, EnemyBrain brain)
+    public EnemyState(Damagable damagable, EnemyStateMachine enemyStateMachine, List<EnemyBehaviour> enemyBehaviours, string Name, EnemyBrain brain)
     {
         this.damagable = damagable;
         this.enemyStateMachine = enemyStateMachine;
         this.enemyBehaviours = enemyBehaviours;
         this.brain = brain;
+        this.Name = Name;
         InitializeConditions();
     }
     private void InitializeConditions()
@@ -84,13 +87,12 @@ public class EnemyState
         HighestPriorityIndex = 0;
         HighestPriority = 0;
         int i = 0;
-        //here: call functions that update condition variables every frame (wouldnt we do this in perception?)
+        //here: call functions that update condition variables every frame (wouldnt we do this in perception?) '' We are calling the perception UpdateFrameVariables method
 
 
         //checking whether current variable values satisfy behaviour conditions
         foreach (EnemyBehaviour behaviour in enemyBehaviours)
         {
-            Debug.Log(frameFunctionNames.Count);
             brain.perception.UpdateFrameVariables(frameFunctionNames);
             if (behaviour.conditions.CheckConditions())
             {
@@ -99,10 +101,6 @@ public class EnemyState
                     HighestPriority = behaviour.priority;
                     HighestPriorityIndex = i;
                 }
-            }
-            else
-            {
-                Debug.Log(false);
             }
             i++;
         }
@@ -121,7 +119,6 @@ public class EnemyState
     public void DoAction(EnemyBehaviour EB)
     {
         //Consider Weights
-        Debug.Log("DidAction!");
 
         brain.actionHandler.StartAction(EB.actionList[0].Func());
     }

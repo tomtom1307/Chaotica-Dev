@@ -26,12 +26,15 @@ public class EnemyBrain : MonoBehaviour
 
     //StateMachine
     EnemyStateMachine stateMachine;
-    IdleState idleState;
+    public string currentStateName;
+    [SerializeField] List<EnemyState> stateList; // Appears in inspector and this is where behaviours are implemented
+    EnemyState idleState; //individual class for each state seemingly uneccesary as we can handle any specific EnterState()/ExitState() things as actions
+    EnemyState patrolState;
     //add more concrete state classes here
 
 
     //Behaviours
-    [SerializeField] List<EnemyBehaviour> behaviours;
+
     [HideInInspector] public EnemyPerception perception;
     [HideInInspector] public EnemyActionHandler actionHandler;
 
@@ -82,8 +85,9 @@ public class EnemyBrain : MonoBehaviour
         
 
         //Initialize State machine + states
-        stateMachine = new EnemyStateMachine();
-        idleState = new IdleState(damagableEnemy, stateMachine, behaviours, this);
+        stateMachine = new EnemyStateMachine(this);
+        idleState = new EnemyState(damagableEnemy, stateMachine, stateList[0].enemyBehaviours, stateList[0].Name, this);
+        patrolState = new EnemyState(damagableEnemy, stateMachine, stateList[1].enemyBehaviours, stateList[0].Name, this);
         stateMachine.Initialize(idleState);
 
         //Do Dict mappings
