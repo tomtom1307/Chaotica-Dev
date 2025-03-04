@@ -87,7 +87,7 @@ public class EnemyBrain : MonoBehaviour
         //Initialize State machine + states
         stateMachine = new EnemyStateMachine(this);
         idleState = new EnemyState(damagableEnemy, stateMachine, stateList[0].enemyBehaviours, stateList[0].Name, this);
-        patrolState = new EnemyState(damagableEnemy, stateMachine, stateList[1].enemyBehaviours, stateList[0].Name, this);
+        patrolState = new EnemyState(damagableEnemy, stateMachine, stateList[1].enemyBehaviours, stateList[1].Name, this);
         stateMachine.Initialize(idleState);
 
         //Do Dict mappings

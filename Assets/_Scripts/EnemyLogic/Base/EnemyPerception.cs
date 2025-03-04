@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
+using System;
 
 public class EnemyPerception : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class EnemyPerception : MonoBehaviour
     //Updates variables every frame 
     public void UpdateFrameVariables(List<string> functions)
     {
+        Debug.Log(String.Join(", ", functions));
         foreach (string func in functions) Invoke(func, 0);
     }
 
@@ -71,6 +73,7 @@ public class EnemyPerception : MonoBehaviour
     public void CheckPlayerDistance() 
     {
         Distance = Vector3.Distance(transform.position, player.position);
+        Debug.Log(Distance);
     }
 
 

@@ -67,6 +67,7 @@ public class EnemyState
             // Invoking repeating function calls every functionTimes seconds for updating condition variables
             brain.perception.StartRepeatingChecks(timeFunctionNames, functionTimes); // TODO: REMOVE DUPLICATE FUNCTION CALLS FROM DIFFERENT BEHAVIOURS AND STATE TRANSITIONS in HandleFunctionDegeneracy()
         }
+        brain.perception.UpdateFrameVariables(frameFunctionNames);
     }
     public virtual void ExitState() 
     {
@@ -88,7 +89,7 @@ public class EnemyState
         HighestPriority = 0;
         int i = 0;
         //here: call functions that update condition variables every frame (wouldnt we do this in perception?) '' We are calling the perception UpdateFrameVariables method
-
+        Debug.Log(String.Join(", ", frameFunctionNames));
         brain.perception.UpdateFrameVariables(frameFunctionNames);
         
 
@@ -119,8 +120,8 @@ public class EnemyState
 
     public void DoAction(EnemyBehaviour EB)
     {
-        //Consider Weights
-
+        //Consider Weights or do all actions in order
+        Debug.Log("DoAction is called.");
         brain.actionHandler.StartAction(EB.actionList[0].Func());
     }
 

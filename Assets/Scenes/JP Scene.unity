@@ -9617,7 +9617,7 @@ MonoBehaviour:
   stateList:
   - Name: Idle State
     enemyBehaviours:
-    - Name: change to patrol
+    - Name: jump
       priority: 1
       conditions:
         brain: {fileID: 0}
@@ -9634,21 +9634,7 @@ MonoBehaviour:
         Weight: 0
       name: 
   - Name: Patrol State
-    enemyBehaviours:
-    - Name: change to idle
-      priority: 0
-      conditions:
-        brain: {fileID: 0}
-        boolChecks:
-        - checkTime: 0
-          checkBool: 1
-        floatChecks: []
-        intChecks: []
-      actionList:
-      - brain: {fileID: 0}
-        B_action: 2
-        Weight: 0
-      name: 
+    enemyBehaviours: []
   perception: {fileID: 0}
   actionHandler: {fileID: 0}
 --- !u!114 &980709016

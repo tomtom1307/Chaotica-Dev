@@ -23,5 +23,6 @@ public class EnemyStateMachine
         CurrentEnemyState = newState;
         CurrentEnemyState.EnterState();
         brain.currentStateName = CurrentEnemyState.Name;
+        Debug.Log("set currentStateName to " + CurrentEnemyState.Name);
     }
 }
