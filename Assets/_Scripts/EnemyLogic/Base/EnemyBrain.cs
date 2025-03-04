@@ -4,12 +4,18 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Experimental.GlobalIllumination;
-
+/// <summary>
+/// The <c>EnemyBrain</c> class is a component attached to every in-game enemy. It handles all of the enemy's behaviour.
+/// <para>
+/// It holds the appropriate instances of the <c>EnemyStateMachine</c>, <c>EnemyState</c> and <c>EnemyPerception</c>.
+/// </para>
+/// </summary>
 [RequireComponent(typeof(DamagableEnemy))]
 public class EnemyBrain : MonoBehaviour
 {
 
     [Header("Movement")]
+    ///<value> Property <c>MoveSpeed</c> holds the enemy's navmesh agent speed.</value>
     public float MoveSpeed;
     public float JumpPower;
 
@@ -82,7 +88,10 @@ public class EnemyBrain : MonoBehaviour
         perception = gameObject.AddComponent<EnemyPerception>();
         perception.brain = this;
         damagableEnemy = GetComponent<DamagableEnemy>();
-        
+        navMesh = GetComponent<NavMeshAgent>();
+        navMesh.speed = MoveSpeed;
+
+
 
         //Initialize State machine + states
         stateMachine = new EnemyStateMachine(this);
@@ -99,6 +108,7 @@ public class EnemyBrain : MonoBehaviour
 
     private void Update()
     {
+        navMesh.speed = MoveSpeed;
         stateMachine.CurrentEnemyState.FrameUpdate();
     }
 

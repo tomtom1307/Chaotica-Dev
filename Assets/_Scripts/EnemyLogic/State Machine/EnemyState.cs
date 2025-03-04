@@ -1,11 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.InputSystem.OnScreen.OnScreenStick;
 
+///<summary>
+///The <c>EnemyState</c> class contains the list of behaviours belonging to an enemy state. 
+///It organizes what variables need to be checked and when. 
+///<para>It then calls upon the <c>ActionHandler.StartAction</c> method to execute the appropriate actions when their conditions are true.</para>
+/// </summary>
 [Serializable]
-public class EnemyState     
+public class EnemyState
 {
     public string Name;
     private EnemyBrain brain;
@@ -18,7 +24,14 @@ public class EnemyState
     private List<string> timeFunctionNames;
     private List<float> functionTimes;
 
-
+    /// <summary>
+    /// Instantiates <c>EnemyState</c> with the appropriate references and defines the list of functions for condition variable updating.
+    /// </summary>
+    /// <param name="damagable">Damagable instance on enemy object.</param>
+    /// <param name="enemyStateMachine">EnemyStateMachine instance in EnemyBrain component.</param>
+    /// <param name="enemyBehaviours">list of EnemyBehaviours defined in Unity Editor for this state.</param>
+    /// <param name="Name">Name of this state.</param>
+    /// <param name="brain">Reference to EnemyBrain component.</param>
     public EnemyState(Damagable damagable, EnemyStateMachine enemyStateMachine, List<EnemyBehaviour> enemyBehaviours, string Name, EnemyBrain brain)
     {
         this.damagable = damagable;
@@ -28,6 +41,10 @@ public class EnemyState
         this.Name = Name;
         InitializeConditions();
     }
+    /// <summary>
+    /// Loops over all behaviours in the state and their conditions to compile the list of function names to be called and at what intervals.
+    /// <para>Defines the lists <c>frameFunctionNames</c>, <c>timeFunctionNames</c> and <c>functionTimes</c>. </para>
+    /// </summary>
     private void InitializeConditions()
     {
         frameFunctionNames = new List<string>();
@@ -56,40 +73,43 @@ public class EnemyState
             functionTimes.AddRange(behaviour.TimeChecks.intCheck.Select(x => x.checkTime).ToList());
 
         }
-        
+        HandleFunctionDegeneracy(frameFunctionNames, timeFunctionNames, functionTimes);
     }
 
-
+    /// <summary>
+    /// Handles functions to be called when entering state, i.e. starting repeating condition variable updates.
+    /// </summary>
     public virtual void EnterState() 
     {
-        foreach (EnemyBehaviour behaviour in enemyBehaviours)
-        {
-            // Invoking repeating function calls every functionTimes seconds for updating condition variables
-            brain.perception.StartRepeatingChecks(timeFunctionNames, functionTimes); // TODO: REMOVE DUPLICATE FUNCTION CALLS FROM DIFFERENT BEHAVIOURS AND STATE TRANSITIONS in HandleFunctionDegeneracy()
-        }
+        // Invoking repeating function calls every functionTimes seconds for updating condition variables
+        brain.perception.StartRepeatingChecks(timeFunctionNames, functionTimes);
         brain.perception.UpdateFrameVariables(frameFunctionNames);
     }
+    /// <summary>
+    /// Handles functions to be called when exiting state: ceasing all repeating condition variable updates.
+    /// </summary>
     public virtual void ExitState() 
     {
-        foreach (EnemyBehaviour behaviour in enemyBehaviours)
-        {
-            // cancelling every repeating function call to prepare for next state
-            brain.perception.StopRepeatingChecks();
-        }
+        // cancelling every repeating function call to prepare for next state
+        brain.perception.StopRepeatingChecks();
     }
 
 
     int HighestPriorityIndex;
     int HighestPriority;
 
-
+    /// <summary>
+    /// Method that is called every frame in the enemy's <c>EnemyBrain</c> class instance.
+    /// <para>
+    /// Invokes condition variable updates, evaluates conditions and priority orders to execute the appropriate actions.
+    /// </para>
+    /// </summary>
     public virtual void FrameUpdate() 
     {
         HighestPriorityIndex = 0;
         HighestPriority = 0;
         int i = 0;
         //here: call functions that update condition variables every frame (wouldnt we do this in perception?) '' We are calling the perception UpdateFrameVariables method
-        Debug.Log(String.Join(", ", frameFunctionNames));
         brain.perception.UpdateFrameVariables(frameFunctionNames);
         
 
@@ -117,7 +137,10 @@ public class EnemyState
     public virtual void PhysicsUpdate() { }
     public virtual void AnimationTriggerEvent() { }
 
-
+    /// <summary>
+    /// Executes actions in <paramref name="EB"/> either in order of list or randomly based on weights. (TO BE IMPLEMENTED)
+    /// </summary>
+    /// <param name="EB">instance of <c>EnemyBehaviour</c> whose actions are being executed.</param>
     public void DoAction(EnemyBehaviour EB)
     {
         //Consider Weights or do all actions in order
@@ -125,8 +148,36 @@ public class EnemyState
         brain.actionHandler.StartAction(EB.actionList[0].Func());
     }
 
-    private void HandleFunctionDegeneracy()
+    ///<summary>
+    ///This method removes the degeneracy in the lists of function names to be called to remove unnecessary function invocations. 
+    ///<para>It does so by reassinging the EnemyState properties of these lists to the non-degenerate result.</para>  
+    ///</summary>
+    ///<param name="frameFunctions">list of function names that are called every frame</param>
+    ///<param name="timeFunctions">list of function names that are called every t seconds</param>
+    ///<param name="times">list of times for repeating function invokes</param>
+    private void HandleFunctionDegeneracy(List<string> frameFunctions, List<string> timeFunctions, List<float> times)
     {
-
+        List<string> distinctFrameFunctions = new List<string>();
+        List<string> distinctTimeFunctions = new List<string>();
+        List<float> distinctTimes = new List<float>();
+        distinctFrameFunctions = frameFunctions.Distinct().ToList();
+        for (int i = 0; i < timeFunctions.Count; i++)
+        {
+            if (!distinctFrameFunctions.Contains(timeFunctions[i]))
+            {
+                if (!distinctTimeFunctions.Contains(timeFunctions[i]))
+                {
+                    distinctTimeFunctions.Add(timeFunctions[i]); distinctTimes.Add(times[i]);
+                }
+                else
+                {
+                    int index = distinctTimeFunctions.IndexOf(timeFunctions[i]);
+                    if (times[i] < distinctTimes[index]) distinctTimes[index] = times[i];
+                }
+            }
+        }
+        frameFunctionNames = distinctFrameFunctions;
+        timeFunctionNames = distinctTimeFunctions;
+        functionTimes = distinctTimes;
     }
 }
