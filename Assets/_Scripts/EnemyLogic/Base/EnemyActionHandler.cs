@@ -25,6 +25,16 @@ public class EnemyActionHandler : MonoBehaviour
     {
         transform.DOJump(transform.position, brain.JumpPower, 7, 1).OnComplete(EndAction);
     }
+    public void ChangeToIdleState()
+    {
+        brain.stateMachine.ChangeState(brain.stateList[0]);
+        EndAction();
+    }
+    public void ChangeToPatrolState()
+    {
+        brain.stateMachine.ChangeState(brain.stateList[1]);
+        EndAction();
+    }
 
     public void DoError()
     {

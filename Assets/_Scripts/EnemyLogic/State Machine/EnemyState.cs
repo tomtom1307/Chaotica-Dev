@@ -89,11 +89,12 @@ public class EnemyState
         int i = 0;
         //here: call functions that update condition variables every frame (wouldnt we do this in perception?) '' We are calling the perception UpdateFrameVariables method
 
+        brain.perception.UpdateFrameVariables(frameFunctionNames);
+        
 
         //checking whether current variable values satisfy behaviour conditions
         foreach (EnemyBehaviour behaviour in enemyBehaviours)
         {
-            brain.perception.UpdateFrameVariables(frameFunctionNames);
             if (behaviour.conditions.CheckConditions())
             {
                 if(behaviour.priority > HighestPriority)

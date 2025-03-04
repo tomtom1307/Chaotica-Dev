@@ -11,7 +11,7 @@ public class B_Action
 
     public enum b_Action
     {
-        DoThing
+        DoThing , ChangeToPatrol, ChangeToIdle
     }
 
     
@@ -21,6 +21,10 @@ public class B_Action
         {
             case b_Action.DoThing:
                 return brain.actionHandler.DoLilHops;
+            case b_Action.ChangeToPatrol:
+                return brain.actionHandler.ChangeToPatrolState;
+            case b_Action.ChangeToIdle:
+                return brain.actionHandler.ChangeToIdleState;
             default:
                 return brain.actionHandler.DoError;
         }

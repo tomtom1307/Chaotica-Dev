@@ -3772,8 +3772,78 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1210316982324589196, guid: ce2744065acb73445a6259f819d37148, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1775835605862016773}
+    - targetCorrespondingSourceObject: {fileID: 1210316982324589196, guid: ce2744065acb73445a6259f819d37148, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1775835605862016772}
   m_SourcePrefab: {fileID: 100100000, guid: ce2744065acb73445a6259f819d37148, type: 3}
+--- !u!1 &1775835605862016771 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1210316982324589196, guid: ce2744065acb73445a6259f819d37148, type: 3}
+  m_PrefabInstance: {fileID: 1775835605862016770}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1775835605862016772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775835605862016771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfa621f46e2fee2459331b14dd83d65a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveSpeed: 0
+  JumpPower: 0.2
+  DetectionRange: 93.6
+  PerceptionStat: 1
+  DetectionMeterDecay: 0.2
+  ViewAngle: 53.9
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1089
+  navMesh: {fileID: 0}
+  currentStateName: 
+  stateList:
+  - Name: Idle State
+    enemyBehaviours:
+    - Name: Test
+      priority: 1
+      conditions:
+        brain: {fileID: 0}
+        boolChecks:
+        - checkTime: 0
+          checkBool: 1
+        floatChecks: []
+        intChecks: []
+      actionList:
+      - brain: {fileID: 0}
+        B_action: 1
+        Weight: 0
+      name: 
+  - Name: Patrol State
+    enemyBehaviours: []
+  perception: {fileID: 0}
+  actionHandler: {fileID: 0}
+--- !u!114 &1775835605862016773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775835605862016771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5734c078d0bd4747911c7e5e6409562, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 10
+  Health: 0
+  DamageNumbers: 1
 --- !u!1 &1865821459857508030
 GameObject:
   m_ObjectHideFlags: 0

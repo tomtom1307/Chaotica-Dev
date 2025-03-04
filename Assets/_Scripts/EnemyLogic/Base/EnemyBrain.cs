@@ -25,9 +25,9 @@ public class EnemyBrain : MonoBehaviour
     [HideInInspector] public NavMeshAgent navMesh;
 
     //StateMachine
-    EnemyStateMachine stateMachine;
+    public EnemyStateMachine stateMachine;
     public string currentStateName;
-    [SerializeField] List<EnemyState> stateList; // Appears in inspector and this is where behaviours are implemented
+    [SerializeField] public List<EnemyState> stateList; // Appears in inspector and this is where behaviours are implemented
     EnemyState idleState; //individual class for each state seemingly uneccesary as we can handle any specific EnterState()/ExitState() things as actions
     EnemyState patrolState;
     //add more concrete state classes here
