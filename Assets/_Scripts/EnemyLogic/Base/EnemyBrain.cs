@@ -49,7 +49,8 @@ public class EnemyBrain : MonoBehaviour
 
 
 
-
+    //Animator
+    [HideInInspector] public Animator animator;
 
 
 
@@ -90,6 +91,7 @@ public class EnemyBrain : MonoBehaviour
         damagableEnemy = GetComponent<DamagableEnemy>();
         navMesh = GetComponent<NavMeshAgent>();
         navMesh.speed = MoveSpeed;
+        animator = GetComponent<Animator>();
 
 
 

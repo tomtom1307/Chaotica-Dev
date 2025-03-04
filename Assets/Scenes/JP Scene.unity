@@ -9603,7 +9603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfa621f46e2fee2459331b14dd83d65a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 0
+  MoveSpeed: 2
   JumpPower: 0.2
   DetectionRange: 93.6
   PerceptionStat: 1
@@ -9617,40 +9617,24 @@ MonoBehaviour:
   stateList:
   - Name: Idle State
     enemyBehaviours:
-    - Name: YUUMP
+    - Name: move to player
       priority: 1
       conditions:
         brain: {fileID: 0}
         boolChecks: []
         floatChecks:
         - checkTime: 0
-          checkFloat: 0
-          checkComparison: 1
-          input: 1
+          checkFloat: 2
+          checkComparison: 2
+          input: 0.9
         intChecks: []
       actionList:
       - brain: {fileID: 0}
-        B_action: 1
+        B_action: 3
         Weight: 0
       name: 
   - Name: Patrol State
-    enemyBehaviours:
-    - Name: YUUMP
-      priority: 1
-      conditions:
-        brain: {fileID: 0}
-        boolChecks: []
-        floatChecks:
-        - checkTime: 0
-          checkFloat: 0
-          checkComparison: 0
-          input: 5
-        intChecks: []
-      actionList:
-      - brain: {fileID: 0}
-        B_action: 2
-        Weight: 0
-      name: 
+    enemyBehaviours: []
   idleState:
     Name: 
     enemyBehaviours: []
@@ -9659,6 +9643,7 @@ MonoBehaviour:
     enemyBehaviours: []
   perception: {fileID: 0}
   actionHandler: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!114 &980709016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11838,19 +11823,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7953176507071246033, guid: ce2744065acb73445a6259f819d37148, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.01745245
+      value: 0.61517996
       objectReference: {fileID: 0}
     - target: {fileID: 7953176507071246033, guid: ce2744065acb73445a6259f819d37148, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7953176507071246033, guid: ce2744065acb73445a6259f819d37148, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.99984777
+      value: 0.7883867
       objectReference: {fileID: 0}
     - target: {fileID: 7953176507071246033, guid: ce2744065acb73445a6259f819d37148, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7953176507071246033, guid: ce2744065acb73445a6259f819d37148, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -11858,7 +11843,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7953176507071246033, guid: ce2744065acb73445a6259f819d37148, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 178
+      value: 104.07
       objectReference: {fileID: 0}
     - target: {fileID: 7953176507071246033, guid: ce2744065acb73445a6259f819d37148, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

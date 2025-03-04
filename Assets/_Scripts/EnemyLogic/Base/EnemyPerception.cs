@@ -6,7 +6,7 @@ using System;
 public class EnemyPerception : MonoBehaviour
 {
     public EnemyBrain brain;
-    Transform player;
+    public Transform player;
     Vector3 PlayerLastSeenPosition;
 
     public bool LOS;
@@ -80,6 +80,7 @@ public class EnemyPerception : MonoBehaviour
 
     public void CheckDetectionMeter()
     {
+        CheckLOS();
         float ModifyAmount;
 
         if (LOS)

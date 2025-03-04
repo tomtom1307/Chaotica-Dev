@@ -25,6 +25,14 @@ public class EnemyActionHandler : MonoBehaviour
     {
         transform.DOJump(transform.position, brain.JumpPower, 7, 1).OnComplete(EndAction);
     }
+    public void MoveToPlayer()
+    {
+        brain.navMesh.destination = brain.perception.player.position;
+        brain.animator.SetBool("Walking", true);
+        brain.animator.SetFloat("WalkSpeed", brain.MoveSpeed);
+        Debug.Log("Walking.");
+        EndAction();
+    }
     public void ChangeToIdleState()
     {
         brain.stateMachine.ChangeState(brain.idleState); Debug.Log("Changed to Idle State");
