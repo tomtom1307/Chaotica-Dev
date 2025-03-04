@@ -27,12 +27,12 @@ public class EnemyActionHandler : MonoBehaviour
     }
     public void ChangeToIdleState()
     {
-        brain.stateMachine.ChangeState(brain.stateList[0]); Debug.Log("Changed to Idle State");
+        brain.stateMachine.ChangeState(brain.idleState); Debug.Log("Changed to Idle State");
         EndAction();
     }
     public void ChangeToPatrolState()
     {
-        brain.stateMachine.ChangeState(brain.stateList[1]); Debug.Log("Changed to Patrol State");
+        brain.stateMachine.ChangeState(brain.patrolState); Debug.Log("Changed to Patrol State");
         EndAction();
     }
 

@@ -28,8 +28,8 @@ public class EnemyBrain : MonoBehaviour
     public EnemyStateMachine stateMachine;
     public string currentStateName;
     [SerializeField] public List<EnemyState> stateList; // Appears in inspector and this is where behaviours are implemented
-    EnemyState idleState; //individual class for each state seemingly uneccesary as we can handle any specific EnterState()/ExitState() things as actions
-    EnemyState patrolState;
+    [HideInInspector] public EnemyState idleState; //individual class for each state seemingly uneccesary as we can handle any specific EnterState()/ExitState() things as actions
+    [HideInInspector] public EnemyState patrolState;
     //add more concrete state classes here
 
 

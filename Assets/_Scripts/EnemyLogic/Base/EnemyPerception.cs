@@ -27,7 +27,6 @@ public class EnemyPerception : MonoBehaviour
     //Updates variables every frame 
     public void UpdateFrameVariables(List<string> functions)
     {
-        Debug.Log(String.Join(", ", functions));
         foreach (string func in functions) Invoke(func, 0);
     }
 
