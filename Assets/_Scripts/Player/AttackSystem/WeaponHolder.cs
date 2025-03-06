@@ -38,7 +38,28 @@ public class WeaponHolder : MonoBehaviour
     //Called to set the weapon data once weapon swapping is implemented
     public void SetWeaponData(WeaponDataSO data)
     {
+        if (!enabled && data != null) enabled = true; 
         this.data = data;
+        HandleWeaponSwapping();
+    }
+
+    public Transform handPos;
+    public Transform secondaryPos;
+    public GameObject WeaponModel;
+    public GameObject SecondaryModel;
+
+    public void HandleWeaponSwapping()
+    {
+        Destroy(WeaponModel);
+        WeaponModel = Instantiate(data.model, handPos);
+        WeaponModel.layer = 7;
+
+        Destroy(SecondaryModel);
+        if (data.secondaryModel != null) SecondaryModel = Instantiate(data.secondaryModel, secondaryPos);
+
+
+        ChargeAmount = 1;
+        Weapon_anim.runtimeAnimatorController = data.Anim_controller;
     }
 
     //Initialization steps
@@ -47,8 +68,14 @@ public class WeaponHolder : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         cam = Camera.main;
         State = AttackState.Ready;
-
+        //handPos = GameObject.Find("HandModel").transform;
         ComboCounter = 0;
+
+        if(data == null)
+        {
+            enabled = false;
+        }
+
     }
 
 
@@ -60,6 +87,7 @@ public class WeaponHolder : MonoBehaviour
     //Calling Input from Queue
     public void DoQueuedInput(int i, InputAction.CallbackContext ctx)
     {
+        if(!enabled) return;
         data.Weapon_Attacks[i].weaponInputLogic.QueuedInput(i, this, ctx);
     }
 
@@ -67,16 +95,19 @@ public class WeaponHolder : MonoBehaviour
     //Check inputs for different attacks 1, 2, 3 (Handled with 3 functions since this is how the input system works best [I think])
     public void Attack1Input(InputAction.CallbackContext ctx)
     {
+        if (!enabled) return;
         data.Weapon_Attacks[0].weaponInputLogic._Input(0, this, ctx);
     }
 
     public void Attack2Input(InputAction.CallbackContext ctx)
     {
+        if (!enabled) return;
         data.Weapon_Attacks[1].weaponInputLogic._Input(1, this, ctx);
     }
 
     public void Attack3Input(InputAction.CallbackContext ctx)
     {
+        if (!enabled) return;
         data.Weapon_Attacks[2].weaponInputLogic._Input(2, this, ctx);
     }
     

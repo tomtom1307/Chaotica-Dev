@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f97d5a5f37eac5f4db92ac9fa4e8c399, type: 3}
-  m_Name: TestWeaponData
+  m_Name: TestWeaponData1
   m_EditorClassIdentifier: 
-  _Name: Schtick
+  _Name: Shword
+  model: {fileID: 919132149155446097, guid: d1404c90fde18d447a5c08713fcd8e34, type: 3}
+  secondaryModel: {fileID: 0}
   WeaponDamage: 5
   Anim_controller: {fileID: 9100000, guid: ede1b6340de25a644b77507b0ece97de, type: 2}
   Weapon_Attacks:

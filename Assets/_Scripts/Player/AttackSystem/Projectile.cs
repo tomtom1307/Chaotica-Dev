@@ -5,14 +5,17 @@ public class Projectile : MonoBehaviour
     public Vector3 dir;
     public float speed;
     public float Damage;
+    public float AntiGrav;
     public LayerMask LayerMask;
     public float MaxLifeTime = 30;
     Rigidbody rb;
 
+    Collider col; 
 
 
     public virtual void Start()
     {
+        col = GetComponent<Collider>();
         Destroy(gameObject, MaxLifeTime);
     }
 
@@ -20,9 +23,11 @@ public class Projectile : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.linearVelocity = dir * speed;
+        transform.LookAt(transform.position + dir);
         if (gravity)
         {
             rb.useGravity = true;
+            
         }
         else
         {
@@ -39,7 +44,8 @@ public class Projectile : MonoBehaviour
             if (rb.linearVelocity.magnitude > 0.2f)
             {
                 //Aligns Z direction with velocity
-                transform.LookAt(rb.linearVelocity);
+                transform.LookAt(transform.position + rb.linearVelocity);
+                rb.AddForce(Vector3.up * AntiGrav, ForceMode.Acceleration);
             }
         }
     }
@@ -55,6 +61,10 @@ public class Projectile : MonoBehaviour
         {
             OnHit(collision.gameObject);
         }
+        rb.isKinematic = true;
+        col.enabled = false;
+
+
     }
 
 

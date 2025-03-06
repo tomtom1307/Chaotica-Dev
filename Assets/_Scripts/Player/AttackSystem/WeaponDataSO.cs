@@ -8,6 +8,8 @@ public class WeaponDataSO : ScriptableObject
 {
     public string _Name;
 
+    public GameObject model;
+    public GameObject secondaryModel;
     public float WeaponDamage;
     public AnimatorController Anim_controller;
 
@@ -15,7 +17,7 @@ public class WeaponDataSO : ScriptableObject
     public List<Weapon_Attack_Data_Base> Weapon_Attacks = new List<Weapon_Attack_Data_Base>();
 
     public Sprite InventorySprite;
-
+    
 
 
 
