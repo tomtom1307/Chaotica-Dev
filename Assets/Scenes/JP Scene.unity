@@ -3799,6 +3799,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChaosCores: 100
+  weaponStashDatas: []
 --- !u!114 &421630852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3830,6 +3831,10 @@ MonoBehaviour:
   Weapon_anim: {fileID: 647396074}
   cam: {fileID: 0}
   ChargeAmount: 0
+  handPos: {fileID: 0}
+  secondaryPos: {fileID: 0}
+  WeaponModel: {fileID: 0}
+  SecondaryModel: {fileID: 0}
 --- !u!114 &421630853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9630,11 +9635,27 @@ MonoBehaviour:
         intChecks: []
       actionList:
       - brain: {fileID: 0}
-        B_action: 3
+        B_action: 1
         Weight: 0
       name: 
   - Name: Patrol State
-    enemyBehaviours: []
+    enemyBehaviours:
+    - Name: Chase Player
+      priority: 1
+      conditions:
+        brain: {fileID: 0}
+        boolChecks: []
+        floatChecks:
+        - checkTime: 0
+          checkFloat: 1
+          checkComparison: 3
+          input: 3
+        intChecks: []
+      actionList:
+      - brain: {fileID: 0}
+        B_action: 3
+        Weight: 0
+      name: 
   idleState:
     Name: 
     enemyBehaviours: []
@@ -11644,6 +11665,14 @@ PrefabInstance:
     - target: {fileID: 3695894016043858045, guid: ce2744065acb73445a6259f819d37148, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 13.508256
+      objectReference: {fileID: 0}
+    - target: {fileID: 3870020995593233394, guid: ce2744065acb73445a6259f819d37148, type: 3}
+      propertyPath: m_Acceleration
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3870020995593233394, guid: ce2744065acb73445a6259f819d37148, type: 3}
+      propertyPath: m_AngularSpeed
+      value: 360
       objectReference: {fileID: 0}
     - target: {fileID: 4163308927874217268, guid: ce2744065acb73445a6259f819d37148, type: 3}
       propertyPath: m_Layer

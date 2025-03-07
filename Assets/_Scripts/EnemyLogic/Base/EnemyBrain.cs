@@ -112,6 +112,8 @@ public class EnemyBrain : MonoBehaviour
     {
         navMesh.speed = MoveSpeed;
         stateMachine.CurrentEnemyState.FrameUpdate();
+        if (navMesh.remainingDistance == 0) animator.SetBool("Walking", false);
+        if(animator.GetBool("Walking")) animator.SetFloat("WalkSpeed", navMesh.velocity.magnitude);
     }
 
 

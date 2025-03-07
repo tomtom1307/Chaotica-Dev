@@ -100,7 +100,8 @@ public class EnemyPerception : MonoBehaviour
 
     float LastSpottedTime;
     public void CheckLastSeenPlayerTime()
-    {   
+    {
+        CheckLOS();
         LSP_time = Time.time - LastSpottedTime;
     }
 

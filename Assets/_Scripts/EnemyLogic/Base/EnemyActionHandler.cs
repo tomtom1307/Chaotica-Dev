@@ -29,7 +29,6 @@ public class EnemyActionHandler : MonoBehaviour
     {
         brain.navMesh.destination = brain.perception.player.position;
         brain.animator.SetBool("Walking", true);
-        brain.animator.SetFloat("WalkSpeed", brain.MoveSpeed);
         Debug.Log("Walking.");
         EndAction();
     }
