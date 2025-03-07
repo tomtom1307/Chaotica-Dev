@@ -11,7 +11,7 @@ public class B_Action
 
     public enum b_Action
     {
-        DoThing , ChangeToPatrol, ChangeToIdle, MoveToPlayer, MoveToPatrol
+        DoThing , ChangeToPatrol, ChangeToIdle, MoveToPlayer, MoveToPatrol, AttackSet, Attack
     }
 
     
