@@ -72,7 +72,6 @@ public class EnemyPerception : MonoBehaviour
     public void CheckPlayerDistance() 
     {
         Distance = Vector3.Distance(transform.position, player.position);
-        Debug.Log(Distance);
     }
 
 

@@ -1,29 +1,30 @@
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EnemyAttackSO", menuName = "Scriptable Objects/EnemyAttackSO")]
+[CreateAssetMenu(fileName = "EnemyAttackSO", menuName = "AttackSO/EnemyAttackSO")]
 public class EnemyAttackSO : ScriptableObject
 {
-    bool rootMotion;
-    bool interruptable;
-    LayerMask whatIsPlayer;
+    public bool rootMotion;
+    public bool interruptable;
+
+    public LayerMask whatIsPlayer;
     [Header("Collider")]
-    bool doCollider;
-    float damageValue;
+    public bool doCollider;
+    public float damageValue;
 
     [Header("Projectile")]
-    bool doProjectile;
-    bool considerGravity;
-    GameObject Projectile;
-    float projectileDamage;
-    float projectileSpeed;
-    float projectileSpread;
-    float projectileAmount;
+    public bool doProjectile;
+    public bool considerGravity;
+    public GameObject Projectile;
+    public float projectileDamage;
+    public float projectileSpeed;
+    public float projectileSpread;
+    public float projectileAmount;
 
     [Header("RayCast")]
-    bool doRayCast;
-    float rayCastDamage;
-    float rayCastRange;
+    public bool doRayCast;
+    public float rayCastDamage;
+    public float rayCastRange;
 
     public virtual void EnterAttack(EnemyAttackHandler attackHandler)
     {
@@ -31,4 +32,7 @@ public class EnemyAttackSO : ScriptableObject
     public virtual void ExitAttack(EnemyAttackHandler attackHandler) 
     {
     }
+
+
+    public virtual void DamageLogic(PlayerHealth ph,EnemyAttackHandler attackHandler) { }
 }

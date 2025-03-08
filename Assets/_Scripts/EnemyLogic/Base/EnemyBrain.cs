@@ -11,6 +11,7 @@ using UnityEngine.Experimental.GlobalIllumination;
 /// </para>
 /// </summary>
 [RequireComponent(typeof(DamagableEnemy))]
+[RequireComponent(typeof(EnemyAnimationEventHandler))]
 public class EnemyBrain : MonoBehaviour
 {
 
@@ -26,7 +27,7 @@ public class EnemyBrain : MonoBehaviour
     public float ViewAngle;
     public LayerMask layerMask;
 
-
+    EnemyAnimationEventHandler enemyAnimationevent;
     //Navmesh
     [HideInInspector] public NavMeshAgent navMesh;
 
@@ -39,6 +40,7 @@ public class EnemyBrain : MonoBehaviour
     //add more concrete state classes here
     [HideInInspector] public EnemyPerception perception;
     [HideInInspector] public EnemyActionHandler actionHandler;
+    [HideInInspector] public EnemyAttackHandler attackHandler;
 
     //Health
     private DamagableEnemy damagableEnemy;
@@ -77,9 +79,21 @@ public class EnemyBrain : MonoBehaviour
 
     }
 
+
+
     private void Start()
     {
+        
+        
+
+
         //Get references 
+        attackHandler = gameObject.AddComponent<EnemyAttackHandler>();
+        attackHandler.brain = this;
+
+        enemyAnimationevent = GetComponent<EnemyAnimationEventHandler>();
+        enemyAnimationevent.attackHandler = attackHandler;
+
         actionHandler = gameObject.AddComponent<EnemyActionHandler>();
         actionHandler.brain = this;
         perception = gameObject.AddComponent<EnemyPerception>();
@@ -88,6 +102,8 @@ public class EnemyBrain : MonoBehaviour
         navMesh = GetComponent<NavMeshAgent>();
         navMesh.speed = MoveSpeed;
         animator = GetComponent<Animator>();
+
+
 
 
 

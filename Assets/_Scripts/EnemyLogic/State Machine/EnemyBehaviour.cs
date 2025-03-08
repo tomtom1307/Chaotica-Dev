@@ -10,6 +10,8 @@ public class EnemyBehaviour
     public int priority = 1;
     public Conditions conditions;
     public List<B_Action> actionList;
+    public List<EnemyAttack> attackList;
+
     public (List<CheckBool> boolCheck, List<CheckFloat> floatCheck, List<CheckInt> intCheck) TimeChecks;
     public (List<CheckBool> boolCheck, List<CheckFloat> floatCheck, List<CheckInt> intCheck) FrameChecks;
 

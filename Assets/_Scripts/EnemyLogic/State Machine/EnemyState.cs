@@ -131,11 +131,13 @@ public class EnemyState
         if(HighestPriority > 0)
         {
             DoAction(enemyBehaviours[HighestPriorityIndex]);
+            DoAttack(enemyBehaviours[HighestPriorityIndex]);
         }
     }
 
     public virtual void PhysicsUpdate() { }
     public virtual void AnimationTriggerEvent() { }
+
 
     /// <summary>
     /// Executes actions in <paramref name="EB"/> either in order of list or randomly based on weights. (TO BE IMPLEMENTED)
@@ -143,9 +145,16 @@ public class EnemyState
     /// <param name="EB">instance of <c>EnemyBehaviour</c> whose actions are being executed.</param>
     public void DoAction(EnemyBehaviour EB)
     {
+        if (EB.actionList.Count == 0) return;
         //Consider Weights or do all actions in order
-        Debug.Log("DoAction is called.");
         brain.actionHandler.StartAction(EB.actionList[0].Func());
+    }
+
+    public void DoAttack( EnemyBehaviour EB)
+    {
+        if (EB.attackList.Count == 0) return;
+        brain.attackHandler.EnterAttack(EB.attackList[0]);
+
     }
 
     ///<summary>
