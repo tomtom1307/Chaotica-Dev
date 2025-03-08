@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemyAttackHandler : MonoBehaviour
@@ -35,6 +36,7 @@ public class EnemyAttackHandler : MonoBehaviour
 
     public void DamagePlayer(PlayerHealth PH)
     {
+        Debug.Log("PlayerWasDamaged!");
         currentAttack.attackData.DamageLogic(PH , this);
         PH.TakeDamage(10);
 
@@ -55,6 +57,30 @@ public class EnemyAttackHandler : MonoBehaviour
 
     public void DoProjectile() { }
 
-    public void DoColliderCheck() { }
+    public void DoColliderCheck() {
+        foreach (var colliderGroup in currentAttack.colliderGroups)
+        {
+            float DetectTime = colliderGroup.DetectTime;
+            colliderGroup.collider.TriggerDetection(DetectTime);
+            colliderGroup.collider.OnDetectCallback += RecieveColliderHitCallback;
+            StartCoroutine(DisableColliderAfterTime(DetectTime, colliderGroup.collider));
+        }
+    
+    }
+
+    public void RecieveColliderHitCallback(PlayerHealth ph, ColliderDetector col)
+    {
+        
+        DamagePlayer(ph);
+        
+    }
+
+    private IEnumerator DisableColliderAfterTime(float detectionTime, ColliderDetector col)
+    {
+        yield return new WaitForSeconds(detectionTime);
+        col.DisableCollider();
+        col.OnDetectCallback -= RecieveColliderHitCallback; 
+    }
+
 
 }

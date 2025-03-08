@@ -7,7 +7,14 @@ using UnityEngine;
 public class EnemyAttack
 {
     [SerializeField] public EnemyAttackSO attackData;
-    [SerializeField] public List<Collider> colliderGroup;
+    [SerializeField] public List<colliderGroup> colliderGroups;
     [SerializeField] public int attackType;
 
+}
+
+[Serializable]
+public struct colliderGroup
+{
+    public ColliderDetector collider;
+    public float DetectTime;
 }
