@@ -10,15 +10,12 @@ public class EnemyAnimationEventHandler : MonoBehaviour
 
     public void ExitAttackCall() => attackHandler.ExitAttack();
 
-    public void StartAttack(AttackType attackType)
+    public void DoNonColliderAttack(AttackType attackType)
     {
         switch (attackType)
         {
             case AttackType.Raycast:
                 attackHandler.DoRayCast();
-                break;
-            case AttackType.Collider:
-                attackHandler.DoColliderCheck(0); // For some reason function does not show when StartAttack() takes an integer parameter. Are only 2 parameters allowed?
                 break;
             case AttackType.Projectile:
                 attackHandler.DoProjectile();
@@ -27,11 +24,11 @@ public class EnemyAnimationEventHandler : MonoBehaviour
                 break;
         }
     }
+    public void StartColliderAttack(int colliderGroupIndex) => attackHandler.DoColliderCheck(colliderGroupIndex);
 
     public enum AttackType
     {
         Raycast,
-        Collider,
         Projectile
     }
     public void DisableCollider(int colliderGroup) => attackHandler.DisableColliderGroup(colliderGroup);

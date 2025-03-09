@@ -1,10 +1,13 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyAttackHandler : MonoBehaviour
 {
     [HideInInspector] public EnemyBrain brain;
     [HideInInspector] public EnemyAttack currentAttack;
+    List<bool> groupDidDamage;
     public bool attacking;
 
 
@@ -14,8 +17,9 @@ public class EnemyAttackHandler : MonoBehaviour
         Debug.Log("Enter Attack!");
         currentAttack = EA;
         attacking = true;
-        brain.animator.SetInteger("AT", currentAttack.attackType);
+        brain.animator.SetInteger("AT", currentAttack.attackAnimation);
         currentAttack.attackData.EnterAttack(this);
+        if(currentAttack.attackData.doCollider) groupDidDamage = Enumerable.Repeat(false, currentAttack.colliderGroups.Count).ToList();
 
         brain.animator.SetBool("Attacking", attacking);
     }
@@ -25,7 +29,6 @@ public class EnemyAttackHandler : MonoBehaviour
         brain.animator.SetBool("Attacking", false);
         Invoke(nameof(AttackCooldownExit), 0.1f);
         currentAttack.attackData.ExitAttack(this);
-
     }
 
     private void AttackCooldownExit()
@@ -58,22 +61,43 @@ public class EnemyAttackHandler : MonoBehaviour
 
     public void DoColliderCheck(int colliderGroupIndex)
     {
-        colliderGroup colliderG = currentAttack.colliderGroups[colliderGroupIndex];
-        colliderG.collider.TriggerDetection();
-        colliderG.collider.OnDetectCallback += RecieveColliderHitCallback;
+        if (currentAttack.attackData.doCollider)
+        {
+            List<ColliderDetector> colliderGroupList = currentAttack.colliderGroups[colliderGroupIndex].colliderList;
+            foreach (ColliderDetector col in colliderGroupList)
+            {
+                col.TriggerDetection();
+                col.OnDetectCallback += RecieveColliderHitCallback;
+            }
+        }
+        else Debug.LogError("You must set the attack SO DoCollider bool to true to initialize the necesary lists.");
+
     }
 
     public void RecieveColliderHitCallback(PlayerHealth ph, ColliderDetector col)
     {
-
-        DamagePlayer(ph);
-
+        int count = 0;
+        foreach (colliderGroup colGroup in currentAttack.colliderGroups)
+        {
+            if (colGroup.colliderList.Contains(col) && !groupDidDamage[count])
+            {
+                Debug.Log("Attack group has not done damage yet!");
+                DamagePlayer(ph); // Damage player
+                groupDidDamage[count] = true; // Count group as having done damage
+            }
+            else Debug.Log("Ignored extra collider trigger.");
+                count++;
+        }
     }
     public void DisableColliderGroup(int colliderGroupIndex)
     {
-        ColliderDetector col = currentAttack.colliderGroups[colliderGroupIndex].collider;
-        currentAttack.colliderGroups[colliderGroupIndex].collider.DisableCollider();
-        col.OnDetectCallback -= RecieveColliderHitCallback;
+        List<ColliderDetector> colliderGroupList = currentAttack.colliderGroups[colliderGroupIndex].colliderList;
+        foreach(ColliderDetector col in colliderGroupList)
+        {
+            col.DisableCollider();
+            col.OnDetectCallback -= RecieveColliderHitCallback;
+        }
+
     }
 
     // Remove or keep?
