@@ -17,8 +17,8 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 1024
-  doCollider: 0
-  damageValue: 0
+  doCollider: 1
+  damageValue: 10
   doProjectile: 0
   considerGravity: 0
   Projectile: {fileID: 0}
@@ -26,6 +26,6 @@ MonoBehaviour:
   projectileSpeed: 0
   projectileSpread: 0
   projectileAmount: 0
-  doRayCast: 1
+  doRayCast: 0
   rayCastDamage: 10
   rayCastRange: 100

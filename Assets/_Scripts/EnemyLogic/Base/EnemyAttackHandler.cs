@@ -37,44 +37,46 @@ public class EnemyAttackHandler : MonoBehaviour
     public void DamagePlayer(PlayerHealth PH)
     {
         Debug.Log("PlayerWasDamaged!");
-        currentAttack.attackData.DamageLogic(PH , this);
-        PH.TakeDamage(10);
-
+        currentAttack.attackData.DamageLogic(PH, this);
+        PH.TakeDamage(currentAttack.attackData.damageValue);
     }
 
-    public void DoRayCast() 
+    public void DoRayCast()
     {
-        Vector3 shootDir = (brain.perception.player.position+Vector3.up - transform.position).normalized;
-        RaycastHit hit; 
-        if(Physics.Raycast(transform.position, shootDir, out hit, currentAttack.attackData.rayCastRange, currentAttack.attackData.whatIsPlayer))
+        Vector3 shootDir = (brain.perception.player.position + Vector3.up - transform.position).normalized;
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, shootDir, out hit, currentAttack.attackData.rayCastRange, currentAttack.attackData.whatIsPlayer))
         {
             PlayerHealth PH = hit.collider.gameObject.GetComponent<PlayerHealth>();
             DamagePlayer(PH);
         }
-        
-    
+
+
     }
 
     public void DoProjectile() { }
 
-    public void DoColliderCheck() {
-        foreach (var colliderGroup in currentAttack.colliderGroups)
-        {
-            float DetectTime = colliderGroup.DetectTime;
-            colliderGroup.collider.TriggerDetection(DetectTime);
-            colliderGroup.collider.OnDetectCallback += RecieveColliderHitCallback;
-            StartCoroutine(DisableColliderAfterTime(DetectTime, colliderGroup.collider));
-        }
-    
+    public void DoColliderCheck(int colliderGroupIndex)
+    {
+        colliderGroup colliderG = currentAttack.colliderGroups[colliderGroupIndex];
+        colliderG.collider.TriggerDetection();
+        colliderG.collider.OnDetectCallback += RecieveColliderHitCallback;
     }
 
     public void RecieveColliderHitCallback(PlayerHealth ph, ColliderDetector col)
     {
-        
+
         DamagePlayer(ph);
-        
+
+    }
+    public void DisableColliderGroup(int colliderGroupIndex)
+    {
+        ColliderDetector col = currentAttack.colliderGroups[colliderGroupIndex].collider;
+        currentAttack.colliderGroups[colliderGroupIndex].collider.DisableCollider();
+        col.OnDetectCallback -= RecieveColliderHitCallback;
     }
 
+    // Remove or keep?
     private IEnumerator DisableColliderAfterTime(float detectionTime, ColliderDetector col)
     {
         yield return new WaitForSeconds(detectionTime);

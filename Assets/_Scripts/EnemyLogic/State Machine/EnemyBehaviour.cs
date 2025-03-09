@@ -30,17 +30,6 @@ public class EnemyBehaviour
     }
 
 
-
-    public void DoActions()
-    {
-        
-    }
-    public void DoAttacks()
-    {
-
-    }
-
-
     [HideInInspector] public string name = "Behaviour";
 
 }

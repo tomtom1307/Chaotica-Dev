@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class EnemyAnimationEventHandler : MonoBehaviour
 {
@@ -7,12 +8,9 @@ public class EnemyAnimationEventHandler : MonoBehaviour
     //THIS SCRIPT EXISTS TO SIMPLIFY THE UNITY UI WHEN DOING ANIMATION EVENTS
 
 
-    public void ExitAttack()
-    {
-        
-    }
+    public void ExitAttackCall() => attackHandler.ExitAttack();
 
-    public void DoAttack(AttackType attackType)
+    public void StartAttack(AttackType attackType)
     {
         switch (attackType)
         {
@@ -20,7 +18,7 @@ public class EnemyAnimationEventHandler : MonoBehaviour
                 attackHandler.DoRayCast();
                 break;
             case AttackType.Collider:
-                attackHandler.DoColliderCheck();
+                attackHandler.DoColliderCheck(0); // For some reason function does not show when StartAttack() takes an integer parameter. Are only 2 parameters allowed?
                 break;
             case AttackType.Projectile:
                 attackHandler.DoProjectile();
@@ -36,4 +34,5 @@ public class EnemyAnimationEventHandler : MonoBehaviour
         Collider,
         Projectile
     }
+    public void DisableCollider(int colliderGroup) => attackHandler.DisableColliderGroup(colliderGroup);
 }

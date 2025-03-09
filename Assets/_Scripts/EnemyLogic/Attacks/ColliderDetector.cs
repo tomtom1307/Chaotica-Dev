@@ -6,7 +6,7 @@ public class ColliderDetector : MonoBehaviour
 {
 
     public Collider detectionCollider; 
-    public float detectionTime;
+
     public Action<PlayerHealth, ColliderDetector> OnDetectCallback;
     public bool playerDetected = false; 
     private PlayerHealth ph;
@@ -18,7 +18,7 @@ public class ColliderDetector : MonoBehaviour
         
     }
 
-    public void TriggerDetection(float DetectTime) 
+    public void TriggerDetection() 
     {
         gameObject.SetActive(true);
         playerDetected = false;
