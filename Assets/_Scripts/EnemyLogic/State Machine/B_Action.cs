@@ -23,6 +23,8 @@ public class B_Action
                 return brain.actionHandler.DoLilHops;
             case b_Action.MoveToPlayer:
                 return brain.actionHandler.MoveToPlayer;
+            case b_Action.MoveToPatrol:
+                return brain.actionHandler.DoPatrol;
             case b_Action.ChangeToPatrol:
                 return brain.actionHandler.ChangeToPatrolState;
             case b_Action.ChangeToIdle:
