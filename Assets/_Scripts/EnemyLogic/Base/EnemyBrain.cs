@@ -44,8 +44,8 @@ public class EnemyBrain : MonoBehaviour
     [HideInInspector] public EnemyAttackHandler attackHandler;
 
 
-    public UnityEvent OnPlayerSpotted;
-    public UnityEvent OnPlayerLost;
+    [HideInInspector] public UnityEvent OnPlayerSpotted;
+    [HideInInspector] public UnityEvent OnPlayerLost;
     //Health
     private DamagableEnemy damagableEnemy;
 
