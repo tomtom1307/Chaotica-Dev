@@ -2466,7 +2466,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &219614491
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13545,7 +13545,9 @@ MonoBehaviour:
       priority: 1
       conditions:
         brain: {fileID: 0}
-        boolChecks: []
+        boolChecks:
+        - checkTime: 0
+          checkBool: 1
         floatChecks:
         - checkTime: 0
           checkFloat: 2
@@ -21298,7 +21300,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1841062562
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22210,7 +22212,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0.0028384565, y: -10.66185}
-  m_SizeDelta: {x: 0, y: 28}
+  m_SizeDelta: {x: 188, y: 128}
   m_Pivot: {x: 0.5, y: 0.98}
 --- !u!114 &1903579859
 MonoBehaviour:
@@ -25271,67 +25273,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1001 &2776115657047917108
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4784340333781393268, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
-      propertyPath: m_Name
-      value: ShatteredFloatyShootyBall
-      objectReference: {fileID: 0}
-    - target: {fileID: 4784340333781393268, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5511006928826847299, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.687
-      objectReference: {fileID: 0}
-    - target: {fileID: 5511006928826847299, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 12.948
-      objectReference: {fileID: 0}
-    - target: {fileID: 5511006928826847299, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -34.53
-      objectReference: {fileID: 0}
-    - target: {fileID: 5511006928826847299, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.41200975
-      objectReference: {fileID: 0}
-    - target: {fileID: 5511006928826847299, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.9052191
-      objectReference: {fileID: 0}
-    - target: {fileID: 5511006928826847299, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.0803196
-      objectReference: {fileID: 0}
-    - target: {fileID: 5511006928826847299, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.06614548
-      objectReference: {fileID: 0}
-    - target: {fileID: 5511006928826847299, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 130.84
-      objectReference: {fileID: 0}
-    - target: {fileID: 5511006928826847299, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -4.699005
-      objectReference: {fileID: 0}
-    - target: {fileID: 5511006928826847299, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 7.9909973
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
 --- !u!1 &2877611620170034284 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 220623029931947935, guid: 3e16e13cbdba156429dc3b330941efa2, type: 3}
@@ -26423,4 +26364,3 @@ SceneRoots:
   - {fileID: 1329174698}
   - {fileID: 526439701}
   - {fileID: 124109366}
-  - {fileID: 2776115657047917108}
