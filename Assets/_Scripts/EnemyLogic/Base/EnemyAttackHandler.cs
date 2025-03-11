@@ -29,7 +29,15 @@ public class EnemyAttackHandler : MonoBehaviour
         Debug.Log("Enter Attack!");
         currentAttack = EA;
         attacking = true;
-        brain.animator.SetInteger("AT", currentAttack.attackAnimation);
+        if (currentAttack.attackData.rootMotion)
+        {
+            Debug.Log("enabled root motion and disabled navmeshagent.");
+            brain.animator.applyRootMotion = true;
+            brain.navMesh.velocity = Vector3.zero;
+            brain.navMesh.enabled = false;
+        }
+        else Debug.Log("rootmotion in data is set to false.");
+            brain.animator.SetInteger("AT", currentAttack.attackAnimation);
         currentAttack.attackData.EnterAttack(this);
         if(currentAttack.attackData.doCollider) groupDidDamage = Enumerable.Repeat(false, currentAttack.colliderGroups.Count).ToList();
 
@@ -37,6 +45,12 @@ public class EnemyAttackHandler : MonoBehaviour
     }
     public void ExitAttack()
     {
+        if (currentAttack.attackData.rootMotion)
+        {
+            gameObject.transform.position = brain.animator.rootPosition;
+            brain.animator.applyRootMotion = false;
+            brain.navMesh.enabled = true;
+        }
         brain.animator.SetInteger("AT", 0);
         brain.animator.SetBool("Attacking", false);
         Invoke(nameof(AttackCooldownExit), Mathf.Clamp(currentAttack.attackData.AttackCooldown, 0.1f, 10000000));
