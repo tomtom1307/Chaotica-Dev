@@ -13,9 +13,10 @@ public class ColliderDetector : MonoBehaviour
 
     private void Start()
     {
+        
         gameObject.SetActive(false);
         detectionCollider = GetComponent<Collider>();
-        
+        detectionCollider.isTrigger = true;
     }
 
     public void TriggerDetection() 

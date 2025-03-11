@@ -39,8 +39,13 @@ public class EnemyActionHandler : MonoBehaviour
     public void ChangeToPatrolState()
     {
         brain.stateMachine.ChangeState(brain.patrolState); Debug.Log("Changed to Patrol State");
+
+        brain.OnPlayerSpotted.Invoke(); //TODO Handle in seperate action or include in change to attack state logic
+
+
         EndAction();
     }
+
 
     public void DoError()
     {

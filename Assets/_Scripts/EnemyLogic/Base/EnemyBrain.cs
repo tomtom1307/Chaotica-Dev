@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using UnityEngine.Experimental.GlobalIllumination;
 /// <summary>
 /// The <c>EnemyBrain</c> class is a component attached to every in-game enemy. It handles all of the enemy's behaviour.
@@ -26,7 +27,7 @@ public class EnemyBrain : MonoBehaviour
     public float DetectionMeterDecay;
     public float ViewAngle;
     public LayerMask layerMask;
-
+    public Transform LookDirectionTransform;
     EnemyAnimationEventHandler enemyAnimationevent;
     //Navmesh
     [HideInInspector] public NavMeshAgent navMesh;
@@ -42,6 +43,9 @@ public class EnemyBrain : MonoBehaviour
     [HideInInspector] public EnemyActionHandler actionHandler;
     [HideInInspector] public EnemyAttackHandler attackHandler;
 
+
+    public UnityEvent OnPlayerSpotted;
+    public UnityEvent OnPlayerLost;
     //Health
     private DamagableEnemy damagableEnemy;
 
@@ -83,9 +87,9 @@ public class EnemyBrain : MonoBehaviour
 
     private void Start()
     {
-        
-        
 
+
+        if (LookDirectionTransform == null) LookDirectionTransform = this.transform;
 
         //Get references 
         attackHandler = gameObject.AddComponent<EnemyAttackHandler>();

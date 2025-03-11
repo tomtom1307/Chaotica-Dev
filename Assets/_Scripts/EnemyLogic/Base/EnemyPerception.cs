@@ -49,9 +49,9 @@ public class EnemyPerception : MonoBehaviour
     {
         RaycastHit hit;
         //Vector3.up because enemy transform position is at feet
-        if(Physics.Raycast(transform.position + Vector3.up, player.position - transform.position + Vector3.up, out hit, brain.DetectionRange, brain.layerMask)) 
+        if(Physics.Raycast(brain.LookDirectionTransform.position, player.position - brain.LookDirectionTransform.position, out hit, brain.DetectionRange, brain.layerMask)) 
         {
-            if (hit.collider.gameObject.layer == 10 && Vector3.Angle(transform.forward, player.position - transform.position + Vector3.up) < brain.ViewAngle)
+            if (hit.collider.gameObject.layer == 10 && Vector3.Angle(brain.LookDirectionTransform.forward, player.position - transform.position + Vector3.up) < brain.ViewAngle)
             {
                 LOS = true;
                 LastSpottedTime = Time.time;

@@ -46,9 +46,9 @@ public class EnemyAttackHandler : MonoBehaviour
 
     public void DoRayCast()
     {
-        Vector3 shootDir = (brain.perception.player.position + Vector3.up - transform.position).normalized;
+        Vector3 shootDir = (brain.perception.player.position + Vector3.up - brain.LookDirectionTransform.position).normalized;
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, shootDir, out hit, currentAttack.attackData.rayCastRange, currentAttack.attackData.whatIsPlayer))
+        if (Physics.Raycast(brain.LookDirectionTransform.position, shootDir, out hit, currentAttack.attackData.rayCastRange, currentAttack.attackData.whatIsPlayer))
         {
             PlayerHealth PH = hit.collider.gameObject.GetComponent<PlayerHealth>();
             DamagePlayer(PH);
