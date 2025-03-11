@@ -7,6 +7,12 @@ public class EnemyAttackSO : ScriptableObject
     public bool rootMotion;
     public bool interruptable;
 
+    public float AttackCooldown;
+
+    
+
+
+
     public LayerMask whatIsPlayer;
     [Header("Collider")]
     public bool doCollider;
@@ -25,6 +31,12 @@ public class EnemyAttackSO : ScriptableObject
     public bool doRayCast;
     public float rayCastDamage;
     public float rayCastRange;
+
+    [Range(0.0f, 1.0f)]
+    [Tooltip("Changes how velocity dependent raycast is:" +
+        " {1 being raycast will hit regardless of player speed to " +
+        "0 being will certainly miss when player moving}")]
+    public float Accuracy; // Ranges from 0 to 1
 
     public virtual void EnterAttack(EnemyAttackHandler attackHandler)
     {

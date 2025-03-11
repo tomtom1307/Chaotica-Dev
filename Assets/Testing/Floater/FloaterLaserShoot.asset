@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootMotion: 0
   interruptable: 0
+  AttackCooldown: 2
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -29,3 +30,4 @@ MonoBehaviour:
   doRayCast: 1
   rayCastDamage: 10
   rayCastRange: 50
+  Accuracy: 1

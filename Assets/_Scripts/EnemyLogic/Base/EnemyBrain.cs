@@ -92,16 +92,19 @@ public class EnemyBrain : MonoBehaviour
         if (LookDirectionTransform == null) LookDirectionTransform = this.transform;
 
         //Get references 
-        attackHandler = gameObject.AddComponent<EnemyAttackHandler>();
-        attackHandler.brain = this;
-
-        enemyAnimationevent = GetComponent<EnemyAnimationEventHandler>();
-        enemyAnimationevent.attackHandler = attackHandler;
+        
 
         actionHandler = gameObject.AddComponent<EnemyActionHandler>();
         actionHandler.brain = this;
         perception = gameObject.AddComponent<EnemyPerception>();
         perception.brain = this;
+
+        attackHandler = gameObject.AddComponent<EnemyAttackHandler>();
+        attackHandler.Init(this);
+
+        enemyAnimationevent = GetComponent<EnemyAnimationEventHandler>();
+        enemyAnimationevent.attackHandler = attackHandler;
+
         damagableEnemy = GetComponent<DamagableEnemy>();
         navMesh = GetComponent<NavMeshAgent>();
         navMesh.speed = MoveSpeed;

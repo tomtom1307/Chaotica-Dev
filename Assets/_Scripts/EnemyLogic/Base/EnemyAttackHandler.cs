@@ -11,6 +11,18 @@ public class EnemyAttackHandler : MonoBehaviour
     public bool attacking;
 
 
+    Transform player;
+    Rigidbody _playerRb;
+
+
+    public void Init(EnemyBrain brain)
+    {
+        this.brain = brain;
+        player = GameManager.instance.player;
+        _playerRb = player.GetComponent<Rigidbody>();
+    }
+
+
     public void EnterAttack(EnemyAttack EA)
     {
         if (attacking) { return; }
@@ -27,7 +39,7 @@ public class EnemyAttackHandler : MonoBehaviour
     {
         brain.animator.SetInteger("AT", 0);
         brain.animator.SetBool("Attacking", false);
-        Invoke(nameof(AttackCooldownExit), 0.1f);
+        Invoke(nameof(AttackCooldownExit), Mathf.Clamp(currentAttack.attackData.AttackCooldown, 0.1f, 10000000));
         currentAttack.attackData.ExitAttack(this);
     }
 
@@ -46,9 +58,12 @@ public class EnemyAttackHandler : MonoBehaviour
 
     public void DoRayCast()
     {
-        Vector3 shootDir = (brain.perception.player.position + Vector3.up - brain.LookDirectionTransform.position).normalized;
+        Vector3 shootDir = (player.position + Vector3.up - brain.LookDirectionTransform.position).normalized;
+        shootDir += -0.1f*(1 - currentAttack.attackData.Accuracy) *_playerRb.linearVelocity;
         RaycastHit hit;
-        if (Physics.Raycast(brain.LookDirectionTransform.position, shootDir, out hit, currentAttack.attackData.rayCastRange, currentAttack.attackData.whatIsPlayer))
+
+        Debug.DrawRay(transform.position, shootDir, Color.yellow, 5);
+        if (Physics.Raycast(brain.LookDirectionTransform.position, shootDir.normalized, out hit, currentAttack.attackData.rayCastRange, currentAttack.attackData.whatIsPlayer))
         {
             PlayerHealth PH = hit.collider.gameObject.GetComponent<PlayerHealth>();
             DamagePlayer(PH);
