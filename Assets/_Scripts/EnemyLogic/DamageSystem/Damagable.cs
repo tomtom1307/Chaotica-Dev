@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class Damagable : MonoBehaviour
 {
-    public float MaxHealth;
+    public float MaxHealth = 10;
     public float Health;
 
-    public bool DamageNumbers;
+    public bool DamageNumbers = true;
     [HideInInspector] GameObject DamageNumber;
-
+    public GameObject SpawnOnDeath;
 
 
 
@@ -31,7 +31,12 @@ public class Damagable : MonoBehaviour
 
     public virtual void Die()
     {
+        if(SpawnOnDeath != null)
+        {
+            Instantiate(SpawnOnDeath, transform.position, transform.rotation);
+        }
         Destroy(gameObject);
+        
     }
 
     public virtual void OnDamageTaken(float damage)

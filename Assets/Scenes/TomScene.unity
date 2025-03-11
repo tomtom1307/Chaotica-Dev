@@ -13645,9 +13645,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5734c078d0bd4747911c7e5e6409562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 0
+  MaxHealth: 50
   Health: 0
-  DamageNumbers: 0
+  DamageNumbers: 1
+  SpawnOnDeath: {fileID: 4784340333781393268, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
 --- !u!135 &1173849752
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -13667,7 +13668,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.012
+  m_Radius: 0.39
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1180208319
 GameObject:
@@ -25270,6 +25271,67 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1001 &2776115657047917108
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4784340333781393268, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
+      propertyPath: m_Name
+      value: ShatteredFloatyShootyBall
+      objectReference: {fileID: 0}
+    - target: {fileID: 4784340333781393268, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5511006928826847299, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.687
+      objectReference: {fileID: 0}
+    - target: {fileID: 5511006928826847299, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 12.948
+      objectReference: {fileID: 0}
+    - target: {fileID: 5511006928826847299, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -34.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 5511006928826847299, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.41200975
+      objectReference: {fileID: 0}
+    - target: {fileID: 5511006928826847299, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.9052191
+      objectReference: {fileID: 0}
+    - target: {fileID: 5511006928826847299, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0803196
+      objectReference: {fileID: 0}
+    - target: {fileID: 5511006928826847299, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.06614548
+      objectReference: {fileID: 0}
+    - target: {fileID: 5511006928826847299, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 130.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 5511006928826847299, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -4.699005
+      objectReference: {fileID: 0}
+    - target: {fileID: 5511006928826847299, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 7.9909973
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
 --- !u!1 &2877611620170034284 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 220623029931947935, guid: 3e16e13cbdba156429dc3b330941efa2, type: 3}
@@ -26207,6 +26269,7 @@ MonoBehaviour:
   MaxHealth: 1000
   Health: 0
   DamageNumbers: 1
+  SpawnOnDeath: {fileID: 0}
 --- !u!136 &4569633281391185008
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -26360,3 +26423,4 @@ SceneRoots:
   - {fileID: 1329174698}
   - {fileID: 526439701}
   - {fileID: 124109366}
+  - {fileID: 2776115657047917108}
