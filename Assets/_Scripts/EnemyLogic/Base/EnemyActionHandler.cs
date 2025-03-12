@@ -67,6 +67,7 @@ public class EnemyActionHandler : MonoBehaviour
             if (TargetpatrolPoint == null) { return; }
         }
         TargetpatrolPoint.Claim();
+        brain.animator.SetBool("Walking", true);
         brain.navMesh.SetDestination(TargetpatrolPoint.transform.position);
         if(brain.navMesh.remainingDistance < 0.2f)
         {

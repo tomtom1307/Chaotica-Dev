@@ -13659,7 +13659,7 @@ MonoBehaviour:
   MoveSpeed: 5
   JumpPower: 0
   DetectionRange: 48.9
-  PerceptionStat: 0
+  PerceptionStat: 2
   DetectionMeterDecay: 1.14
   ViewAngle: 57.18
   layerMask:
@@ -25631,7 +25631,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1210316982324589196, guid: ce2744065acb73445a6259f819d37148, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1300188508712699850, guid: ce2744065acb73445a6259f819d37148, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -26237,9 +26237,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1210316982324589196, guid: ce2744065acb73445a6259f819d37148, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4569633281391185006}
-    - targetCorrespondingSourceObject: {fileID: 1210316982324589196, guid: ce2744065acb73445a6259f819d37148, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4569633281391185008}
   m_SourcePrefab: {fileID: 100100000, guid: ce2744065acb73445a6259f819d37148, type: 3}
 --- !u!1 &4569633281391185004 stripped
 GameObject:
@@ -26273,23 +26270,6 @@ MonoBehaviour:
   stateList:
   - Name: Idle State
     enemyBehaviours:
-    - Name: Distance
-      priority: 2
-      conditions:
-        brain: {fileID: 0}
-        boolChecks: []
-        floatChecks:
-        - checkTime: 0
-          checkFloat: 0
-          checkComparison: 1
-          input: 3
-        intChecks: []
-      actionList:
-      - brain: {fileID: 0}
-        B_action: 0
-        Weight: 100
-      attackList: []
-      name: Behaviour
     - Name: Detection meter + LOS
       priority: 2
       conditions:
@@ -26310,20 +26290,16 @@ MonoBehaviour:
         Weight: 100
       attackList: []
       name: Behaviour
-    - Name: LSP_time
-      priority: 2
+    - Name: Patrol
+      priority: 1
       conditions:
         brain: {fileID: 0}
         boolChecks: []
-        floatChecks:
-        - checkTime: 0
-          checkFloat: 1
-          checkComparison: 0
-          input: 4
+        floatChecks: []
         intChecks: []
       actionList:
       - brain: {fileID: 0}
-        B_action: 0
+        B_action: 4
         Weight: 100
       attackList: []
       name: Behaviour
@@ -26401,29 +26377,6 @@ MonoBehaviour:
   Health: 0
   DamageNumbers: 1
   SpawnOnDeath: {fileID: 0}
---- !u!136 &4569633281391185008
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4569633281391185004}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2.6059203
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.3519493, z: 0}
 --- !u!114 &4569633281391185011
 MonoBehaviour:
   m_ObjectHideFlags: 0
