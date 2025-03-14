@@ -1,10 +1,17 @@
 using DG.Tweening;
+using System;
 using UnityEngine;
 
 public class EnemyActionHandler : MonoBehaviour
 {
     [HideInInspector] public EnemyBrain brain;
     public bool DoingAction;
+
+
+    private void Start()
+    {
+        DefaultStoppingDistance = brain.navMesh.stoppingDistance;
+    }
 
     public void StartAction(System.Action someFunction)
     {
@@ -27,6 +34,7 @@ public class EnemyActionHandler : MonoBehaviour
     }
     public void MoveToPlayer()
     {
+        brain.navMesh.stoppingDistance = DefaultStoppingDistance;
         brain.navMesh.destination = brain.perception.player.position;
         brain.animator.SetBool("Walking", true);
         EndAction();
@@ -47,12 +55,36 @@ public class EnemyActionHandler : MonoBehaviour
     }
 
 
+    public EnemyPatrolPoint TargetpatrolPoint;
+    public float DefaultStoppingDistance;
+
+    public void DoPatrol()
+    {
+        brain.navMesh.stoppingDistance = 0;
+        if(TargetpatrolPoint == null)
+        {
+            TargetpatrolPoint = GameManager.instance.FindClosestPatrol(transform.position);
+            if (TargetpatrolPoint == null) { return; }
+        }
+        TargetpatrolPoint.Claim();
+        brain.animator.SetBool("Walking", true);
+        brain.navMesh.SetDestination(TargetpatrolPoint.transform.position);
+        if(brain.navMesh.remainingDistance < 0.2f)
+        {
+            //TODO: Implement WaitTimeLogic and get next Available patrol point
+            TargetpatrolPoint.MoveOn();
+            TargetpatrolPoint = TargetpatrolPoint.nextInPatrol;
+
+        }
+
+        EndAction();
+    }
+
+
     public void DoError()
     {
         Debug.LogError("This action does not exist. Look at EnemyActionHandler.cs");
     }
 
-
     
-
 }

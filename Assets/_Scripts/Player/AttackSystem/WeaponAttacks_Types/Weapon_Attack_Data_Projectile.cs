@@ -34,7 +34,7 @@ public class Weapon_Attack_Data_Projectile : Weapon_Attack_Data_Base
             dir.Normalize(); 
 
             GameObject proj = W.SpawnObject(projectile, W.cam.transform.position, Quaternion.identity);
-            proj.GetComponent<Projectile>().Init(dir, speed, DamageVal(W), gravity);
+            proj.GetComponent<Projectile>().Init(dir,W.ChargeAmount * speed, DamageVal(W), gravity);
         }
 
     }

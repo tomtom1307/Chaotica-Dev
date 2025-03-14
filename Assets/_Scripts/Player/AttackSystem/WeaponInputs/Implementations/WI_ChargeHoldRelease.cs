@@ -19,6 +19,7 @@ public class ChargeHoldRelease: Weapon_Input
     {
         if(WH.State == WeaponHolder.AttackState.Charging)
         {
+            if (WH.Weapon_anim.GetInteger("AttackType") != AttackNum) return;
             HoldLogic(AttackNum, WH, ctx);
         }
 
