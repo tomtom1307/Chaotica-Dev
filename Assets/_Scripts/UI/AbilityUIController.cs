@@ -25,5 +25,9 @@ public class AbilityUIController : MonoBehaviour
         // Spawns poop on hand (idk) and gives damage boost to player
 
         Debug.Log("yay you can spawn poop now");
+
+        // Attach poop to hand
+
+        // PlayerStats
     }
 }
