@@ -3675,6 +3675,7 @@ GameObject:
   - component: {fileID: 421630852}
   - component: {fileID: 421630853}
   - component: {fileID: 421630854}
+  - component: {fileID: 421630855}
   m_Layer: 10
   m_Name: Character
   m_TagString: Player
@@ -3717,6 +3718,7 @@ MonoBehaviour:
   _groundMoveMultiply: 10
   _jumpForce: 400
   orientation: {fileID: 2016439520}
+  jumpEnhance: 1
   whatisGround:
     serializedVersion: 2
     m_Bits: 64
@@ -3862,6 +3864,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChaosCores: 100
+  weaponStashDatas: []
 --- !u!114 &421630852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3893,6 +3896,10 @@ MonoBehaviour:
   Weapon_anim: {fileID: 647396074}
   cam: {fileID: 0}
   ChargeAmount: 0
+  handPos: {fileID: 0}
+  secondaryPos: {fileID: 0}
+  WeaponModel: {fileID: 0}
+  SecondaryModel: {fileID: 0}
 --- !u!114 &421630853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4023,6 +4030,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f94b67bb176a1f4fa11b1836f4b0612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &421630855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421630842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75ce68688e5d54e4487ad5160c95ec85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ability: {fileID: 11400000, guid: 5a2f6e66cd6107a4bb3651ccf707f94b, type: 2}
+  key: 9
 --- !u!1 &449229946
 GameObject:
   m_ObjectHideFlags: 0
@@ -17812,6 +17833,7 @@ MonoBehaviour:
   MaxHealth: 10000
   Health: 0
   DamageNumbers: 1
+  SpawnOnDeath: {fileID: 0}
 --- !u!1 &1721715381
 GameObject:
   m_ObjectHideFlags: 0

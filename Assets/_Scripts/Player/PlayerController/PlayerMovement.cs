@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     private float _moveSpeed, _groundDrag, _airDrag, _airMoveMultiplier, _groundMoveMultiply, _jumpForce;
     public Transform orientation;
 
-
+    public float jumpEnhance = 1f;
 
     public LayerMask whatisGround;
 
@@ -85,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
     
     void Jump()
     {
-        rb.AddForce(_jumpForce * transform.up, ForceMode.Impulse);
+        rb.AddForce(_jumpForce * transform.up * jumpEnhance, ForceMode.Impulse);
     }
 
     private bool OnSlope()
