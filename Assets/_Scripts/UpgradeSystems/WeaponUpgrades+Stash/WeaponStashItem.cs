@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class WeaponStashItem : MonoBehaviour
 {
+    public WeaponInstance instance;
     public WeaponDataSO data;
     public Image SpriteDisplay;
     WeaponStash ws;
@@ -12,9 +13,10 @@ public class WeaponStashItem : MonoBehaviour
     public bool Selected;
     public bool Equiped;
 
-    public void SetData(WeaponDataSO data, WeaponStash WS)
+    public void SetData(WeaponInstance instance, WeaponStash WS)
     {
-        this.data = data;
+        this.instance = instance;
+        this.data = instance.data;
         SetSelected(false);
         SetEquiped(false);
         SpriteDisplay.sprite = this.data.InventorySprite;

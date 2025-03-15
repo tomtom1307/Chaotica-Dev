@@ -27,7 +27,7 @@ public class WeaponHolder : MonoBehaviour
     //State variable
     [SerializeField]public AttackState State = AttackState.Ready;
 
-
+    [SerializeField] public WeaponInstance instance;
     [SerializeField] public WeaponDataSO data;
     [SerializeField] public LayerMask DamagableLayer;
     public Animator Weapon_anim;
@@ -36,10 +36,11 @@ public class WeaponHolder : MonoBehaviour
 
 
     //Called to set the weapon data once weapon swapping is implemented
-    public void SetWeaponData(WeaponDataSO data)
+    public void SetWeaponInstance(WeaponInstance instance)
     {
-        if (!enabled && data != null) enabled = true; 
-        this.data = data;
+        //if (!enabled && instance != null) enabled = true; 
+        this.instance = instance;
+        this.data = instance.data;
         HandleWeaponSwapping();
     }
 

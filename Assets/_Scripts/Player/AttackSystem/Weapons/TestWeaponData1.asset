@@ -20,13 +20,33 @@ MonoBehaviour:
   Weapon_Attacks:
   - rid: 3205115419090485444
   - rid: 3205115430689309103
+  - rid: 1142561162159194297
   InventorySprite: {fileID: 21300000, guid: b87b967d2eda3564a8480b2ad42ce52c, type: 3}
   references:
     version: 2
     RefIds:
+    - rid: 1142561162159194297
+      type: {class: Weapon_Attack_Data_Raycast, ns: , asm: Assembly-CSharp}
+      data:
+        Name: 'Attack3 '
+        Description: 'Dunno Yet
+
+'
+        weaponInputLogic: {fileID: 0}
+        attackType: 2
+        damageType: 0
+        damage: 5
+        ComboLength: 1
+        manaUse: 5
+        StaggerDamage: 5
+        hasCooldown: 0
+        cooldown: 0.1
+        Range: 0
     - rid: 3205115419090485444
       type: {class: Weapon_Attack_Data_Melee, ns: , asm: Assembly-CSharp}
       data:
+        Name: SwordSwing
+        Description: Swing Sword lol
         weaponInputLogic: {fileID: 11400000, guid: fa62de39fcdf5ac419138ca13612768e, type: 2}
         attackType: 0
         damageType: 0
@@ -41,6 +61,8 @@ MonoBehaviour:
     - rid: 3205115430689309103
       type: {class: Weapon_Attack_Data_AOE, ns: , asm: Assembly-CSharp}
       data:
+        Name: Big Sword Swing
+        Description: 'Big sword swing : Charge to do more damage'
         weaponInputLogic: {fileID: 11400000, guid: 64e432b799d9359488024441752d2110, type: 2}
         attackType: 3
         damageType: 0
