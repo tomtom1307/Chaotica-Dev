@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8670275
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19799,10 +19799,10 @@ RectTransform:
   - {fileID: 620516790}
   m_Father: {fileID: 1251168404}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 384.25, y: -123.2}
-  m_SizeDelta: {x: 246.76666, y: 206.4}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 206.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1480089515
 MonoBehaviour:
@@ -19822,6 +19822,7 @@ MonoBehaviour:
   Description: {fileID: 1385676529}
   Damage: {fileID: 910121343}
   KillRequirement: {fileID: 331581940}
+  IsAttack: 0
 --- !u!114 &1480089516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24669,7 +24670,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0.0028384565, y: -10.66185}
-  m_SizeDelta: {x: 0, y: 28}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.98}
 --- !u!114 &1903579859
 MonoBehaviour:
@@ -26733,10 +26734,10 @@ RectTransform:
   - {fileID: 2126418341}
   m_Father: {fileID: 1251168404}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 130.38333, y: -123.2}
-  m_SizeDelta: {x: 246.76666, y: 206.4}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 206.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2051324676
 MonoBehaviour:
@@ -26794,6 +26795,7 @@ MonoBehaviour:
   Description: {fileID: 1156484237}
   Damage: {fileID: 827918288}
   KillRequirement: {fileID: 1195216342}
+  IsAttack: 0
 --- !u!1 &2056351083
 GameObject:
   m_ObjectHideFlags: 0
@@ -27141,10 +27143,10 @@ RectTransform:
   - {fileID: 716983664}
   m_Father: {fileID: 1251168404}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 638.1167, y: -123.2}
-  m_SizeDelta: {x: 246.76666, y: 206.4}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 206.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2065512864
 MonoBehaviour:
@@ -27164,6 +27166,7 @@ MonoBehaviour:
   Description: {fileID: 99011059}
   Damage: {fileID: 1541251569}
   KillRequirement: {fileID: 1355994870}
+  IsAttack: 0
 --- !u!114 &2065512865
 MonoBehaviour:
   m_ObjectHideFlags: 0

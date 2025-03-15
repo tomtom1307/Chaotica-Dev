@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class WeaponStash : MonoBehaviour
 {
     public GameObject canvas;
-
     public Transform WeaponsContainer;
     public GameObject WeaponItemPrefab;
     public Image ProgressBar;
@@ -54,8 +53,10 @@ public class WeaponStash : MonoBehaviour
             if (weaponHolder.data == weaponInstance.data)
             {
                 currentSelectedWeapon = inst.GetComponent<WeaponStashItem>();
+                HandleAttackInfoContainers(weaponInstance);
                 Equip();
                 SelectCurrentWeapon(currentEquipedWeapon);
+                ProgressBar.fillAmount = currentSelectedWeapon.instance.KillCount / (currentSelectedWeapon.instance.Threshold1 + currentSelectedWeapon.instance.Threshold2);
             }
             
         }
@@ -83,7 +84,7 @@ public class WeaponStash : MonoBehaviour
     {
         NameTxt.text = currentSelectedWeapon.data._Name;
         DamageText.text = "Damage: " + currentSelectedWeapon.data.WeaponDamage;
-        ProgressBar.fillAmount = currentSelectedWeapon.instance.KillCount / (currentSelectedWeapon.instance.Threshold1 + currentSelectedWeapon.instance.Threshold2);
+        ProgressBar.fillAmount = (float)currentSelectedWeapon.instance.KillCount / (float)((currentSelectedWeapon.instance.Threshold1 + currentSelectedWeapon.instance.Threshold2));
         HandleAttackInfoContainers(currentSelectedWeapon.instance);
     }
 
@@ -95,7 +96,7 @@ public class WeaponStash : MonoBehaviour
             currentEquipedWeapon.SetEquiped(false);
         }
         currentEquipedWeapon = currentSelectedWeapon;
-        weaponHolder.SetWeaponInstance(currentEquipedWeapon.instance);
+        weaponHolder.SetWeaponInstance(currentEquipedWeapon.instance, AttackContainers[1].IsAttack, AttackContainers[2].IsAttack);
 
 
         currentEquipedWeapon.SetEquiped(true);

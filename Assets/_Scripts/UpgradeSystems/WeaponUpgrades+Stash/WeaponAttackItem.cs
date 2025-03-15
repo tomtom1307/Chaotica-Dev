@@ -10,13 +10,15 @@ public class WeaponAttackItem : MonoBehaviour
     public TMP_Text Damage;
     public TMP_Text KillRequirement;
 
+    [HideInInspector] public bool IsAttack;
     public void FillInfo(WeaponInstance Inst)
     {
         AttackName.text = Inst.data.Weapon_Attacks[AttackNum].Name;
         Description.text = Inst.data.Weapon_Attacks[AttackNum].Description;
         Damage.text = Inst.data.Weapon_Attacks[AttackNum].damage + "%";
-
-        Obscurer.SetActive(!IsAttackUnlocked(Inst));
+        IsAttack = IsAttackUnlocked(Inst);
+        Obscurer.SetActive(!IsAttack);
+        
     }
 
     public bool IsAttackUnlocked(WeaponInstance Inst)
