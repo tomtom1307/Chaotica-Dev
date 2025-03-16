@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8670275
 RectTransform:
   m_ObjectHideFlags: 0
@@ -983,7 +983,7 @@ GameObject:
   - component: {fileID: 86085314}
   - component: {fileID: 86085316}
   m_Layer: 5
-  m_Name: Menu
+  m_Name: MainMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4757,7 +4757,7 @@ MonoBehaviour:
   weaponStashDatas:
   - data: {fileID: 11400000, guid: 116d85b2292f29249bbb2350b2fa2fd4, type: 2}
     Level: 1
-    KillCount: 1
+    KillCount: 0
     Threshold1: 1
     Threshold2: 2
   - data: {fileID: 11400000, guid: 123846b4addc23a4e882975908cc384d, type: 2}
@@ -15739,7 +15739,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1198127930
 Transform:
   m_ObjectHideFlags: 0
@@ -15754,8 +15754,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1065688615}
-  - {fileID: 1328025835}
   - {fileID: 1173849746}
+  - {fileID: 1328025835}
   m_Father: {fileID: 536800416}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1200447736
@@ -19799,10 +19799,10 @@ RectTransform:
   - {fileID: 620516790}
   m_Father: {fileID: 1251168404}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 206.4}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 384.25, y: -123.2}
+  m_SizeDelta: {x: 246.76666, y: 206.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1480089515
 MonoBehaviour:
@@ -24670,7 +24670,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0.0028384565, y: -10.66185}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 28}
   m_Pivot: {x: 0.5, y: 0.98}
 --- !u!114 &1903579859
 MonoBehaviour:
@@ -26734,10 +26734,10 @@ RectTransform:
   - {fileID: 2126418341}
   m_Father: {fileID: 1251168404}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 206.4}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 130.38333, y: -123.2}
+  m_SizeDelta: {x: 246.76666, y: 206.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2051324676
 MonoBehaviour:
@@ -27143,10 +27143,10 @@ RectTransform:
   - {fileID: 716983664}
   m_Father: {fileID: 1251168404}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 206.4}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 638.1167, y: -123.2}
+  m_SizeDelta: {x: 246.76666, y: 206.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2065512864
 MonoBehaviour:
@@ -28813,16 +28813,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5849893152138461132, guid: ce2744065acb73445a6259f819d37148, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 7953176507071246033, guid: ce2744065acb73445a6259f819d37148, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2035536632}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1210316982324589196, guid: ce2744065acb73445a6259f819d37148, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 4569633281391185011}
     - targetCorrespondingSourceObject: {fileID: 1210316982324589196, guid: ce2744065acb73445a6259f819d37148, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4569633281391185007}
@@ -28965,23 +28963,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5734c078d0bd4747911c7e5e6409562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 1000
+  MaxHealth: 50
   Health: 0
   DamageNumbers: 1
   SpawnOnDeath: {fileID: 0}
---- !u!114 &4569633281391185011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4569633281391185004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40acb3a1a2145a4588fb9aefdb3e6c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackHandler: {fileID: 0}
 --- !u!1001 &7830036268348022465
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ public class DamagableEnemy : Damagable
 
     public override void Die()
     {
+        GameManager.instance.EnemyKilled();
         base.Die();
     }
 

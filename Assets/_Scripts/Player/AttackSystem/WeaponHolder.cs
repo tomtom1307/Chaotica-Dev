@@ -269,7 +269,10 @@ public class WeaponHolder : MonoBehaviour
 
     }
 
-
+    public void EnemyKilled()
+    {
+        instance.KillCount++;
+    }
     
     
 }
