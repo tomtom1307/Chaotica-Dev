@@ -6,6 +6,7 @@ public class AbilityHolder : MonoBehaviour
     float cooldownTime;
     float activeTime;
 
+    
     enum AbilityState
     {
         ready,
@@ -16,6 +17,12 @@ public class AbilityHolder : MonoBehaviour
     AbilityState abilityState = AbilityState.ready;
 
     public KeyCode key;
+
+    void SwapAbility()
+    {
+        //
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -26,11 +33,12 @@ public class AbilityHolder : MonoBehaviour
                 {
                     // activate
                     ability.Activate(gameObject);
-                    abilityState = AbilityState.ready;
+                    abilityState = AbilityState.active;
                     activeTime = ability.activeTime;
                 }
             break;
             case AbilityState.active:
+                //time that ability is used
                 if (activeTime > 0)
                 {
                     activeTime -= Time.deltaTime;
@@ -42,6 +50,7 @@ public class AbilityHolder : MonoBehaviour
                 }
             break;
             case AbilityState.cooldown:
+                //time that ability cant be used
                 if (cooldownTime > 0)
                 {
                     cooldownTime -= Time.deltaTime;
