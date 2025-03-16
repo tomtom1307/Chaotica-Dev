@@ -51,4 +51,13 @@ public class GameManager : MonoBehaviour
     {
         
     }
+
+
+    public void EnemyKilled()
+    {
+        if (player != null)
+        {
+            player.GetComponent<WeaponHolder>().EnemyKilled();
+        }
+    }
 }

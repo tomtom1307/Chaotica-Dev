@@ -2,19 +2,20 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WeaponStash : MonoBehaviour
 {
     public GameObject canvas;
-
     public Transform WeaponsContainer;
     public GameObject WeaponItemPrefab;
+    public Image ProgressBar;
 
     public Interactable interactable;
     private void Start()
     {
         interactable = GetComponent<Interactable>();
-        
+        weaponStashObjs = new List<GameObject>();
     }
 
 
@@ -25,33 +26,41 @@ public class WeaponStash : MonoBehaviour
         DisplayUnlockedWeapons();
     }
 
-    public List<WeaponDataSO> datas;
     WeaponHolder weaponHolder;
 
+
+    List<GameObject> weaponStashObjs;
     public void DisplayUnlockedWeapons()
     {
-
-        PlayerInventory inv = interactable.interactor.GetComponent<PlayerInventory>();
-        weaponHolder = inv.gameObject.GetComponent<WeaponHolder>();
-        List<WeaponDataSO> list = inv.weaponStashDatas;
-
-        foreach (var weaponData in list)
+        if(weaponStashObjs.Count > 0)
         {
-            
-            if (datas.Contains(weaponData))
+            foreach (var item in weaponStashObjs)
             {
-                continue;
-            }
-            
-            GameObject inst = Instantiate(WeaponItemPrefab, WeaponsContainer);
-            datas.Add(weaponData);
-            inst.GetComponent<WeaponStashItem>().SetData(weaponData, this);
-            if (weaponHolder.data == weaponData)
-            {
-                currentSelectedWeapon = inst.GetComponent<WeaponStashItem>();
-                Equip();
+                Destroy(item);
             }
         }
+        
+        weaponStashObjs = new List<GameObject>();
+        ProgressBar.fillAmount = 0;
+        PlayerInventory inv = interactable.interactor.GetComponent<PlayerInventory>();
+        weaponHolder = inv.gameObject.GetComponent<WeaponHolder>();
+
+        foreach (var weaponInstance in inv.weaponStashDatas)
+        {
+            GameObject inst = Instantiate(WeaponItemPrefab, WeaponsContainer);
+            weaponStashObjs.Add(inst);
+            inst.GetComponent<WeaponStashItem>().SetData(weaponInstance, this);
+            if (weaponHolder.data == weaponInstance.data)
+            {
+                currentSelectedWeapon = inst.GetComponent<WeaponStashItem>();
+                HandleAttackInfoContainers(weaponInstance);
+                Equip();
+                SelectCurrentWeapon(currentEquipedWeapon);
+                ProgressBar.fillAmount = currentSelectedWeapon.instance.KillCount / (currentSelectedWeapon.instance.Threshold1 + currentSelectedWeapon.instance.Threshold2);
+            }
+            
+        }
+
 
     }
 
@@ -75,6 +84,8 @@ public class WeaponStash : MonoBehaviour
     {
         NameTxt.text = currentSelectedWeapon.data._Name;
         DamageText.text = "Damage: " + currentSelectedWeapon.data.WeaponDamage;
+        ProgressBar.fillAmount = (float)currentSelectedWeapon.instance.KillCount / (float)((currentSelectedWeapon.instance.Threshold1 + currentSelectedWeapon.instance.Threshold2));
+        HandleAttackInfoContainers(currentSelectedWeapon.instance);
     }
 
     public void Equip()
@@ -85,11 +96,23 @@ public class WeaponStash : MonoBehaviour
             currentEquipedWeapon.SetEquiped(false);
         }
         currentEquipedWeapon = currentSelectedWeapon;
-        weaponHolder.SetWeaponData(currentEquipedWeapon.data);
+        weaponHolder.SetWeaponInstance(currentEquipedWeapon.instance, AttackContainers[1].IsAttack, AttackContainers[2].IsAttack);
 
 
         currentEquipedWeapon.SetEquiped(true);
     }
+
+
+    [SerializeField] List<WeaponAttackItem> AttackContainers;
+
+    public void HandleAttackInfoContainers(WeaponInstance inst)
+    {
+        foreach (var container in AttackContainers)
+        {
+            container.FillInfo(inst);
+        }
+    }
+
 
 
 }

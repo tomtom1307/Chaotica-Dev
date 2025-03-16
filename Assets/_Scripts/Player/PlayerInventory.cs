@@ -5,6 +5,6 @@ public class PlayerInventory : MonoBehaviour
 {
     public float ChaosCores;
 
-    public List<WeaponDataSO> weaponStashDatas;
+    public List<WeaponInstance> weaponStashDatas;
 
 }

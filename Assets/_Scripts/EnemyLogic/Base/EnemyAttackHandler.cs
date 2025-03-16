@@ -33,8 +33,9 @@ public class EnemyAttackHandler : MonoBehaviour
         {
             Debug.Log("enabled root motion and disabled navmeshagent.");
             brain.animator.applyRootMotion = true;
-            brain.navMesh.velocity = Vector3.zero;
-            brain.navMesh.enabled = false;
+            brain.navMesh.isStopped = true;
+            brain.navMesh.speed = 0;
+            //brain.navMesh.enabled = false;
         }
         else Debug.Log("rootmotion in data is set to false.");
             brain.animator.SetInteger("AT", currentAttack.attackAnimation);
@@ -49,7 +50,9 @@ public class EnemyAttackHandler : MonoBehaviour
         {
             gameObject.transform.position = brain.animator.rootPosition;
             brain.animator.applyRootMotion = false;
-            brain.navMesh.enabled = true;
+            brain.navMesh.isStopped = false;
+            brain.navMesh.speed = brain.MoveSpeed;
+            //brain.navMesh.enabled = true;
         }
         brain.animator.SetInteger("AT", 0);
         brain.animator.SetBool("Attacking", false);

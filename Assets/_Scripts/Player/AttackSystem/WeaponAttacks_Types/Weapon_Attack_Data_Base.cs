@@ -1,12 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 [Serializable]
 public class Weapon_Attack_Data_Base
 {
+    public string Name;
+    [TextArea(4, 1)]
+    public string Description;
     public Weapon_Input weaponInputLogic;
-    public AttackType attackType;
+    [ReadOnlyy, SerializeField]protected AttackType attackType;
     public DamageType damageType = DamageType.Standard;
     public float damage = 5;
     public float ComboLength = 1;
@@ -53,3 +57,4 @@ public enum DamageType
     Verdancy,
     Aetherflow
 }
+

@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -27,7 +28,7 @@ public class WeaponHolder : MonoBehaviour
     //State variable
     [SerializeField]public AttackState State = AttackState.Ready;
 
-
+    [SerializeField] public WeaponInstance instance;
     [SerializeField] public WeaponDataSO data;
     [SerializeField] public LayerMask DamagableLayer;
     public Animator Weapon_anim;
@@ -35,11 +36,17 @@ public class WeaponHolder : MonoBehaviour
     public float ChargeAmount;
 
 
+
+    bool IsAttack2;
+    bool IsAttack3;
     //Called to set the weapon data once weapon swapping is implemented
-    public void SetWeaponData(WeaponDataSO data)
+    public void SetWeaponInstance(WeaponInstance instance, bool A2 =false, bool A3 = false)
     {
-        if (!enabled && data != null) enabled = true; 
-        this.data = data;
+        //if (!enabled && instance != null) enabled = true; 
+        this.instance = instance;
+        this.data = instance.data;
+        IsAttack2 = A2;
+        IsAttack3 = A3;
         HandleWeaponSwapping();
     }
 
@@ -101,13 +108,13 @@ public class WeaponHolder : MonoBehaviour
 
     public void Attack2Input(InputAction.CallbackContext ctx)
     {
-        if (!enabled) return;
+        if (!enabled || !IsAttack2) return;
         data.Weapon_Attacks[1].weaponInputLogic._Input(1, this, ctx);
     }
 
     public void Attack3Input(InputAction.CallbackContext ctx)
     {
-        if (!enabled) return;
+        if (!enabled || !IsAttack3) return;
         data.Weapon_Attacks[2].weaponInputLogic._Input(2, this, ctx);
     }
     
@@ -262,7 +269,10 @@ public class WeaponHolder : MonoBehaviour
 
     }
 
-
+    public void EnemyKilled()
+    {
+        instance.KillCount++;
+    }
     
     
 }
