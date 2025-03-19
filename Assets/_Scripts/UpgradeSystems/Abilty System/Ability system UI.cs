@@ -8,6 +8,9 @@ public class AbilitySystemUI : MonoBehaviour
 {
     //UI gameobject
     public GameObject Canvas;
+    public GameObject Player;
+
+    private AbilityUIController AbilityUIController;
 
     [HideInInspector] public Interactable _inter;
     [HideInInspector] public PlayerInventory PlayerInventory;
@@ -21,16 +24,41 @@ public class AbilitySystemUI : MonoBehaviour
         UIManager.instance.IsMenu(true, Canvas);
         UIManager.instance.ShowCursor();
 
+        // Debug.Log(AbilityUIController);
 
+        Player = _inter.interactor;
+
+        
     }
 
     //List<StatUpgradeContainer> StatUpgrades;
 
-    //private void Start()
-    //{
-    //    StatUpgrades = GetComponentsInChildren<StatUpgradeContainer>(true).ToList();
-    //    _inter = GetComponent<Interactable>();
-    //}
+    private void Start()
+    {
+       _inter = GetComponent<Interactable>();
+
+       // AbilityUIController = GetComponentInChildren<AbilityUIController>(true);
+    }
+
+    public void OnJumpAbilityButtonClicked()
+    {
+        if (Player.GetComponent<AbilityHolder>().enabled == false)
+        {
+            // Activates Jump ability on Character
+            print("Hey itss enabled");
+
+            Player.GetComponent<AbilityHolder>().enabled = true;
+        }
+        else
+        {
+            // Disables the Jump ability on Character
+            Debug.Log("Hey it is now disabled");
+
+            Player.GetComponent<AbilityHolder>().enabled = false;
+        }
+
+        print("Buttonpressedyo");
+    }
 
 
 
