@@ -1,33 +1,55 @@
+using Unity.Jobs;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class AbilityUIController : MonoBehaviour
 {
+    public GameObject Player;
+
     public VisualElement ui;
 
-    public Button SpawnPoopButton;
+    public Button JumpAbilityButton;
     private void Awake()
     {
         // Takes from UI document that the script is on
 
         ui = GetComponent<UIDocument>().rootVisualElement;
+
+        
     }
     private void OnEnable()
     {
         //  
 
-        SpawnPoopButton = ui.Q<Button>("SpawnPoop");
-        SpawnPoopButton.clicked += OnSpawnPoopButtonClicked;
+        JumpAbilityButton = ui.Q<Button>("JumpAbility");
+        JumpAbilityButton.clicked += OnJumpAbilityButtonClicked;
+
+        print("imenabled");
     }
-    private void OnSpawnPoopButtonClicked()
+
+    private void OnDisable()
     {
-        // Spawns poop on hand (idk) and gives damage boost to player
+        JumpAbilityButton.clicked -= OnJumpAbilityButtonClicked;
 
-        Debug.Log("yay you can spawn poop now");
+        print("imdiscbaale");
+    }
+    private void OnJumpAbilityButtonClicked()
+    {
+        if (Player.GetComponent<AbilityHolder>().enabled == false)
+        {
+            // Activates Jump ability on Character
+            print("Hey itss enabled");
 
-        // Attach poop to hand
+            Player.GetComponent<AbilityHolder>().enabled = true;
+        } else
+        {
+            // Disables the Jump ability on Character
+            Debug.Log("Hey it is now disabled");
 
-        // PlayerStats
+            Player.GetComponent<AbilityHolder>().enabled = false;
+        }
+
+        print("Buttonpressedyo");
     }
 }
