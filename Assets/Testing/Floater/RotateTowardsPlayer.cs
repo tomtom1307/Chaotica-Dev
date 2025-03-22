@@ -23,7 +23,6 @@ public class RotateTowardsPlayer : MonoBehaviour
     }
 
     public float maxOvershoot = 1;
-    private float t = 0;
 
     void Update()
     {

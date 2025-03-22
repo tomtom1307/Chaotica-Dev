@@ -90,7 +90,6 @@ public class WeaponStash : MonoBehaviour
 
     public void Equip()
     {
-        Debug.Log("Equip!");
         if(currentEquipedWeapon != null)
         {
             currentEquipedWeapon.SetEquiped(false);

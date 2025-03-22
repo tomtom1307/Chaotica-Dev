@@ -41,12 +41,14 @@ public class EnemyActionHandler : MonoBehaviour
     }
     public void ChangeToIdleState()
     {
-        brain.stateMachine.ChangeState(brain.idleState); Debug.Log("Changed to Idle State");
+        if(brain.stateChangeDebug) Debug.Log("Changed to Idle State");
+        brain.stateMachine.ChangeState(brain.idleState); 
         EndAction();
     }
     public void ChangeToPatrolState()
     {
-        brain.stateMachine.ChangeState(brain.patrolState); Debug.Log("Changed to Patrol State");
+        if(brain.stateChangeDebug) Debug.Log("Changed to Patrol State");
+        brain.stateMachine.ChangeState(brain.patrolState); 
 
         brain.OnPlayerSpotted.Invoke(); //TODO Handle in seperate action or include in change to attack state logic
 

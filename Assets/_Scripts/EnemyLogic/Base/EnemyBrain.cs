@@ -49,7 +49,8 @@ public class EnemyBrain : MonoBehaviour
     //Health
     private DamagableEnemy damagableEnemy;
 
-
+    [Header("Debug")]
+    public bool stateChangeDebug;
 
     //Animator
     [HideInInspector] public Animator animator;
@@ -59,7 +60,7 @@ public class EnemyBrain : MonoBehaviour
     //Stores the CheckBool value
     public Dictionary<CheckBool.Bool, Func<bool>> conditionBools = new Dictionary<CheckBool.Bool, Func<bool>>() { };
 
-    public void MapBools()
+    public virtual void MapBools()
     {
         conditionBools[CheckBool.Bool.LOS] = () => perception.LOS;
     }
@@ -68,7 +69,7 @@ public class EnemyBrain : MonoBehaviour
     //Stores the CheckFloat value
     public Dictionary<CheckFloat.Float, Func<float>> conditionFloats = new Dictionary<CheckFloat.Float, Func<float>>() { };
 
-    public void MapFloats()
+    public virtual void MapFloats()
     {
         conditionFloats[CheckFloat.Float.LSP_time] = () => perception.LSP_time;
         conditionFloats[CheckFloat.Float.playerDistance] = () => perception.Distance;
@@ -78,14 +79,14 @@ public class EnemyBrain : MonoBehaviour
     //Stores the CheckInt value
     public Dictionary<CheckInt.Int, Func<int>> conditionInts = new Dictionary<CheckInt.Int, Func<int>>() { };
 
-    public void MapInts()
+    public virtual void MapInts()
     {
 
     }
 
 
 
-    private void Start()
+    protected virtual void Start()
     {
 
 
@@ -127,12 +128,11 @@ public class EnemyBrain : MonoBehaviour
 
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         navMesh.speed = MoveSpeed;
         stateMachine.CurrentEnemyState.FrameUpdate();
-        if (navMesh.remainingDistance == 0) animator.SetBool("Walking", false);
-        if(animator.GetBool("Walking")) animator.SetFloat("WalkSpeed", navMesh.velocity.magnitude);
+
     }
 
 
