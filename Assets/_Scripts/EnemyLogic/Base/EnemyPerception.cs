@@ -35,7 +35,6 @@ public class EnemyPerception : MonoBehaviour
     {
         for (int i = 0; i < functions.Count; i++)
         {
-            Debug.Log(functions[i]);
             InvokeRepeating(functions[i], 0, times[i]);
         }
     }

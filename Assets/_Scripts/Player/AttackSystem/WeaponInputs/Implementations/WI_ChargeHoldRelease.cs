@@ -11,7 +11,6 @@ public class ChargeHoldRelease: Weapon_Input
 
     public override void QueuedInput(int AttackNum, WeaponHolder WH, InputAction.CallbackContext ctx)
     {
-        Debug.Log("Did Queued Input");
         HoldLogic(AttackNum, WH, ctx);
     }
 
@@ -28,7 +27,6 @@ public class ChargeHoldRelease: Weapon_Input
             
             if (ctx.performed)
             {
-                Debug.Log("Queued Hold");
                 WH.QueueAttack(AttackNum, ctx, queueExpirationTime);
             }
             return;
@@ -42,7 +40,6 @@ public class ChargeHoldRelease: Weapon_Input
     {
         if (ctx.performed && !isCharging) // Button pressed down
         {
-            Debug.Log("Performed Hold" + "CurrentState:" + WH.State);
             WH.StartAttackCharging(AttackNum);
             chargeStartTime = Time.time;
             isCharging = true;
@@ -51,7 +48,6 @@ public class ChargeHoldRelease: Weapon_Input
         else if (ctx.canceled && isCharging) // Button released
         {
             HUDController.instance.StopFill();
-            Debug.Log("Released Hold");
             float totalCharge = Time.time - chargeStartTime;
             isCharging = false;
 

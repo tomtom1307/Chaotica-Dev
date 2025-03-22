@@ -64,7 +64,6 @@ public class ColliderDetector : MonoBehaviour
     private void PlayerDetected()
     {
         DisableCollider();
-        Debug.Log("Player was hit by the attack!");
         OnDetectCallback?.Invoke(ph, this);
 
     }

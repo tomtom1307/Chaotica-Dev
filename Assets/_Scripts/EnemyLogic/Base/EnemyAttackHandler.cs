@@ -26,7 +26,6 @@ public class EnemyAttackHandler : MonoBehaviour
     public void EnterAttack(EnemyAttack EA)
     {
         if (attacking) { return; }
-        Debug.Log("Enter Attack!");
         currentAttack = EA;
         attacking = true;
         if (currentAttack.attackData.rootMotion)
@@ -63,12 +62,10 @@ public class EnemyAttackHandler : MonoBehaviour
     private void AttackCooldownExit()
     {
         attacking = false;
-        Debug.Log("FinishedAttack!");
     }
 
     public void DamagePlayer(PlayerHealth PH)
     {
-        Debug.Log("PlayerWasDamaged!");
         currentAttack.attackData.DamageLogic(PH, this);
         PH.TakeDamage(currentAttack.attackData.damageValue);
     }
@@ -113,11 +110,9 @@ public class EnemyAttackHandler : MonoBehaviour
         {
             if (colGroup.colliderList.Contains(col) && !groupDidDamage[count])
             {
-                Debug.Log("Attack group has not done damage yet!");
                 DamagePlayer(ph); // Damage player
                 groupDidDamage[count] = true; // Count group as having done damage
             }
-            else Debug.Log("Ignored extra collider trigger.");
                 count++;
         }
     }
