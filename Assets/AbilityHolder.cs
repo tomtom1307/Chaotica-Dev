@@ -26,6 +26,11 @@ public class AbilityHolder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (ability == null)
+        {
+            return;
+        }
+
         switch (abilityState)
         {
             case AbilityState.ready:

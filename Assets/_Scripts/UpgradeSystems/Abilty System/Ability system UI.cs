@@ -10,12 +10,21 @@ public class AbilitySystemUI : MonoBehaviour
     public GameObject Canvas;
     public GameObject Player;
 
-    private AbilityUIController AbilityUIController;
+    //private AbilityUIController AbilityUIController;
 
     [HideInInspector] public Interactable _inter;
     [HideInInspector] public PlayerInventory PlayerInventory;
 
     public TMP_Text ChaosCoresTxt;
+    public TreeNode cursel;
+
+    // reference to abilityholders
+
+    public List <AbilityHolder> AHolder;
+
+    // reference to abilityslots
+
+    
 
     //Function Called by interactable 
     public void _EnterAbilityWindow()
@@ -28,37 +37,31 @@ public class AbilitySystemUI : MonoBehaviour
 
         Player = _inter.interactor;
 
-        
+        AHolder = Player.GetComponents<AbilityHolder>().ToList();
     }
 
     //List<StatUpgradeContainer> StatUpgrades;
 
     private void Start()
     {
-       _inter = GetComponent<Interactable>();
+        _inter = GetComponent<Interactable>();
 
+        
        // AbilityUIController = GetComponentInChildren<AbilityUIController>(true);
     }
 
-    public void OnJumpAbilityButtonClicked()
+    public void AbilityEquip(int i)
     {
-        if (Player.GetComponent<AbilityHolder>().enabled == false)
+        // takes integer from Abilityslot, takes in data/SO from cursel and links to AbilityHolder to equip
+        if (cursel == null)
         {
-            // Activates Jump ability on Character
-            print("Hey itss enabled");
-
-            Player.GetComponent<AbilityHolder>().enabled = true;
+            return;
         }
-        else
-        {
-            // Disables the Jump ability on Character
-            Debug.Log("Hey it is now disabled");
+        AHolder[i].ability = cursel.data;
 
-            Player.GetComponent<AbilityHolder>().enabled = false;
-        }
-
-        print("Buttonpressedyo");
+        //print("Buttonpressedyo");
     }
+
 
 
 
