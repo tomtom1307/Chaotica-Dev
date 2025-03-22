@@ -54,7 +54,7 @@ public class MazeGenerator : MonoBehaviour
         currentCell.Visit();
         ClearWalls(previousCell, currentCell);
 
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.1f);
 
         MazeCell nextCell;
         do
