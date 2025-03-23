@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float sensY;
     [SerializeField] private float LerpSpeed;
     [SerializeField] Transform orientation;
+    public GameObject Player;
     [SerializeField] Transform HeadPos;
 
     Camera cam;
@@ -21,6 +22,7 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         cam = GetComponentInChildren<Camera>();
+        
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

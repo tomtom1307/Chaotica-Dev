@@ -93,7 +93,10 @@ VisualEffect:
         m_Name: FireTex
         m_Overridden: 1
     m_Bool:
-      m_Array: []
+      m_Array:
+      - m_Value: 0
+        m_Name: SmokeEnabled
+        m_Overridden: 1
 --- !u!73398921 &6466004750790250043
 VFXRenderer:
   serializedVersion: 1
