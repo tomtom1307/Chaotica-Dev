@@ -80,26 +80,37 @@ public class CamAttackAnim : MonoBehaviour
     public float rotationMagnitude = 15f;  // Max rotation angle
 
     private Quaternion originalRotation;
-
+    public CameraController cc;
+    public Rigidbody rb;
     private void Start()
     {
         originalRotation = transform.rotation;
-        weaponHolder = GetComponent<CameraController>().Player.GetComponent<WeaponHolder>();
+        cc = GetComponent<CameraController>();
+        weaponHolder = cc.Player.GetComponent<WeaponHolder>();
+        rb = weaponHolder.GetComponent<Rigidbody>();
+        
     }
 
     public void RotateCamera(Vector2 direction, float Mult)
     {
-        //StopAllCoroutines();
+        StopAllCoroutines();
         StartCoroutine(RotateRoutine(direction, Mult));
     }
 
     private IEnumerator RotateRoutine(Vector2 direction, float Mult)
     {
+        Vector3 considerVector = rb.linearVelocity;
+        considerVector.y = 0;
+        if (considerVector.magnitude < 0.5f)
+        {
+            considerVector = cc.orientation.forward;
+        }
+        
         Quaternion targetRotation = Quaternion.Euler(
-            -direction.y * rotationMagnitude * Mult,
-            direction.x * rotationMagnitude * Mult,
-            0f
-        ) * originalRotation;
+            -direction.y * rotationMagnitude * Mult * Vector3.Dot(transform.forward, considerVector.normalized),  // Pitch (X-axis)
+            (-direction.x * rotationMagnitude * Mult), 
+            (direction.y * rotationMagnitude * Mult * Vector3.Dot(transform.right, considerVector.normalized)
+        ));
 
         // Rotate towards target
         float elapsedTime = 0f;

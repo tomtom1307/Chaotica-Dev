@@ -26,10 +26,11 @@ public class PlayerMovement : MonoBehaviour
     Vector3 MoveDir;
 
     Rigidbody rb;
-
+    CamAttackAnim CamattackAnim;
 
     private void Start()
     {
+        CamattackAnim = Camera.main.GetComponentInParent<CamAttackAnim>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         _currentMoveSpeed = _moveSpeed;
@@ -48,6 +49,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (!isGrounded)
+        {
+            isGrounded = Physics.CheckSphere(transform.position + 0.3f * Vector3.up, 0.4f, whatisGround);
+            if (isGrounded) CamattackAnim.RotateCamera(Vector2.down, 0.7f);
+        }
         isGrounded = Physics.CheckSphere(transform.position+0.3f*Vector3.up, 0.4f, whatisGround);
 
         MyInput();
@@ -103,6 +109,7 @@ public class PlayerMovement : MonoBehaviour
     
     void Jump()
     {
+        CamattackAnim.RotateCamera(Vector2.up, 0.7f);
         rb.AddForce(_jumpForce * transform.up * jumpEnhance, ForceMode.Impulse);
     }
 

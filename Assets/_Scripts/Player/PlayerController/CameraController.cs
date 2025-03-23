@@ -5,7 +5,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float sensX;
     [SerializeField] private float sensY;
     [SerializeField] private float LerpSpeed;
-    [SerializeField] Transform orientation;
+    [SerializeField] public Transform orientation;
     public GameObject Player;
     [SerializeField] Transform HeadPos;
 
