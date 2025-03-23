@@ -2032,12 +2032,13 @@ MonoBehaviour:
   _airDrag: 0.1
   _airMoveMultiplier: 0.05
   _groundMoveMultiply: 10
-  _jumpForce: 400
+  _jumpForce: 450
   orientation: {fileID: 7714421985405113136}
   jumpEnhance: 1
   whatisGround:
     serializedVersion: 2
     m_Bits: 64
+  isGrounded: 0
   MaxSlopeAngle: 60
   moveInput: {x: 0, y: 0}
 --- !u!114 &8091079049166687030
@@ -3044,6 +3045,10 @@ MonoBehaviour:
   maxStepDistance: 0.06
   rotationStep: 4
   maxRotationStep: 5
+  SpeedCurve: 0
+  travelLimit: {x: 0.01, y: 0.01, z: 0.03}
+  bobLimit: {x: 0.007, y: 0.01, z: 0.01}
+  multiplier: {x: 1, y: 1, z: 1}
 --- !u!1 &8068327152247927796
 GameObject:
   m_ObjectHideFlags: 0
