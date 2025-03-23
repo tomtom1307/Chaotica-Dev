@@ -35,7 +35,7 @@ public class WeaponHolder : MonoBehaviour
     public Camera cam;
     public float ChargeAmount;
 
-
+    private PlayerMovement playerMovement;
 
     bool IsAttack2;
     bool IsAttack3;
@@ -72,6 +72,7 @@ public class WeaponHolder : MonoBehaviour
     //Initialization steps
     private void Start()
     {
+        playerMovement = GetComponent<PlayerMovement>();
         playerInput = GetComponent<PlayerInput>();
         cam = Camera.main;
         State = AttackState.Ready;
@@ -125,7 +126,7 @@ public class WeaponHolder : MonoBehaviour
         //Set State and variables
         State = AttackState.Attacking;
         CurrentAttackData = data.Weapon_Attacks[i];
-        
+        playerMovement.SetAttackMoveSpeed(CurrentAttackData.MoveSpeedMult);
         
 
         //Handle Animation stuff
@@ -148,6 +149,7 @@ public class WeaponHolder : MonoBehaviour
     public void ExitAttack()
     {
         //Reset basically
+        playerMovement.ResetMoveSpeed();
         HandleCooldownStuff();
         CurrentAttackData = null;
         
@@ -263,7 +265,9 @@ public class WeaponHolder : MonoBehaviour
     //the 
     public void StartAttackCharging(int Attack)
     {
+        CurrentAttackData = data.Weapon_Attacks[Attack];
         State = AttackState.Charging;
+        playerMovement.SetAttackMoveSpeed(CurrentAttackData.MoveSpeedMult);
         Weapon_anim.SetBool("Charging", true);
         Weapon_anim.SetInteger("AttackType", Attack);
 
@@ -272,6 +276,7 @@ public class WeaponHolder : MonoBehaviour
     public void EnemyKilled()
     {
         instance.KillCount++;
+        //TODO: Check if new attack unlocked!
     }
     
     

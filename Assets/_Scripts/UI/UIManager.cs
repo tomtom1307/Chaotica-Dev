@@ -25,7 +25,7 @@ public class UIManager : MonoBehaviour
         }
 
         playerMovement = GetComponent<PlayerMovement>();
-        CamController = Camera.main.GetComponent<CameraController>();
+        CamController = Camera.main.GetComponentInParent<CameraController>();
         weaponHolder = GetComponent<WeaponHolder>();
     }
 

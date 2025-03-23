@@ -16,7 +16,8 @@ public class Weapon_Attack_Data_Base
     public float ComboLength = 1;
     public float manaUse = 5;
     public float StaggerDamage = 5;
-
+    public float AttackWeight = 1;
+    public float MoveSpeedMult = 1;
     public bool hasCooldown = false;
     public float cooldown = 0.1f;
     

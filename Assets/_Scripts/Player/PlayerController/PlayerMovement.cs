@@ -5,6 +5,7 @@ public class PlayerMovement : MonoBehaviour
     
     [SerializeField]
     private float _moveSpeed, _groundDrag, _airDrag, _airMoveMultiplier, _groundMoveMultiply, _jumpForce;
+    private float _currentMoveSpeed;
     public Transform orientation;
 
     public float jumpEnhance = 1f;
@@ -31,6 +32,17 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        _currentMoveSpeed = _moveSpeed;
+    }
+
+    public void SetAttackMoveSpeed(float mult)
+    {
+        _currentMoveSpeed = mult*_moveSpeed;
+    }
+
+    public void ResetMoveSpeed()
+    {
+        _currentMoveSpeed = _moveSpeed;
     }
 
 
@@ -116,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!OnSlope())
         {
-            rb.AddForce(MoveDir * _moveSpeed * (1 + 0.01f*PlayerStats.instance.GetStat(StatType.MoveSpeedIncrease)) * _moveMultiply, ForceMode.Acceleration);
+            rb.AddForce(MoveDir * _currentMoveSpeed * (1 + 0.01f*PlayerStats.instance.GetStat(StatType.MoveSpeedIncrease)) * _moveMultiply, ForceMode.Acceleration);
         }
         else if(isGrounded && OnSlope())
         {
@@ -127,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
                 
                 return;
             }
-            rb.AddForce(slopeMoveDirection * _moveSpeed * (1 + 0.01f * PlayerStats.instance.GetStat(StatType.MoveSpeedIncrease)) * _moveMultiply, ForceMode.Acceleration);
+            rb.AddForce(slopeMoveDirection * _currentMoveSpeed * (1 + 0.01f * PlayerStats.instance.GetStat(StatType.MoveSpeedIncrease)) * _moveMultiply, ForceMode.Acceleration);
             
             rb.AddForce((1-slopeMoveDirection.magnitude) * -1 * Vector3.ProjectOnPlane(Physics.gravity, slopeHit.normal), ForceMode.Acceleration);
             
