@@ -54,13 +54,14 @@ public class CamAttackAnim : MonoBehaviour
                 }
         }
 
-        RotateCamera(SwingDir);
+        RotateCamera(SwingDir, weaponHolder.CurrentAttackData.AttackWeight * weaponHolder.ChargeAmount);
 
 
     }
 
     private void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             RotateCamera(Vector2.up);
@@ -72,7 +73,7 @@ public class CamAttackAnim : MonoBehaviour
         else if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.LeftArrow))
         {
             RotateCamera(Vector2.up+Vector2.left);
-        }
+        }*/
     }
 
     public float rotationSpeed = 2f;  // Speed of rotation
@@ -86,17 +87,17 @@ public class CamAttackAnim : MonoBehaviour
         weaponHolder = GetComponent<CameraController>().Player.GetComponent<WeaponHolder>();
     }
 
-    public void RotateCamera(Vector2 direction)
+    public void RotateCamera(Vector2 direction, float Mult)
     {
         //StopAllCoroutines();
-        StartCoroutine(RotateRoutine(direction));
+        StartCoroutine(RotateRoutine(direction, Mult));
     }
 
-    private IEnumerator RotateRoutine(Vector2 direction)
+    private IEnumerator RotateRoutine(Vector2 direction, float Mult)
     {
         Quaternion targetRotation = Quaternion.Euler(
-            -direction.y * rotationMagnitude * weaponHolder.CurrentAttackData.AttackWeight * weaponHolder.ChargeAmount,
-            direction.x * rotationMagnitude * weaponHolder.CurrentAttackData.AttackWeight * weaponHolder.ChargeAmount,
+            -direction.y * rotationMagnitude * Mult,
+            direction.x * rotationMagnitude * Mult,
             0f
         ) * originalRotation;
 
@@ -105,7 +106,7 @@ public class CamAttackAnim : MonoBehaviour
         while (elapsedTime < 1f)
         {
             transform.rotation = Quaternion.Slerp(originalRotation, targetRotation, elapsedTime);
-            elapsedTime += Time.deltaTime * rotationSpeed*1.5f * weaponHolder.CurrentAttackData.AttackWeight * weaponHolder.ChargeAmount;
+            elapsedTime += Time.deltaTime * rotationSpeed * 1.5f * Mult;
             yield return null;
         }
 

@@ -61,10 +61,16 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+
+    [HideInInspector] public Vector2 moveInput;
+
     void MyInput()
     {
         horMovement = Input.GetAxisRaw("Horizontal");
         vertMovement = Input.GetAxisRaw("Vertical");
+        moveInput.x = horMovement;
+        moveInput.y = vertMovement;
+        moveInput = moveInput.normalized;
 
         if(isGrounded && Input.GetKeyDown(KeyCode.Space))
         {

@@ -46,10 +46,13 @@ public class CameraController : MonoBehaviour
         sensY = val;
     }
 
+    [HideInInspector] public Vector2 mouseInput;
     void myInput()
     {
         mousex = Input.GetAxisRaw("Mouse X");
         mousey = Input.GetAxisRaw("Mouse Y");
+        mouseInput.x = mousex;
+        mouseInput.y = mousey;
 
 
         yRot += mousex * sensX * multiplier;
