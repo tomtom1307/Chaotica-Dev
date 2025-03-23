@@ -59,6 +59,7 @@ public class AbilitySystemUI : MonoBehaviour
         }
         AHolder[i].ability = cursel.data;
 
+
         //print("Buttonpressedyo");
     }
 
