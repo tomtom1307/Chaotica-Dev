@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: TestWeaponData2
   m_EditorClassIdentifier: 
   _Name: Bow
-  model: {fileID: 919132149155446097, guid: d690d93790e1e5d49a7fc8a252270c04, type: 3}
-  secondaryModel: {fileID: 919132149155446097, guid: 780a74868b0bbb941ab10ce572b51d44, type: 3}
+  model: {fileID: 8348362843108236407, guid: 96d487f57a14d78459be8a1a84293582, type: 3}
+  secondaryModel: {fileID: 6817403599729623704, guid: 3420ab1c1471dfa42a5df420e86d3553, type: 3}
   WeaponDamage: 10
   Anim_controller: {fileID: 9100000, guid: 9fe8c0fc8029ebb4e9ab6dd7228a9f97, type: 2}
   Weapon_Attacks:
@@ -37,7 +37,7 @@ MonoBehaviour:
         ComboLength: 1
         manaUse: 5
         StaggerDamage: 5
-        AttackWeight: 0
+        AttackWeight: 1
         MoveSpeedMult: 0.7
         hasCooldown: 1
         cooldown: 0.1

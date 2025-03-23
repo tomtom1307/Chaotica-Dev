@@ -11893,6 +11893,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3064122235748413130, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: bobLimit.x
+      value: 0.007
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064122235748413130, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: multiplier.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064122235748413130, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: multiplier.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064122235748413130, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: multiplier.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064122235748413130, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: travelLimit.x
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064122235748413130, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: travelLimit.y
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 3064122235748413130, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: travelLimit.z
+      value: 0.03
+      objectReference: {fileID: 0}
     - target: {fileID: 8248619696985984631, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
       propertyPath: m_Name
       value: Player

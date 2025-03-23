@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     float _moveMultiply;
 
 
-    bool isGrounded;
+    public bool isGrounded;
     public float MaxSlopeAngle;
     RaycastHit slopeHit;
 
@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
         if (!isGrounded)
         {
             isGrounded = Physics.CheckSphere(transform.position + 0.3f * Vector3.up, 0.4f, whatisGround);
-            if (isGrounded) CamattackAnim.RotateCamera(Vector2.down, 0.7f);
+            if (isGrounded) CamattackAnim.RotateCamera(Vector2.down, 0.8f);
         }
         isGrounded = Physics.CheckSphere(transform.position+0.3f*Vector3.up, 0.4f, whatisGround);
 

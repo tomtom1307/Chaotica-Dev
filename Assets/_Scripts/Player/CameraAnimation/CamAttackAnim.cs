@@ -108,7 +108,7 @@ public class CamAttackAnim : MonoBehaviour
         
         Quaternion targetRotation = Quaternion.Euler(
             -direction.y * rotationMagnitude * Mult * Vector3.Dot(transform.forward, considerVector.normalized),  // Pitch (X-axis)
-            (-direction.x * rotationMagnitude * Mult), 
+            (direction.x * rotationMagnitude * Mult), 
             (direction.y * rotationMagnitude * Mult * Vector3.Dot(transform.right, considerVector.normalized)
         ));
 
