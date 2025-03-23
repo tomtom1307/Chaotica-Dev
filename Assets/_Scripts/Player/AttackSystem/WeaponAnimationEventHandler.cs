@@ -8,6 +8,7 @@ public class WeaponAnimationEventHandler : MonoBehaviour
     public UnityEvent onFinishedAttack;
     public UnityEvent OnAttackPerformed;
     public UnityEvent onMoveSpeedReset;
+    
     CamAttackAnim CamAnimator;
 
     public void FinishedAttack()
@@ -35,13 +36,17 @@ public class WeaponAnimationEventHandler : MonoBehaviour
         onComboWindowClosed.Invoke();
     }
 
+    public void PlaySound(PlayerSoundSource.SoundType soundType)
+    {
+        PlayerSoundSource.instance.PlaySound(soundType, 1);
+    }
+
     //Can Later have it calculate the projection of the direction vector to the hand onto the camera plane instead of using enum
     public void CamSwing(SwingDirection dir)
     {
         CamAnimator.DoAnim(dir);
         
     }
-
     private void Start()
     {
         CamAnimator = GetComponentInParent<CamAttackAnim>();

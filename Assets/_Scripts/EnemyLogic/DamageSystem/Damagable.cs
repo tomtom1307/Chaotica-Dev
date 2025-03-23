@@ -8,7 +8,7 @@ public class Damagable : MonoBehaviour
     public bool DamageNumbers = true;
     [HideInInspector] GameObject DamageNumber;
     public GameObject SpawnOnDeath;
-
+    public Vector3 spawnOffset;
 
 
 
@@ -50,9 +50,9 @@ public class Damagable : MonoBehaviour
 
     public void SpawnDamageNumbers(float damage)
     {
-        GameObject number = Instantiate(DamageNumber, transform.position+0.3f*(Camera.main.transform.position-transform.position).normalized, Quaternion.identity);
+        Vector3 offsetVector = spawnOffset.x * transform.right + spawnOffset.y * transform.up + spawnOffset.z * transform.forward;
+        GameObject number = Instantiate(DamageNumber,offsetVector+ transform.position+0.3f*(Camera.main.transform.position-transform.position).normalized, Quaternion.identity);
         number.GetComponent<DamageNumber>().SetValue(damage);
-        
     }
 
 
