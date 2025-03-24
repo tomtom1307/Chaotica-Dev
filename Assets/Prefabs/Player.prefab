@@ -2407,20 +2407,27 @@ MonoBehaviour:
   clips:
   - name: FootSteps
     pitchVariation: {x: 0, y: 0}
+    desiredVolume: 0
     sounds: []
   - name: TakeDamage
     pitchVariation: {x: 0, y: 0}
+    desiredVolume: 0
     sounds: []
   - name: SwingSword
-    pitchVariation: {x: 1.3, y: 1.5}
+    pitchVariation: {x: 0.8, y: 1.1}
+    desiredVolume: 3.2
     sounds:
-    - {fileID: 8300000, guid: e00c48dc23504bc488e3bc6b9ecbfb2a, type: 3}
+    - {fileID: 8300000, guid: a37848f36ff6f4f44bb2c74e5e012edd, type: 3}
+    - {fileID: 8300000, guid: 109c1c03676bbab4a8d839c0095bc6e7, type: 3}
+    - {fileID: 8300000, guid: b4b60642eb30d5847a7294ccd9d4a73b, type: 3}
   - name: DrawBow
     pitchVariation: {x: 0.9, y: 1.1}
+    desiredVolume: 2
     sounds:
     - {fileID: 8300000, guid: 8c4a382f7a1b6c94ea97960f503f770b, type: 3}
   - name: ShootBow
     pitchVariation: {x: 0.8, y: 1.2}
+    desiredVolume: 2
     sounds:
     - {fileID: 8300000, guid: 67aa978a2c8f708478f724492be818e8, type: 3}
 --- !u!1 &6547277670590502999

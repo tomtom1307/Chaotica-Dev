@@ -356,15 +356,18 @@ MonoBehaviour:
   clips:
   - name: FootSteps
     pitchVariation: {x: 0, y: 0}
+    desiredVolume: 0
     sounds: []
   - name: TakeDamageBladed
     pitchVariation: {x: 0.9, y: 1.1}
+    desiredVolume: 0
     sounds:
     - {fileID: 8300000, guid: 97244a39a14983a429800822064fcbd7, type: 3}
     - {fileID: 8300000, guid: 69b21fb8a1c5a284ea09079ddb4d3b42, type: 3}
     - {fileID: 8300000, guid: 2761590773ec37a4e9f928543a946708, type: 3}
   - name: TakeDamageBlunt
     pitchVariation: {x: 0, y: 0}
+    desiredVolume: 0
     sounds: []
 --- !u!82 &877918189897887276
 AudioSource:
@@ -423,7 +426,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -545,8 +548,10 @@ MonoBehaviour:
   MaxHealth: 25
   Health: 0
   DamageNumbers: 1
-  SpawnOnDeath: {fileID: 0}
+  SpawnOnDeath: {fileID: 310846752812338475, guid: 05b59a82ad168ad4d9139ed7732d1d82, type: 3}
   spawnOffset: {x: 0, y: 1, z: 0}
+  model: {fileID: 7522260643798107158}
+  ded: 0
   hitParticleFX: {fileID: 9105707323847228812, guid: ce9284e5638470c4e9112b8eff7efa2b, type: 3}
 --- !u!114 &5281054923219915767
 MonoBehaviour:
