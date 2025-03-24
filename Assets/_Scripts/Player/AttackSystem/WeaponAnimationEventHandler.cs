@@ -38,7 +38,7 @@ public class WeaponAnimationEventHandler : MonoBehaviour
 
     public void PlaySound(PlayerSoundSource.SoundType soundType)
     {
-        PlayerSoundSource.instance.PlaySound(soundType, 1);
+        PlayerSoundSource.instance.PlaySound(soundType);
     }
 
     //Can Later have it calculate the projection of the direction vector to the hand onto the camera plane instead of using enum

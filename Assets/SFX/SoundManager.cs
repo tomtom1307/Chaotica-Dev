@@ -17,14 +17,17 @@ public abstract class SourceSoundManager<T> : MonoBehaviour where T: Enum
 
     [HideInInspector]public AudioSource audioSource;
     public SoundList[] clips;
-    public virtual void PlaySound(T sound, float volume, bool looping = false)
+    public virtual void PlaySound(T sound, float volume = -1, bool looping = false)
     {
         
         AudioClip[] _clips = clips[Convert.ToInt32(sound)].Sounds;
         if(_clips.Length == 0) { Debug.LogError("The Called sound has no assigned sounds please assign them in the inspector"); return; }
         audioSource.pitch = UnityEngine.Random.Range(clips[Convert.ToInt32(sound)].pitchVariation.x, clips[Convert.ToInt32(sound)].pitchVariation.y);
         AudioClip randomClip = _clips[UnityEngine.Random.Range(0, _clips.Length)];
-
+        if(volume == -1)
+        {
+            volume = clips[Convert.ToInt32(sound)].desiredVolume;
+        }
         if (looping)
         {
             audioSource.loop = true;
@@ -69,6 +72,7 @@ public struct SoundList
     public AudioClip[] Sounds { get => sounds; }
     [HideInInspector] public string name;
     [SerializeField] public Vector2 pitchVariation;
+    [SerializeField] public float desiredVolume;
     [SerializeField] public AudioClip[] sounds;
 }
 

@@ -17,7 +17,7 @@ public class PlayerSoundSource : SourceSoundManager<PlayerSoundSource.SoundType>
         }
     }
 
-    public override void PlaySound(SoundType sound, float volume, bool looping = false)
+    public override void PlaySound(SoundType sound, float volume = -1, bool looping = false)
     {
         base.PlaySound(sound, volume, looping);
     }

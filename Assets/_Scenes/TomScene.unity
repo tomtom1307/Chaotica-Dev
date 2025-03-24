@@ -6490,6 +6490,8 @@ MonoBehaviour:
   DamageNumbers: 1
   SpawnOnDeath: {fileID: 4784340333781393268, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
   spawnOffset: {x: 0, y: 0, z: 0}
+  model: {fileID: 919132147513655597}
+  ded: 0
   hitParticleFX: {fileID: 9105707323847228812, guid: ce9284e5638470c4e9112b8eff7efa2b, type: 3}
 --- !u!135 &1173849752
 SphereCollider:
@@ -6528,15 +6530,18 @@ MonoBehaviour:
   clips:
   - name: FootSteps
     pitchVariation: {x: 0, y: 0}
+    desiredVolume: 0
     sounds: []
   - name: TakeDamageBladed
     pitchVariation: {x: 0.9, y: 1.1}
+    desiredVolume: 0
     sounds:
     - {fileID: 8300000, guid: 97244a39a14983a429800822064fcbd7, type: 3}
     - {fileID: 8300000, guid: 69b21fb8a1c5a284ea09079ddb4d3b42, type: 3}
     - {fileID: 8300000, guid: 2761590773ec37a4e9f928543a946708, type: 3}
   - name: TakeDamageBlunt
     pitchVariation: {x: 0, y: 0}
+    desiredVolume: 0
     sounds: []
 --- !u!82 &1173849754
 AudioSource:
@@ -6595,7 +6600,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.97
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -9183,6 +9188,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LowerBound: 0.6
   UpperBound: 1.4
+--- !u!1 &1661118336 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7522260643798107158, guid: ce2744065acb73445a6259f819d37148, type: 3}
+  m_PrefabInstance: {fileID: 4569633281391185003}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1665563424
 GameObject:
   m_ObjectHideFlags: 0
@@ -11894,21 +11904,41 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: clips.Array.data[2].desiredVolume
+      value: 3.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: clips.Array.data[3].desiredVolume
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: clips.Array.data[4].desiredVolume
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: clips.Array.data[2].pitchVariation.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: clips.Array.data[2].pitchVariation.y
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
       propertyPath: clips.Array.data[2].sounds.Array.size
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
       propertyPath: 'clips.Array.data[2].sounds.Array.data[0]'
       value: 
-      objectReference: {fileID: 8300000, guid: fdb2e49db70f1c945b1d303cf8d8f2d6, type: 3}
+      objectReference: {fileID: 8300000, guid: a37848f36ff6f4f44bb2c74e5e012edd, type: 3}
     - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
       propertyPath: 'clips.Array.data[2].sounds.Array.data[1]'
       value: 
-      objectReference: {fileID: 8300000, guid: fe2896a8cd624e04fa815b457d5c7e75, type: 3}
+      objectReference: {fileID: 8300000, guid: 109c1c03676bbab4a8d839c0095bc6e7, type: 3}
     - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
       propertyPath: 'clips.Array.data[2].sounds.Array.data[2]'
       value: 
-      objectReference: {fileID: 8300000, guid: 6fddd9f075978b6438a09749d1c7ff99, type: 3}
+      objectReference: {fileID: 8300000, guid: b4b60642eb30d5847a7294ccd9d4a73b, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12217,9 +12247,37 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1198127930}
     m_Modifications:
+    - target: {fileID: 877918189897887276, guid: ce2744065acb73445a6259f819d37148, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1210316982324589196, guid: ce2744065acb73445a6259f819d37148, type: 3}
       propertyPath: m_Name
       value: CrystalHead2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772586632240386656, guid: ce2744065acb73445a6259f819d37148, type: 3}
+      propertyPath: clips.Array.data[1].pitchVariation.x
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772586632240386656, guid: ce2744065acb73445a6259f819d37148, type: 3}
+      propertyPath: clips.Array.data[1].pitchVariation.y
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880005699377850875, guid: ce2744065acb73445a6259f819d37148, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5849893152138461132, guid: ce2744065acb73445a6259f819d37148, type: 3}
+      propertyPath: model
+      value: 
+      objectReference: {fileID: 1661118336}
+    - target: {fileID: 5849893152138461132, guid: ce2744065acb73445a6259f819d37148, type: 3}
+      propertyPath: SpawnOnDeath
+      value: 
+      objectReference: {fileID: 310846752812338475, guid: 05b59a82ad168ad4d9139ed7732d1d82, type: 3}
+    - target: {fileID: 7522260643798107158, guid: ce2744065acb73445a6259f819d37148, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7953176507071246033, guid: ce2744065acb73445a6259f819d37148, type: 3}
       propertyPath: m_LocalPosition.x

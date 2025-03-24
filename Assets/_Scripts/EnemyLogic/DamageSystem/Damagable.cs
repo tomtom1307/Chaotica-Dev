@@ -9,8 +9,8 @@ public class Damagable : MonoBehaviour
     [HideInInspector] GameObject DamageNumber;
     public GameObject SpawnOnDeath;
     public Vector3 spawnOffset;
-
-
+    public GameObject model;
+    public bool ded;
 
     protected virtual void Start()
     {
@@ -21,6 +21,7 @@ public class Damagable : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (ded == true) return;
         Health -= damage;
         OnDamageTaken(damage);
         if(Health <= 0)
@@ -31,11 +32,17 @@ public class Damagable : MonoBehaviour
 
     public virtual void Die()
     {
+        if(ded == true) { return; }
+        ded = true;
         if(SpawnOnDeath != null)
         {
             Instantiate(SpawnOnDeath, transform.position, transform.rotation);
         }
-        Destroy(gameObject);
+        if(model != null)
+        {
+            model.SetActive(false);
+        }
+        Destroy(gameObject,0.5f);
         
     }
 
