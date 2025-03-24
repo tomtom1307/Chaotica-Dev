@@ -14,6 +14,7 @@ public class WeaponStash : MonoBehaviour
     public Interactable interactable;
     private void Start()
     {
+        canvas.SetActive(false);
         interactable = GetComponent<Interactable>();
         weaponStashObjs = new List<GameObject>();
     }
