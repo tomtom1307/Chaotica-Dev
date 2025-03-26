@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 public class AbilitySlot : MonoBehaviour
 {
-    public int i;
+    public int SlotNumber;
 
     public AbilitySystemUI abilitySystemUI;
 
@@ -20,7 +20,7 @@ public class AbilitySlot : MonoBehaviour
 
     public void OnButtonClicked()
     {
-        abilitySystemUI.AbilityEquip(i);
+        abilitySystemUI.AbilityEquip(SlotNumber);
 
         if (abilitySystemUI.cursel == null)
         {

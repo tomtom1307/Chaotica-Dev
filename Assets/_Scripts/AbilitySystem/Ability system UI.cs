@@ -50,6 +50,17 @@ public class AbilitySystemUI : MonoBehaviour
        // AbilityUIController = GetComponentInChildren<AbilityUIController>(true);
     }
 
+    public void SelectTreeNode(TreeNode TN)
+    {
+        if (cursel != null) 
+        {
+            cursel.outline.enabled = false;
+        }
+
+        cursel = TN;
+
+        cursel.outline.enabled = true;
+    }
     public void AbilityEquip(int i)
     {
         // takes integer from Abilityslot, takes in data/SO from cursel and links to AbilityHolder to equip
