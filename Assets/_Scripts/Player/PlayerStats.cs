@@ -48,7 +48,7 @@ public class PlayerStats : MonoBehaviour
         stats[StatType.MoveSpeedIncrease] = 0f;
 
         stats[StatType.DamageResistance] = 0f;
-        stats[StatType.AllDamageBuff] = 0f;
+        stats[StatType.AllDamageBuff] = 100f;
         stats[StatType.UmbravailDamageBuff] = 0f;
         stats[StatType.ScarForgeDamageBuff] = 0f;
         stats[StatType.VerdancyDamageBuff] = 0f;

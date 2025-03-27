@@ -27,7 +27,7 @@ public class Weapon_Attack_Data_Base
     public virtual void ExitAttack(WeaponHolder W) { }
 
     public float DamageVal(WeaponHolder W) {
-        float DamageValue = W.ChargeAmount * 0.01f * damage * W.data.WeaponDamage;
+        float DamageValue = W.DamageBonus(damageType) * W.ChargeAmount * 0.01f * damage * W.data.WeaponDamage;
         return DamageValue;
     }
 

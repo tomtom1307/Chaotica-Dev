@@ -280,6 +280,32 @@ public class WeaponHolder : MonoBehaviour
     }
     
     
+    public float DamageBonus(DamageType damageType)
+    {
+        float damagebonus = PlayerStats.instance.GetStat(StatType.AllDamageBuff);
+        switch (damageType)
+        {
+            case DamageType.Standard:
+                damagebonus += 0;
+                break;
+            case DamageType.Umbraveil:
+                damagebonus += PlayerStats.instance.GetStat(StatType.UmbravailDamageBuff);
+                break;
+            case DamageType.Scarforge:
+                damagebonus += PlayerStats.instance.GetStat(StatType.ScarForgeDamageBuff);
+                break;
+            case DamageType.Verdancy:
+                damagebonus += PlayerStats.instance.GetStat(StatType.VerdancyDamageBuff);
+                break;
+            case DamageType.Aetherflow:
+                damagebonus += PlayerStats.instance.GetStat(StatType.AetherflowDamageBuff);
+                break;
+            default:
+                break;
+        }
+        return damagebonus/100;
+    }
+
 }
 
 
