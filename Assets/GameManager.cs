@@ -1,7 +1,9 @@
 using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,6 +28,9 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player").transform;
     }
 
+    
+    
+
     public EnemyPatrolPoint FindClosestPatrol(Vector3 pos)
     {
         float minDist = 1000;
@@ -49,8 +54,25 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            SlowTimeScale(0.5f, 2);
+        }
     }
+
+    public void SlowTimeScale(float amount,float t)
+    {
+        Time.timeScale = amount;
+        StartCoroutine(ResetTime(t));
+    }
+
+    public IEnumerator ResetTime(float t)
+    {
+        yield return new WaitForSeconds(t);
+        Time.timeScale = 1;
+
+    }
+
 
 
     public void EnemyKilled()

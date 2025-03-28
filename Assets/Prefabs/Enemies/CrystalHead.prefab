@@ -360,11 +360,12 @@ MonoBehaviour:
     sounds: []
   - name: TakeDamageBladed
     pitchVariation: {x: 0.9, y: 1.1}
-    desiredVolume: 0
+    desiredVolume: 1
     sounds:
-    - {fileID: 8300000, guid: 97244a39a14983a429800822064fcbd7, type: 3}
-    - {fileID: 8300000, guid: 69b21fb8a1c5a284ea09079ddb4d3b42, type: 3}
-    - {fileID: 8300000, guid: 2761590773ec37a4e9f928543a946708, type: 3}
+    - {fileID: 8300000, guid: 04ef9a34598312d428a4d81150ce5869, type: 3}
+    - {fileID: 8300000, guid: 9e6c5d5620c8fb948b92cff8298a2bc6, type: 3}
+    - {fileID: 8300000, guid: fd4cafb995c7be44d8a7c87b53e81760, type: 3}
+    - {fileID: 8300000, guid: 5665604e0e593134181969a263df259f, type: 3}
   - name: TakeDamageBlunt
     pitchVariation: {x: 0, y: 0}
     desiredVolume: 0
@@ -633,6 +634,28 @@ MonoBehaviour:
         B_action: 0
         Weight: 100
       attackList: []
+      name: Behaviour
+    - Name: LSP_time
+      priority: 2
+      conditions:
+        brain: {fileID: 0}
+        boolChecks:
+        - checkTime: 0
+          checkBool: 1
+        floatChecks:
+        - checkTime: 0
+          checkFloat: 1
+          checkComparison: 0
+          input: 4
+        intChecks: []
+      actionList:
+      - brain: {fileID: 0}
+        B_action: 0
+        Weight: 100
+      attackList:
+      - attackData: {fileID: 0}
+        colliderGroups: []
+        attackAnimation: 0
       name: Behaviour
   - Name: Patrol State
     enemyBehaviours:

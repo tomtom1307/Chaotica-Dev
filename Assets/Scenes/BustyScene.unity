@@ -5397,50 +5397,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Floater
       objectReference: {fileID: 0}
-    - target: {fileID: 1671085220632632970, guid: e34a6aeba2dda40458f02715bd5bd6e1, type: 3}
-      propertyPath: model
-      value: 
-      objectReference: {fileID: 1189098909}
-    - target: {fileID: 1671085220632632970, guid: e34a6aeba2dda40458f02715bd5bd6e1, type: 3}
-      propertyPath: hitParticleFX
-      value: 
-      objectReference: {fileID: 9105707323847228812, guid: ce9284e5638470c4e9112b8eff7efa2b, type: 3}
-    - target: {fileID: 2326641728770611222, guid: e34a6aeba2dda40458f02715bd5bd6e1, type: 3}
-      propertyPath: audioSource
-      value: 
-      objectReference: {fileID: 613007178}
-    - target: {fileID: 2326641728770611222, guid: e34a6aeba2dda40458f02715bd5bd6e1, type: 3}
-      propertyPath: clips.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2326641728770611222, guid: e34a6aeba2dda40458f02715bd5bd6e1, type: 3}
-      propertyPath: clips.Array.data[0].name
-      value: FootSteps
-      objectReference: {fileID: 0}
-    - target: {fileID: 2326641728770611222, guid: e34a6aeba2dda40458f02715bd5bd6e1, type: 3}
-      propertyPath: clips.Array.data[1].name
-      value: TakeDamageBladed
-      objectReference: {fileID: 0}
-    - target: {fileID: 2326641728770611222, guid: e34a6aeba2dda40458f02715bd5bd6e1, type: 3}
-      propertyPath: clips.Array.data[2].name
-      value: TakeDamageBlunt
-      objectReference: {fileID: 0}
-    - target: {fileID: 5265470799860576429, guid: e34a6aeba2dda40458f02715bd5bd6e1, type: 3}
-      propertyPath: stateList.Array.data[0].enemyBehaviours.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5265470799860576429, guid: e34a6aeba2dda40458f02715bd5bd6e1, type: 3}
-      propertyPath: stateList.Array.data[0].enemyBehaviours.Array.data[1].actionList.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5265470799860576429, guid: e34a6aeba2dda40458f02715bd5bd6e1, type: 3}
-      propertyPath: stateList.Array.data[0].enemyBehaviours.Array.data[1].conditions.boolChecks.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5265470799860576429, guid: e34a6aeba2dda40458f02715bd5bd6e1, type: 3}
-      propertyPath: stateList.Array.data[0].enemyBehaviours.Array.data[1].conditions.boolChecks.Array.data[0].checkBool
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7748369135818650311, guid: e34a6aeba2dda40458f02715bd5bd6e1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.586244
@@ -5486,11 +5442,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e34a6aeba2dda40458f02715bd5bd6e1, type: 3}
---- !u!82 &613007178 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 8909094624479394555, guid: e34a6aeba2dda40458f02715bd5bd6e1, type: 3}
-  m_PrefabInstance: {fileID: 613007177}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &616044189
 GameObject:
   m_ObjectHideFlags: 0
@@ -11080,11 +11031,6 @@ RectTransform:
   m_AnchoredPosition: {x: -30, y: -5.2}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1189098909 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 775067291979300683, guid: e34a6aeba2dda40458f02715bd5bd6e1, type: 3}
-  m_PrefabInstance: {fileID: 613007177}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1192774607
 GameObject:
   m_ObjectHideFlags: 0

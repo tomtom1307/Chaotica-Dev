@@ -304,7 +304,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -363,9 +363,13 @@ MonoBehaviour:
     desiredVolume: 0
     sounds: []
   - name: TakeDamageBladed
-    pitchVariation: {x: 0, y: 0}
-    desiredVolume: 0
-    sounds: []
+    pitchVariation: {x: 0.9, y: 1.1}
+    desiredVolume: 1
+    sounds:
+    - {fileID: 8300000, guid: 04ef9a34598312d428a4d81150ce5869, type: 3}
+    - {fileID: 8300000, guid: 9e6c5d5620c8fb948b92cff8298a2bc6, type: 3}
+    - {fileID: 8300000, guid: fd4cafb995c7be44d8a7c87b53e81760, type: 3}
+    - {fileID: 8300000, guid: 5665604e0e593134181969a263df259f, type: 3}
   - name: TakeDamageBlunt
     pitchVariation: {x: 0, y: 0}
     desiredVolume: 0

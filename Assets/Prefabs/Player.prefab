@@ -1918,6 +1918,7 @@ GameObject:
   - component: {fileID: 6680297976080352696}
   - component: {fileID: 2418679542156267141}
   - component: {fileID: 8398970947235143369}
+  - component: {fileID: 6510342939511281708}
   m_Layer: 10
   m_Name: Character
   m_TagString: Player
@@ -2414,12 +2415,10 @@ MonoBehaviour:
     desiredVolume: 0
     sounds: []
   - name: SwingSword
-    pitchVariation: {x: 0.8, y: 1.1}
-    desiredVolume: 3.2
+    pitchVariation: {x: 1, y: 1.7}
+    desiredVolume: 0.4
     sounds:
-    - {fileID: 8300000, guid: a37848f36ff6f4f44bb2c74e5e012edd, type: 3}
-    - {fileID: 8300000, guid: 109c1c03676bbab4a8d839c0095bc6e7, type: 3}
-    - {fileID: 8300000, guid: b4b60642eb30d5847a7294ccd9d4a73b, type: 3}
+    - {fileID: 8300000, guid: 914f9547b7fe7664c99fa87b1dac4edc, type: 3}
   - name: DrawBow
     pitchVariation: {x: 0.9, y: 1.1}
     desiredVolume: 2
@@ -2430,6 +2429,20 @@ MonoBehaviour:
     desiredVolume: 2
     sounds:
     - {fileID: 8300000, guid: 67aa978a2c8f708478f724492be818e8, type: 3}
+--- !u!114 &6510342939511281708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6467585232366290873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75ce68688e5d54e4487ad5160c95ec85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ability: {fileID: 0}
+  key: 9
 --- !u!1 &6547277670590502999
 GameObject:
   m_ObjectHideFlags: 0

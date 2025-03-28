@@ -11,8 +11,6 @@ public class WeaponHolder : MonoBehaviour
     int ComboCounter;
     
     [HideInInspector]public Weapon_Attack_Data_Base CurrentAttackData;
-
-    
     
 
     //Define statemachine states
@@ -30,6 +28,7 @@ public class WeaponHolder : MonoBehaviour
 
     [SerializeField] public WeaponInstance instance;
     [SerializeField] public WeaponDataSO data;
+    [SerializeField] public Secondary_Weapon_Base SecondaryWeaponData;
     [SerializeField] public LayerMask DamagableLayer;
     public Animator Weapon_anim;
     public Camera cam;
@@ -118,13 +117,15 @@ public class WeaponHolder : MonoBehaviour
         if (!enabled || !IsAttack3) return;
         data.Weapon_Attacks[2].weaponInputLogic._Input(2, this, ctx);
     }
-    
+
     //Called from weapon Input logic when conditions are met
     public void EnterAttack(int i)
     {
         if (!this.enabled) return;
         //Set State and variables
         State = AttackState.Attacking;
+
+        //
         CurrentAttackData = data.Weapon_Attacks[i];
         playerMovement.SetAttackMoveSpeed(CurrentAttackData.MoveSpeedMult);
         
