@@ -60,6 +60,8 @@ public class AbilitySystemUI : MonoBehaviour
         cursel = TN;
 
         cursel.outline.enabled = true;
+        
+
     }
     public void AbilityEquip(int i)
     {

@@ -10,12 +10,15 @@ public class AbilitySlot : MonoBehaviour
 
     public AbilitySystemUI abilitySystemUI;
 
+    public GameObject AEquip;
+
     // public Image image;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         abilitySystemUI = GetComponentInParent<AbilitySystemUI>();
+
     }
 
     public void OnButtonClicked()
@@ -27,5 +30,21 @@ public class AbilitySlot : MonoBehaviour
             return;
         }
         gameObject.GetComponent<UnityEngine.UI.Image>().sprite = abilitySystemUI.cursel.GetComponent<UnityEngine.UI.Image>().sprite;
+    }
+
+    public void OnEnableHover()
+    {
+        if (abilitySystemUI.cursel == null 
+            || abilitySystemUI.cursel.GetComponent<UnityEngine.UI.Image>().sprite == gameObject.GetComponent<UnityEngine.UI.Image>().sprite)
+        {
+            return;
+        }
+
+        AEquip.SetActive(true);
+    }
+
+    public void OnDisableHover()
+    {
+        AEquip.SetActive(false);
     }
 }
