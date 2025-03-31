@@ -11,8 +11,8 @@ public class WeaponHolder : MonoBehaviour
     int ComboCounter;
     
     [HideInInspector]public Weapon_Attack_Data_Base CurrentAttackData;
-    
 
+    HandIKHandler IK_Handler;
     //Define statemachine states
     public enum AttackState
     {
@@ -41,11 +41,13 @@ public class WeaponHolder : MonoBehaviour
     //Called to set the weapon data once weapon swapping is implemented
     public void SetWeaponInstance(WeaponInstance instance, bool A2 =false, bool A3 = false)
     {
-        //if (!enabled && instance != null) enabled = true; 
-        this.instance = instance;
-        this.data = instance.data;
+        //if (!enabled && instance != null) enabled = true;
         IsAttack2 = A2;
         IsAttack3 = A3;
+        if (instance == this.instance) return;
+        this.instance = instance;
+        this.data = instance.data;
+        
         HandleWeaponSwapping();
     }
 
@@ -58,12 +60,16 @@ public class WeaponHolder : MonoBehaviour
     {
         Destroy(WeaponModel);
         WeaponModel = Instantiate(data.model, handPos);
+        
         WeaponModel.layer = 7;
 
         Destroy(SecondaryModel);
         if (data.secondaryModel != null) SecondaryModel = Instantiate(data.secondaryModel, secondaryPos);
 
-
+        if (IK_Handler == null) {
+            IK_Handler = Camera.main.GetComponentInChildren<HandIKHandler>();
+        }
+        IK_Handler.GetWeaponIkPos();
         ChargeAmount = 1;
         Weapon_anim.runtimeAnimatorController = data.Anim_controller;
     }
@@ -75,6 +81,7 @@ public class WeaponHolder : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         cam = Camera.main;
         State = AttackState.Ready;
+        IK_Handler = cam.GetComponentInChildren<HandIKHandler>();
         //handPos = GameObject.Find("HandModel").transform;
         ComboCounter = 0;
 
