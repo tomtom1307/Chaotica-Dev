@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform orientation;
 
     public float jumpEnhance = 1f;
-
+    public float SprintMult = 1.5f;
     public LayerMask whatisGround;
 
     float horMovement;
@@ -83,8 +83,12 @@ public class PlayerMovement : MonoBehaviour
             Jump();
         }
 
-        
-        MoveDir = (orientation.forward * vertMovement + orientation.right * horMovement).normalized;
+        float Sprint = 1;
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            Sprint = SprintMult;
+        }
+        MoveDir = Sprint*(orientation.forward * vertMovement + orientation.right * horMovement).normalized;
         if (Vector3.Dot(rb.linearVelocity, MoveDir) < 0) MoveDir = 2 * MoveDir;
     }
 

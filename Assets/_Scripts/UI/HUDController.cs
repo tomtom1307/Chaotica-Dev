@@ -9,7 +9,10 @@ public class HUDController : MonoBehaviour
     [SerializeField] Image ChargeMeter;
     private void Awake()
     {
-        instance = this;
+        if(instance == null)
+        {
+            instance = this;
+        }
     }
 
     [SerializeField] TMP_Text InteractionText;

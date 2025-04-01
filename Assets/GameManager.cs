@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+        else
+        {
+            Destroy(gameObject);
+        }
 
         availablePatrolPoints = new List<EnemyPatrolPoint>();
         player = GameObject.FindWithTag("Player").transform;
