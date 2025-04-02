@@ -476,11 +476,11 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1210316982324589196}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: f20cb06d80cd04446aa668ac7152bf76, type: 3}
   m_Controller: {fileID: 9100000, guid: 0cfd4179df6927946b79e3be33630baf, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
@@ -500,9 +500,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 10
+  m_Acceleration: 24.54
   avoidancePriority: 50
-  m_AngularSpeed: 360
+  m_AngularSpeed: 1220.21
   m_StoppingDistance: 0.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -546,7 +546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5734c078d0bd4747911c7e5e6409562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 25
+  MaxHealth: 100
   Health: 0
   DamageNumbers: 1
   SpawnOnDeath: {fileID: 310846752812338475, guid: 05b59a82ad168ad4d9139ed7732d1d82, type: 3}
@@ -566,12 +566,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42b75dae65b283048976184a23c969ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 2
+  MoveSpeed: 3
   JumpPower: 0.2
   DetectionRange: 93.6
-  PerceptionStat: 1
+  PerceptionStat: 0.5
   DetectionMeterDecay: 0.2
   ViewAngle: 53.9
+  SearchRange: 1
   layerMask:
     serializedVersion: 2
     m_Bits: 1089
@@ -579,27 +580,10 @@ MonoBehaviour:
   navMesh: {fileID: 0}
   currentStateName: 
   stateList:
-  - Name: Idle State
+  - Name: Idle
     enemyBehaviours:
-    - Name: Distance
-      priority: 2
-      conditions:
-        brain: {fileID: 0}
-        boolChecks: []
-        floatChecks:
-        - checkTime: 0
-          checkFloat: 0
-          checkComparison: 1
-          input: 3
-        intChecks: []
-      actionList:
-      - brain: {fileID: 0}
-        B_action: 0
-        Weight: 100
-      attackList: []
-      name: Behaviour
-    - Name: Detection meter + LOS
-      priority: 2
+    - Name: OnDetectAttack
+      priority: 3
       conditions:
         brain: {fileID: 0}
         boolChecks: []
@@ -612,52 +596,43 @@ MonoBehaviour:
       actionList:
       - brain: {fileID: 0}
         B_action: 1
-        Weight: 100
-      - brain: {fileID: 0}
-        B_action: 6
-        Weight: 100
+        Override: 1
+        Weight: 0
       attackList: []
-      name: Behaviour
-    - Name: LSP_time
-      priority: 2
+      name: 
+    - Name: IsSpot
+      priority: 3
       conditions:
         brain: {fileID: 0}
         boolChecks: []
         floatChecks:
         - checkTime: 0
-          checkFloat: 1
+          checkFloat: 2
           checkComparison: 0
-          input: 4
+          input: 0.4
         intChecks: []
       actionList:
       - brain: {fileID: 0}
-        B_action: 0
-        Weight: 100
+        B_action: 6
+        Override: 0
+        Weight: 0
       attackList: []
-      name: Behaviour
-    - Name: LSP_time
+      name: 
+    - Name: Patrol
       priority: 2
       conditions:
         brain: {fileID: 0}
-        boolChecks:
-        - checkTime: 0
-          checkBool: 1
-        floatChecks:
-        - checkTime: 0
-          checkFloat: 1
-          checkComparison: 0
-          input: 4
+        boolChecks: []
+        floatChecks: []
         intChecks: []
       actionList:
       - brain: {fileID: 0}
-        B_action: 0
-        Weight: 100
-      attackList:
-      - attackData: {fileID: 0}
-        colliderGroups: []
-        attackAnimation: 0
-      name: Behaviour
-  - Name: Patrol State
+        B_action: 4
+        Override: 0
+        Weight: 0
+      attackList: []
+      name: 
+  - Name: AttackState
     enemyBehaviours:
     - Name: CloseAttack
       priority: 3
@@ -670,7 +645,7 @@ MonoBehaviour:
         - checkTime: 0.1
           checkFloat: 0
           checkComparison: 1
-          input: 1
+          input: 2
         intChecks: []
       actionList: []
       attackList:
@@ -696,6 +671,65 @@ MonoBehaviour:
       actionList:
       - brain: {fileID: 0}
         B_action: 3
+        Override: 0
+        Weight: 0
+      attackList: []
+      name: 
+    - Name: Move To playerDistance
+      priority: 1
+      conditions:
+        brain: {fileID: 0}
+        boolChecks: []
+        floatChecks:
+        - checkTime: 0
+          checkFloat: 0
+          checkComparison: 1
+          input: 6
+        - checkTime: 0
+          checkFloat: 1
+          checkComparison: 1
+          input: 10
+        intChecks: []
+      actionList:
+      - brain: {fileID: 0}
+        B_action: 3
+        Override: 0
+        Weight: 0
+      attackList: []
+      name: 
+    - Name: LSP
+      priority: 1
+      conditions:
+        brain: {fileID: 0}
+        boolChecks: []
+        floatChecks:
+        - checkTime: 0
+          checkFloat: 1
+          checkComparison: 0
+          input: 5
+        intChecks: []
+      actionList:
+      - brain: {fileID: 0}
+        B_action: 5
+        Override: 0
+        Weight: 0
+      attackList: []
+      name: 
+    - Name: BackToIdle
+      priority: 3
+      conditions:
+        brain: {fileID: 0}
+        boolChecks: []
+        floatChecks:
+        - checkTime: 0
+          checkFloat: 1
+          checkComparison: 0
+          input: 15
+        intChecks: []
+      actionList:
+      - brain: {fileID: 0}
+        B_action: 2
+        Override: 1
         Weight: 0
       attackList: []
       name: 

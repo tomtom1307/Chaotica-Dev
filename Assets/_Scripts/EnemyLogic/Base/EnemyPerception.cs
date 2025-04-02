@@ -7,7 +7,7 @@ public class EnemyPerception : MonoBehaviour
 {
     public EnemyBrain brain;
     public Transform player;
-    Vector3 PlayerLastSeenPosition;
+    public Vector3 PlayerLastSeenPosition;
 
     public bool LOS;
     public bool IsAlert;
@@ -53,6 +53,7 @@ public class EnemyPerception : MonoBehaviour
             if (hit.collider.gameObject.layer == 10 && Vector3.Angle(brain.LookDirectionTransform.forward, player.position - transform.position + Vector3.up) < brain.ViewAngle)
             {
                 LOS = true;
+                PlayerLastSeenPosition = player.transform.position;
                 LastSpottedTime = Time.time;
                 return;
             }
@@ -83,7 +84,7 @@ public class EnemyPerception : MonoBehaviour
 
         if (LOS)
         {
-            ModifyAmount = brain.PerceptionStat* Time.deltaTime;
+            ModifyAmount = (1/Distance) * brain.PerceptionStat* Time.deltaTime;
         }
         else
         {

@@ -134,7 +134,7 @@ public class WeaponHolder : MonoBehaviour
 
         //
         CurrentAttackData = data.Weapon_Attacks[i];
-        playerMovement.SetAttackMoveSpeed(CurrentAttackData.MoveSpeedMult);
+        playerMovement.SetMoveSpeed(CurrentAttackData.MoveSpeedMult);
         
 
         //Handle Animation stuff
@@ -275,7 +275,7 @@ public class WeaponHolder : MonoBehaviour
     {
         CurrentAttackData = data.Weapon_Attacks[Attack];
         State = AttackState.Charging;
-        playerMovement.SetAttackMoveSpeed(CurrentAttackData.MoveSpeedMult);
+        playerMovement.SetMoveSpeed(CurrentAttackData.MoveSpeedMult);
         Weapon_anim.SetBool("Charging", true);
         Weapon_anim.SetInteger("AttackType", Attack);
 

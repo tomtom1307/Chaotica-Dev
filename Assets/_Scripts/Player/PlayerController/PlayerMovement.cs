@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
         _currentMoveSpeed = _moveSpeed;
     }
 
-    public void SetAttackMoveSpeed(float mult)
+    public void SetMoveSpeed(float mult)
     {
         _currentMoveSpeed = mult*_moveSpeed;
     }

@@ -7,11 +7,20 @@ public class B_Action
     [HideInInspector] public EnemyBrain brain;
 
     public b_Action B_action;
+    public bool Override;
     public float Weight;
 
     public enum b_Action
     {
-        DoThing , ChangeToPatrol, ChangeToIdle, MoveToPlayer, MoveToPatrol, AttackSet, Attack
+        DoThing , 
+        ChangeToPatrol, 
+        ChangeToIdle, 
+        MoveToPlayer, 
+        MoveToPatrol,
+        MoveToLSP,
+        SearchNearby,
+        AttackSet, 
+        Attack
     }
 
     
@@ -29,6 +38,10 @@ public class B_Action
                 return brain.actionHandler.ChangeToPatrolState;
             case b_Action.ChangeToIdle:
                 return brain.actionHandler.ChangeToIdleState;
+            case b_Action.MoveToLSP:
+                return brain.actionHandler.MoveToLSP;
+            case b_Action.SearchNearby:
+                return brain.actionHandler.SearchNearby;
             default:
                 return brain.actionHandler.DoError;
         }
