@@ -9,8 +9,8 @@ public class EnemyAttackSO : ScriptableObject
 
     public float AttackCooldown;
 
-    
-
+    public float KnockBackAmount;
+    public bool KnockBack;
 
 
     public LayerMask whatIsPlayer;
@@ -46,5 +46,10 @@ public class EnemyAttackSO : ScriptableObject
     }
 
 
-    public virtual void DamageLogic(PlayerHealth ph,EnemyAttackHandler attackHandler) { }
+    public virtual void DamageLogic(PlayerHealth ph,EnemyAttackHandler attackHandler) {
+        if (KnockBack)
+        {
+            ph.GetComponent<Rigidbody>().AddForce(KnockBackAmount * attackHandler.transform.forward);
+        }
+    }
 }
