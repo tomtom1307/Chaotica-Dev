@@ -64,7 +64,8 @@ public class EnemyActionHandler : MonoBehaviour
     public void ChangeToIdleState()
     {
         if(brain.stateChangeDebug) Debug.Log("Changed to Idle State");
-        brain.stateMachine.ChangeState(brain.idleState); 
+        brain.stateMachine.ChangeState(brain.idleState);
+        brain.perception.DetectionMeter = 0;
         EndAction();
     }
     public void ChangeToPatrolState()
@@ -116,16 +117,30 @@ public class EnemyActionHandler : MonoBehaviour
     bool Searching;
     public void SearchNearby()
     {
+        
         brain.navMesh.stoppingDistance = 0;
+        if (brain.perception.PlayerLastSeenPosition == Vector3.zero || Vector3.Distance(brain.perception.player.position, brain.perception.PlayerLastSeenPosition) > Vector3.Distance(transform.position, brain.perception.player.position))
+        {
+            brain.perception.PlayerLastSeenPosition = GetPositionInCircle(brain.perception.player.position, brain.SearchRange * 5);
+        }
         float Range = Vector3.Distance(brain.perception.player.position, brain.perception.PlayerLastSeenPosition) * brain.SearchRange ;
+        
 
-        float Random1 = UnityEngine.Random.Range(-Range, Range);
-        float Random2 = UnityEngine.Random.Range(-Range, Range);
-        Vector3 SearchPos = brain.perception.player.position + Random1*Vector3.forward + Random2*Vector3.right;
 
-        brain.navMesh.SetDestination(SearchPos);
+
+        brain.navMesh.SetDestination(GetPositionInCircle(brain.perception.player.position, Range));
         brain.animator.SetBool("Walking", true);
         Searching = true;
+    }
+
+    public Vector3 GetPositionInCircle(Vector3 pos, float Range)
+    {
+        float Random1 = UnityEngine.Random.Range(-Range, Range);
+        float Random2 = UnityEngine.Random.Range(-Range, Range);
+        Vector3 Pos = pos + Random1 * Vector3.forward + Random2 * Vector3.right;
+
+        return Pos;
+
     }
 
 

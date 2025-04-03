@@ -28,6 +28,9 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody rb;
     CamAttackAnim CamattackAnim;
 
+    public AudioSource WindAS;
+    public float VolLerpSpeed;
+    public float MaxVol;
     private void Start()
     {
         CamattackAnim = Camera.main.GetComponentInParent<CamAttackAnim>();
@@ -49,16 +52,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (!isGrounded)
-        {
-            isGrounded = Physics.CheckSphere(transform.position + 0.3f * Vector3.up, 0.4f, whatisGround);
-            if (isGrounded) CamattackAnim.RotateCamera(Vector2.down, 0.8f);
-        }
-        isGrounded = Physics.CheckSphere(transform.position+0.3f*Vector3.up, 0.4f, whatisGround);
+        Grounding();
 
         MyInput();
         ControlDrag();
-
+        WindSFX();
         if (OnSlope())
         {
 
@@ -67,6 +65,36 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+
+    public void WindSFX()
+    {
+        if (!isGrounded)
+        {
+            WindAS.volume = Mathf.Lerp(WindAS.volume, Mathf.Clamp(rb.linearVelocity.magnitude / 10,0,MaxVol), VolLerpSpeed * Time.deltaTime);
+        }
+        else
+        {
+            WindAS.volume = 0;
+        }
+    }
+
+    public void Grounding()
+    {
+        if (!isGrounded)
+        {
+            isGrounded = Physics.CheckSphere(transform.position + 0.3f * Vector3.up, 0.4f, whatisGround);
+            if (isGrounded) // OnLanding
+            {
+                CamattackAnim.RotateCamera(Vector2.down, 0.8f);
+                PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.FootSteps, Mathf.Clamp(1*rb.linearVelocity.magnitude,0.5f,1.5f));
+            }
+        }
+        else
+        {
+            isGrounded = Physics.CheckSphere(transform.position + 0.3f * Vector3.up, 0.4f, whatisGround);
+        }
+    }
+
 
     [HideInInspector] public Vector2 moveInput;
 
@@ -113,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
     
     void Jump()
     {
+        PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.FootSteps, 1);
         CamattackAnim.RotateCamera(Vector2.up, 0.7f);
         rb.AddForce(_jumpForce * transform.up * jumpEnhance, ForceMode.Impulse);
     }

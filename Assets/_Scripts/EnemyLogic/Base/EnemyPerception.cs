@@ -48,9 +48,12 @@ public class EnemyPerception : MonoBehaviour
     {
         RaycastHit hit;
         //Vector3.up because enemy transform position is at feet
-        if(Physics.Raycast(brain.LookDirectionTransform.position, player.position - brain.LookDirectionTransform.position, out hit, brain.DetectionRange, brain.layerMask)) 
+        Vector3 LookVector = Vector3.Project(brain.LookDirectionTransform.forward, transform.forward).normalized;
+        Debug.DrawRay(brain.LookDirectionTransform.position, player.position - brain.LookDirectionTransform.position + Vector3.up, Color.blue);
+        Debug.DrawRay(brain.LookDirectionTransform.position, LookVector*5, Color.red);
+        if (Physics.Raycast(brain.LookDirectionTransform.position, player.position - brain.LookDirectionTransform.position, out hit, brain.DetectionRange, brain.layerMask)) 
         {
-            if (hit.collider.gameObject.layer == 10 && Vector3.Angle(brain.LookDirectionTransform.forward, player.position - transform.position + Vector3.up) < brain.ViewAngle)
+            if (hit.collider.gameObject.layer == 10 && Vector3.Angle(LookVector, player.position - transform.position) < brain.ViewAngle)
             {
                 LOS = true;
                 PlayerLastSeenPosition = player.transform.position;
@@ -84,7 +87,7 @@ public class EnemyPerception : MonoBehaviour
 
         if (LOS)
         {
-            ModifyAmount = (1/Distance) * brain.PerceptionStat* Time.deltaTime;
+            ModifyAmount = Mathf.Exp(-((1/3)*Distance-3)) * brain.PerceptionStat* Time.deltaTime;
         }
         else
         {
