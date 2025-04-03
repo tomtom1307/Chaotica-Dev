@@ -33,7 +33,7 @@ public class CamSwayandBob : MonoBehaviour
     bool playedSFX;
     public void SFX()
     {
-        if (Mathf.Abs(Mathf.Cos(SpeedCurve)) > 0.9f && !playedSFX && rb.linearVelocity.magnitude > 0.1f && pm.isGrounded)
+        if (Mathf.Abs(Mathf.Cos(SpeedCurve)) > 0.9f && !playedSFX && rb.linearVelocity.magnitude > 0.1f && pm.isGrounded && pm.state != PlayerMovement.PlayerMechanimState.Sliding)
         {
             playedSFX = true;
             PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.FootSteps);

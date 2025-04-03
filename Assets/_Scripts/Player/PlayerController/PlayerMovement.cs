@@ -4,7 +4,7 @@ public class PlayerMovement : MonoBehaviour
 {
     
     [SerializeField]
-    private float _moveSpeed, _groundDrag, _airDrag, _airMoveMultiplier, _groundMoveMultiply, _jumpForce;
+    private float _moveSpeed, _groundDrag, _airDrag, _airMoveMultiplier, _groundMoveMultiply, _jumpForce, CrouchMoveSpeed;
     private float _currentMoveSpeed;
     public Transform orientation;
 
@@ -24,15 +24,32 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 slopeMoveDirection;
     Vector3 MoveDir;
-
+    CapsuleCollider collider;
+    float ColliderHeight;
     Rigidbody rb;
     CamAttackAnim CamattackAnim;
-
+    public float SlideForce;
     public AudioSource WindAS;
     public float VolLerpSpeed;
+    public float SlideTime;
+    public float SlideDrag;
     public float MaxVol;
+    float timer;
+    public enum PlayerMechanimState
+    {
+        Walking,
+        Sprinting,
+        Jumping,
+        Crouching,
+        Sliding
+    }
+
+    public PlayerMechanimState state;
+
     private void Start()
     {
+        collider = GetComponent<CapsuleCollider>();
+        ColliderHeight = collider.height;
         CamattackAnim = Camera.main.GetComponentInParent<CamAttackAnim>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -66,17 +83,6 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    public void WindSFX()
-    {
-        if (!isGrounded)
-        {
-            WindAS.volume = Mathf.Lerp(WindAS.volume, Mathf.Clamp(rb.linearVelocity.magnitude / 10,0,MaxVol), VolLerpSpeed * Time.deltaTime);
-        }
-        else
-        {
-            WindAS.volume = 0;
-        }
-    }
 
     public void Grounding()
     {
@@ -105,18 +111,47 @@ public class PlayerMovement : MonoBehaviour
         moveInput.x = horMovement;
         moveInput.y = vertMovement;
         moveInput = moveInput.normalized;
-
-        if(isGrounded && Input.GetKeyDown(KeyCode.Space))
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
+            state = PlayerMechanimState.Jumping;
             Jump();
         }
-
-        float Sprint = 1;
-        if (Input.GetKey(KeyCode.LeftShift))
+        else if (isGrounded && Input.GetKey(KeyCode.LeftShift))
         {
-            Sprint = SprintMult;
+            state = PlayerMechanimState.Sprinting;
+            SetMoveSpeed(SprintMult);
         }
-        MoveDir = Sprint*(orientation.forward * vertMovement + orientation.right * horMovement).normalized;
+        else
+        {
+            state = PlayerMechanimState.Walking;
+            ResetMoveSpeed();
+        }
+        if (isGrounded && Input.GetKey(KeyCode.C))
+        {
+            if(state == PlayerMechanimState.Sprinting)
+            {
+                state = PlayerMechanimState.Sliding;
+                Slide();
+            }
+            else
+            {
+                
+                Crouch();
+            }
+        }
+        else if (isGrounded && Input.GetKeyUp(KeyCode.C))
+        {
+            state = PlayerMechanimState.Walking;
+            EndCrouch();
+        }
+        if (!isGrounded)
+        {
+            state = PlayerMechanimState.Jumping;
+        }
+        
+        
+        
+        MoveDir = (orientation.forward * vertMovement + orientation.right * horMovement).normalized;
         if (Vector3.Dot(rb.linearVelocity, MoveDir) < 0) MoveDir = 2 * MoveDir;
     }
 
@@ -129,7 +164,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isGrounded)
         {
-            rb.linearDamping = _groundDrag;
+            if(state == PlayerMechanimState.Sliding)
+            {
+                rb.linearDamping = SlideDrag;
+            }
+            else rb.linearDamping = _groundDrag;
             _moveMultiply = _groundMoveMultiply;
         }
         else
@@ -192,4 +231,52 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+
+
+    public void Slide()
+    {
+        if (timer > SlideTime)
+        {
+            Crouch();
+            return;
+        }
+        SetMoveSpeed(0);
+        collider.height = 0.5f * ColliderHeight;
+        rb.linearDamping = 0;
+        timer += Time.deltaTime;
+        rb.AddForce(rb.linearVelocity * SlideForce);
+
+
+
+    }
+
+    public void Crouch()
+    {
+        state = PlayerMechanimState.Crouching;
+        rb.linearDamping = _groundDrag;
+        collider.height = 0.5f * ColliderHeight;
+        SetMoveSpeed(CrouchMoveSpeed);
+    }
+
+    public void EndCrouch()
+    {
+        timer = 0;
+        ResetMoveSpeed();
+        collider.height = ColliderHeight;
+    }
+
+
+
+    public void WindSFX()
+    {
+        if (!isGrounded)
+        {
+            WindAS.volume = Mathf.Lerp(WindAS.volume, Mathf.Clamp(rb.linearVelocity.magnitude / 10, 0, MaxVol), VolLerpSpeed * Time.deltaTime);
+        }
+        else
+        {
+            WindAS.volume = 0;
+        }
+    }
+
 }
