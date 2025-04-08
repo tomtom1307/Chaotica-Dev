@@ -2212,23 +2212,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6e6107e5ba115b46bbfbde8e380cc1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxMoveSpeed: 100
   _moveSpeed: 5
   _groundDrag: 6
   _airDrag: 0.1
   _airMoveMultiplier: 0.05
   _groundMoveMultiply: 10
   _jumpForce: 450
+  CrouchMoveSpeed: 0.5
   orientation: {fileID: 7714421985405113136}
   jumpEnhance: 1
   SprintMult: 1.5
   whatisGround:
     serializedVersion: 2
     m_Bits: 64
-  isGrounded: 0
+  isGrounded: 1
   MaxSlopeAngle: 60
   WindAS: {fileID: 3517139010969816703}
-  VolLerpSpeed: 0.05
+  VolLerpSpeed: 0.1
   MaxVol: 0.5
+  SlideTime: 1
+  SlideDrag: 0
+  SlideForce: 100
+  SlideThresh: 0.1
+  VelocityThresh: 0
+  state: 0
   moveInput: {x: 0, y: 0}
 --- !u!114 &8091079049166687030
 MonoBehaviour:

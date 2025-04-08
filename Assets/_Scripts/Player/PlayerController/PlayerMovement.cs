@@ -4,7 +4,7 @@ public class PlayerMovement : MonoBehaviour
 {
     
     [SerializeField]
-    private float _moveSpeed, _groundDrag, _airDrag, _airMoveMultiplier, _groundMoveMultiply, _jumpForce, CrouchMoveSpeed;
+    private float MaxMoveSpeed, _moveSpeed, _groundDrag, _airDrag, _airMoveMultiplier, _groundMoveMultiply, _jumpForce, CrouchMoveSpeed;
     private float _currentMoveSpeed;
     public Transform orientation;
 
@@ -28,12 +28,18 @@ public class PlayerMovement : MonoBehaviour
     float ColliderHeight;
     Rigidbody rb;
     CamAttackAnim CamattackAnim;
-    public float SlideForce;
+    
     public AudioSource WindAS;
     public float VolLerpSpeed;
+    public float MaxVol;
+    [Header("Sliding")]
+    
     public float SlideTime;
     public float SlideDrag;
-    public float MaxVol;
+    public float SlideForce;
+    public float SlideThresh;
+    public float VelocityThresh;
+
     float timer;
     public enum PlayerMechanimState
     {
@@ -52,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
         ColliderHeight = collider.height;
         CamattackAnim = Camera.main.GetComponentInParent<CamAttackAnim>();
         rb = GetComponent<Rigidbody>();
+        rb.maxLinearVelocity = MaxMoveSpeed;
         rb.freezeRotation = true;
         _currentMoveSpeed = _moveSpeed;
     }
@@ -128,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (isGrounded && Input.GetKey(KeyCode.C))
         {
-            if(state == PlayerMechanimState.Sprinting)
+            if(rb.linearVelocity.magnitude > VelocityThresh)
             {
                 state = PlayerMechanimState.Sliding;
                 Slide();
@@ -182,7 +189,7 @@ public class PlayerMovement : MonoBehaviour
     {
         PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.FootSteps, 1);
         CamattackAnim.RotateCamera(Vector2.up, 0.7f);
-        rb.AddForce(_jumpForce * transform.up * jumpEnhance, ForceMode.Impulse);
+        rb.AddForce(_jumpForce * Vector3.up * jumpEnhance, ForceMode.Impulse);
     }
 
     private bool OnSlope()
@@ -226,7 +233,7 @@ public class PlayerMovement : MonoBehaviour
             }
             rb.AddForce(slopeMoveDirection * _currentMoveSpeed * (1 + 0.01f * PlayerStats.instance.GetStat(StatType.MoveSpeedIncrease)) * _moveMultiply, ForceMode.Acceleration);
             
-            rb.AddForce((1-slopeMoveDirection.magnitude) * -1 * Vector3.ProjectOnPlane(Physics.gravity, slopeHit.normal), ForceMode.Acceleration);
+            //rb.AddForce((1-slopeMoveDirection.magnitude) * -1 * Vector3.ProjectOnPlane(Physics.gravity, slopeHit.normal), ForceMode.Acceleration);
             
         }
 
@@ -244,7 +251,10 @@ public class PlayerMovement : MonoBehaviour
         collider.height = 0.5f * ColliderHeight;
         rb.linearDamping = 0;
         timer += Time.deltaTime;
-        rb.AddForce(rb.linearVelocity * SlideForce);
+        if(timer < SlideThresh)
+        {
+            rb.AddForce(rb.linearVelocity * SlideForce);
+        }
 
 
 
