@@ -643,6 +643,11 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 6fa6798106fe45c438b67688702be1fd, type: 2}
   m_BuildHeightMesh: 0
+--- !u!4 &134330756 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6987454334613743101, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+  m_PrefabInstance: {fileID: 274145621513451321}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &134586476
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11499,45 +11504,57 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6557944627631893748, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6557944627631893748, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6557944627631893748, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6557944627631893748, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6557944627631893748, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8248619696985984631, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8414243873322991182, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
-      propertyPath: MaxVol
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8414243873322991182, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
-      propertyPath: SlideDrag
-      value: 0
-      objectReference: {fileID: 0}
+      propertyPath: headPos
+      value: 
+      objectReference: {fileID: 134330756}
     - target: {fileID: 8414243873322991182, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
       propertyPath: SlideTime
-      value: 1
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8414243873322991182, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: CamFXSpeed
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8414243873322991182, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
       propertyPath: SlideForce
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8414243873322991182, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
-      propertyPath: isGrounded
+      propertyPath: SlidingCamRot
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8414243873322991182, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
-      propertyPath: SlideThresh
-      value: 0.1
+      propertyPath: VelocityThresh
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8414243873322991182, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
-      propertyPath: MaxMoveSpeed
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8414243873322991182, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
-      propertyPath: VolLerpSpeed
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8414243873322991182, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
-      propertyPath: CrouchMoveSpeed
-      value: 0.5
+      propertyPath: MaxSlidingCamRot
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

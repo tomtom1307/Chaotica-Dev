@@ -1,25 +1,39 @@
+using System;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    
-    [SerializeField]
-    private float MaxMoveSpeed, _moveSpeed, _groundDrag, _airDrag, _airMoveMultiplier, _groundMoveMultiply, _jumpForce, CrouchMoveSpeed;
-    private float _currentMoveSpeed;
-    public Transform orientation;
 
+
+
+    [Header("General Controls")]
+    [SerializeField]
+    private float MaxMoveSpeed;
+    [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _CrouchMoveSpeed;
+    [SerializeField] private float _jumpForce;
+    [SerializeField] private float _groundDrag;
+    [SerializeField] private float _airDrag;
+    [SerializeField] private float _airMoveMultiplier;
+    [SerializeField] private float _groundMoveMultiply;
+
+    private float _currentMoveSpeed;
+
+    [Header("SetUp")]
+    public float MaxSlopeAngle;
     public float jumpEnhance = 1f;
     public float SprintMult = 1.5f;
     public LayerMask whatisGround;
-
+    public Transform orientation;
+    public bool isGrounded;
     float horMovement;
     float vertMovement;
 
     float _moveMultiply;
 
 
-    public bool isGrounded;
-    public float MaxSlopeAngle;
+    
+    
     RaycastHit slopeHit;
 
     Vector3 slopeMoveDirection;
@@ -29,9 +43,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody rb;
     CamAttackAnim CamattackAnim;
     
-    public AudioSource WindAS;
-    public float VolLerpSpeed;
-    public float MaxVol;
+    
     [Header("Sliding")]
     
     public float SlideTime;
@@ -39,6 +51,15 @@ public class PlayerMovement : MonoBehaviour
     public float SlideForce;
     public float SlideThresh;
     public float VelocityThresh;
+
+    [Header("Misc")]
+    public AudioSource WindAS;
+    public float VolLerpSpeed;
+    public float MaxVol;
+    public Transform headPos;
+    public float CamFXSpeed;
+    public float SlidingCamRot;
+    public float MaxSlidingCamRot;
 
     float timer;
     public enum PlayerMechanimState
@@ -87,9 +108,23 @@ public class PlayerMovement : MonoBehaviour
             slopeMoveDirection = Vector3.ProjectOnPlane(MoveDir, slopeHit.normal);
 
         }
-
+        CamRotation();
     }
 
+    private void CamRotation()
+    {
+        Quaternion target_Rot = Quaternion.identity;
+        if (state == PlayerMechanimState.Sliding)
+        {
+             
+            float RotationMag = Vector3.Dot(orientation.right, rb.linearVelocity);
+
+            target_Rot = Quaternion.Euler(0, 0, Mathf.Clamp(RotationMag * SlidingCamRot, -MaxSlidingCamRot, MaxSlidingCamRot));
+            headPos.transform.rotation = Quaternion.Lerp(headPos.transform.localRotation, target_Rot, Time.deltaTime * CamFXSpeed);
+        }
+        
+        
+    }
 
     public void Grounding()
     {
@@ -265,7 +300,7 @@ public class PlayerMovement : MonoBehaviour
         state = PlayerMechanimState.Crouching;
         rb.linearDamping = _groundDrag;
         collider.height = 0.5f * ColliderHeight;
-        SetMoveSpeed(CrouchMoveSpeed);
+        SetMoveSpeed(_CrouchMoveSpeed);
     }
 
     public void EndCrouch()

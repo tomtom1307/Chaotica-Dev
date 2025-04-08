@@ -24,6 +24,7 @@ public class PeakCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (pm.state == PlayerMovement.PlayerMechanimState.Sliding) return;
         if (Input.GetKey(KeyCode.Q))
         {
             MoveHead(-1);

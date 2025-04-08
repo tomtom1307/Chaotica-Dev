@@ -1384,7 +1384,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4269359395189293501}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.536813, y: -1.369873, z: -6.268118}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2214,28 +2214,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxMoveSpeed: 100
   _moveSpeed: 5
+  _CrouchMoveSpeed: 0
+  _jumpForce: 450
   _groundDrag: 6
   _airDrag: 0.1
   _airMoveMultiplier: 0.05
   _groundMoveMultiply: 10
-  _jumpForce: 450
-  CrouchMoveSpeed: 0.5
-  orientation: {fileID: 7714421985405113136}
+  MaxSlopeAngle: 60
   jumpEnhance: 1
   SprintMult: 1.5
   whatisGround:
     serializedVersion: 2
     m_Bits: 64
+  orientation: {fileID: 7714421985405113136}
   isGrounded: 1
-  MaxSlopeAngle: 60
-  WindAS: {fileID: 3517139010969816703}
-  VolLerpSpeed: 0.1
-  MaxVol: 0.5
-  SlideTime: 1
+  SlideTime: 100
   SlideDrag: 0
   SlideForce: 100
   SlideThresh: 0.1
-  VelocityThresh: 0
+  VelocityThresh: 5
+  WindAS: {fileID: 3517139010969816703}
+  VolLerpSpeed: 0.1
+  MaxVol: 0.5
+  headPos: {fileID: 6987454334613743101}
+  CamFXSpeed: 15
+  SlidingCamRot: 1
+  MaxSlidingCamRot: 20
   state: 0
   moveInput: {x: 0, y: 0}
 --- !u!114 &8091079049166687030
