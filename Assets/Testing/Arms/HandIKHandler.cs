@@ -21,6 +21,7 @@ public class HandIKHandler : MonoBehaviour
     public void GetWeaponIkPos()
     {
         WeaponIKTargets weaponIKTargets = GetComponentInChildren<WeaponIKTargets>();
+        if (weaponIKTargets == null) return;
         L_Desired = weaponIKTargets.LeftHand;
         R_Desired = weaponIKTargets.RightHand;
     }

@@ -32,7 +32,7 @@ public class CameraController : MonoBehaviour
     {
         myInput();
 
-        cam.transform.localRotation = Quaternion.Euler(xRot, yRot, 0);
+        cam.transform.localRotation = Quaternion.Euler(xRot, yRot, HeadPos.eulerAngles.z);
         orientation.rotation = Quaternion.Euler(0, yRot, 0);
 
         transform.position = HeadPos.position;

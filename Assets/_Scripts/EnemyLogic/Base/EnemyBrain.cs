@@ -26,6 +26,7 @@ public class EnemyBrain : MonoBehaviour
     public float PerceptionStat;
     public float DetectionMeterDecay;
     public float ViewAngle;
+    public float SearchRange;
     public LayerMask layerMask;
     public Transform LookDirectionTransform;
     EnemyAnimationEventHandler enemyAnimationevent;

@@ -10,9 +10,15 @@ public class EnemyAttackHandler : MonoBehaviour
     List<bool> groupDidDamage;
     public bool attacking;
 
-
+    Rigidbody rb;
     Transform player;
     Rigidbody _playerRb;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+
+    }
 
 
     public void Init(EnemyBrain brain)
@@ -31,9 +37,9 @@ public class EnemyAttackHandler : MonoBehaviour
         if (currentAttack.attackData.rootMotion)
         {
             Debug.Log("enabled root motion and disabled navmeshagent.");
-            brain.animator.applyRootMotion = true;
             brain.navMesh.isStopped = true;
-            brain.navMesh.speed = 0;
+            
+            //brain.navMesh.speed = 0;
             //brain.navMesh.enabled = false;
         }
         else Debug.Log("rootmotion in data is set to false.");
@@ -43,14 +49,25 @@ public class EnemyAttackHandler : MonoBehaviour
 
         brain.animator.SetBool("Attacking", attacking);
     }
+
+
+
+    private void OnAnimatorMove()
+    {
+        Vector3 newPos = transform.position + brain.animator.deltaPosition;
+        Debug.Log(brain.animator.deltaPosition);
+        transform.position = newPos;
+    }
+
     public void ExitAttack()
     {
         if (currentAttack.attackData.rootMotion)
         {
-            gameObject.transform.position = brain.animator.rootPosition;
-            brain.animator.applyRootMotion = false;
             brain.navMesh.isStopped = false;
-            brain.navMesh.speed = brain.MoveSpeed;
+            //brain.animator.applyRootMotion = false;
+
+            //brain.navMesh.isStopped = false;
+            //brain.navMesh.speed = brain.MoveSpeed;
             //brain.navMesh.enabled = true;
         }
         brain.animator.SetInteger("AT", 0);

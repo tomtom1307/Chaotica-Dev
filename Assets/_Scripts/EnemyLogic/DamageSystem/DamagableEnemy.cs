@@ -10,7 +10,11 @@ public class DamagableEnemy : Damagable
     {
         base.OnDamageTaken(damage);
         brain.animator.SetTrigger("Hit");
-        if(hitParticleFX != null)
+        if(brain.stateMachine.CurrentEnemyState == brain.idleState)
+        {
+            brain.actionHandler.StartActionOverride(brain.actionHandler.SearchNearby);
+        }
+        if (hitParticleFX != null)
         {
             var ps = Instantiate(hitParticleFX, transform.position + spawnOffset, Quaternion.LookRotation(brain.perception.player.position - transform.position));
 

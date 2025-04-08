@@ -22,6 +22,7 @@ public class CamSwayandBob : MonoBehaviour
         GetInput();
 
         Sway();
+        SFX();
         SwayRotation();
         BobOffset();
         BobRotation();
@@ -29,8 +30,19 @@ public class CamSwayandBob : MonoBehaviour
 
         CompositePositionRotation();
     }
-
-    
+    bool playedSFX;
+    public void SFX()
+    {
+        if (Mathf.Abs(Mathf.Cos(SpeedCurve)) > 0.9f && !playedSFX && rb.linearVelocity.magnitude > 0.1f && pm.isGrounded && pm.state != PlayerMovement.PlayerMechanimState.Sliding)
+        {
+            playedSFX = true;
+            PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.FootSteps);
+        }
+        if(Mathf.Abs(curveCos) < 0.5f)
+        {
+            playedSFX=false;
+        }
+    }
 
     float smooth = 10;
     float smoothRot = 12;

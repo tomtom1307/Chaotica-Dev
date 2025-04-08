@@ -147,7 +147,15 @@ public class EnemyState
     {
         if (EB.actionList.Count == 0) return;
         //Consider Weights or do all actions in order
-        brain.actionHandler.StartAction(EB.actionList[0].Func());
+        B_Action selected = EB.actionList[0];
+        if (selected.Override)
+        {
+            brain.actionHandler.StartActionOverride(selected.Func());
+        }
+        else
+        {
+            brain.actionHandler.StartAction(selected.Func());
+        }
     }
 
     public void DoAttack( EnemyBehaviour EB)
