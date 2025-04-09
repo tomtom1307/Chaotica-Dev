@@ -125,9 +125,6 @@
         },
         {
             "m_Id": "ba784b014bd74cf69634565da87b458e"
-        },
-        {
-            "m_Id": "80017e1f441d49aebc74ea5da6347512"
         }
     ],
     "m_GroupDatas": [],
@@ -524,9 +521,6 @@
             },
             {
                 "m_Id": "d90bdd5d46274acea7d0baf1246e9add"
-            },
-            {
-                "m_Id": "80017e1f441d49aebc74ea5da6347512"
             }
         ]
     },
@@ -680,21 +674,6 @@
         "z": 0.0,
         "w": 0.0
     }
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
-    "m_ObjectId": "07221964b1fb4bc3aaf9a4862c1d29c7",
-    "m_Id": 0,
-    "m_DisplayName": "Alpha",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "Alpha",
-    "m_StageCapability": 2,
-    "m_Value": 1.0,
-    "m_DefaultValue": 1.0,
-    "m_Labels": []
 }
 
 {
@@ -2164,40 +2143,6 @@
 
 {
     "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.BlockNode",
-    "m_ObjectId": "80017e1f441d49aebc74ea5da6347512",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "SurfaceDescription.Alpha",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 0.0,
-            "height": 0.0
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "07221964b1fb4bc3aaf9a4862c1d29c7"
-        }
-    ],
-    "synonyms": [],
-    "m_Precision": 0,
-    "m_PreviewExpanded": true,
-    "m_DismissedVersion": 0,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_SerializedDescriptor": "SurfaceDescription.Alpha"
-}
-
-{
-    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.NormalMaterialSlot",
     "m_ObjectId": "809532260084471c971ffe13352e1088",
     "m_Id": 0,
@@ -3074,7 +3019,7 @@
         "m_Id": "d1d097c7b9cc4af1a5c4be3fb07a2f60"
     },
     "m_AllowMaterialOverride": false,
-    "m_SurfaceType": 1,
+    "m_SurfaceType": 0,
     "m_ZTestMode": 4,
     "m_ZWriteControl": 0,
     "m_AlphaMode": 0,

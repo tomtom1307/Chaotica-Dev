@@ -51,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
     public float SlideForce;
     public float SlideThresh;
     public float VelocityThresh;
+    public float LandingSlide;
 
     [Header("Misc")]
     public AudioSource WindAS;
@@ -133,6 +134,13 @@ public class PlayerMovement : MonoBehaviour
             isGrounded = Physics.CheckSphere(transform.position + 0.3f * Vector3.up, 0.4f, whatisGround);
             if (isGrounded) // OnLanding
             {
+                if (Input.GetKey(KeyCode.C))
+                {
+                    //state = PlayerMovement.PlayerMechanimState.Sliding;
+                    //Slide();
+                    Vector3 vel = Vector3.ProjectOnPlane(rb.linearVelocity, slopeHit.normal).normalized;
+                    rb.AddForce(vel * LandingSlide, ForceMode.VelocityChange);
+                }
                 CamattackAnim.RotateCamera(Vector2.down, 0.8f);
                 PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.FootSteps, Mathf.Clamp(1*rb.linearVelocity.magnitude,0.5f,1.5f));
             }
@@ -158,19 +166,14 @@ public class PlayerMovement : MonoBehaviour
             state = PlayerMechanimState.Jumping;
             Jump();
         }
-        else if (isGrounded && Input.GetKey(KeyCode.LeftShift))
+        else if (isGrounded && Input.GetKey(KeyCode.LeftShift) && state != PlayerMovement.PlayerMechanimState.Crouching && state != PlayerMovement.PlayerMechanimState.Sliding)
         {
             state = PlayerMechanimState.Sprinting;
             SetMoveSpeed(SprintMult);
         }
-        else
-        {
-            state = PlayerMechanimState.Walking;
-            ResetMoveSpeed();
-        }
         if (isGrounded && Input.GetKey(KeyCode.C))
         {
-            if(rb.linearVelocity.magnitude > VelocityThresh)
+            if (rb.linearVelocity.magnitude > VelocityThresh && state != PlayerMovement.PlayerMechanimState.Crouching)
             {
                 state = PlayerMechanimState.Sliding;
                 Slide();
@@ -222,6 +225,9 @@ public class PlayerMovement : MonoBehaviour
     
     void Jump()
     {
+        Vector3 vel = rb.linearVelocity;
+        vel.y = 0;
+        rb.linearVelocity = vel;
         PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.FootSteps, 1);
         CamattackAnim.RotateCamera(Vector2.up, 0.7f);
         rb.AddForce(_jumpForce * Vector3.up * jumpEnhance, ForceMode.Impulse);
@@ -288,7 +294,7 @@ public class PlayerMovement : MonoBehaviour
         timer += Time.deltaTime;
         if(timer < SlideThresh)
         {
-            rb.AddForce(rb.linearVelocity * SlideForce);
+            rb.AddForce(rb.linearVelocity * SlideForce*Time.deltaTime);
         }
 
 
