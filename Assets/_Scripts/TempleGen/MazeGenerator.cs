@@ -26,6 +26,7 @@ public class MazeGenerator : MonoBehaviour
                 GameObject mc = Instantiate(mazeCellPrefab, gameObject.transform);
                 _mazeGrid[x, z] = mc.GetComponent<MazeCell>();
                 _mazeGrid[x, z].transform.localPosition = new Vector3(x, 0, z);
+                
                 if(x == MazeSize.x / 2)
                 {
                     if(z == 0)
@@ -136,7 +137,7 @@ public class MazeGenerator : MonoBehaviour
         }
 
         //LeftToRight
-        if(previousCell.transform.position.x < currentCell.transform.position.x)
+        if(previousCell.transform.localPosition.x < currentCell.transform.localPosition.x)
         {
             previousCell.ClearRightWall();
             currentCell.ClearLeftWall();
@@ -144,7 +145,7 @@ public class MazeGenerator : MonoBehaviour
         }
 
         //RightToLeft
-        if (previousCell.transform.position.x > currentCell.transform.position.x)
+        if (previousCell.transform.localPosition.x > currentCell.transform.localPosition.x)
         {
             previousCell.ClearLeftWall();
             currentCell.ClearRightWall();
@@ -152,7 +153,7 @@ public class MazeGenerator : MonoBehaviour
         }
 
         //UpToDown
-        if(previousCell.transform.position.z > currentCell.transform.position.z)
+        if(previousCell.transform.localPosition.z > currentCell.transform.localPosition.z)
         {
             previousCell.ClearBackWall();
             currentCell.ClearFrontWall();
@@ -160,7 +161,7 @@ public class MazeGenerator : MonoBehaviour
         }
 
         //DownToUp
-        if (previousCell.transform.position.z < currentCell.transform.position.z)
+        if (previousCell.transform.localPosition.z < currentCell.transform.localPosition.z)
         {
             previousCell.ClearFrontWall();
             currentCell.ClearBackWall();
