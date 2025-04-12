@@ -20,7 +20,9 @@ public class Weapon_Attack_Data_Base
     public float MoveSpeedMult = 1;
     public bool hasCooldown = false;
     public float cooldown = 0.1f;
-    
+
+    public List<Vector3> Forces;
+
     //TODO: Store attack chargeup time on here instead of on weapon input (Custom Editor)
     public virtual void EnterAttack(WeaponHolder W) { }
     public virtual void PerformAttack(WeaponHolder W) { }
@@ -34,6 +36,13 @@ public class Weapon_Attack_Data_Base
     public void DealDamage(WeaponHolder W, Damagable damagable) {
         damagable.TakeDamage(DamageVal(W));
     }
+
+    public void ApplyForce(WeaponHolder W,int i)
+    {
+        Vector3 Force = Forces[i].x * W.playerMovement.orientation.right +  Forces[i].y * Vector3.up + Forces[i].z*W.playerMovement.orientation.forward ;
+        W.rb.AddForce(Force,ForceMode.VelocityChange);
+    }
+
     
 }
 

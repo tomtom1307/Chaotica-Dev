@@ -8,8 +8,14 @@ public class WeaponAnimationEventHandler : MonoBehaviour
     public UnityEvent onFinishedAttack;
     public UnityEvent OnAttackPerformed;
     public UnityEvent onMoveSpeedReset;
+    public UnityEvent<int> onForceApply;
     
     CamAttackAnim CamAnimator;
+
+    public void OnForceApply(int i)
+    {
+        onForceApply.Invoke(i);
+    }
 
     public void FinishedAttack()
     {
@@ -45,7 +51,6 @@ public class WeaponAnimationEventHandler : MonoBehaviour
     public void CamSwing(SwingDirection dir)
     {
         CamAnimator.DoAnim(dir);
-        
     }
     private void Start()
     {

@@ -43,6 +43,7 @@ MonoBehaviour:
         MoveSpeedMult: 0
         hasCooldown: 0
         cooldown: 0.1
+        Forces: []
         Range: 0
     - rid: 3205115419090485444
       type: {class: Weapon_Attack_Data_Melee, ns: , asm: Assembly-CSharp}
@@ -60,6 +61,8 @@ MonoBehaviour:
         MoveSpeedMult: 0.5
         hasCooldown: 1
         cooldown: 0.1
+        Forces:
+        - {x: 0, y: 0, z: 207.61}
         attack_range: 3
         MaxViewAngle: 45
     - rid: 3205115430689309103
@@ -78,4 +81,5 @@ MonoBehaviour:
         MoveSpeedMult: 0.2
         hasCooldown: 1
         cooldown: 0.1
+        Forces: []
         attack_range: 10

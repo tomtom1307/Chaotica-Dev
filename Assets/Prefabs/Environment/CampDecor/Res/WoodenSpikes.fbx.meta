@@ -1,9 +1,19 @@
 fileFormatVersion: 2
-guid: acffe47f367745d4dbf567f2819cd6ed
+guid: 578ef12a919b2e745a11f97240e4176e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Nails
+    second: {fileID: 2100000, guid: 2f52f94337958e74586560a0d6955658, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood
+    second: {fileID: 2100000, guid: 9e83650a4d8da8741980a1343476b838, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -65,7 +75,7 @@ ModelImporter:
     secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
-    useFileScale: 0
+    useFileScale: 1
     strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60

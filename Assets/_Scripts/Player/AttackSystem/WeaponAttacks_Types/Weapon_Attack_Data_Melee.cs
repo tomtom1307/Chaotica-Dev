@@ -22,12 +22,22 @@ public class Weapon_Attack_Data_Melee : Weapon_Attack_Data_Base
         List<Collider> col = Physics.OverlapSphere(W.transform.position, attack_range, W.DamagableLayer).ToList();
         foreach (Collider c in col)
         {
+            RaycastHit hit;
             Vector3 dirVec = c.transform.position  - Camera.main.transform.position;
             if(Vector3.Angle(dirVec, Camera.main.transform.forward) < MaxViewAngle)
             {
                 Damagable D = c.GetComponent<Damagable>();
                 
                 DealDamage(W, D);
+                return;
+            }
+            
+            else if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit,attack_range, W.DamagableLayer))
+            {
+                Damagable D = hit.collider.gameObject.GetComponent<Damagable>();
+
+                DealDamage(W, D);
+                return;
             }
         }
 

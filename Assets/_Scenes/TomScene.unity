@@ -1725,6 +1725,17 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+--- !u!114 &418341491 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4485967108917030190, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+  m_PrefabInstance: {fileID: 274145621513451321}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09bf27bf8864cac4c8ae1a9c162f34ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &436202603
 GameObject:
   m_ObjectHideFlags: 0
@@ -11464,6 +11475,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: onForceApply.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: onForceApply.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 418341491}
+    - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: onForceApply.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: onForceApply.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AttackForce
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: onForceApply.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: WeaponHolder, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: onForceApply.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2498856036708082496, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.194761

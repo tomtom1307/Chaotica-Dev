@@ -34,7 +34,7 @@ public class WeaponHolder : MonoBehaviour
     public Camera cam;
     public float ChargeAmount;
 
-    private PlayerMovement playerMovement;
+    public PlayerMovement playerMovement;
 
     bool IsAttack2;
     bool IsAttack3;
@@ -73,10 +73,11 @@ public class WeaponHolder : MonoBehaviour
         ChargeAmount = 1;
         Weapon_anim.runtimeAnimatorController = data.Anim_controller;
     }
-
+    [HideInInspector]public Rigidbody rb;
     //Initialization steps
     private void Start()
     {
+        rb = GetComponent<Rigidbody>();
         playerMovement = GetComponent<PlayerMovement>();
         playerInput = GetComponent<PlayerInput>();
         cam = Camera.main;
@@ -287,6 +288,12 @@ public class WeaponHolder : MonoBehaviour
         //TODO: Check if new attack unlocked!
     }
     
+    public void AttackForce(int i)
+    {
+        if (playerMovement.state == PlayerMovement.PlayerMechanimState.Jumping || playerMovement.state == PlayerMovement.PlayerMechanimState.Sliding) return;
+        CurrentAttackData.ApplyForce(this, i);
+    }
+
     
     public float DamageBonus(DamageType damageType)
     {

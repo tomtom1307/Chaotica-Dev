@@ -134,6 +134,7 @@ public class PlayerMovement : MonoBehaviour
             isGrounded = Physics.CheckSphere(transform.position + 0.3f * Vector3.up, 0.4f, whatisGround);
             if (isGrounded) // OnLanding
             {
+                state = PlayerMechanimState.Walking;
                 if (Input.GetKey(KeyCode.C))
                 {
                     //state = PlayerMovement.PlayerMechanimState.Sliding;
