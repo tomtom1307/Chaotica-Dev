@@ -2214,8 +2214,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxMoveSpeed: 100
   _moveSpeed: 5
-  _CrouchMoveSpeed: 0
-  _jumpForce: 450
+  _CrouchMoveSpeed: 0.6
+  _jumpForce: 500
   _groundDrag: 6
   _airDrag: 0.1
   _airMoveMultiplier: 0.05
@@ -2229,17 +2229,18 @@ MonoBehaviour:
   orientation: {fileID: 7714421985405113136}
   isGrounded: 1
   SlideTime: 100
-  SlideDrag: 0
-  SlideForce: 100
+  SlideDrag: 0.2
+  SlideForce: 5000
   SlideThresh: 0.1
-  VelocityThresh: 5
+  VelocityThresh: 3
+  LandingSlide: 1
   WindAS: {fileID: 3517139010969816703}
   VolLerpSpeed: 0.1
   MaxVol: 0.5
   headPos: {fileID: 6987454334613743101}
-  CamFXSpeed: 15
+  CamFXSpeed: 10
   SlidingCamRot: 1
-  MaxSlidingCamRot: 20
+  MaxSlidingCamRot: 10
   state: 0
   moveInput: {x: 0, y: 0}
 --- !u!114 &8091079049166687030
@@ -2345,6 +2346,7 @@ MonoBehaviour:
     MoveSpeedMult: 0
     hasCooldown: 0
     cooldown: 0.1
+    Forces: []
   State: 1
   instance:
     data: {fileID: 0}
@@ -2360,10 +2362,12 @@ MonoBehaviour:
   Weapon_anim: {fileID: 2576812946705734547}
   cam: {fileID: 0}
   ChargeAmount: 0
+  playerMovement: {fileID: 0}
   handPos: {fileID: 4104726984783066815}
   secondaryPos: {fileID: 3673516885489444593}
   WeaponModel: {fileID: 0}
   SecondaryModel: {fileID: 0}
+  rb: {fileID: 0}
 --- !u!114 &9212400540348738076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3849,6 +3853,21 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
         m_MethodName: ResetMoveSpeed
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onForceApply:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4485967108917030190}
+        m_TargetAssemblyTypeName: WeaponHolder, Assembly-CSharp
+        m_MethodName: AttackForce
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
