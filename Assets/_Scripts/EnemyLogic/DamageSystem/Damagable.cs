@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Damagable : MonoBehaviour
@@ -7,7 +9,7 @@ public class Damagable : MonoBehaviour
 
     public bool DamageNumbers = true;
     [HideInInspector] GameObject DamageNumber;
-    public GameObject SpawnOnDeath;
+    public List<GameObject> SpawnOnDeath;
     public Vector3 spawnOffset;
     public GameObject model;
     public bool ded;
@@ -34,9 +36,16 @@ public class Damagable : MonoBehaviour
     {
         if(ded == true) { return; }
         ded = true;
-        if(SpawnOnDeath != null)
+        if(SpawnOnDeath.Count > 0)
         {
-            Instantiate(SpawnOnDeath, transform.position, transform.rotation);
+            foreach(GameObject obj in SpawnOnDeath)
+            {
+                if(obj != null)
+                {
+                    Instantiate(obj, transform.position, transform.rotation);
+                }
+                
+            }
         }
         if(model != null)
         {
@@ -61,7 +70,6 @@ public class Damagable : MonoBehaviour
         GameObject number = Instantiate(DamageNumber,offsetVector+ transform.position+0.3f*(Camera.main.transform.position-transform.position).normalized, Quaternion.identity);
         number.GetComponent<DamageNumber>().SetValue(damage);
     }
-
 
 
 

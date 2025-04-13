@@ -15,7 +15,17 @@ public class HUDController : MonoBehaviour
         }
     }
 
+    
+
+
     [SerializeField] TMP_Text InteractionText;
+    [SerializeField] TMP_Text ChaosCoreAmount;
+
+
+    public void SetChaosCoreText(float amount)
+    {
+        ChaosCoreAmount.text = amount.ToString();
+    }
 
     public void EnableInteractionText(string text = "")
     {
@@ -26,6 +36,8 @@ public class HUDController : MonoBehaviour
     public void DisableInteractionText() {
         InteractionText.gameObject.SetActive(false);
     }
+
+
 
     #region ChargeMeter
     private Coroutine fillCoroutine;

@@ -15,7 +15,7 @@ using UnityEngine.Experimental.GlobalIllumination;
 [RequireComponent(typeof(EnemyAnimationEventHandler))]
 public class EnemyBrain : MonoBehaviour
 {
-
+    public float TimeBetweenAttacks;
     [Header("Movement")]
     ///<value> Property <c>MoveSpeed</c> holds the enemy's navmesh agent speed.</value>
     public float MoveSpeed;
@@ -43,12 +43,19 @@ public class EnemyBrain : MonoBehaviour
     [HideInInspector] public EnemyPerception perception;
     [HideInInspector] public EnemyActionHandler actionHandler;
     [HideInInspector] public EnemyAttackHandler attackHandler;
+    
 
-
-    [HideInInspector] public UnityEvent OnPlayerSpotted;
-    [HideInInspector] public UnityEvent OnPlayerLost;
+    public UnityEvent OnPlayerSpotted;
+    public UnityEvent OnPlayerLost;
     //Health
     private DamagableEnemy damagableEnemy;
+    [Header("Stats")]
+    [Range(0.0f, 1.0f)]
+    [Tooltip("Changes how velocity dependent raycast is:" +
+        " {1 being raycast will hit regardless of player speed to " +
+        "0 being will certainly miss when player moving}")]
+    public float Accuracy; // Ranges from 0 to 1
+
 
     [Header("Debug")]
     public bool stateChangeDebug;

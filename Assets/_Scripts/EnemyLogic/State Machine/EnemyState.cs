@@ -158,7 +158,7 @@ public class EnemyState
         }
     }
 
-    public void DoAttack( EnemyBehaviour EB)
+    public void DoAttack(EnemyBehaviour EB)
     {
         if (EB.attackList.Count == 0) return;
         brain.attackHandler.EnterAttack(EB.attackList[0]);

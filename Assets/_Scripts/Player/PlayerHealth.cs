@@ -21,7 +21,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Update()
     {
-
+        UpdateHealthBar();
         //Testing
         if (Input.GetKeyDown(KeyCode.K))
         {

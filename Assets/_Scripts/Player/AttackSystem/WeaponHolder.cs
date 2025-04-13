@@ -77,6 +77,7 @@ public class WeaponHolder : MonoBehaviour
     //Initialization steps
     private void Start()
     {
+        
         rb = GetComponent<Rigidbody>();
         playerMovement = GetComponent<PlayerMovement>();
         playerInput = GetComponent<PlayerInput>();
@@ -85,7 +86,7 @@ public class WeaponHolder : MonoBehaviour
         IK_Handler = cam.GetComponentInChildren<HandIKHandler>();
         //handPos = GameObject.Find("HandModel").transform;
         ComboCounter = 0;
-
+        CurrentAttackData = null;
         if(data == null)
         {
             enabled = false;
@@ -135,7 +136,7 @@ public class WeaponHolder : MonoBehaviour
 
         //
         CurrentAttackData = data.Weapon_Attacks[i];
-        playerMovement.SetMoveSpeed(CurrentAttackData.MoveSpeedMult);
+        playerMovement.AttackMoveSpeed(CurrentAttackData.MoveSpeedMult, CurrentAttackData.AllowAgility);
         
 
         //Handle Animation stuff
@@ -158,7 +159,7 @@ public class WeaponHolder : MonoBehaviour
     public void ExitAttack()
     {
         //Reset basically
-        playerMovement.ResetMoveSpeed();
+        playerMovement.AttackResetMoveSpeed();
         HandleCooldownStuff();
         CurrentAttackData = null;
         
@@ -276,7 +277,7 @@ public class WeaponHolder : MonoBehaviour
     {
         CurrentAttackData = data.Weapon_Attacks[Attack];
         State = AttackState.Charging;
-        playerMovement.SetMoveSpeed(CurrentAttackData.MoveSpeedMult);
+        playerMovement.AttackMoveSpeed(CurrentAttackData.MoveSpeedMult, CurrentAttackData.AllowAgility);
         Weapon_anim.SetBool("Charging", true);
         Weapon_anim.SetInteger("AttackType", Attack);
 
@@ -291,7 +292,7 @@ public class WeaponHolder : MonoBehaviour
     public void AttackForce(int i)
     {
         if (playerMovement.state == PlayerMovement.PlayerMechanimState.Jumping || playerMovement.state == PlayerMovement.PlayerMechanimState.Sliding) return;
-        CurrentAttackData.ApplyForce(this, i);
+        CurrentAttackData.ApplyForceToPlayer(this, i);
     }
 
     

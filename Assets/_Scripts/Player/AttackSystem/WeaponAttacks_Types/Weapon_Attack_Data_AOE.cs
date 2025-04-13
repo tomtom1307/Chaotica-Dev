@@ -29,10 +29,14 @@ public class Weapon_Attack_Data_AOE : Weapon_Attack_Data_Base
         {
             //For Knockback!
             Vector3 dirVec = c.transform.position - Camera.main.transform.position;
+            ApplyKnockback(c,dirVec);
             Damagable D = c.GetComponent<Damagable>();
             DealDamage(W, D);
         }
     }
+
+
+    
 
     public override void EnterAttack(WeaponHolder W)
     {

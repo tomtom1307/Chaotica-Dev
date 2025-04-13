@@ -55,6 +55,10 @@ public class EnemyPerception : MonoBehaviour
         {
             if (hit.collider.gameObject.layer == 10 && Vector3.Angle(LookVector, player.position - transform.position) < brain.ViewAngle)
             {
+                if (!LOS)
+                {
+                    brain.OnPlayerSpotted.Invoke();
+                }
                 LOS = true;
                 PlayerLastSeenPosition = player.transform.position;
                 LastSpottedTime = Time.time;

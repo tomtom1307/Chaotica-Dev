@@ -20,6 +20,7 @@ public class Weapon_Attack_Data_Raycast : Weapon_Attack_Data_Base
        
         if (Physics.Raycast(W.cam.transform.position, W.cam.transform.forward, out hit, Range))
         {
+            ApplyKnockback(hit.collider, W.cam.transform.forward);
             if (hit.collider.gameObject.layer == 8)
             {
                 Debug.Log("Raycast hit!");

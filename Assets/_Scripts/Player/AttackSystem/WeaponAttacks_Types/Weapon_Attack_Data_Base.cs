@@ -20,7 +20,8 @@ public class Weapon_Attack_Data_Base
     public float MoveSpeedMult = 1;
     public bool hasCooldown = false;
     public float cooldown = 0.1f;
-
+    public bool AllowAgility;
+    public float KnockBackForce;
     public List<Vector3> Forces;
 
     //TODO: Store attack chargeup time on here instead of on weapon input (Custom Editor)
@@ -37,13 +38,22 @@ public class Weapon_Attack_Data_Base
         damagable.TakeDamage(DamageVal(W));
     }
 
-    public void ApplyForce(WeaponHolder W,int i)
+    public void ApplyForceToPlayer(WeaponHolder W,int i)
     {
         Vector3 Force = Forces[i].x * W.playerMovement.orientation.right +  Forces[i].y * Vector3.up + Forces[i].z*W.playerMovement.orientation.forward ;
         W.rb.AddForce(Force,ForceMode.VelocityChange);
     }
 
-    
+    public void ApplyKnockback(Collider c, Vector3 v)
+    {
+        Rigidbody hitrb;
+        if (c.gameObject.TryGetComponent<Rigidbody>(out hitrb))
+        {
+            hitrb.AddForce(KnockBackForce * v.normalized);
+        }
+    }
+
+
 }
 
 

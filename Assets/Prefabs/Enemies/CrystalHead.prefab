@@ -503,7 +503,7 @@ NavMeshAgent:
   m_Acceleration: 24.54
   avoidancePriority: 50
   m_AngularSpeed: 1220.21
-  m_StoppingDistance: 0.5
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -546,14 +546,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5734c078d0bd4747911c7e5e6409562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 100
+  MaxHealth: 25
   Health: 0
   DamageNumbers: 1
-  SpawnOnDeath: {fileID: 310846752812338475, guid: 05b59a82ad168ad4d9139ed7732d1d82, type: 3}
+  SpawnOnDeath:
+  - {fileID: 6229015314133012181, guid: 69d1dfa3e85f3e549bb742429f91c7b8, type: 3}
+  - {fileID: 310846752812338475, guid: 05b59a82ad168ad4d9139ed7732d1d82, type: 3}
   spawnOffset: {x: 0, y: 1, z: 0}
   model: {fileID: 7522260643798107158}
   ded: 0
-  hitParticleFX: {fileID: 9105707323847228812, guid: ce9284e5638470c4e9112b8eff7efa2b, type: 3}
+  hitParticleFX: {fileID: 6229015314133012181, guid: 69d1dfa3e85f3e549bb742429f91c7b8, type: 3}
 --- !u!114 &5281054923219915767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -566,6 +568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42b75dae65b283048976184a23c969ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TimeBetweenAttacks: 0.3
   MoveSpeed: 3
   JumpPower: 0.2
   DetectionRange: 93.6
@@ -609,7 +612,7 @@ MonoBehaviour:
         - checkTime: 0
           checkFloat: 2
           checkComparison: 0
-          input: 0.4
+          input: 0.2
         intChecks: []
       actionList:
       - brain: {fileID: 0}
@@ -748,6 +751,7 @@ MonoBehaviour:
   OnPlayerLost:
     m_PersistentCalls:
       m_Calls: []
+  Accuracy: 0
   stateChangeDebug: 1
   animator: {fileID: 0}
 --- !u!1 &1646196334279308325

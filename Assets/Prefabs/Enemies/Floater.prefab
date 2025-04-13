@@ -51,9 +51,9 @@ NavMeshAgent:
   m_AgentTypeID: -1372625422
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 30
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 360
   m_StoppingDistance: 6
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -96,14 +96,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5734c078d0bd4747911c7e5e6409562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 50
+  MaxHealth: 10
   Health: 0
   DamageNumbers: 1
-  SpawnOnDeath: {fileID: 4784340333781393268, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
+  SpawnOnDeath:
+  - {fileID: 4784340333781393268, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
   spawnOffset: {x: 0, y: 0, z: 0}
   model: {fileID: 775067291979300683}
   ded: 0
-  hitParticleFX: {fileID: 9105707323847228812, guid: ce9284e5638470c4e9112b8eff7efa2b, type: 3}
+  hitParticleFX: {fileID: 6229015314133012181, guid: 69d1dfa3e85f3e549bb742429f91c7b8, type: 3}
 --- !u!114 &7248831718900849666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,12 +130,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfa621f46e2fee2459331b14dd83d65a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TimeBetweenAttacks: 2
   MoveSpeed: 5
   JumpPower: 0
   DetectionRange: 48.9
   PerceptionStat: 2
   DetectionMeterDecay: 1.14
   ViewAngle: 57.18
+  SearchRange: 0
   layerMask:
     serializedVersion: 2
     m_Bits: 1089
@@ -142,15 +145,13 @@ MonoBehaviour:
   navMesh: {fileID: 0}
   currentStateName: 
   stateList:
-  - Name: Idle
+  - Name: Patrol
     enemyBehaviours:
-    - Name: Check Detection Meter
-      priority: 2
+    - Name: OnDetectAttack
+      priority: 3
       conditions:
         brain: {fileID: 0}
-        boolChecks:
-        - checkTime: 0
-          checkBool: 1
+        boolChecks: []
         floatChecks:
         - checkTime: 0
           checkFloat: 2
@@ -160,10 +161,43 @@ MonoBehaviour:
       actionList:
       - brain: {fileID: 0}
         B_action: 1
+        Override: 1
         Weight: 0
       attackList: []
       name: 
-  - Name: Patrol
+    - Name: IsSpot
+      priority: 3
+      conditions:
+        brain: {fileID: 0}
+        boolChecks: []
+        floatChecks:
+        - checkTime: 0
+          checkFloat: 2
+          checkComparison: 0
+          input: 0.2
+        intChecks: []
+      actionList:
+      - brain: {fileID: 0}
+        B_action: 6
+        Override: 0
+        Weight: 0
+      attackList: []
+      name: 
+    - Name: Patrol
+      priority: 2
+      conditions:
+        brain: {fileID: 0}
+        boolChecks: []
+        floatChecks: []
+        intChecks: []
+      actionList:
+      - brain: {fileID: 0}
+        B_action: 4
+        Override: 0
+        Weight: 0
+      attackList: []
+      name: 
+  - Name: Attack
     enemyBehaviours:
     - Name: ChasePlayer
       priority: 1
@@ -179,6 +213,7 @@ MonoBehaviour:
       actionList:
       - brain: {fileID: 0}
         B_action: 3
+        Override: 0
         Weight: 0
       attackList: []
       name: 
@@ -221,9 +256,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6208216760424408910}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   OnPlayerLost:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6208216760424408910}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  Accuracy: 0.48
   stateChangeDebug: 0
   animator: {fileID: 0}
 --- !u!135 &6081056787126832431
@@ -502,7 +562,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 850062111196167152}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d2844b718cccc842bf05631ec183777, type: 3}
   m_Name: 
@@ -510,8 +570,8 @@ MonoBehaviour:
   brain: {fileID: 0}
   player: {fileID: 0}
   Playerrb: {fileID: 0}
-  rotationSpeed: 2
-  maxOvershoot: 1
+  rotationSpeed: 10
+  maxOvershoot: 0
 --- !u!1 &4822218351640901317
 GameObject:
   m_ObjectHideFlags: 0

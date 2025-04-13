@@ -7,4 +7,15 @@ public class PlayerInventory : MonoBehaviour
 
     public List<WeaponInstance> weaponStashDatas;
 
+    private void Start()
+    {
+        HUDController.instance.SetChaosCoreText(ChaosCores);
+    }
+
+    public void AddChaosCores(float Amount)
+    {
+        ChaosCores += Amount;
+        HUDController.instance.SetChaosCoreText(ChaosCores);
+    }
+
 }

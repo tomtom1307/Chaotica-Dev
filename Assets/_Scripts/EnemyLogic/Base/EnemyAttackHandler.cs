@@ -9,10 +9,13 @@ public class EnemyAttackHandler : MonoBehaviour
     [HideInInspector] public EnemyAttack currentAttack;
     List<bool> groupDidDamage;
     public bool attacking;
-
+    
     Rigidbody rb;
     Transform player;
     Rigidbody _playerRb;
+
+    float AttackTimer;
+
 
     private void Start()
     {
@@ -31,9 +34,11 @@ public class EnemyAttackHandler : MonoBehaviour
 
     public void EnterAttack(EnemyAttack EA)
     {
-        if (attacking) { return; }
+        if (attacking || AttackTimer <= brain.TimeBetweenAttacks) { return; }
         currentAttack = EA;
+        
         attacking = true;
+
         if (currentAttack.attackData.rootMotion)
         {
             Debug.Log("enabled root motion and disabled navmeshagent.");
@@ -55,20 +60,30 @@ public class EnemyAttackHandler : MonoBehaviour
     private void OnAnimatorMove()
     {
         Vector3 newPos = transform.position + brain.animator.deltaPosition;
-        Debug.Log(brain.animator.deltaPosition);
         transform.position = newPos;
+    }
+
+    private void Update()
+    {
+        if (attacking)
+        {
+            currentAttack.attackData.AttackUpdate(this);
+        }
+        else
+        {
+            AttackTimer += Time.deltaTime;
+        }
+        AimDirection = (player.position + Vector3.up - brain.LookDirectionTransform.position).normalized;
+        AimDirection += -0.1f * (1 - brain.Accuracy) * _playerRb.linearVelocity;
+
     }
 
     public void ExitAttack()
     {
+        
         if (currentAttack.attackData.rootMotion)
         {
             brain.navMesh.isStopped = false;
-            //brain.animator.applyRootMotion = false;
-
-            //brain.navMesh.isStopped = false;
-            //brain.navMesh.speed = brain.MoveSpeed;
-            //brain.navMesh.enabled = true;
         }
         brain.animator.SetInteger("AT", 0);
         brain.animator.SetBool("Attacking", false);
@@ -86,15 +101,14 @@ public class EnemyAttackHandler : MonoBehaviour
         currentAttack.attackData.DamageLogic(PH, this);
         PH.TakeDamage(currentAttack.attackData.damageValue);
     }
-
+    [HideInInspector] public Vector3 AimDirection;
     public void DoRayCast()
     {
-        Vector3 shootDir = (player.position + Vector3.up - brain.LookDirectionTransform.position).normalized;
-        shootDir += -0.1f*(1 - currentAttack.attackData.Accuracy) *_playerRb.linearVelocity;
+        
         RaycastHit hit;
 
-        Debug.DrawRay(transform.position, shootDir, Color.yellow, 5);
-        if (Physics.Raycast(brain.LookDirectionTransform.position, shootDir.normalized, out hit, currentAttack.attackData.rayCastRange, currentAttack.attackData.whatIsPlayer))
+        Debug.DrawRay(transform.position, AimDirection, Color.yellow, 5);
+        if (Physics.Raycast(brain.LookDirectionTransform.position, AimDirection.normalized, out hit, currentAttack.attackData.rayCastRange, currentAttack.attackData.whatIsPlayer))
         {
             PlayerHealth PH = hit.collider.gameObject.GetComponent<PlayerHealth>();
             DamagePlayer(PH);

@@ -1,3 +1,4 @@
+using System.Drawing;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -9,6 +10,7 @@ public class Projectile : MonoBehaviour
     public LayerMask LayerMask;
     public float MaxLifeTime = 30;
     Rigidbody rb;
+    public float KnockBack;
 
     Collider col; 
 
@@ -19,7 +21,7 @@ public class Projectile : MonoBehaviour
         Destroy(gameObject, MaxLifeTime);
     }
 
-    public virtual void Init(Vector3 dir, float speed, float Damage, bool gravity)
+    public virtual void Init(Vector3 dir, float speed, float Damage, bool gravity, float KnockBack = 0)
     {
         rb = GetComponent<Rigidbody>();
         rb.linearVelocity = dir * speed;
@@ -60,6 +62,12 @@ public class Projectile : MonoBehaviour
         if(IsInLayerMask(collision.gameObject,LayerMask))
         {
             OnHit(collision.gameObject);
+        }
+        Rigidbody hitrb;
+        
+        if(collision.gameObject.TryGetComponent<Rigidbody>(out hitrb))
+        {
+            hitrb.AddForce(KnockBack * -collision.relativeVelocity);
         }
         rb.isKinematic = true;
         col.enabled = false;

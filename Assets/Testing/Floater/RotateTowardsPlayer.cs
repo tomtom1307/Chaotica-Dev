@@ -28,7 +28,7 @@ public class RotateTowardsPlayer : MonoBehaviour
     {
         if (player == null) return;
 
-        Vector3 direction = (player.position+ Vector3.up + Vector3.ClampMagnitude(Playerrb.linearVelocity, maxOvershoot) - transform.position).normalized;
+        Vector3 direction = (brain.attackHandler.AimDirection).normalized;
 
         Quaternion targetRotation = Quaternion.LookRotation(direction);
 

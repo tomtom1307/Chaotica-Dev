@@ -36,9 +36,17 @@ public class PeakCam : MonoBehaviour
         }
         else
         {
-            pm.ResetMoveSpeed();
+            
             targetPos = orginal;
             TargetZ = Quaternion.Euler(0, 0, 0);
+            if (pm.wh.State != WeaponHolder.AttackState.Ready)
+            {
+                
+            }
+            else
+            {
+                pm.ResetMoveSpeed();
+            }
         }
 
 

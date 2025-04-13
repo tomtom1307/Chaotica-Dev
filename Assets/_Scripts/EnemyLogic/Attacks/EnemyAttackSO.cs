@@ -6,7 +6,6 @@ public class EnemyAttackSO : ScriptableObject
 {
     public bool rootMotion;
     public bool interruptable;
-
     public float AttackCooldown;
 
     public float KnockBackAmount;
@@ -32,11 +31,8 @@ public class EnemyAttackSO : ScriptableObject
     public float rayCastDamage;
     public float rayCastRange;
 
-    [Range(0.0f, 1.0f)]
-    [Tooltip("Changes how velocity dependent raycast is:" +
-        " {1 being raycast will hit regardless of player speed to " +
-        "0 being will certainly miss when player moving}")]
-    public float Accuracy; // Ranges from 0 to 1
+    
+    
 
     public virtual void EnterAttack(EnemyAttackHandler attackHandler)
     {
@@ -45,6 +41,10 @@ public class EnemyAttackSO : ScriptableObject
     {
     }
 
+    public virtual void AttackUpdate(EnemyAttackHandler attackHandler)
+    {
+        
+    }
 
     public virtual void DamageLogic(PlayerHealth ph,EnemyAttackHandler attackHandler) {
         if (KnockBack)

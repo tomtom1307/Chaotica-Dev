@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -73,9 +74,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public PlayerMechanimState state;
-
+    public WeaponHolder wh;
     private void Start()
     {
+        wh = GetComponent<WeaponHolder>();
         collider = GetComponent<CapsuleCollider>();
         ColliderHeight = collider.height;
         CamattackAnim = Camera.main.GetComponentInParent<CamAttackAnim>();
@@ -92,9 +94,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void ResetMoveSpeed()
     {
+        
         _currentMoveSpeed = _moveSpeed;
     }
 
+    
 
     private void Update()
     {
@@ -162,24 +166,25 @@ public class PlayerMovement : MonoBehaviour
         moveInput.x = horMovement;
         moveInput.y = vertMovement;
         moveInput = moveInput.normalized;
-        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space))//Jumping
         {
             state = PlayerMechanimState.Jumping;
             Jump();
         }
-        else if (isGrounded && Input.GetKey(KeyCode.LeftShift) && state != PlayerMovement.PlayerMechanimState.Crouching && state != PlayerMovement.PlayerMechanimState.Sliding)
+        //Sprinting
+        else if (isGrounded && Input.GetKey(KeyCode.LeftShift) && state != PlayerMechanimState.Crouching && state != PlayerMechanimState.Sliding && isAttackAgile())
         {
             state = PlayerMechanimState.Sprinting;
             SetMoveSpeed(SprintMult);
         }
         if (isGrounded && Input.GetKey(KeyCode.C))
         {
-            if (rb.linearVelocity.magnitude > VelocityThresh && state != PlayerMovement.PlayerMechanimState.Crouching)
+            if (rb.linearVelocity.magnitude > VelocityThresh && state != PlayerMechanimState.Crouching) //Sliding
             {
                 state = PlayerMechanimState.Sliding;
                 Slide();
             }
-            else
+            else //Crouching
             {
                 
                 Crouch();
@@ -189,6 +194,10 @@ public class PlayerMovement : MonoBehaviour
         {
             state = PlayerMechanimState.Walking;
             EndCrouch();
+        }
+        else
+        {
+            state = PlayerMovement.PlayerMechanimState.Walking;
         }
         if (!isGrounded)
         {
@@ -331,4 +340,26 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    bool AttackAgile = true;
+
+    public void AttackMoveSpeed(float val,bool Agile)
+    {
+        if (state == PlayerMechanimState.Sprinting)
+        {
+            state = PlayerMechanimState.Walking;
+        }
+        SetMoveSpeed(val);
+        AttackAgile = Agile;
+    }
+
+    public void AttackResetMoveSpeed()
+    {
+        AttackAgile = true;
+        ResetMoveSpeed();
+    }
+
+    private bool isAttackAgile()
+    {
+        return AttackAgile;
+    }
 }
