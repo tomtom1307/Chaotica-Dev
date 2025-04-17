@@ -84,6 +84,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.maxLinearVelocity = MaxMoveSpeed;
         rb.freezeRotation = true;
+        attackMoveSpeed = 1;
         _currentMoveSpeed = _moveSpeed;
     }
 
@@ -316,13 +317,13 @@ public class PlayerMovement : MonoBehaviour
         state = PlayerMechanimState.Crouching;
         rb.linearDamping = _groundDrag;
         collider.height = 0.5f * ColliderHeight;
-        SetMoveSpeed(_CrouchMoveSpeed);
+        SetMoveSpeed(_CrouchMoveSpeed * attackMoveSpeed);
     }
 
     public void EndCrouch()
     {
         timer = 0;
-        ResetMoveSpeed();
+        AttackMoveSpeed(attackMoveSpeed, true);
         collider.height = ColliderHeight;
     }
 
@@ -341,7 +342,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     bool AttackAgile = true;
-
+    float attackMoveSpeed;
     public void AttackMoveSpeed(float val,bool Agile)
     {
         if (state == PlayerMechanimState.Sprinting)
@@ -349,11 +350,13 @@ public class PlayerMovement : MonoBehaviour
             state = PlayerMechanimState.Walking;
         }
         SetMoveSpeed(val);
+        attackMoveSpeed = val;
         AttackAgile = Agile;
     }
 
     public void AttackResetMoveSpeed()
     {
+        attackMoveSpeed = 1;
         AttackAgile = true;
         ResetMoveSpeed();
     }

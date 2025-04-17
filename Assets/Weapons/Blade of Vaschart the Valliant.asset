@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f97d5a5f37eac5f4db92ac9fa4e8c399, type: 3}
+  m_Name: Blade of Vaschart the Valliant
+  m_EditorClassIdentifier: 
+  _Name: LongSword
+  model: {fileID: 817179458808357495, guid: 74a91fa4972be0b4e8d12dc40677e53c, type: 3}
+  secondaryModel: {fileID: 0}
+  WeaponDamage: 5
+  Anim_controller: {fileID: 9100000, guid: 98244d638b235d14b8d04567bfc3ed9b, type: 2}
+  Weapon_Attacks:
+  - rid: 6776318021367234627
+  - rid: 6776318021367234728
+  - rid: 6776318021367234729
+  InventorySprite: {fileID: 21300000, guid: b87b967d2eda3564a8480b2ad42ce52c, type: 3}
+  references:
+    version: 2
+    RefIds:
+    - rid: 6776318021367234627
+      type: {class: Weapon_Attack_Data_Melee, ns: , asm: Assembly-CSharp}
+      data:
+        Name: Stabbing Thrust
+        Description: 'Lunge at your enemies '
+        weaponInputLogic: {fileID: 11400000, guid: fa62de39fcdf5ac419138ca13612768e, type: 2}
+        attackType: 0
+        damageType: 0
+        damage: 100
+        ComboLength: 3
+        StaggerDamage: 0
+        AttackWeight: 1
+        MoveSpeedMult: 0.4
+        hasCooldown: 1
+        cooldown: 0.1
+        AllowAgility: 0
+        KnockBackForce: 974.8
+        FinalHitMultiplier: 10
+        Forces:
+        - {x: 0, y: 0, z: 6}
+        - {x: 0, y: 0, z: 10}
+        - {x: 0, y: 0, z: 25}
+        attack_range: 4
+        MaxViewAngle: 30
+    - rid: 6776318021367234728
+      type: {class: Weapon_Attack_Data_Melee, ns: , asm: Assembly-CSharp}
+      data:
+        Name: 
+        Description: 
+        weaponInputLogic: {fileID: 0}
+        attackType: 0
+        damageType: 0
+        damage: 100
+        ComboLength: 1
+        StaggerDamage: 5
+        AttackWeight: 1
+        MoveSpeedMult: 1
+        hasCooldown: 1
+        cooldown: 0.1
+        AllowAgility: 0
+        KnockBackForce: 100
+        FinalHitMultiplier: 100
+        Forces: []
+        attack_range: 3
+        MaxViewAngle: 45
+    - rid: 6776318021367234729
+      type: {class: Weapon_Attack_Data_Melee, ns: , asm: Assembly-CSharp}
+      data:
+        Name: 
+        Description: 
+        weaponInputLogic: {fileID: 0}
+        attackType: 0
+        damageType: 0
+        damage: 100
+        ComboLength: 1
+        StaggerDamage: 5
+        AttackWeight: 1
+        MoveSpeedMult: 1
+        hasCooldown: 1
+        cooldown: 0.1
+        AllowAgility: 0
+        KnockBackForce: 100
+        FinalHitMultiplier: 100
+        Forces: []
+        attack_range: 3
+        MaxViewAngle: 45

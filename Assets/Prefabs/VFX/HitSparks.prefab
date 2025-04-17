@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 548645307062469222}
   - component: {fileID: 2508337755677863436}
   - component: {fileID: 5295403969304576353}
+  - component: {fileID: 6795982984508151250}
   m_Layer: 0
   m_Name: HitSparks
   m_TagString: Untagged
@@ -114,3 +115,16 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &6795982984508151250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6229015314133012181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7d626cff35e25e48914239bc39bb21b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Lifetime: 2

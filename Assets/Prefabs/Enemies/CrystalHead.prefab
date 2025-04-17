@@ -552,6 +552,7 @@ MonoBehaviour:
   SpawnOnDeath:
   - {fileID: 6229015314133012181, guid: 69d1dfa3e85f3e549bb742429f91c7b8, type: 3}
   - {fileID: 310846752812338475, guid: 05b59a82ad168ad4d9139ed7732d1d82, type: 3}
+  SpawnOnHit: []
   spawnOffset: {x: 0, y: 1, z: 0}
   model: {fileID: 7522260643798107158}
   ded: 0
@@ -1432,7 +1433,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 4b78d8fc5dcbdf94093609ec0c29c4af, type: 2}
-  - {fileID: 2100000, guid: 6e69ee2bbebea5f45b43bad74594a201, type: 2}
+  - {fileID: 2100000, guid: 3ccbeaff925e364468772a515ed06d32, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -61,13 +61,14 @@ public class Projectile : MonoBehaviour
     {
         if(IsInLayerMask(collision.gameObject,LayerMask))
         {
-            OnHit(collision.gameObject);
+            OnHit(collision.gameObject, collision.GetContact(0));
         }
+        
         Rigidbody hitrb;
         
         if(collision.gameObject.TryGetComponent<Rigidbody>(out hitrb))
         {
-            hitrb.AddForce(KnockBack * -collision.relativeVelocity);
+            hitrb.AddForceAtPosition(KnockBack * -collision.relativeVelocity, collision.contacts[0].point);
         }
         rb.isKinematic = true;
         col.enabled = false;
@@ -76,9 +77,9 @@ public class Projectile : MonoBehaviour
     }
 
 
-    public virtual void OnHit(GameObject hitObj)
+    public virtual void OnHit(GameObject hitObj, ContactPoint col)
     {
-        hitObj.GetComponent<Damagable>().TakeDamage(Damage);
+        hitObj.GetComponent<Damagable>().TakeDamage(Damage, col.point, col.normal);
         Destroy(gameObject);
     }
 }

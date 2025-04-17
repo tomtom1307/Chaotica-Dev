@@ -13,12 +13,15 @@ public class WeaponAttackItem : MonoBehaviour
     [HideInInspector] public bool IsAttack;
     public void FillInfo(WeaponInstance Inst)
     {
-        AttackName.text = Inst.data.Weapon_Attacks[AttackNum].Name;
-        Description.text = Inst.data.Weapon_Attacks[AttackNum].Description;
-        Damage.text = Inst.data.Weapon_Attacks[AttackNum].damage + "%";
-        IsAttack = IsAttackUnlocked(Inst);
-        Obscurer.SetActive(!IsAttack);
-        
+        if (Inst.data.Weapon_Attacks.Count < AttackNum+1) return;
+        if (Inst.data.Weapon_Attacks[AttackNum] != null)
+        {
+            AttackName.text = Inst.data.Weapon_Attacks[AttackNum].Name;
+            Description.text = Inst.data.Weapon_Attacks[AttackNum].Description;
+            Damage.text = Inst.data.Weapon_Attacks[AttackNum].damage + "%";
+            IsAttack = IsAttackUnlocked(Inst);
+            Obscurer.SetActive(!IsAttack);
+        }
     }
 
     public bool IsAttackUnlocked(WeaponInstance Inst)

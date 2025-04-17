@@ -101,6 +101,7 @@ MonoBehaviour:
   DamageNumbers: 1
   SpawnOnDeath:
   - {fileID: 4784340333781393268, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
+  SpawnOnHit: []
   spawnOffset: {x: 0, y: 0, z: 0}
   model: {fileID: 775067291979300683}
   ded: 0
@@ -499,7 +500,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 4b78d8fc5dcbdf94093609ec0c29c4af, type: 2}
-  - {fileID: 2100000, guid: 6e69ee2bbebea5f45b43bad74594a201, type: 2}
+  - {fileID: 2100000, guid: 3ccbeaff925e364468772a515ed06d32, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

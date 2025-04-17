@@ -1,14 +1,16 @@
 using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ShatteredObject : MonoBehaviour
 {
     public List<GameObject> SubPieces;
-
+    public UnityEvent OnStart;
     private void Start()
     {
         Invoke("DoDeletion", 4f);
+        OnStart.Invoke();
     }
 
 

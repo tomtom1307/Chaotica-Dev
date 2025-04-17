@@ -24,12 +24,20 @@ public class Weapon_Attack_Data_Melee : Weapon_Attack_Data_Base
         {
             RaycastHit hit;
             Vector3 dirVec = c.transform.position  - Camera.main.transform.position;
-            ApplyKnockback(c, dirVec);
+            
             if(Vector3.Angle(dirVec, Camera.main.transform.forward) < MaxViewAngle)
             {
                 Damagable D = c.GetComponent<Damagable>();
-                
-                DealDamage(W, D);
+                if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, attack_range, W.DamagableLayer))
+                {
+                    DealDamage(W, D, hit);
+                    ApplyKnockback(c, dirVec, hit.point);
+                }
+                else
+                {
+                    DealDamage(W, D);
+                    ApplyKnockback(c, dirVec);
+                }
                 return;
             }
             
