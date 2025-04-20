@@ -369,7 +369,7 @@ Rigidbody:
   m_GameObject: {fileID: 9155815085249935103}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 2
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -382,7 +382,7 @@ Rigidbody:
     m_Bits: 2999
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -399,7 +399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 836c75cda595c364a9b5fe6c913e97aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Attraction: 200
+  Attraction: 20
 --- !u!135 &8482909032586896825
 SphereCollider:
   m_ObjectHideFlags: 0

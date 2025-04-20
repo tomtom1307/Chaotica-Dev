@@ -15,7 +15,7 @@ MonoBehaviour:
   _Name: LongSword
   model: {fileID: 817179458808357495, guid: 74a91fa4972be0b4e8d12dc40677e53c, type: 3}
   secondaryModel: {fileID: 0}
-  WeaponDamage: 5
+  WeaponDamage: 4
   Anim_controller: {fileID: 9100000, guid: 98244d638b235d14b8d04567bfc3ed9b, type: 2}
   Weapon_Attacks:
   - rid: 6776318021367234627
@@ -42,10 +42,10 @@ MonoBehaviour:
         cooldown: 0.1
         AllowAgility: 0
         KnockBackForce: 974.8
-        FinalHitMultiplier: 10
+        FinalHitMultiplier: 1.5
         Forces:
         - {x: 0, y: 0, z: 6}
-        - {x: 0, y: 0, z: 10}
+        - {x: 0, y: 0, z: 6}
         - {x: 0, y: 0, z: 25}
         attack_range: 4
         MaxViewAngle: 30

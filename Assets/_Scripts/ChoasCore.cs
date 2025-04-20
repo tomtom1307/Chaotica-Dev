@@ -16,17 +16,12 @@ public class ChoasCore : MonoBehaviour
     void Update()
     {
         float r = (Vector3.Distance(player.position, transform.position));
-        rb.AddForce(Attraction * 1 / Mathf.Pow(r,2) * (VecOp.Direction(player, transform)));
-        if(r < 1.5)
+        rb.AddForce((Attraction * Mathf.Clamp((1 / Mathf.Pow(4*r, 1 / 2)) - 0.3f, 0, 10000) * (VecOp.Direction(player, transform))));
+        if(r < 2)
         {
             player.GetComponent<PlayerInventory>().AddChaosCores(1);
             Destroy(gameObject);
         }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        
     }
 
 }

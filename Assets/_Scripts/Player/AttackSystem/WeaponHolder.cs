@@ -8,7 +8,7 @@ public class WeaponHolder : MonoBehaviour
     public bool QueueDebugMessages;
     private PlayerInput playerInput;
 
-    [HideInInspector]public int ComboCounter;
+    public int ComboCounter;
     
     [HideInInspector]public Weapon_Attack_Data_Base CurrentAttackData;
 

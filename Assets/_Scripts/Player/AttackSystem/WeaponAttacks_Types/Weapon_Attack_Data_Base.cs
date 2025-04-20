@@ -32,11 +32,11 @@ public class Weapon_Attack_Data_Base
 
     public float DamageVal(WeaponHolder W) {
         float mult = 1;
-        if(W.ComboCounter == ComboLength)
+        if(W.ComboCounter == 0)
         {
             mult = FinalHitMultiplier;
         }
-        float DamageValue = W.DamageBonus(damageType) * W.ChargeAmount * 0.01f * damage * W.data.WeaponDamage;
+        float DamageValue = mult*W.DamageBonus(damageType) * W.ChargeAmount * 0.01f * damage * W.data.WeaponDamage;
         return DamageValue;
     }
 
