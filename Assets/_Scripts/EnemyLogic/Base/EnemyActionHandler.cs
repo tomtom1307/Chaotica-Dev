@@ -66,15 +66,14 @@ public class EnemyActionHandler : MonoBehaviour
         if(brain.stateChangeDebug) Debug.Log("Changed to Idle State");
         brain.stateMachine.ChangeState(brain.idleState);
         brain.perception.DetectionMeter = 0;
+        //brain.onPlayerLost();
         EndAction();
     }
     public void ChangeToPatrolState()
     {
         if(brain.stateChangeDebug) Debug.Log("Changed to Patrol State");
         brain.stateMachine.ChangeState(brain.patrolState); 
-
-        brain.OnPlayerSpotted.Invoke(); //TODO Handle in seperate action or include in change to attack state logic
-
+        brain.OnAgro(); //TODO Handle in seperate action or include in change to attack state logic
 
         EndAction();
     }
@@ -123,8 +122,7 @@ public class EnemyActionHandler : MonoBehaviour
         {
             brain.perception.PlayerLastSeenPosition = GetPositionInCircle(brain.perception.player.position, brain.SearchRange * 5);
         }
-        float Range = Vector3.Distance(brain.perception.player.position, brain.perception.PlayerLastSeenPosition) * brain.SearchRange ;
-        
+        float Range = Vector3.Distance(brain.perception.player.position, brain.perception.PlayerLastSeenPosition) * brain.SearchRange;
 
 
 
@@ -132,6 +130,8 @@ public class EnemyActionHandler : MonoBehaviour
         brain.animator.SetBool("Walking", true);
         Searching = true;
     }
+
+
 
     public Vector3 GetPositionInCircle(Vector3 pos, float Range)
     {

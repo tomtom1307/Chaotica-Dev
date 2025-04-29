@@ -45,7 +45,7 @@ public class EnemyBrain : MonoBehaviour
     [HideInInspector] public EnemyAttackHandler attackHandler;
     
 
-    public UnityEvent OnPlayerSpotted;
+    public UnityEvent OnPlayerAgro;
     public UnityEvent OnPlayerLost;
     //Health
     private DamagableEnemy damagableEnemy;
@@ -141,6 +141,18 @@ public class EnemyBrain : MonoBehaviour
         navMesh.speed = MoveSpeed;
         stateMachine.CurrentEnemyState.FrameUpdate();
 
+    }
+
+    public virtual void OnAgro()
+    {
+        OnPlayerAgro.Invoke();
+        perception.DI.IsAgro(true);
+    }
+
+    public virtual void onPlayerLost()
+    {
+        OnPlayerLost.Invoke();
+        perception.DI.IsAgro(false);
     }
 
 

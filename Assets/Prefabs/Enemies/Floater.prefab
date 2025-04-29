@@ -101,11 +101,13 @@ MonoBehaviour:
   DamageNumbers: 1
   SpawnOnDeath:
   - {fileID: 4784340333781393268, guid: 983a838bc8f3d03489ab2a0520a9ed2d, type: 3}
+  - {fileID: 5361793931499926745, guid: 8b24770287dbfdb45ac29a94e4be021e, type: 3}
   SpawnOnHit: []
   spawnOffset: {x: 0, y: 0, z: 0}
   model: {fileID: 775067291979300683}
   ded: 0
   hitParticleFX: {fileID: 6229015314133012181, guid: 69d1dfa3e85f3e549bb742429f91c7b8, type: 3}
+  InstantAgro: 5
 --- !u!114 &7248831718900849666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,9 +136,9 @@ MonoBehaviour:
   TimeBetweenAttacks: 2
   MoveSpeed: 5
   JumpPower: 0
-  DetectionRange: 48.9
-  PerceptionStat: 2
-  DetectionMeterDecay: 1.14
+  DetectionRange: 20
+  PerceptionStat: 0.2
+  DetectionMeterDecay: 0.05
   ViewAngle: 57.18
   SearchRange: 0
   layerMask:
@@ -146,7 +148,7 @@ MonoBehaviour:
   navMesh: {fileID: 0}
   currentStateName: 
   stateList:
-  - Name: Patrol
+  - Name: Idle
     enemyBehaviours:
     - Name: OnDetectAttack
       priority: 3
@@ -198,10 +200,29 @@ MonoBehaviour:
         Weight: 0
       attackList: []
       name: 
-  - Name: Attack
+  - Name: AttackState
     enemyBehaviours:
-    - Name: ChasePlayer
-      priority: 1
+    - Name: LaserAttack
+      priority: 3
+      conditions:
+        brain: {fileID: 0}
+        boolChecks:
+        - checkTime: 0
+          checkBool: 1
+        floatChecks:
+        - checkTime: 0.1
+          checkFloat: 0
+          checkComparison: 1
+          input: 8
+        intChecks: []
+      actionList: []
+      attackList:
+      - attackData: {fileID: 11400000, guid: 7be892f4f0cd89a4982a0a3b23712c9b, type: 2}
+        colliderGroups: []
+        attackAnimation: 1
+      name: 
+    - Name: Move To player
+      priority: 2
       conditions:
         brain: {fileID: 0}
         boolChecks: []
@@ -209,7 +230,7 @@ MonoBehaviour:
         - checkTime: 0
           checkFloat: 1
           checkComparison: 1
-          input: 5
+          input: 3
         intChecks: []
       actionList:
       - brain: {fileID: 0}
@@ -218,20 +239,63 @@ MonoBehaviour:
         Weight: 0
       attackList: []
       name: 
-    - Name: AttackPlayer
-      priority: 2
+    - Name: Move To playerDistance
+      priority: 1
       conditions:
         brain: {fileID: 0}
-        boolChecks:
+        boolChecks: []
+        floatChecks:
         - checkTime: 0
-          checkBool: 1
-        floatChecks: []
+          checkFloat: 0
+          checkComparison: 1
+          input: 6
+        - checkTime: 0
+          checkFloat: 1
+          checkComparison: 1
+          input: 10
         intChecks: []
-      actionList: []
-      attackList:
-      - attackData: {fileID: 11400000, guid: 7be892f4f0cd89a4982a0a3b23712c9b, type: 2}
-        colliderGroups: []
-        attackAnimation: 0
+      actionList:
+      - brain: {fileID: 0}
+        B_action: 3
+        Override: 0
+        Weight: 0
+      attackList: []
+      name: 
+    - Name: LSP
+      priority: 1
+      conditions:
+        brain: {fileID: 0}
+        boolChecks: []
+        floatChecks:
+        - checkTime: 0
+          checkFloat: 1
+          checkComparison: 0
+          input: 5
+        intChecks: []
+      actionList:
+      - brain: {fileID: 0}
+        B_action: 5
+        Override: 0
+        Weight: 0
+      attackList: []
+      name: 
+    - Name: BackToIdle
+      priority: 3
+      conditions:
+        brain: {fileID: 0}
+        boolChecks: []
+        floatChecks:
+        - checkTime: 0
+          checkFloat: 1
+          checkComparison: 0
+          input: 15
+        intChecks: []
+      actionList:
+      - brain: {fileID: 0}
+        B_action: 2
+        Override: 1
+        Weight: 0
+      attackList: []
       name: 
   idleState:
     Name: 
@@ -242,7 +306,7 @@ MonoBehaviour:
   perception: {fileID: 0}
   actionHandler: {fileID: 0}
   attackHandler: {fileID: 0}
-  OnPlayerSpotted:
+  OnPlayerAgro:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6208216760424408910}
@@ -256,18 +320,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6208216760424408910}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
         m_CallState: 2
   OnPlayerLost:
     m_PersistentCalls:

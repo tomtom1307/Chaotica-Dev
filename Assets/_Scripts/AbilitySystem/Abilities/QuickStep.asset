@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30425c1147fb17c449d2b319e8ce6f40, type: 3}
-  m_Name: Speed upgrade
+  m_Script: {fileID: 11500000, guid: 1b3f00e49a0116e4ea79a0094edb2862, type: 3}
+  m_Name: QuickStep
   m_EditorClassIdentifier: 
-  Display: {fileID: 0}
-  UpgradeTitle: 
-  UpgradeDescription: 
-  StatUpgrade: 0
-  Stat: 5
-  StatIncrease: 5
+  name: QuickStep
+  activeTime: 1
+  cooldownTime: 1
+  StepSpeed: 48402

@@ -11,12 +11,13 @@ public class PlayerHealth : MonoBehaviour
     float maxHealth { get { return stats.GetStat(StatType.MaxHealth) * (1 + 0.01f * stats.GetStat(StatType.MaxHealthIncrease)); } }
 
     PlayerStats stats;
-
+    FullScreenFXController fullScreenFX;
     private void Start()
     {
         //GetStats 
         stats = PlayerStats.instance;
         health = maxHealth;
+        fullScreenFX = GetComponentInParent<FullScreenFXController>();
     }
 
     private void Update()
@@ -42,12 +43,13 @@ public class PlayerHealth : MonoBehaviour
     {
         health -= Amount;
         UpdateHealthBar();
+        fullScreenFX.currentHurtCorutine = StartCoroutine(fullScreenFX.Hurt());
         if (health <= 0)
         {
             Die();
         }
-        
     }
+
 
     public void UpdateHealthBar() {
         UIHealthBarImage.fillAmount = health / maxHealth;

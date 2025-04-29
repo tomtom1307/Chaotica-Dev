@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f97d5a5f37eac5f4db92ac9fa4e8c399, type: 3}
-  m_Name: Blade of Vaschart the Valliant
+  m_Name: Vaschart Long Sword
   m_EditorClassIdentifier: 
   _Name: LongSword
   model: {fileID: 817179458808357495, guid: 74a91fa4972be0b4e8d12dc40677e53c, type: 3}
@@ -43,32 +43,36 @@ MonoBehaviour:
         AllowAgility: 0
         KnockBackForce: 974.8
         FinalHitMultiplier: 1.5
+        HitFOV: 0
         Forces:
         - {x: 0, y: 0, z: 6}
         - {x: 0, y: 0, z: 6}
         - {x: 0, y: 0, z: 25}
         attack_range: 4
-        MaxViewAngle: 30
+        MaxViewAngle: 40
     - rid: 6776318021367234728
       type: {class: Weapon_Attack_Data_Melee, ns: , asm: Assembly-CSharp}
       data:
-        Name: 
+        Name: BackStep Slash
         Description: 
-        weaponInputLogic: {fileID: 0}
+        weaponInputLogic: {fileID: 11400000, guid: fa62de39fcdf5ac419138ca13612768e, type: 2}
         attackType: 0
         damageType: 0
-        damage: 100
-        ComboLength: 1
+        damage: 80
+        ComboLength: 2
         StaggerDamage: 5
         AttackWeight: 1
-        MoveSpeedMult: 1
+        MoveSpeedMult: 0.7
         hasCooldown: 1
         cooldown: 0.1
         AllowAgility: 0
-        KnockBackForce: 100
-        FinalHitMultiplier: 100
-        Forces: []
-        attack_range: 3
+        KnockBackForce: 1000
+        FinalHitMultiplier: 1
+        HitFOV: 0
+        Forces:
+        - {x: 0, y: 0, z: -10}
+        - {x: 0, y: 0, z: -10}
+        attack_range: 4
         MaxViewAngle: 45
     - rid: 6776318021367234729
       type: {class: Weapon_Attack_Data_Melee, ns: , asm: Assembly-CSharp}
@@ -88,6 +92,7 @@ MonoBehaviour:
         AllowAgility: 0
         KnockBackForce: 100
         FinalHitMultiplier: 100
+        HitFOV: 150
         Forces: []
         attack_range: 3
         MaxViewAngle: 45

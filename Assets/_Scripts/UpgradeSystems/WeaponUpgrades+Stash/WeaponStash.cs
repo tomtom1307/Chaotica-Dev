@@ -57,6 +57,7 @@ public class WeaponStash : MonoBehaviour
                 HandleAttackInfoContainers(weaponInstance);
                 Equip();
                 SelectCurrentWeapon(currentEquipedWeapon);
+                if ((currentSelectedWeapon.instance.Threshold1 + currentSelectedWeapon.instance.Threshold2) == 0) return;
                 ProgressBar.fillAmount = currentSelectedWeapon.instance.KillCount / (currentSelectedWeapon.instance.Threshold1 + currentSelectedWeapon.instance.Threshold2);
             }
             

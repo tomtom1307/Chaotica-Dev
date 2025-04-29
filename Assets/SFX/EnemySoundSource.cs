@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemySoundSource : SourceSoundManager<EnemySoundSource.SoundType>
 {
-    public override void PlaySound(SoundType sound, float volume, bool looping = false)
+    public override void PlaySound(SoundType sound, float volume, bool looping = false, float pitch = -1)
     {
         base.PlaySound(sound, volume, looping);
     }

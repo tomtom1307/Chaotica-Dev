@@ -1,4 +1,7 @@
+using NUnit.Framework;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +9,9 @@ using UnityEngine.UI;
 public class HUDController : MonoBehaviour
 {
     public static HUDController instance;
+    public GameObject DetectionMeter;
+    public Transform DetectionTransform;
+    public CanvasGroup DetectionUICanvasGroup;
     [SerializeField] Image ChargeMeter;
     private void Awake()
     {
@@ -15,11 +21,20 @@ public class HUDController : MonoBehaviour
         }
     }
 
-    
 
+    public List<DetectionIndicator> DetectionIndicators;
 
     [SerializeField] TMP_Text InteractionText;
     [SerializeField] TMP_Text ChaosCoreAmount;
+
+    public DetectionIndicator TriggerDetectionMeter(EnemyBrain EB)
+    {
+        GameObject go = Instantiate(DetectionMeter, DetectionTransform);
+        DetectionIndicator DI = go.GetComponent<DetectionIndicator>();
+        DetectionIndicators.Add(DI);
+        DI.enemy = EB;
+        return DI;
+    }
 
 
     public void SetChaosCoreText(float amount)
@@ -37,7 +52,33 @@ public class HUDController : MonoBehaviour
         InteractionText.gameObject.SetActive(false);
     }
 
+    private void Update()
+    {
+        foreach (var indicator in DetectionIndicators) {
+            if (indicator.Agro)
+            {
+                StartCoroutine(FadeOut(DetectionUICanvasGroup, 1.5f));
+                return;
+            }
+        }
+        DetectionUICanvasGroup.alpha = 1;
+    }
 
+    public IEnumerator FadeOut(CanvasGroup CG,float FadeTime)
+    {
+        float timer = FadeTime;
+
+        while (timer > 0f)
+        {
+            timer -= Time.deltaTime;
+            CG.alpha = Mathf.Clamp01(timer / FadeTime);
+
+            yield return null; // Wait one frame
+        }
+
+        CG.alpha = 0f; // Make sure it ends at 0
+        
+    }
 
     #region ChargeMeter
     private Coroutine fillCoroutine;

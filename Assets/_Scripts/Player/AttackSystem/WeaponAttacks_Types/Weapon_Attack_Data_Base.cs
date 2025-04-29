@@ -23,11 +23,16 @@ public class Weapon_Attack_Data_Base
     public bool AllowAgility = false;
     public float KnockBackForce = 100;
     public float FinalHitMultiplier = 100;
+    public float HitFOV = 120;
     public List<Vector3> Forces;
 
     //TODO: Store attack chargeup time on here instead of on weapon input (Custom Editor)
-    public virtual void EnterAttack(WeaponHolder W) { }
-    public virtual void PerformAttack(WeaponHolder W) { }
+    public virtual void EnterAttack(WeaponHolder W) {
+        
+    }
+    public virtual void PerformAttack(WeaponHolder W) {
+        FOVFXController.instance.PunchFOV(HitFOV, 0.2f, 0.1f, 0.2f);
+    }
     public virtual void ExitAttack(WeaponHolder W) { }
 
     public float DamageVal(WeaponHolder W) {

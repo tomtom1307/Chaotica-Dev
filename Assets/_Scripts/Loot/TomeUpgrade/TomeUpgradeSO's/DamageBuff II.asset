@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30425c1147fb17c449d2b319e8ce6f40, type: 3}
-  m_Name: DamageBuff I
+  m_Name: DamageBuff II
   m_EditorClassIdentifier: 
-  UpgradeTitle: Increase Damage
+  Display: {fileID: 0}
+  UpgradeTitle: 'Increase Damage II '
   UpgradeDescription: Increases Damage by 5%
   StatUpgrade: 0
   Stat: 7
-  StatIncrease: 5
+  StatIncrease: 10

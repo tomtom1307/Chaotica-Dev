@@ -45,6 +45,7 @@ MonoBehaviour:
         AllowAgility: 0
         KnockBackForce: 0
         FinalHitMultiplier: 100
+        HitFOV: 120
         Forces: []
         Range: 0
     - rid: 3205115419090485444
@@ -65,6 +66,7 @@ MonoBehaviour:
         AllowAgility: 0
         KnockBackForce: 800
         FinalHitMultiplier: 1
+        HitFOV: 150
         Forces:
         - {x: 0, y: 0, z: 6}
         attack_range: 3
@@ -77,7 +79,7 @@ MonoBehaviour:
         weaponInputLogic: {fileID: 11400000, guid: 64e432b799d9359488024441752d2110, type: 2}
         attackType: 3
         damageType: 0
-        damage: 200
+        damage: 500
         ComboLength: 1
         StaggerDamage: 5
         AttackWeight: 3
@@ -86,6 +88,7 @@ MonoBehaviour:
         cooldown: 0.1
         AllowAgility: 0
         KnockBackForce: 1400
-        FinalHitMultiplier: 0
+        FinalHitMultiplier: 1
+        HitFOV: 0
         Forces: []
         attack_range: 4

@@ -35,7 +35,6 @@ MonoBehaviour:
         damageType: 0
         damage: 100
         ComboLength: 1
-        manaUse: 5
         StaggerDamage: 5
         AttackWeight: 1
         MoveSpeedMult: 0.2
@@ -43,6 +42,8 @@ MonoBehaviour:
         cooldown: 0.1
         AllowAgility: 0
         KnockBackForce: 1000
+        FinalHitMultiplier: 1
+        HitFOV: 150
         Forces: []
         projectile: {fileID: 140453258620981734, guid: 53e853c3264383c43818968a62e4b6fc, type: 3}
         Projectile_Amount: 1
@@ -59,7 +60,6 @@ MonoBehaviour:
         damageType: 0
         damage: 100
         ComboLength: 1
-        manaUse: 5
         StaggerDamage: 5
         AttackWeight: 0
         MoveSpeedMult: 0.3
@@ -67,6 +67,8 @@ MonoBehaviour:
         cooldown: 0.1
         AllowAgility: 0
         KnockBackForce: 1000
+        FinalHitMultiplier: 100
+        HitFOV: 120
         Forces: []
         projectile: {fileID: 140453258620981734, guid: 53e853c3264383c43818968a62e4b6fc, type: 3}
         Projectile_Amount: 5
@@ -83,7 +85,6 @@ MonoBehaviour:
         damageType: 0
         damage: 5
         ComboLength: 1
-        manaUse: 5
         StaggerDamage: 5
         AttackWeight: 1
         MoveSpeedMult: 0.5
@@ -91,5 +92,7 @@ MonoBehaviour:
         cooldown: 0.1
         AllowAgility: 0
         KnockBackForce: 0
+        FinalHitMultiplier: 100
+        HitFOV: 120
         Forces: []
         Range: 0

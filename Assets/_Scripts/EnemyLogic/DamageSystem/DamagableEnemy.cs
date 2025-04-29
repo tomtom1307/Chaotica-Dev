@@ -6,13 +6,28 @@ public class DamagableEnemy : Damagable
     EnemyBrain brain;
     EnemySoundSource soundSource;
     public GameObject hitParticleFX;
+    public float InstantAgro = 5;
     public override void OnDamageTaken(float damage)
     {
         base.OnDamageTaken(damage);
         brain.animator.SetTrigger("Hit");
         if(brain.stateMachine.CurrentEnemyState == brain.idleState)
         {
-            brain.actionHandler.StartActionOverride(brain.actionHandler.SearchNearby);
+            if(Vector3.Distance(transform.position, brain.perception.player.position) < InstantAgro)
+            {
+                if (brain.perception.DI == null)
+                {
+                    brain.perception.DI = HUDController.instance.TriggerDetectionMeter(brain);
+                    brain.perception.DetectionMeter = 1;
+                    brain.perception.LSP_time = 0;
+                }
+                brain.actionHandler.StartActionOverride(brain.actionHandler.ChangeToPatrolState);
+                return;
+            }
+            else
+            {
+                brain.actionHandler.StartActionOverride(brain.actionHandler.SearchNearby);
+            }
         }
         if (hitParticleFX != null)
         {

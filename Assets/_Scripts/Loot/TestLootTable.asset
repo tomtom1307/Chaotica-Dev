@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d778cab78522de240ba07a15bc87860c, type: 3}
+  m_Name: TestLootTable
+  m_EditorClassIdentifier: 
+  lootTableElements:
+  - LootName: ChaosCores
+    LootItems:
+    - gameObject: {fileID: 9155815085249935103, guid: 2035300daff4d3149819c6fd1d93f130, type: 3}
+      Probability: 20
+      amount: 1
+    - gameObject: {fileID: 9155815085249935103, guid: 2035300daff4d3149819c6fd1d93f130, type: 3}
+      Probability: 10
+      amount: 2
+    - gameObject: {fileID: 9155815085249935103, guid: 2035300daff4d3149819c6fd1d93f130, type: 3}
+      Probability: 5
+      amount: 3
+  - LootName: Tome
+    LootItems:
+    - gameObject: {fileID: 0}
+      Probability: 40
+      amount: 1
+    - gameObject: {fileID: 6026374433315584126, guid: c5f6076e93e4db44e96342df55b4463e, type: 3}
+      Probability: 5
+      amount: 1

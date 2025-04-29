@@ -137,7 +137,7 @@ public class WeaponHolder : MonoBehaviour
         //
         CurrentAttackData = data.Weapon_Attacks[i];
         playerMovement.AttackMoveSpeed(CurrentAttackData.MoveSpeedMult, CurrentAttackData.AllowAgility);
-        
+        CurrentAttackData.EnterAttack(this);
 
         //Handle Animation stuff
         Weapon_anim.SetBool("Attacking", true);

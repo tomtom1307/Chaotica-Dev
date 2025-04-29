@@ -37,8 +37,8 @@ public class PlayerMovement : MonoBehaviour
     
     RaycastHit slopeHit;
 
-    Vector3 slopeMoveDirection;
-    Vector3 MoveDir;
+    [HideInInspector] public Vector3 slopeMoveDirection;
+    [HideInInspector]public Vector3 MoveDir;
     CapsuleCollider collider;
     float ColliderHeight;
     Rigidbody rb;
@@ -62,7 +62,8 @@ public class PlayerMovement : MonoBehaviour
     public float CamFXSpeed;
     public float SlidingCamRot;
     public float MaxSlidingCamRot;
-
+    public float FOV_change;
+    private FOVFXController FOVController;
     float timer;
     public enum PlayerMechanimState
     {
@@ -82,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
         ColliderHeight = collider.height;
         CamattackAnim = Camera.main.GetComponentInParent<CamAttackAnim>();
         rb = GetComponent<Rigidbody>();
+        FOVController = GetComponentInParent<FOVFXController>();
         rb.maxLinearVelocity = MaxMoveSpeed;
         rb.freezeRotation = true;
         attackMoveSpeed = 1;
@@ -95,7 +97,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void ResetMoveSpeed()
     {
-        
         _currentMoveSpeed = _moveSpeed;
     }
 
@@ -175,6 +176,11 @@ public class PlayerMovement : MonoBehaviour
         //Sprinting
         else if (isGrounded && Input.GetKey(KeyCode.LeftShift) && state != PlayerMechanimState.Crouching && state != PlayerMechanimState.Sliding && isAttackAgile())
         {
+            if(attackMoveSpeed < 1)
+            {
+                return;
+            }
+            FOVController.SetTargetFOV(FOVController.DefaultFOV + FOV_change);
             state = PlayerMechanimState.Sprinting;
             SetMoveSpeed(SprintMult);
         }
@@ -182,6 +188,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (rb.linearVelocity.magnitude > VelocityThresh && state != PlayerMechanimState.Crouching) //Sliding
             {
+                FOVController.SetTargetFOV(FOVController.DefaultFOV + FOV_change);
                 state = PlayerMechanimState.Sliding;
                 Slide();
             }
@@ -189,6 +196,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 
                 Crouch();
+                FOVController.SetTargetFOV(FOVController.DefaultFOV);
             }
         }
         else if (isGrounded && Input.GetKeyUp(KeyCode.C))
@@ -198,6 +206,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            FOVController.SetTargetFOV(FOVController.DefaultFOV);
             state = PlayerMovement.PlayerMechanimState.Walking;
         }
         if (!isGrounded)
@@ -244,7 +253,7 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(_jumpForce * Vector3.up * jumpEnhance, ForceMode.Impulse);
     }
 
-    private bool OnSlope()
+    public bool OnSlope()
     {
         if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, 1.5f))
         {

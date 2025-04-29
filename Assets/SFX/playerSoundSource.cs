@@ -17,9 +17,10 @@ public class PlayerSoundSource : SourceSoundManager<PlayerSoundSource.SoundType>
         }
     }
 
-    public override void PlaySound(SoundType sound, float volume = -1, bool looping = false)
+    public override void PlaySound(SoundType sound, float volume = -1, bool looping = false, float pitch = -1)
     {
-        base.PlaySound(sound, volume, looping);
+        Debug.Log("SoundPlayed");
+        base.PlaySound(sound, volume, looping, pitch);
     }
 
     public override void StopSound()
@@ -33,7 +34,8 @@ public class PlayerSoundSource : SourceSoundManager<PlayerSoundSource.SoundType>
         TakeDamage,
         SwingSword,
         DrawBow,
-        ShootBow
+        ShootBow,
+        CrystalPickup
 
     }
 

@@ -22,7 +22,7 @@ public class ShatteredObject : MonoBehaviour
             
         }
 
-        Destroy(this);
+        Destroy(gameObject);
     }
 
 

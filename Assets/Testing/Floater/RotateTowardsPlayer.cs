@@ -11,7 +11,7 @@ public class RotateTowardsPlayer : MonoBehaviour
 
     private void Start()
     {
-        this.enabled = false;
+        //this.enabled = false;
     }
 
     public void EnableScript(EnemyBrain brain)

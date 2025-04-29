@@ -552,11 +552,13 @@ MonoBehaviour:
   SpawnOnDeath:
   - {fileID: 6229015314133012181, guid: 69d1dfa3e85f3e549bb742429f91c7b8, type: 3}
   - {fileID: 310846752812338475, guid: 05b59a82ad168ad4d9139ed7732d1d82, type: 3}
+  - {fileID: 5361793931499926745, guid: 8b24770287dbfdb45ac29a94e4be021e, type: 3}
   SpawnOnHit: []
   spawnOffset: {x: 0, y: 1, z: 0}
   model: {fileID: 7522260643798107158}
   ded: 0
   hitParticleFX: {fileID: 6229015314133012181, guid: 69d1dfa3e85f3e549bb742429f91c7b8, type: 3}
+  InstantAgro: 5
 --- !u!114 &5281054923219915767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -572,9 +574,9 @@ MonoBehaviour:
   TimeBetweenAttacks: 0.3
   MoveSpeed: 3
   JumpPower: 0.2
-  DetectionRange: 93.6
-  PerceptionStat: 0.5
-  DetectionMeterDecay: 0.2
+  DetectionRange: 20
+  PerceptionStat: 0.2
+  DetectionMeterDecay: 0.05
   ViewAngle: 53.9
   SearchRange: 1
   layerMask:
@@ -720,7 +722,7 @@ MonoBehaviour:
       attackList: []
       name: 
     - Name: BackToIdle
-      priority: 3
+      priority: 0
       conditions:
         brain: {fileID: 0}
         boolChecks: []
@@ -746,7 +748,7 @@ MonoBehaviour:
   perception: {fileID: 0}
   actionHandler: {fileID: 0}
   attackHandler: {fileID: 0}
-  OnPlayerSpotted:
+  OnPlayerAgro:
     m_PersistentCalls:
       m_Calls: []
   OnPlayerLost:

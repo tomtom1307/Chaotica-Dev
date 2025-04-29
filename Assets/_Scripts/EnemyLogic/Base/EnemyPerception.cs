@@ -15,7 +15,7 @@ public class EnemyPerception : MonoBehaviour
     public float Distance;
     public float LSP_time;
     public float DetectionMeter;
-
+    public DetectionIndicator DI;
     //Get reference to player
     private void Start()
     {
@@ -57,9 +57,13 @@ public class EnemyPerception : MonoBehaviour
             {
                 if (!LOS)
                 {
-                    brain.OnPlayerSpotted.Invoke();
+                    
                 }
                 LOS = true;
+                if(DI ==  null)
+                {
+                   DI = HUDController.instance.TriggerDetectionMeter(brain);
+                }
                 PlayerLastSeenPosition = player.transform.position;
                 LastSpottedTime = Time.time;
                 return;
@@ -91,7 +95,7 @@ public class EnemyPerception : MonoBehaviour
 
         if (LOS)
         {
-            ModifyAmount = Mathf.Exp(-((1/3)*Distance-3)) * brain.PerceptionStat* Time.deltaTime;
+            ModifyAmount = 0.035f * Mathf.Exp(-((1/3)*Distance-5)) * brain.PerceptionStat * Time.deltaTime;
         }
         else
         {
