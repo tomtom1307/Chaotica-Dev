@@ -51,7 +51,8 @@ public class WeaponHolder : MonoBehaviour
         HandleWeaponSwapping();
     }
 
-    public Transform handPos;
+    public Transform RhandPos;
+    public Transform LhandPos;
     public Transform secondaryPos;
     public GameObject WeaponModel;
     public GameObject SecondaryModel;
@@ -59,8 +60,15 @@ public class WeaponHolder : MonoBehaviour
     public void HandleWeaponSwapping()
     {
         Destroy(WeaponModel);
-        WeaponModel = Instantiate(data.model, handPos);
-        
+        if(data.hand == WeaponDataSO.Hand.right)
+        {
+            WeaponModel = Instantiate(data.model, RhandPos);
+        }
+        else
+        {
+            WeaponModel = Instantiate(data.model, LhandPos);
+        }
+
         WeaponModel.layer = 7;
 
         Destroy(SecondaryModel);
@@ -69,7 +77,7 @@ public class WeaponHolder : MonoBehaviour
         if (IK_Handler == null) {
             IK_Handler = Camera.main.GetComponentInChildren<HandIKHandler>();
         }
-        IK_Handler.GetWeaponIkPos();
+        
         ChargeAmount = 1;
         Weapon_anim.runtimeAnimatorController = data.Anim_controller;
     }
@@ -101,7 +109,7 @@ public class WeaponHolder : MonoBehaviour
     }
 
     //Calling Input from Queue
-    public void DoQueuedInput(int i, InputAction.CallbackContext ctx)
+    public void DoQueuedInput(int i, InputAction.CallbackContext ctx, bool alt = false)
     {
         if(!enabled) return;
         data.Weapon_Attacks[i].weaponInputLogic.QueuedInput(i, this, ctx);
@@ -128,8 +136,9 @@ public class WeaponHolder : MonoBehaviour
     }
 
     //Called from weapon Input logic when conditions are met
-    public void EnterAttack(int i)
+    public void EnterAttack(int i, bool alt = false)
     {
+        Weapon_anim.SetBool("AltAttack", false);
         if (!this.enabled) return;
         //Set State and variables
         State = AttackState.Attacking;
@@ -144,17 +153,26 @@ public class WeaponHolder : MonoBehaviour
 
         Weapon_anim.SetInteger("AttackType", i);
 
-        Weapon_anim.SetInteger("ComboInt", ComboCounter);
+        if (!alt)
+        {
+            this.alt = false;
+            Weapon_anim.SetInteger("ComboInt", ComboCounter);
+        }
+        else
+        {
+            this.alt = true;
+            Weapon_anim.SetBool("AltAttack", true);
+        }
 
-        //Combocounter allows different animations for the same attack
-        ComboCounter++;
+            //Combocounter allows different animations for the same attack
+            ComboCounter++;
         if (ComboCounter >= CurrentAttackData.ComboLength) ComboCounter = 0;
 
         //Testing
         //CurrentAttackData.PerformAttack(this);
 
     }
-
+    [HideInInspector]public bool alt;
 
     public void ExitAttack()
     {
@@ -169,6 +187,7 @@ public class WeaponHolder : MonoBehaviour
         
         //Handle Animation stuff
         Weapon_anim.SetBool("Attacking", false);
+        Weapon_anim.SetBool("AltAttack", false);
         Weapon_anim.SetBool("Combo", false);
         Weapon_anim.SetBool("Charging", false);
     }
@@ -207,7 +226,7 @@ public class WeaponHolder : MonoBehaviour
     private float queueTime;
     private float queueExpirationTime;
 
-    public void QueueAttack(int attackNum, InputAction.CallbackContext ctx, float expirationTime)
+    public void QueueAttack(int attackNum, InputAction.CallbackContext ctx, float expirationTime, bool alt = false)
     {
         if(QueueDebugMessages) Debug.Log("Queued Attack");
         queuedAttack = true;
@@ -321,6 +340,7 @@ public class WeaponHolder : MonoBehaviour
         }
         return damagebonus/100;
     }
+
 
 }
 

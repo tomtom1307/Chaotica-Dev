@@ -9,7 +9,7 @@ public class ChargeHoldRelease: Weapon_Input
     private bool isCharging; // Track if we are charging
 
 
-    public override void QueuedInput(int AttackNum, WeaponHolder WH, InputAction.CallbackContext ctx)
+    public override void QueuedInput(int AttackNum, WeaponHolder WH, InputAction.CallbackContext ctx, bool alt)
     {
         HoldLogic(AttackNum, WH, ctx);
     }

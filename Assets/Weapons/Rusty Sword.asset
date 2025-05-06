@@ -17,6 +17,7 @@ MonoBehaviour:
   secondaryModel: {fileID: 0}
   WeaponDamage: 5
   Anim_controller: {fileID: 9100000, guid: ede1b6340de25a644b77507b0ece97de, type: 2}
+  hand: 1
   Weapon_Attacks:
   - rid: 3205115419090485444
   - rid: 3205115430689309103
@@ -57,7 +58,7 @@ MonoBehaviour:
         attackType: 0
         damageType: 0
         damage: 100
-        ComboLength: 2
+        ComboLength: 3
         StaggerDamage: 5
         AttackWeight: 1.2
         MoveSpeedMult: 0.6
@@ -65,8 +66,8 @@ MonoBehaviour:
         cooldown: 0.1
         AllowAgility: 0
         KnockBackForce: 800
-        FinalHitMultiplier: 1
-        HitFOV: 150
+        FinalHitMultiplier: 1.5
+        HitFOV: 100
         Forces:
         - {x: 0, y: 0, z: 6}
         attack_range: 3

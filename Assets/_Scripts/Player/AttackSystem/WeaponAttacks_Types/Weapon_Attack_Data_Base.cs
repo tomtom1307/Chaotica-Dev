@@ -37,7 +37,7 @@ public class Weapon_Attack_Data_Base
 
     public float DamageVal(WeaponHolder W) {
         float mult = 1;
-        if(W.ComboCounter == 0)
+        if(W.ComboCounter == 0 || W.alt)
         {
             mult = FinalHitMultiplier;
         }

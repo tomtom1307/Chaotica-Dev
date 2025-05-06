@@ -9,7 +9,7 @@ public class ShatteredObject : MonoBehaviour
     public UnityEvent OnStart;
     private void Start()
     {
-        Invoke("DoDeletion", 4f);
+        Invoke("DoDeletion", 1f);
         OnStart.Invoke();
     }
 
@@ -22,7 +22,7 @@ public class ShatteredObject : MonoBehaviour
             
         }
 
-        Destroy(gameObject);
+        Destroy(gameObject,4);
     }
 
 

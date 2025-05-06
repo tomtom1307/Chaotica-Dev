@@ -8,9 +8,9 @@ public class Weapon_Input : ScriptableObject
     {
     }
 
-    public virtual void QueuedInput(int AttackNum, WeaponHolder WH, InputAction.CallbackContext ctx)
+    public virtual void QueuedInput(int AttackNum, WeaponHolder WH, InputAction.CallbackContext ctx, bool alt = false)
     {
-        WH.EnterAttack(AttackNum);
+        WH.EnterAttack(AttackNum, alt);
     }
 
 

@@ -1,3 +1,4 @@
+using Project;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -43,6 +44,7 @@ public class PlayerHealth : MonoBehaviour
     {
         health -= Amount;
         UpdateHealthBar();
+        CamShake.instance.StartShake(CamShake.instance.onHit);
         fullScreenFX.currentHurtCorutine = StartCoroutine(fullScreenFX.Hurt());
         if (health <= 0)
         {

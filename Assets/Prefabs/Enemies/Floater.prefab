@@ -498,6 +498,7 @@ GameObject:
   - component: {fileID: 7056929378556508101}
   - component: {fileID: 7754020665798964201}
   - component: {fileID: 2122326274201388596}
+  - component: {fileID: 3202832609305107140}
   m_Layer: 8
   m_Name: FloatyShootyBall
   m_TagString: Untagged
@@ -574,6 +575,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3202832609305107140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775067291979300683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e8f79a54a42e0f4a8029bf69beec828, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &850062111196167152
 GameObject:
   m_ObjectHideFlags: 0

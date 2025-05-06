@@ -2,6 +2,7 @@ using UnityEngine;
 using TRTools;
 public class ChoasCore : MonoBehaviour
 {
+    public float MaxDist = 20;
     public float Attraction;
     Transform player;
     Rigidbody rb;
@@ -16,7 +17,8 @@ public class ChoasCore : MonoBehaviour
     void Update()
     {
         float r = (Vector3.Distance(player.position, transform.position));
-        rb.AddForce((Attraction * Mathf.Clamp((1 / Mathf.Pow(4*r, 1 / 2)) - 0.3f, 0, 10000) * (VecOp.Direction(player, transform))));
+        if (r > MaxDist) return;
+        rb.AddForce((Time.deltaTime*Attraction * Mathf.Clamp((1 / Mathf.Pow(4*r, 1 / 2)) - 0.3f, 0, 10000) * (VecOp.Direction(player, transform))));
         if(r < 2)
         {
             player.GetComponent<PlayerInventory>().AddChaosCores(1);

@@ -9,6 +9,7 @@ public class DamagableEnemy : Damagable
     public float InstantAgro = 5;
     public override void OnDamageTaken(float damage)
     {
+        soundSource.PlaySound(EnemySoundSource.SoundType.TakeDamageBladed, 2);
         base.OnDamageTaken(damage);
         brain.animator.SetTrigger("Hit");
         if(brain.stateMachine.CurrentEnemyState == brain.idleState)
@@ -35,7 +36,12 @@ public class DamagableEnemy : Damagable
 
 
         }
-        soundSource.PlaySound(EnemySoundSource.SoundType.TakeDamageBladed, 2);
+        
+        if ( DCM != null)
+        {
+            DCM.ChangeCrack(1-Health / MaxHealth);
+        }
+        
     }
 
 
@@ -45,12 +51,19 @@ public class DamagableEnemy : Damagable
         base.Die();
     }
 
+    DamageCrackingManager DCM;
     protected override void Start()
     {
+        
         base.Start();
         brain = GetComponent<EnemyBrain>();
         soundSource = GetComponent<EnemySoundSource>();
 
+        DCM = GetComponent<DamageCrackingManager>();
+        if (DCM == null)
+        {
+            DCM = GetComponentInChildren<DamageCrackingManager>();
+        }
     }
 
     protected override void Update()

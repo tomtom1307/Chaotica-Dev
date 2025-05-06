@@ -19,7 +19,7 @@ public class PlayerSoundSource : SourceSoundManager<PlayerSoundSource.SoundType>
 
     public override void PlaySound(SoundType sound, float volume = -1, bool looping = false, float pitch = -1)
     {
-        Debug.Log("SoundPlayed");
+        
         base.PlaySound(sound, volume, looping, pitch);
     }
 

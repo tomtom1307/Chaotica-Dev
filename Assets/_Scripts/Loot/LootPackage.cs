@@ -12,7 +12,8 @@ public class LootPackage : MonoBehaviour
     public Vector3 ForceDir2;
     void Start()
     {
-        GenerateLoot(LootTable);       
+        GenerateLoot(LootTable);
+        Destroy(gameObject, 5);
     }
 
     public void GenerateLoot(LootTable LT)

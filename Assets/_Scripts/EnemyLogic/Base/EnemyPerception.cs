@@ -51,8 +51,9 @@ public class EnemyPerception : MonoBehaviour
         Vector3 LookVector = Vector3.Project(brain.LookDirectionTransform.forward, transform.forward).normalized;
         Debug.DrawRay(brain.LookDirectionTransform.position, player.position - brain.LookDirectionTransform.position + Vector3.up, Color.blue);
         Debug.DrawRay(brain.LookDirectionTransform.position, LookVector*5, Color.red);
-        if (Physics.Raycast(brain.LookDirectionTransform.position, player.position - brain.LookDirectionTransform.position, out hit, brain.DetectionRange, brain.layerMask)) 
+        if (Physics.Raycast(brain.LookDirectionTransform.position, player.position - brain.LookDirectionTransform.position + Vector3.up, out hit, brain.DetectionRange, brain.layerMask)) 
         {
+            Debug.Log(hit.collider.gameObject);
             if (hit.collider.gameObject.layer == 10 && Vector3.Angle(LookVector, player.position - transform.position) < brain.ViewAngle)
             {
                 if (!LOS)

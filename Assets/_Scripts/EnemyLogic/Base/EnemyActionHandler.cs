@@ -84,6 +84,7 @@ public class EnemyActionHandler : MonoBehaviour
 
     public void MoveToLSP()
     {
+        
         brain.navMesh.stoppingDistance = 0;
         brain.animator.SetBool("Walking", true);
         brain.navMesh.SetDestination(brain.perception.PlayerLastSeenPosition);
