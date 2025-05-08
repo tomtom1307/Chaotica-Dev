@@ -15,7 +15,7 @@ public class WeaponDataSO : ScriptableObject
     public Hand hand;
     [SerializeReference] // This enables polymorphic serialization
     public List<Weapon_Attack_Data_Base> Weapon_Attacks = new List<Weapon_Attack_Data_Base>();
-
+    
     public Sprite InventorySprite;
     
 

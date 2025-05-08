@@ -8,6 +8,7 @@ public class WeaponAnimationEventHandler : MonoBehaviour
     public UnityEvent onFinishedAttack;
     public UnityEvent OnAttackPerformed;
     public UnityEvent onMoveSpeedReset;
+    public UnityEvent<int> OnVFXCalled;
     public UnityEvent<int> onForceApply;
     
     CamAttackAnim CamAnimator;
@@ -34,6 +35,11 @@ public class WeaponAnimationEventHandler : MonoBehaviour
     public void ResetMoveSpeed()
     {
         onMoveSpeedReset.Invoke();
+    }
+
+    public void OnVfxSet(int i)
+    {
+        OnVFXCalled.Invoke(i);
     }
 
 

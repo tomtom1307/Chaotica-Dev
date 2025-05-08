@@ -48,6 +48,7 @@ MonoBehaviour:
         FinalHitMultiplier: 100
         HitFOV: 120
         Forces: []
+        VFX: {fileID: 0}
         Range: 0
     - rid: 3205115419090485444
       type: {class: Weapon_Attack_Data_Melee, ns: , asm: Assembly-CSharp}
@@ -70,6 +71,7 @@ MonoBehaviour:
         HitFOV: 100
         Forces:
         - {x: 0, y: 0, z: 6}
+        VFX: {fileID: 5314773374567602985, guid: 9da12960a7ac7ed429f8cca416b18a77, type: 3}
         attack_range: 3
         MaxViewAngle: 45
     - rid: 3205115430689309103
@@ -92,4 +94,5 @@ MonoBehaviour:
         FinalHitMultiplier: 1
         HitFOV: 0
         Forces: []
+        VFX: {fileID: 0}
         attack_range: 4

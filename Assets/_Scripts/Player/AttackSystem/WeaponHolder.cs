@@ -105,7 +105,11 @@ public class WeaponHolder : MonoBehaviour
 
     private void Update()
     {
-        
+        if (Input.GetKey(KeyCode.Alpha9))
+        {
+            State = AttackState.Ready;
+            ComboCounter = 0;
+        }
     }
 
     //Calling Input from Queue
@@ -341,6 +345,11 @@ public class WeaponHolder : MonoBehaviour
         return damagebonus/100;
     }
 
+    //Currently on supports singular FX per attack
+    public void SpawnVFX(int i)
+    {
+        PlayerVFXHandler.instance.SpawnVFX(CurrentAttackData.VFX, i);
+    }
 
 }
 

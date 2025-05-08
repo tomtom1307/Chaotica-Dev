@@ -25,7 +25,7 @@ public class Weapon_Attack_Data_Base
     public float FinalHitMultiplier = 100;
     public float HitFOV = 120;
     public List<Vector3> Forces;
-
+    public GameObject VFX;
     //TODO: Store attack chargeup time on here instead of on weapon input (Custom Editor)
     public virtual void EnterAttack(WeaponHolder W) {
         

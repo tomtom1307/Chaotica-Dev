@@ -17,6 +17,7 @@ MonoBehaviour:
   secondaryModel: {fileID: 6817403599729623704, guid: 3420ab1c1471dfa42a5df420e86d3553, type: 3}
   WeaponDamage: 10
   Anim_controller: {fileID: 9100000, guid: 9fe8c0fc8029ebb4e9ab6dd7228a9f97, type: 2}
+  hand: 0
   Weapon_Attacks:
   - rid: 1142560951034445932
   - rid: 1142560951034445958
@@ -58,7 +59,7 @@ MonoBehaviour:
         weaponInputLogic: {fileID: 11400000, guid: 9f7385efd906cab4c90af0c476313a9d, type: 2}
         attackType: 1
         damageType: 0
-        damage: 100
+        damage: 70
         ComboLength: 1
         StaggerDamage: 5
         AttackWeight: 0
@@ -67,12 +68,12 @@ MonoBehaviour:
         cooldown: 0.1
         AllowAgility: 0
         KnockBackForce: 1000
-        FinalHitMultiplier: 100
+        FinalHitMultiplier: 1
         HitFOV: 120
         Forces: []
         projectile: {fileID: 140453258620981734, guid: 53e853c3264383c43818968a62e4b6fc, type: 3}
-        Projectile_Amount: 5
-        spread: 0.23
+        Projectile_Amount: 3
+        spread: 0.11
         speed: 24.81
         gravity: 1
     - rid: 1142561162159194298
