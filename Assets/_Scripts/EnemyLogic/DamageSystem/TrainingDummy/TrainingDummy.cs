@@ -22,7 +22,7 @@ public class TrainingDummy : Damagable
         base.TakeDamage(Damage, pos, normal);
     }
 
-    public override void TakeDamage(float damage)
+    public override void TakeDamage(float damage, bool HitFX = true)
     {
         base.TakeDamage(damage);
     }

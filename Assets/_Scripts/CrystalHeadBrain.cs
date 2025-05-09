@@ -25,7 +25,11 @@ public class CrystalHeadBrain : EnemyBrain
     protected override void Update()
     {
         base.Update();
-        if (navMesh.remainingDistance == 0) animator.SetBool("Walking", false);
-        if (animator.GetBool("Walking")) animator.SetFloat("WalkSpeed", navMesh.velocity.magnitude);
+        if (navMesh.enabled)
+        {
+            if (navMesh.remainingDistance == 0) animator.SetBool("Walking", false);
+            if (animator.GetBool("Walking")) animator.SetFloat("WalkSpeed", navMesh.velocity.magnitude);
+        }
+        
     }
 }

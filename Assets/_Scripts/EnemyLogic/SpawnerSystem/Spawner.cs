@@ -43,7 +43,11 @@ public class Spawner : MonoBehaviour
 
     public virtual void SpawnEnemy(GameObject GO,Vector3 Position)
     {
-        Instantiate(GO, Position, Quaternion.identity);
+        var enemy = Instantiate(GO, Position, Quaternion.identity);
+        Animator anim = enemy.GetComponent<Animator>();
+        anim.Play("Spawn");
+        anim.applyRootMotion = false;
+
     }
 
     public virtual bool isValidSpawn(Vector3 pos)

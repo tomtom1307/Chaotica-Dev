@@ -43,7 +43,7 @@ public class EnemyBrain : MonoBehaviour
     [HideInInspector] public EnemyPerception perception;
     [HideInInspector] public EnemyActionHandler actionHandler;
     [HideInInspector] public EnemyAttackHandler attackHandler;
-    
+
 
     public UnityEvent OnPlayerAgro;
     public UnityEvent OnPlayerLost;
@@ -101,10 +101,11 @@ public class EnemyBrain : MonoBehaviour
         if (LookDirectionTransform == null) LookDirectionTransform = this.transform;
 
         //Get references 
-        
+
 
         actionHandler = gameObject.AddComponent<EnemyActionHandler>();
         actionHandler.brain = this;
+
         perception = gameObject.AddComponent<EnemyPerception>();
         perception.brain = this;
 
@@ -138,6 +139,7 @@ public class EnemyBrain : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (!navMesh.enabled) return;
         navMesh.speed = MoveSpeed;
         stateMachine.CurrentEnemyState.FrameUpdate();
 
@@ -156,4 +158,21 @@ public class EnemyBrain : MonoBehaviour
     }
 
 
+
+
+    public void SpawnEnemy()
+    {
+        navMesh.enabled = true;
+        attackHandler.enabled = true;
+        actionHandler.enabled = true;
+        perception.enabled = true;
+
+    }
+
+    public void Activate()
+    {
+        
+    }
 }
+
+    

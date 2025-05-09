@@ -25,12 +25,12 @@ public class Damagable : MonoBehaviour
     }
 
 
-    public virtual void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage, bool HitFX = true)
     {
         if (ded == true) return;
         Health -= damage;
         if (soundManager != null) soundManager.PlaySound(0);
-        OnHitSpawn();
+        if(HitFX) OnHitSpawn();
         OnDamageTaken(damage);
         if(Health <= 0)
         {
@@ -40,7 +40,7 @@ public class Damagable : MonoBehaviour
 
     public virtual void TakeDamage(float Damage, Vector3 pos, Vector3 normal)
     {
-        TakeDamage(Damage);
+        TakeDamage(Damage, false);
         OnHitSpawn(pos, normal);
 
     }

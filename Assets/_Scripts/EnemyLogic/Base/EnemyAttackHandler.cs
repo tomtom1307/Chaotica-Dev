@@ -59,6 +59,7 @@ public class EnemyAttackHandler : MonoBehaviour
 
     private void OnAnimatorMove()
     {
+        if (!enabled) return;
         Vector3 newPos = transform.position + brain.animator.deltaPosition;
         transform.position = newPos;
     }
