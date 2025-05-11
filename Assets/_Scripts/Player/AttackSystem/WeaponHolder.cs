@@ -185,6 +185,7 @@ public class WeaponHolder : MonoBehaviour
         playerMovement.AttackResetMoveSpeed();
         Weapon_anim.SetBool("Attacking", false);
         HandleCooldownStuff();
+        CurrentAttackData.ExitAttack(this);
         CurrentAttackData = null;
         
         

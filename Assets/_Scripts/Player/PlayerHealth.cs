@@ -14,6 +14,7 @@ public class PlayerHealth : MonoBehaviour
     PlayerStats stats;
     FullScreenFXController fullScreenFX;
     public static PlayerHealth instance;
+    WeaponHolder weaponHolder;
     private void Start()
     {
 
@@ -25,6 +26,7 @@ public class PlayerHealth : MonoBehaviour
         {
             Destroy(this);
         }
+        weaponHolder = GetComponent<WeaponHolder>();
             //GetStats 
             stats = PlayerStats.instance;
         health = maxHealth;
@@ -76,7 +78,7 @@ public class PlayerHealth : MonoBehaviour
                 }
                 else if (paryable)
                 {
-                    EB.Stun();
+                    Parry(EB);
                 }
                 break;
             }
@@ -96,7 +98,24 @@ public class PlayerHealth : MonoBehaviour
 
     public void BlockDamage(float amount)
     {
+        Weapon_Attack_Data_BlockParry weapon_Attack_Data_BlockParry = weaponHolder.CurrentAttackData as Weapon_Attack_Data_BlockParry;
+        health -= amount * weapon_Attack_Data_BlockParry.DamageReduction;
+        UpdateHealthBar();
+        CamShake.instance.StartShake(CamShake.instance.onHit);
+        fullScreenFX.currentHurtCorutine = StartCoroutine(fullScreenFX.Hurt());
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
 
+    public GameObject ParryVFX;
+
+    public void Parry(EnemyBrain EB)
+    {
+        PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.Parry);
+        Instantiate(ParryVFX, transform);
+        EB.Stun();
     }
 
     public void UpdateHealthBar() {

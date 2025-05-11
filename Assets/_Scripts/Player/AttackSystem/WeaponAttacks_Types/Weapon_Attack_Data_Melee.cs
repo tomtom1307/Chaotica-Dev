@@ -38,7 +38,7 @@ public class Weapon_Attack_Data_Melee : Weapon_Attack_Data_Base
                     DealDamage(W, D);
                     ApplyKnockback(c, dirVec);
                 }
-                return;
+                continue;
             }
             
             else if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit,attack_range, W.DamagableLayer))
@@ -46,7 +46,7 @@ public class Weapon_Attack_Data_Melee : Weapon_Attack_Data_Base
                 Damagable D = hit.collider.gameObject.GetComponent<Damagable>();
 
                 DealDamage(W, D);
-                return;
+                continue;
             }
         }
 

@@ -14275,6 +14275,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1339538049585677, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: ParryVFX
+      value: 
+      objectReference: {fileID: 7137820216468454223, guid: 4825554c88416bf48b152b4b20ac7ba4, type: 3}
     - target: {fileID: 112338399628014996, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.021
@@ -14423,6 +14427,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: clips.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: clips.Array.data[6].name
+      value: Parry
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: clips.Array.data[6].desiredVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: clips.Array.data[6].pitchVariation.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: clips.Array.data[6].pitchVariation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: clips.Array.data[6].sounds.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: 'clips.Array.data[6].sounds.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 41d9ea0a9bf09ff449c98c5e084c856d, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

@@ -37,6 +37,10 @@ public class WI_ClickandHold : Weapon_Input
                 {
                     WH.EnterAttack(AttackNum);
                 }
+                else
+                {
+                    WH.QueueAttack(AttackNum, ctx, queueExpirationTime);
+                }
             }
         }
         

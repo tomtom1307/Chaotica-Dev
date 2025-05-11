@@ -35,7 +35,8 @@ public class PlayerSoundSource : SourceSoundManager<PlayerSoundSource.SoundType>
         SwingSword,
         DrawBow,
         ShootBow,
-        CrystalPickup
+        CrystalPickup,
+        Parry
 
     }
 
