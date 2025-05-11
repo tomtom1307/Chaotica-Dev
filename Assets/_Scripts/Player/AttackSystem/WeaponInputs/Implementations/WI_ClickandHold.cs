@@ -5,36 +5,40 @@ using UnityEngine.InputSystem.Interactions;
 [CreateAssetMenu(fileName = "WI_ClickandHold", menuName = "WeaponInputs/Click and Hold")]
 public class WI_ClickandHold : Weapon_Input
 {
-    private bool holdTriggered;
 
+    bool performedHold;
     public override void _Input(int AttackNum, WeaponHolder WH, InputAction.CallbackContext ctx)
     {
-        if (ctx.started)
+        if (ctx.interaction is HoldInteraction)
         {
-            holdTriggered = false; // Reset hold flag when button is first pressed
-        }
-
-        if (ctx.performed && ctx.interaction is HoldInteraction)
-        {
-            if (!holdTriggered)
+            if (ctx.performed)
             {
-                holdTriggered = true;
-
-                // Trigger hold (alt) attack
                 if (CheckState(AttackNum, WH))
-                    WH.EnterAttack(AttackNum, alt: true);
+                {
+                    WH.EnterAttack(AttackNum, true);
+                    Debug.Log("IsHold");
+                }
                 else
+                {
                     WH.QueueAttack(AttackNum, ctx, queueExpirationTime, alt: true);
+                }
+            }
+            if (WH.Weapon_anim.GetBool("Alt") && ctx.canceled && !CheckState(AttackNum, WH))
+            {
+                WH.ExitAttack();
             }
         }
-
-        if (ctx.canceled && !holdTriggered)
+        if (ctx.interaction is TapInteraction)
         {
-            // Trigger tap attack if hold wasn't triggered
-            if (CheckState(AttackNum, WH))
-                WH.EnterAttack(AttackNum);
-            else
-                WH.QueueAttack(AttackNum, ctx, queueExpirationTime);
+            if (ctx.performed)
+            {
+                performedHold = false;
+                if (CheckState(AttackNum, WH)) 
+                {
+                    WH.EnterAttack(AttackNum);
+                }
+            }
         }
+        
     }
 }

@@ -173,6 +173,17 @@ public class EnemyBrain : MonoBehaviour
     {
         
     }
+
+    public void Stun()
+    {
+        InstaKill();//Replace With Stun Logic
+    }
+
+    public void InstaKill()
+    {
+        damagableEnemy.Die();
+    }
+
 }
 
     

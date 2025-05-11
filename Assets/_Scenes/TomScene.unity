@@ -14292,6 +14292,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: onParryWindowOpen.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: onParryWindowClosed.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
       propertyPath: OnVFXCalled.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 3
       objectReference: {fileID: 0}
@@ -14308,11 +14316,63 @@ PrefabInstance:
       value: SpawnVFX
       objectReference: {fileID: 0}
     - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: onParryWindowOpen.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: onParryWindowClosed.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: onParryWindowOpen.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2087778110}
+    - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: onParryWindowClosed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2087778110}
+    - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: onParryWindowOpen.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: onParryWindowOpen.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ParryWindow
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: onParryWindowClosed.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: onParryWindowClosed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ParryWindow
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
       propertyPath: OnVFXCalled.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: WeaponHolder, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: onParryWindowOpen.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: WeaponHolder, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: onParryWindowClosed.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: WeaponHolder, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: onParryWindowOpen.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
       propertyPath: OnVFXCalled.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: onParryWindowOpen.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125346463399776465, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: onParryWindowClosed.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2498856036708082496, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}

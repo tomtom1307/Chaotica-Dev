@@ -10,7 +10,8 @@ public class EnemyAttackSO : ScriptableObject
 
     public float KnockBackAmount;
     public bool KnockBack;
-
+    [SerializeField] public bool Parryable;
+    [SerializeField] public bool Blockable;
 
     public LayerMask whatIsPlayer;
     [Header("Collider")]

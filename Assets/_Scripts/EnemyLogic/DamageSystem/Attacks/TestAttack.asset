@@ -17,6 +17,8 @@ MonoBehaviour:
   AttackCooldown: 0
   KnockBackAmount: 30000
   KnockBack: 1
+  Parryable: 1
+  Blockable: 0
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -32,4 +34,3 @@ MonoBehaviour:
   doRayCast: 0
   rayCastDamage: 10
   rayCastRange: 100
-  Accuracy: 0

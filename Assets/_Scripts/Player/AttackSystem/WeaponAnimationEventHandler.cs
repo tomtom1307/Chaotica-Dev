@@ -5,6 +5,8 @@ public class WeaponAnimationEventHandler : MonoBehaviour
 {
     public UnityEvent onComboWindowOpen;
     public UnityEvent onComboWindowClosed;
+    public UnityEvent onParryWindowOpen;
+    public UnityEvent onParryWindowClosed;
     public UnityEvent onFinishedAttack;
     public UnityEvent OnAttackPerformed;
     public UnityEvent onMoveSpeedReset;
@@ -61,6 +63,16 @@ public class WeaponAnimationEventHandler : MonoBehaviour
     private void Start()
     {
         CamAnimator = GetComponentInParent<CamAttackAnim>();
+    }
+
+    public void OpenParryWindow()
+    {
+        onParryWindowOpen.Invoke();
+    }
+
+    public void CloseParryWindow()
+    {
+        onParryWindowClosed.Invoke();
     }
 
 

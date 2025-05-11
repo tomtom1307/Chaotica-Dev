@@ -50,7 +50,7 @@ public class PlayerHealth : MonoBehaviour
     
 
     //Take damage with UI handling
-    public void TakeDamage(float Amount, EnemyBrain EB = null)
+    public void TakeDamage(float Amount, EnemyBrain EB = null, bool paryable = false, bool blockable = false)
     {
         switch (d_state)
         {
@@ -68,11 +68,16 @@ public class PlayerHealth : MonoBehaviour
             }
             case (DamageState.Parrying):
             {
-                if(EB == null)
-                    {
-                        d_state = DamageState.Normal;
-                        TakeDamage(Amount);
-                    }
+                if(EB == null || !paryable)
+                {
+                    d_state = DamageState.Normal;
+                    TakeDamage(Amount);
+                    break;
+                }
+                else if (paryable)
+                {
+                    EB.Stun();
+                }
                 break;
             }
             case (DamageState.Blocking):

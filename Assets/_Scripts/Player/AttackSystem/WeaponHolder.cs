@@ -116,7 +116,7 @@ public class WeaponHolder : MonoBehaviour
     public void DoQueuedInput(int i, InputAction.CallbackContext ctx, bool alt = false)
     {
         if(!enabled) return;
-        data.Weapon_Attacks[i].weaponInputLogic.QueuedInput(i, this, ctx);
+        data.Weapon_Attacks[i].weaponInputLogic.QueuedInput(i, this, ctx, alt);
     }
 
 
@@ -142,8 +142,8 @@ public class WeaponHolder : MonoBehaviour
     //Called from weapon Input logic when conditions are met
     public void EnterAttack(int i, bool alt = false)
     {
-        Weapon_anim.SetBool("Attacking", true);
-        Weapon_anim.SetBool("AltAttack", false);
+        
+        Weapon_anim.SetBool("Alt", false);
         if (!this.enabled) return;
         //Set State and variables
         State = AttackState.Attacking;
@@ -166,11 +166,11 @@ public class WeaponHolder : MonoBehaviour
         else
         {
             this.alt = true;
-            Weapon_anim.SetBool("AltAttack", true);
+            Weapon_anim.SetBool("Alt", true);
         }
-
-            //Combocounter allows different animations for the same attack
-            ComboCounter++;
+        Weapon_anim.SetBool("Attacking", true);
+        //Combocounter allows different animations for the same attack
+        ComboCounter++;
         if (ComboCounter >= CurrentAttackData.ComboLength) ComboCounter = 0;
 
         //Testing
@@ -193,7 +193,7 @@ public class WeaponHolder : MonoBehaviour
         
         //Handle Animation stuff
         
-        Weapon_anim.SetBool("AltAttack", false);
+        Weapon_anim.SetBool("Alt", false);
         Weapon_anim.SetBool("Combo", false);
         Weapon_anim.SetBool("Charging", false);
     }
@@ -240,6 +240,7 @@ public class WeaponHolder : MonoBehaviour
         queuedContext = ctx;
         queueTime = Time.time;
         queueExpirationTime = expirationTime;
+        this.alt = alt;
     }
 
     public void TryExecuteQueuedAttack()
@@ -259,7 +260,7 @@ public class WeaponHolder : MonoBehaviour
             if (QueueDebugMessages) Debug.Log("Executing Queued Attack");
             
             // Do attack BEFORE resetting the queue
-            DoQueuedInput(queuedAttackNum, queuedContext);
+            DoQueuedInput(queuedAttackNum, queuedContext, alt);
 
             // reset queue after attack
             queuedAttack = false;

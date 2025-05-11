@@ -100,7 +100,7 @@ public class EnemyAttackHandler : MonoBehaviour
     public void DamagePlayer(PlayerHealth PH)
     {
         currentAttack.attackData.DamageLogic(PH, this);
-        PH.TakeDamage(currentAttack.attackData.damageValue, brain);
+        PH.TakeDamage(currentAttack.attackData.damageValue, brain, currentAttack.attackData.Parryable, currentAttack.attackData.Parryable);
     }
     [HideInInspector] public Vector3 AimDirection;
     public void DoRayCast()
