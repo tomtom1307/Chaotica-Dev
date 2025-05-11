@@ -22,7 +22,8 @@ public class WeaponDataSO : ScriptableObject
     public enum Hand
     {
         left,
-        right
+        right,
+        Twohanded
     }
 
 }

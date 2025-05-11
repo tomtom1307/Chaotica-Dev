@@ -25,7 +25,7 @@ public class ChargeHoldRelease: Weapon_Input
         if (!CheckState(AttackNum ,WH))
         {
             
-            if (ctx.performed)
+            if (ctx.started)
             {
                 WH.QueueAttack(AttackNum, ctx, queueExpirationTime);
             }
@@ -38,7 +38,7 @@ public class ChargeHoldRelease: Weapon_Input
 
     public void HoldLogic(int AttackNum, WeaponHolder WH, InputAction.CallbackContext ctx)
     {
-        if (ctx.performed && !isCharging) // Button pressed down
+        if (ctx.started && !isCharging) // Button pressed down
         {
             WH.StartAttackCharging(AttackNum);
             chargeStartTime = Time.time;

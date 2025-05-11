@@ -36,7 +36,11 @@ public class WeaponEditor : Editor
         {
             AddNewAttack(AttackType.Raycast, SO);
         }
-        
+        if (GUILayout.Button("Add Block/Parry"))
+        {
+            AddNewAttack(AttackType.BlockParry, SO);
+        }
+
 
         serializedObject.ApplyModifiedProperties(); // Save any modified properties
     }
@@ -66,6 +70,9 @@ public class WeaponEditor : Editor
                 break;
             case AttackType.Raycast:
                 newAttack = new Weapon_Attack_Data_Raycast();
+                break;
+            case AttackType.BlockParry:
+                newAttack = new Weapon_Attack_Data_BlockParry();
                 break;
         }
 

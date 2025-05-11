@@ -142,6 +142,7 @@ public class WeaponHolder : MonoBehaviour
     //Called from weapon Input logic when conditions are met
     public void EnterAttack(int i, bool alt = false)
     {
+        Weapon_anim.SetBool("Attacking", true);
         Weapon_anim.SetBool("AltAttack", false);
         if (!this.enabled) return;
         //Set State and variables
@@ -153,7 +154,7 @@ public class WeaponHolder : MonoBehaviour
         CurrentAttackData.EnterAttack(this);
 
         //Handle Animation stuff
-        Weapon_anim.SetBool("Attacking", true);
+        
 
         Weapon_anim.SetInteger("AttackType", i);
 
@@ -182,6 +183,7 @@ public class WeaponHolder : MonoBehaviour
     {
         //Reset basically
         playerMovement.AttackResetMoveSpeed();
+        Weapon_anim.SetBool("Attacking", false);
         HandleCooldownStuff();
         CurrentAttackData = null;
         
@@ -190,7 +192,7 @@ public class WeaponHolder : MonoBehaviour
         ChargeAmount = 1;
         
         //Handle Animation stuff
-        Weapon_anim.SetBool("Attacking", false);
+        
         Weapon_anim.SetBool("AltAttack", false);
         Weapon_anim.SetBool("Combo", false);
         Weapon_anim.SetBool("Charging", false);
@@ -255,7 +257,7 @@ public class WeaponHolder : MonoBehaviour
         if (State == AttackState.Ready || (State == AttackState.Combo && data.Weapon_Attacks[queuedAttackNum].ComboLength>1)) // Player can attack now
         {
             if (QueueDebugMessages) Debug.Log("Executing Queued Attack");
-
+            
             // Do attack BEFORE resetting the queue
             DoQueuedInput(queuedAttackNum, queuedContext);
 
@@ -350,6 +352,36 @@ public class WeaponHolder : MonoBehaviour
     {
         PlayerVFXHandler.instance.SpawnVFX(CurrentAttackData.VFX, i);
     }
+
+    public void TriggerBlock(bool TF)
+    {
+        if (TF)
+        {
+            SetPlayerHealthState(PlayerHealth.DamageState.Blocking);
+        }
+        else
+        {
+            SetPlayerHealthState(PlayerHealth.DamageState.Normal);
+        }
+    }
+
+    public void ParryWindow(bool TF)
+    {
+        if (TF)
+        {
+            SetPlayerHealthState(PlayerHealth.DamageState.Parrying);
+        }
+        else
+        {
+            SetPlayerHealthState(PlayerHealth.DamageState.Normal);
+        }
+    }
+
+    public void SetPlayerHealthState(PlayerHealth.DamageState state)
+    {
+        PlayerHealth.instance.d_state = state;
+    }
+
 
 }
 

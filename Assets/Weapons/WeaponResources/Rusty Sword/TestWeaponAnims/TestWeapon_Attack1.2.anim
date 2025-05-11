@@ -1783,14 +1783,14 @@ AnimationClip:
     intParameter: 2
     messageOptions: 0
   - time: 0.21666667
-    functionName: OnVfxSet
+    functionName: OnForceApply
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.21666667
-    functionName: OnForceApply
+    functionName: OnVfxSet
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -1819,6 +1819,13 @@ AnimationClip:
     messageOptions: 0
   - time: 0.53333336
     functionName: OpenComboWindow
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.71666664
+    functionName: CloseComboWindow
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

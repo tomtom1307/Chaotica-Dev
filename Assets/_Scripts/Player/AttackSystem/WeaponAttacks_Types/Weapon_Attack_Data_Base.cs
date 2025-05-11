@@ -93,7 +93,8 @@ public enum AttackType
     Melee,
     Projectile,
     Raycast,
-    AOE
+    AOE,
+    BlockParry
 }
 
 public enum DamageType

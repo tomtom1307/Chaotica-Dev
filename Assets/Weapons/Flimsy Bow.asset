@@ -21,7 +21,7 @@ MonoBehaviour:
   Weapon_Attacks:
   - rid: 1142560951034445932
   - rid: 1142560951034445958
-  - rid: 1142561162159194298
+  - rid: 4875732898165293139
   InventorySprite: {fileID: 21300000, guid: b87b967d2eda3564a8480b2ad42ce52c, type: 3}
   references:
     version: 2
@@ -46,6 +46,7 @@ MonoBehaviour:
         FinalHitMultiplier: 1
         HitFOV: 150
         Forces: []
+        VFX: {fileID: 0}
         projectile: {fileID: 140453258620981734, guid: 53e853c3264383c43818968a62e4b6fc, type: 3}
         Projectile_Amount: 1
         spread: 0
@@ -71,29 +72,32 @@ MonoBehaviour:
         FinalHitMultiplier: 1
         HitFOV: 120
         Forces: []
+        VFX: {fileID: 0}
         projectile: {fileID: 140453258620981734, guid: 53e853c3264383c43818968a62e4b6fc, type: 3}
         Projectile_Amount: 3
         spread: 0.11
         speed: 24.81
         gravity: 1
-    - rid: 1142561162159194298
-      type: {class: Weapon_Attack_Data_Raycast, ns: , asm: Assembly-CSharp}
+    - rid: 4875732898165293139
+      type: {class: Weapon_Attack_Data_Melee, ns: , asm: Assembly-CSharp}
       data:
-        Name: 'Yadda '
-        Description: Badda
+        Name: Swipe
+        Description: 
         weaponInputLogic: {fileID: 0}
-        attackType: 2
+        attackType: 0
         damageType: 0
-        damage: 5
+        damage: 100
         ComboLength: 1
         StaggerDamage: 5
         AttackWeight: 1
-        MoveSpeedMult: 0.5
-        hasCooldown: 0
+        MoveSpeedMult: 1
+        hasCooldown: 1
         cooldown: 0.1
         AllowAgility: 0
-        KnockBackForce: 0
+        KnockBackForce: 100
         FinalHitMultiplier: 100
         HitFOV: 120
         Forces: []
-        Range: 0
+        VFX: {fileID: 0}
+        attack_range: 3
+        MaxViewAngle: 45

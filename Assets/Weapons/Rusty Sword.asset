@@ -21,35 +21,11 @@ MonoBehaviour:
   Weapon_Attacks:
   - rid: 3205115419090485444
   - rid: 3205115430689309103
-  - rid: 1142561162159194297
+  - rid: 4875732898165293138
   InventorySprite: {fileID: 21300000, guid: b87b967d2eda3564a8480b2ad42ce52c, type: 3}
   references:
     version: 2
     RefIds:
-    - rid: 1142561162159194297
-      type: {class: Weapon_Attack_Data_Raycast, ns: , asm: Assembly-CSharp}
-      data:
-        Name: 'Attack3 '
-        Description: 'Dunno Yet
-
-'
-        weaponInputLogic: {fileID: 0}
-        attackType: 2
-        damageType: 0
-        damage: 5
-        ComboLength: 1
-        StaggerDamage: 5
-        AttackWeight: 1
-        MoveSpeedMult: 0
-        hasCooldown: 0
-        cooldown: 0.1
-        AllowAgility: 0
-        KnockBackForce: 0
-        FinalHitMultiplier: 100
-        HitFOV: 120
-        Forces: []
-        VFX: {fileID: 0}
-        Range: 0
     - rid: 3205115419090485444
       type: {class: Weapon_Attack_Data_Melee, ns: , asm: Assembly-CSharp}
       data:
@@ -96,3 +72,24 @@ MonoBehaviour:
         Forces: []
         VFX: {fileID: 5314773374567602985, guid: 9da12960a7ac7ed429f8cca416b18a77, type: 3}
         attack_range: 4
+    - rid: 4875732898165293138
+      type: {class: Weapon_Attack_Data_BlockParry, ns: , asm: Assembly-CSharp}
+      data:
+        Name: Block/Parry
+        Description: Yeah
+        weaponInputLogic: {fileID: 0}
+        attackType: 4
+        damageType: 0
+        damage: 100
+        ComboLength: 1
+        StaggerDamage: 5
+        AttackWeight: 1
+        MoveSpeedMult: 1
+        hasCooldown: 1
+        cooldown: 0.1
+        AllowAgility: 0
+        KnockBackForce: 100
+        FinalHitMultiplier: 100
+        HitFOV: 120
+        Forces: []
+        VFX: {fileID: 0}
