@@ -17,7 +17,7 @@ public class WeaponDataSO : ScriptableObject
     public List<Weapon_Attack_Data_Base> Weapon_Attacks = new List<Weapon_Attack_Data_Base>();
     
     public Sprite InventorySprite;
-    
+    public Vector3 DroppedWeaponSize;
 
     public enum Hand
     {

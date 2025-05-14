@@ -10,7 +10,7 @@ public class Interactable : MonoBehaviour
     public bool DoOutline;
 
     [HideInInspector] public GameObject interactor;
-    public UnityEvent onInteraction;
+    public UnityEvent onInteraction = new UnityEvent();
 
 
     //Get Outline Component
