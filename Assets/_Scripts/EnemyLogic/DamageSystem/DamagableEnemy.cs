@@ -7,10 +7,10 @@ public class DamagableEnemy : Damagable
     EnemySoundSource soundSource;
     public GameObject hitParticleFX;
     public float InstantAgro = 5;
-    public override void OnDamageTaken(float damage)
+    public override void OnDamageTaken(float damage, Color col)
     {
         soundSource.PlaySound(EnemySoundSource.SoundType.TakeDamageBladed, 2);
-        base.OnDamageTaken(damage);
+        base.OnDamageTaken(damage, col);
         brain.animator.SetTrigger("Hit");
         if(brain.stateMachine.CurrentEnemyState == brain.idleState)
         {
@@ -22,7 +22,10 @@ public class DamagableEnemy : Damagable
                     brain.perception.DetectionMeter = 1;
                     brain.perception.LSP_time = 0;
                 }
+                brain.navMesh.stoppingDistance = 0;
+                brain.actionHandler.StartActionOverride(brain.actionHandler.MoveToPlayer);
                 brain.actionHandler.StartActionOverride(brain.actionHandler.ChangeToPatrolState);
+                
                 return;
             }
             else

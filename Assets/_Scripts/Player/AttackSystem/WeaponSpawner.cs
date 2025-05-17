@@ -1,11 +1,15 @@
+using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class WeaponSpawner : MonoBehaviour
 {
+    public bool SpawnOnStart = false;
     public WeaponDataSO dataSO;
     GameObject model;
-    WeaponInstance weaponInstance;
-
+    public WeaponInstance weaponInstance;
+    public VisualEffectAsset RarityVFX;
 
     public void CreateWeapon(WeaponInstance WI)
     {
@@ -17,7 +21,7 @@ public class WeaponSpawner : MonoBehaviour
     public void CreateWeapon(WeaponDataSO data)
     {
         AddWeaponVisual(data);
-        model.AddComponent<Rigidbody>();
+
     }
     WeaponPickup WP;
     public void AddWeaponVisual(WeaponDataSO data)
@@ -27,7 +31,7 @@ public class WeaponSpawner : MonoBehaviour
         WP.instance = weaponInstance;
         model.gameObject.layer = 0;
         model.transform.position = transform.position;
-        model.transform.localRotation = Quaternion.identity;
+        model.transform.localRotation = Quaternion.Euler(data.DroppedWeaponQuaternion);
         model.transform.localScale = data.DroppedWeaponSize;
         BoxCollider BC = null;
         Renderer r = null;
@@ -54,16 +58,30 @@ public class WeaponSpawner : MonoBehaviour
             return;
         }
         BC.gameObject.tag = "Interactable";
+        BC.isTrigger = true;
         Interactable inter = BC.gameObject.AddComponent<Interactable>();
         inter.onInteraction.AddListener(WP.Pickup);
+
+
+        //VFX
+        RarityVFX = Resources.Load<VisualEffectAsset>("Rarity");
+        GameObject vfxHolder = new GameObject("VFXHolder");
+        VisualEffect vfx = vfxHolder.AddComponent<VisualEffect>();
+        vfxHolder.transform.parent = model.transform;
+        vfxHolder.transform.localPosition = Vector3.zero; 
+        vfx.visualEffectAsset = RarityVFX;
+        vfx.SetVector4("Color", WeaponDataSO.GetColorByRarity(data.rarity));
+
+        Destroy(gameObject);
     }
 
 
     void Start()
     {
-        if (dataSO != null)
+        RarityVFX = Resources.Load<VisualEffectAsset>("Rarity");
+        if (SpawnOnStart)
         {
-            weaponInstance = new WeaponInstance(dataSO);
+            weaponInstance = new WeaponInstance(dataSO, 0,0);
             CreateWeapon(dataSO);
             
         }

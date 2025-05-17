@@ -12,7 +12,7 @@ public enum StatType
     VerdancyDamageBuff, AetherflowDamageBuff, CritChance,
     ArcheryLevel, ArcheryXP, ArcheryLevelUpAmount,
     SwordsmanshipLevel, SwordsmanshipXP, SwordsmanshipLevelUpAmount,
-    WizardryLevel, WizardryXP, WizardryLevelUpAmount
+    WizardryLevel, WizardryXP, WizardryLevelUpAmount, CritMultiplier
 }
 
 
@@ -53,7 +53,7 @@ public class PlayerStats : MonoBehaviour
         stats[StatType.ScarForgeDamageBuff] = 0f;
         stats[StatType.VerdancyDamageBuff] = 0f;
         stats[StatType.AetherflowDamageBuff] = 0f;
-        stats[StatType.CritChance] = 0f;
+        
 
         stats[StatType.ArcheryLevel] = 1;
         stats[StatType.ArcheryXP] = 0f;
@@ -66,6 +66,9 @@ public class PlayerStats : MonoBehaviour
         stats[StatType.WizardryLevel] = 1;
         stats[StatType.WizardryXP] = 0f;
         stats[StatType.WizardryLevelUpAmount] = 100f;
+
+        stats[StatType.CritMultiplier] = 2;
+        stats[StatType.CritChance] = 0.05f;
     }
 
     //Modify value

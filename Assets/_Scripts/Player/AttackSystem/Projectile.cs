@@ -1,4 +1,5 @@
 using System.Drawing;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -7,6 +8,7 @@ public class Projectile : MonoBehaviour
     public float speed;
     public float Damage;
     public float AntiGrav;
+    public bool Crit;
     public LayerMask LayerMask;
     public float MaxLifeTime = 30;
     Rigidbody rb;
@@ -21,8 +23,9 @@ public class Projectile : MonoBehaviour
         Destroy(gameObject, MaxLifeTime);
     }
 
-    public virtual void Init(Vector3 dir, float speed, float Damage, bool gravity, float KnockBack = 0)
+    public virtual void Init(Vector3 dir, float speed, float Damage, bool gravity, float KnockBack = 0, bool crit = false)
     {
+        Crit = crit;
         rb = GetComponent<Rigidbody>();
         rb.linearVelocity = dir * speed;
         transform.LookAt(transform.position + dir);
@@ -61,7 +64,7 @@ public class Projectile : MonoBehaviour
     {
         if(IsInLayerMask(collision.gameObject,LayerMask))
         {
-            OnHit(collision.gameObject, collision.GetContact(0));
+            OnHit(collision.gameObject, collision.GetContact(0), Crit);
         }
         
         Rigidbody hitrb;
@@ -77,9 +80,21 @@ public class Projectile : MonoBehaviour
     }
 
 
-    public virtual void OnHit(GameObject hitObj, ContactPoint col)
+    public virtual void OnHit(GameObject hitObj, ContactPoint col, bool isCrit)
     {
-        hitObj.GetComponent<Damagable>().TakeDamage(Damage, col.point, col.normal);
+        if (hitObj.tag == "Head")
+        {
+            isCrit = true;
+            hitObj = hitObj.GetComponentInParent<Damagable>().gameObject;
+            Damage *= PlayerStats.instance.GetStat(StatType.CritMultiplier);
+        }
+        Damagable.CheckForDamagable(hitObj).TakeDamage(Damage, col.point, col.normal, isCrit);
+        TrailRenderer TR = GetComponentInChildren<TrailRenderer>();
+        if (TR!=null)
+        {
+            TR.transform.parent = null;
+            Destroy(TR.gameObject, 4);
+        }
         Destroy(gameObject);
     }
 }

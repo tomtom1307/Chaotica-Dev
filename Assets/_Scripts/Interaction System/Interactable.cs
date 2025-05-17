@@ -20,6 +20,7 @@ public class Interactable : MonoBehaviour
         outline.enabled = false;
     }
 
+
     public void Interact(GameObject player)
     {
         interactor = player;

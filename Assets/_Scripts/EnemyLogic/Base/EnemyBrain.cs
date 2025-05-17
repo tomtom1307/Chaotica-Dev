@@ -20,6 +20,9 @@ public class EnemyBrain : MonoBehaviour
     ///<value> Property <c>MoveSpeed</c> holds the enemy's navmesh agent speed.</value>
     public float MoveSpeed;
     public float JumpPower;
+    public float DashDistance;
+    public float DashTime;
+    public float DashCoolDown;
 
     [Header("Detection")]
     public float DetectionRange;

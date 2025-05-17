@@ -98,10 +98,12 @@ MonoBehaviour:
   speed: 0
   Damage: 0
   AntiGrav: 6.85
+  Crit: 0
   LayerMask:
     serializedVersion: 2
     m_Bits: 256
   MaxLifeTime: 30
+  KnockBack: 0
 --- !u!54 &2317204261318812221
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -208,7 +210,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e823cd5b5d27c0f4b8256e7c12ee3e6d, type: 2}
+  - {fileID: 2100000, guid: 10549ca83f113984e9d36f3a90f09680, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -229,17 +231,17 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.5
+  m_Time: 0.2
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 0.1
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.108724594
+        value: 0.6111965
         inSlope: 0
         outSlope: 0
         tangentMode: 0

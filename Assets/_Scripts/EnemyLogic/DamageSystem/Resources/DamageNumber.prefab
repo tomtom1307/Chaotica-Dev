@@ -111,9 +111,9 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4292867071
-  m_fontColor: {r: 1, g: 0.9515857, b: 0.87358487, a: 1}
-  m_enableVertexGradient: 1
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
     topLeft: {r: 0.98490566, g: 0.54549783, b: 0.41440365, a: 1}
@@ -223,6 +223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 4295149195553358609}
   DestroyTime: 5
+  cul: {r: 1, g: 0.48867923, b: 0.48867923, a: 1}
   PopupTime: 0.4
   Size: 0.3
   ExistanceTime: 0.7

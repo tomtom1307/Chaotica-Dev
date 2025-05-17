@@ -25,22 +25,27 @@ public class Damagable : MonoBehaviour
     }
 
 
-    public virtual void TakeDamage(float damage, bool HitFX = true)
+    public virtual void TakeDamage(float damage, bool HitFX = true, bool crit = false)
     {
         if (ded == true) return;
         Health -= damage;
         if (soundManager != null) soundManager.PlaySound(0);
         if(HitFX) OnHitSpawn();
-        OnDamageTaken(damage);
-        if(Health <= 0)
+
+        Debug.Log("Crit:" + crit);
+        if (crit) OnDamageTaken(damage, new Color(247f/255f, 167f/255f, 5f/255f));
+        else OnDamageTaken(damage, Color.white);
+
+
+        if (Health <= 0)
         {
             Die();
         }
     }
 
-    public virtual void TakeDamage(float Damage, Vector3 pos, Vector3 normal)
+    public virtual void TakeDamage(float Damage, Vector3 pos, Vector3 normal, bool isCrit)
     {
-        TakeDamage(Damage, false);
+        TakeDamage(Damage, false, isCrit);
         OnHitSpawn(pos, normal);
 
     }
@@ -97,27 +102,33 @@ public class Damagable : MonoBehaviour
         
     }
 
-    public virtual void OnDamageTaken(float damage)
+    public virtual void OnDamageTaken(float damage, Color col)
     {
-        if(DamageNumbers)
+        Color finalColor = col;
+        Debug.Log("Color used: " + finalColor);
+    
+
+        if (DamageNumbers)
         {
-            SpawnDamageNumbers(damage);
+            SpawnDamageNumbers(damage, finalColor);
         }
     }
 
 
-    public virtual void SpawnDamageNumbers(float damage)
+    public virtual void SpawnDamageNumbers(float damage, Color Col)
     {
+        Debug.Log(Col);
         Vector3 offsetVector = spawnOffset.x * transform.right + spawnOffset.y * transform.up + spawnOffset.z * transform.forward;
         GameObject number = Instantiate(DamageNumber,offsetVector+ transform.position+0.3f*(Camera.main.transform.position-transform.position).normalized, Quaternion.identity);
-        number.GetComponent<DamageNumber>().SetValue(damage);
+        number.GetComponent<DamageNumber>().SetValue(damage, Col);
     }
 
-    public virtual void SpawnDamageNumbers(float damage, Vector3 HitPos)
+    public virtual void SpawnDamageNumbers(float damage, Vector3 HitPos, Color Col)
     {
+        Debug.Log(Col);
         Vector3 offsetVector = spawnOffset.x * transform.right + spawnOffset.y * transform.up + spawnOffset.z * transform.forward;
         GameObject number = Instantiate(DamageNumber, offsetVector + transform.position + 0.3f * (Camera.main.transform.position - transform.position).normalized, Quaternion.identity);
-        number.GetComponent<DamageNumber>().SetValue(damage);
+        number.GetComponent<DamageNumber>().SetValue(damage, Col);
     }
 
 
@@ -125,5 +136,16 @@ public class Damagable : MonoBehaviour
     protected virtual void Update()
     {
         
+    }
+
+
+    public static Damagable CheckForDamagable(GameObject go)
+    {
+        Damagable D = go.GetComponent<Damagable>();
+        if (D== null)
+        {
+            D = go.GetComponentInParent<Damagable>();
+        }
+        return D;
     }
 }

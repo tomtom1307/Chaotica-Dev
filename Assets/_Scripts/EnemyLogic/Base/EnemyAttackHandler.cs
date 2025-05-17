@@ -34,11 +34,12 @@ public class EnemyAttackHandler : MonoBehaviour
 
     public void EnterAttack(EnemyAttack EA)
     {
+        transform.rotation.SetLookRotation(player.position, Vector3.up);
         if (attacking || AttackTimer <= brain.TimeBetweenAttacks) { return; }
         currentAttack = EA;
         
         attacking = true;
-
+        brain.navMesh.updateRotation = false;
         if (currentAttack.attackData.rootMotion)
         {
             Debug.Log("enabled root motion and disabled navmeshagent.");
@@ -68,6 +69,9 @@ public class EnemyAttackHandler : MonoBehaviour
     {
         if (attacking)
         {
+            Vector3 direction = player.position - transform.position;
+            direction.y = 0f; // Ignore vertical difference
+            transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
             currentAttack.attackData.AttackUpdate(this);
         }
         else
@@ -86,6 +90,7 @@ public class EnemyAttackHandler : MonoBehaviour
         {
             brain.navMesh.isStopped = false;
         }
+        brain.navMesh.updateRotation = true;
         brain.animator.SetInteger("AT", 0);
         brain.animator.SetBool("Attacking", false);
         Invoke(nameof(AttackCooldownExit), Mathf.Clamp(currentAttack.attackData.AttackCooldown, 0.1f, 10000000));

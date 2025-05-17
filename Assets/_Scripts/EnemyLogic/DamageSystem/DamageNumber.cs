@@ -8,6 +8,7 @@ public class DamageNumber : MonoBehaviour
 {
     public TMP_Text text;
     public float DestroyTime;
+    public Color cul = new Color(255, 92, 92);
     Vector3 upVector;
     public float PopupTime = 0.2f;
     public float Size;
@@ -28,11 +29,12 @@ public class DamageNumber : MonoBehaviour
         Destroy(gameObject, DestroyTime);
     }
 
-    public void SetValue(float value)
+    public void SetValue(float value, Color col)
     {
         float val = Mathf.RoundToInt(value);
         if (val == 0) val = 1;
         text.text = val.ToString();
+        text.color = col;
     }
 
     private void Update()

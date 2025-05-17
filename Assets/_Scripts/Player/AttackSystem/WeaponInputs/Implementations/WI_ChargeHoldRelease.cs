@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 [CreateAssetMenu(fileName = "WI_ChargeHoldRelease", menuName = "WeaponInputs/ChargeHoldRelease")]
 public class ChargeHoldRelease: Weapon_Input
@@ -38,7 +39,7 @@ public class ChargeHoldRelease: Weapon_Input
 
     public void HoldLogic(int AttackNum, WeaponHolder WH, InputAction.CallbackContext ctx)
     {
-        if (ctx.started && !isCharging) // Button pressed down
+        if ((ctx.started ||ctx.performed)&& !isCharging) // Button pressed down
         {
             WH.StartAttackCharging(AttackNum);
             chargeStartTime = Time.time;

@@ -6,6 +6,7 @@ using UnityEngine.WSA;
 
 public class Ability : ScriptableObject
 {
+    public Sprite Display;
     public new string name;
     public float activeTime;
     public float cooldownTime;

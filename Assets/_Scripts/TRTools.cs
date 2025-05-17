@@ -4,6 +4,12 @@ namespace TRTools
 {
     public static class VecOp
     {
+
+        public static Vector3 DirectionDistance(Vector3 A, Vector3 B)
+        {
+            return (A - B);
+        }
+
         public static Vector3 Direction(Vector3 A, Vector3 B)
         {
             return (A - B).normalized;

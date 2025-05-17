@@ -26,7 +26,7 @@ public class WeaponHolder : MonoBehaviour
     //State variable
     [SerializeField]public AttackState State = AttackState.Ready;
 
-    [SerializeField] public WeaponInstance instance;
+    [SerializeField] public WeaponInstance instance = null;
     [SerializeField] public WeaponDataSO data;
     [SerializeField] public Secondary_Weapon_Base SecondaryWeaponData;
     [SerializeField] public LayerMask DamagableLayer;
@@ -45,11 +45,24 @@ public class WeaponHolder : MonoBehaviour
         IsAttack2 = A2;
         IsAttack3 = A3;
         if (instance == this.instance) return;
+        else if(this.instance.data != null)
+        {
+            SpawnWeapon(this.instance);
+        }
         this.instance = instance;
         this.data = instance.data;
         
         HandleWeaponSwapping();
     }
+
+    public void SpawnWeapon(WeaponInstance weaponInstance)
+    {
+        GameObject spawner = new GameObject("WeaponSpawner");
+
+        spawner.transform.position = transform.position + playerMovement.orientation.transform.forward + Vector3.up;
+        spawner.AddComponent<WeaponSpawner>().CreateWeapon(weaponInstance);
+    }
+
 
     public Transform RhandPos;
     public Transform LhandPos;
@@ -74,12 +87,19 @@ public class WeaponHolder : MonoBehaviour
         Destroy(SecondaryModel);
         if (data.secondaryModel != null) SecondaryModel = Instantiate(data.secondaryModel, secondaryPos);
 
-        if (IK_Handler == null) {
-            IK_Handler = Camera.main.GetComponentInChildren<HandIKHandler>();
-        }
         
         ChargeAmount = 1;
         Weapon_anim.runtimeAnimatorController = data.Anim_controller;
+
+        if (instance.KillCount >= instance.Threshold1)
+        {
+            IsAttack2 = true;
+        }
+        if (instance.KillCount >= instance.Threshold2)
+        {
+            IsAttack3 = true;
+        }
+
     }
     [HideInInspector]public Rigidbody rb;
     //Initialization steps
@@ -109,6 +129,10 @@ public class WeaponHolder : MonoBehaviour
         {
             State = AttackState.Ready;
             ComboCounter = 0;
+        }
+        if (Input.GetKey(KeyCode.Alpha8))
+        {
+            instance.ProcableAbilityList.Add(new LifestealEffect(0.5f, 0.5f));
         }
     }
 
@@ -313,7 +337,14 @@ public class WeaponHolder : MonoBehaviour
     public void EnemyKilled()
     {
         instance.KillCount++;
-        //TODO: Check if new attack unlocked!
+        if(instance.KillCount >= instance.Threshold1)
+        {
+            IsAttack2 = true;   
+        }
+        if(instance.KillCount >= instance.Threshold2)
+        {
+            IsAttack3 = true;
+        }
     }
     
     public void AttackForce(int i)

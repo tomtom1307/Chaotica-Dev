@@ -205,8 +205,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Upgrade
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bc0c743f6d1f26245b73f5b77b5c5641, type: 2}
+  m_sharedMaterial: {fileID: -4766009995572650975, guid: bc0c743f6d1f26245b73f5b77b5c5641, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -411,7 +411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.18579403, g: 0.16064787, b: 0.4113207, a: 0.392}
+  m_Color: {r: 0.18490559, g: 0.18490559, b: 0.18490559, a: 0.392}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -492,7 +492,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 959.99994, y: -523.3748}
+  m_AnchoredPosition: {x: 960, y: -540}
   m_SizeDelta: {x: 550.89, y: 790.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2054902953903236441
@@ -516,7 +516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.47450984, b: 0.24705884, a: 1}
+  m_Color: {r: 0.3735848, g: 0.37147018, b: 0.37147018, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -646,8 +646,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Upgrade
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bc0c743f6d1f26245b73f5b77b5c5641, type: 2}
+  m_sharedMaterial: {fileID: -4766009995572650975, guid: bc0c743f6d1f26245b73f5b77b5c5641, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -954,6 +954,8 @@ MonoBehaviour:
     weight: 1
   - Upgrade: {fileID: 11400000, guid: 2d789d092c7e8a44aafa91c0482d8f38, type: 2}
     weight: 1
+  - Upgrade: {fileID: 11400000, guid: 148b14d43002ba44bb88ffc120738073, type: 2}
+    weight: 100
   Generated: 0
   player: {fileID: 0}
 --- !u!96 &1312249632760013834
@@ -1352,8 +1354,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Upgrade
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bc0c743f6d1f26245b73f5b77b5c5641, type: 2}
+  m_sharedMaterial: {fileID: -4766009995572650975, guid: bc0c743f6d1f26245b73f5b77b5c5641, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1596,7 +1598,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 319.99997, y: -523.3748}
+  m_AnchoredPosition: {x: 320, y: -540}
   m_SizeDelta: {x: 550.89, y: 790.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3189146715459918802
@@ -1620,7 +1622,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.47450984, b: 0.24705884, a: 1}
+  m_Color: {r: 0.3735848, g: 0.37147018, b: 0.37147018, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1795,7 +1797,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1599.9998, y: -523.3748}
+  m_AnchoredPosition: {x: 1600, y: -540}
   m_SizeDelta: {x: 550.89, y: 790.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2127139567362756459
@@ -1819,7 +1821,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.47450984, b: 0.24705884, a: 1}
+  m_Color: {r: 0.3735848, g: 0.37147018, b: 0.37147018, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

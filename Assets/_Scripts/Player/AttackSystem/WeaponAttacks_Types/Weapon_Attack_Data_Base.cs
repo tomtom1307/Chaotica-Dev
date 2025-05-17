@@ -1,3 +1,4 @@
+using Project;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,8 +27,13 @@ public class Weapon_Attack_Data_Base
     public float HitFOV = 120;
     public List<Vector3> Forces;
     public GameObject VFX;
+
+
+
+
     //TODO: Store attack chargeup time on here instead of on weapon input (Custom Editor)
-    public virtual void EnterAttack(WeaponHolder W) {
+    public virtual void EnterAttack(WeaponHolder W) 
+    {
         
     }
     public virtual void PerformAttack(WeaponHolder W) {
@@ -35,23 +41,42 @@ public class Weapon_Attack_Data_Base
     }
     public virtual void ExitAttack(WeaponHolder W) { }
 
-    public float DamageVal(WeaponHolder W) {
+    public (float, bool) DamageVal(WeaponHolder W) {
         float mult = 1;
         if(W.ComboCounter == 0 || W.alt)
         {
             mult = FinalHitMultiplier;
         }
+
+        //CheckIfCrit
+        bool isCrit = UnityEngine.Random.value <= PlayerStats.instance.GetStat(StatType.CritChance);
+        if (isCrit)
+        {
+            CamShake.instance.StartShake(CamShake.instance.onHit);
+            mult *= PlayerStats.instance.GetStat(StatType.CritMultiplier);
+        }
+
         float DamageValue = mult*W.DamageBonus(damageType) * W.ChargeAmount * 0.01f * damage * W.data.WeaponDamage;
-        return DamageValue;
+        return (DamageValue, isCrit);
     }
 
     public void DealDamage(WeaponHolder W, Damagable damagable) {
-        damagable.TakeDamage(DamageVal(W));
+        float Damage = 0;
+        bool isCrit = false;
+        (Damage, isCrit) = DamageVal(W);
+        
+        damagable.TakeDamage(Damage,crit: isCrit);
+        W.instance.TryTriggerProcs(W, damagable, damage);
     }
 
     public void DealDamage(WeaponHolder W, Damagable damagable, RaycastHit hit)
     {
-        damagable.TakeDamage(DamageVal(W), hit.point, hit.normal);
+        float Damage = 0;
+        bool isCrit = false;
+        (Damage, isCrit) = DamageVal(W);
+
+        damagable.TakeDamage(Damage, hit.point, hit.normal, isCrit);
+        W.instance.TryTriggerProcs(W, damagable, damage, hit);
 
     }
 
@@ -105,4 +130,5 @@ public enum DamageType
     Verdancy,
     Aetherflow
 }
+
 

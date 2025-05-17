@@ -20,7 +20,8 @@ public class B_Action
         MoveToLSP,
         SearchNearby,
         AttackSet, 
-        Attack
+        Attack,
+        DashToPlayer
     }
 
     
@@ -42,6 +43,8 @@ public class B_Action
                 return brain.actionHandler.MoveToLSP;
             case b_Action.SearchNearby:
                 return brain.actionHandler.SearchNearby;
+            case b_Action.DashToPlayer:
+                return brain.actionHandler.DashToPlayer;
             default:
                 return brain.actionHandler.DoError;
         }

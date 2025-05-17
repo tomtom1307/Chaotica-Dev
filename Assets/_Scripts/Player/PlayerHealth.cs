@@ -49,7 +49,11 @@ public class PlayerHealth : MonoBehaviour
 
     public DamageState d_state;
 
-    
+    public void Heal(float Amount)
+    {
+        health += Mathf.Clamp(Amount, 0, maxHealth);
+        //OtherStuff like SFX + visuals
+    }
 
     //Take damage with UI handling
     public void TakeDamage(float Amount, EnemyBrain EB = null, bool paryable = false, bool blockable = false)

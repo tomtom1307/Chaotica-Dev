@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5668903994763103793}
-  m_Layer: 0
+  - component: {fileID: 2230738890129062377}
+  m_Layer: 8
   m_Name: Head_end
-  m_TagString: Untagged
+  m_TagString: Head
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,6 +32,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6855167476882937937}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &2230738890129062377
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262277916045788570}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.003197399
+  m_Center: {x: -7.037787e-11, y: -0.0013615756, z: 3.474358e-10}
 --- !u!1 &785092806163638362
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,7 +396,7 @@ MonoBehaviour:
   model: {fileID: 5384560554013420759}
   ded: 0
   hitParticleFX: {fileID: 6229015314133012181, guid: 69d1dfa3e85f3e549bb742429f91c7b8, type: 3}
-  InstantAgro: 5
+  InstantAgro: 10
 --- !u!114 &5281054923219915767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,6 +412,9 @@ MonoBehaviour:
   TimeBetweenAttacks: 0.3
   MoveSpeed: 3
   JumpPower: 0.2
+  DashDistance: 0
+  DashTime: 0
+  DashCoolDown: 0
   DetectionRange: 20
   PerceptionStat: 0.2
   DetectionMeterDecay: 0.05
@@ -488,17 +513,17 @@ MonoBehaviour:
         - checkTime: 0
           checkFloat: 1
           checkComparison: 1
-          input: 3
+          input: 5
         intChecks: []
       actionList:
       - brain: {fileID: 0}
         B_action: 3
         Override: 0
-        Weight: 0
+        Weight: 1
       attackList: []
       name: 
     - Name: Move To playerDistance
-      priority: 1
+      priority: 3
       conditions:
         brain: {fileID: 0}
         boolChecks: []
@@ -528,7 +553,7 @@ MonoBehaviour:
         - checkTime: 0
           checkFloat: 1
           checkComparison: 0
-          input: 5
+          input: 7
         intChecks: []
       actionList:
       - brain: {fileID: 0}

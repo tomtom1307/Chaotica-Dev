@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 using static UnityEditor.Handles;
@@ -117,7 +118,7 @@ public class EnemyActionHandler : MonoBehaviour
     bool Searching;
     public void SearchNearby()
     {
-        
+        Debug.Log("SearchingNearby");
         brain.navMesh.stoppingDistance = 0;
         if (brain.perception.PlayerLastSeenPosition == Vector3.zero || Vector3.Distance(brain.perception.player.position, brain.perception.PlayerLastSeenPosition) > Vector3.Distance(transform.position, brain.perception.player.position))
         {
@@ -132,7 +133,58 @@ public class EnemyActionHandler : MonoBehaviour
         Searching = true;
     }
 
+    #region Dash
+    public void DashToPlayer()
+    {
+        
+        if (canDash)
+        {
+            Debug.Log("Dash");
+            brain.navMesh.SetDestination(brain.perception.player.position);
+            brain.navMesh.updateRotation = false;
+            brain.animator.SetTrigger("Dash");
+            
+            Vector3 Dir = TRTools.VecOp.DirectionDistance(transform.position, brain.perception.player.position);
+            float Dist = brain.DashDistance;
+            if(Dir.magnitude < brain.DashDistance)
+            {
+                Dist = Dir.magnitude-2;
+            }
+            Dir = Dist*Dir.normalized;
+            brain.transform.DOMove(transform.position - Dir, brain.DashTime).SetEase(Ease.Flash).OnComplete(EndDash);
+        }
+        else
+        {
+            Debug.Log("Dash Cancelled");
+            brain.navMesh.SetDestination(brain.perception.player.position);
+            EndAction();
+            return;
+        }
+        
 
+    }
+
+    public void EndDash()
+    {
+        brain.navMesh.SetDestination(brain.perception.player.position);
+        brain.navMesh.updateRotation = true;
+        StartCoroutine(DashCooldown());
+        EndAction();
+        
+    }
+
+    bool canDash = true;
+
+    private IEnumerator DashCooldown()
+    {
+        canDash = false;
+
+        yield return new WaitForSeconds(brain.DashCoolDown);
+
+        canDash = true;
+    }
+
+    #endregion
 
     public Vector3 GetPositionInCircle(Vector3 pos, float Range)
     {
@@ -150,5 +202,4 @@ public class EnemyActionHandler : MonoBehaviour
         Debug.LogError("This action does not exist. Look at EnemyActionHandler.cs");
     }
 
-    
 }
