@@ -60,7 +60,7 @@ public class UIManager : MonoBehaviour
     }
 
 
-    //Pass in boolean to establish if in menu pass in the MenuCanvas GO
+    //Pass in boolean to establish if in menu, pass in the MenuCanvas GO
     public void IsMenu(bool x, GameObject Canvas = null)
     {
         CurrentMenu = Canvas;

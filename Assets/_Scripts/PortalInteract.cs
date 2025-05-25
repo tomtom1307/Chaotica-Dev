@@ -18,7 +18,7 @@ public class PortalInteract : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        
+        // Things to do when loading into a scene
         
     }
 
