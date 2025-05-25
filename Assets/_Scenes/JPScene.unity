@@ -1816,9 +1816,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1448972321}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 100, y: -100}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &373236060
@@ -4032,9 +4032,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1448972321}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 100, y: -330}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &672328297
@@ -4982,10 +4982,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 1821562609}
+  buttonPrefab: {fileID: 287571952752032037, guid: 734799816369f6e478da5ded8aa43e0d, type: 3}
   levels:
   - {fileID: 11400000, guid: 9d1312ad5634e1d49a405236fad1a3e7, type: 2}
   - {fileID: 11400000, guid: af2d08c69c1f14b40a4b0ed108127cf6, type: 2}
+  - {fileID: 11400000, guid: bf38d7fe569b4b549be9293ac2493191, type: 2}
   levelButtons: {fileID: 1448972321}
+  rowCapacity: 5
 --- !u!1001 &754638398
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8693,9 +8696,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1448972321}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 100, y: -560}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1357043963
@@ -11856,7 +11859,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1821562610
 RectTransform:
   m_ObjectHideFlags: 0

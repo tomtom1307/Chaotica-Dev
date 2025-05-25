@@ -15,20 +15,21 @@ public class PortalMapUI : MonoBehaviour
     public int rowCapacity = 5;
 
     private List<Transform> levelButtonRows;
+    private bool buttonsPopulated = false;
 
     void Start()
     {
         //List transform of each Level Button Row
-        levelButtonRows = new List<Transform>(3);
+        levelButtonRows = new List<Transform>();
         for (int i = 0; i < levelButtons.childCount; i++)
         {
-            levelButtonRows[i] = levelButtons.GetChild(i);
+            levelButtonRows.Add(levelButtons.GetChild(i));
         }
     }
 
     public void OpenMap()
     {
-        PopulateButtons();
+        if(!buttonsPopulated) PopulateButtons();
         UIManager.instance.IsMenu(true, canvas);
         UIManager.instance.ShowCursor();
     }
@@ -36,6 +37,8 @@ public class PortalMapUI : MonoBehaviour
     //Goes through SO Datas in the list
     void PopulateButtons()
     {
+        buttonsPopulated = true;
+        Debug.Log($"levelButtonRows.Count = {levelButtonRows.Count}");
         for (int i = 0; i < levels.Count; i++)
         {
             int rowIndex = i / rowCapacity;
