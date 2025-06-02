@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
@@ -25,9 +26,16 @@ public class SceneLoader : MonoBehaviour
     }
 
     public void LoadScene(string SceneName) 
-    { 
+    {
+        ClosingProcesses();
         SceneManager.LoadScene(SceneName);
-        
+    }
+
+    // Necessary processes for closing a scene
+    private void ClosingProcesses()
+    {
+        //Stop tween errors when objects are unloaded.
+        DOTween.KillAll();
     }
 
 }
