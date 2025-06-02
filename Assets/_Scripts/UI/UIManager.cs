@@ -44,8 +44,7 @@ public class UIManager : MonoBehaviour
             {
                 if (CurrentMenu != null)
                 {
-                    IsMenu(false, CurrentMenu);
-                    LockCursor();
+                    CloseCurrentMenu();
                 }
             }
             //Pause Game 
@@ -58,7 +57,11 @@ public class UIManager : MonoBehaviour
         
 
     }
-
+    public void CloseCurrentMenu()
+    {
+        IsMenu(false, CurrentMenu);
+        LockCursor();
+    }
 
     //Pass in boolean to establish if in menu, pass in the MenuCanvas GO
     public void IsMenu(bool x, GameObject Canvas = null)

@@ -17,8 +17,12 @@ public class LevelButton : MonoBehaviour
 
     public void LoadLevel()
     {
-        // Load Scene associated with level
-        if (levelData != null) SceneLoader.instance.LoadScene(levelData.sceneName);
+        // Close Menu and Load Scene associated with level
+        if (levelData != null) 
+        { 
+            UIManager.instance.CloseCurrentMenu(); 
+            SceneLoader.instance.LoadScene(levelData.sceneName); 
+        }
     }
     public void LevelInfo()
     {
