@@ -7,6 +7,7 @@ public class EnemyAttackHandler : MonoBehaviour
 {
     [HideInInspector] public EnemyBrain brain;
     [HideInInspector] public EnemyAttack currentAttack;
+    [HideInInspector] public EnemyVFXHandler vfxHandler;
     List<bool> groupDidDamage;
     public bool attacking;
     
@@ -29,6 +30,7 @@ public class EnemyAttackHandler : MonoBehaviour
         this.brain = brain;
         player = GameManager.instance.player;
         _playerRb = player.GetComponent<Rigidbody>();
+        vfxHandler = GetComponentInChildren<EnemyVFXHandler>();
     }
 
 
@@ -171,6 +173,19 @@ public class EnemyAttackHandler : MonoBehaviour
         col.DisableCollider();
         col.OnDetectCallback -= RecieveColliderHitCallback; 
     }
+
+    public void SpawnVFX(int index)
+    {
+        if (vfxHandler == null)
+        {
+            Debug.LogError("There is no VFXHandler on this object!");
+            return;
+        }
+        GameObject VFX = Instantiate(currentAttack.VFXs[index], vfxHandler.transform.position, vfxHandler.transform.rotation);
+        VFX.transform.localScale = vfxHandler.transform.localScale;
+    }
+
+
 
 
 }

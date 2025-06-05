@@ -32,4 +32,6 @@ public class EnemyAnimationEventHandler : MonoBehaviour
         Projectile
     }
     public void DisableCollider(int colliderGroup) => attackHandler.DisableColliderGroup(colliderGroup);
+
+    public void SpawnVFX(int i) => attackHandler.SpawnVFX(i);
 }
