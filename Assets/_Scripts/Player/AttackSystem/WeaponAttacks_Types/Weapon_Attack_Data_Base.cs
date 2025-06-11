@@ -52,6 +52,7 @@ public class Weapon_Attack_Data_Base
         bool isCrit = UnityEngine.Random.value <= PlayerStats.instance.GetStat(StatType.CritChance);
         if (isCrit)
         {
+            GameManager.instance.TriggerHitStop(0.05f);
             CamShake.instance.StartShake(CamShake.instance.onHit);
             mult *= PlayerStats.instance.GetStat(StatType.CritMultiplier);
         }

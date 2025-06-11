@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -176,16 +177,35 @@ public class EnemyAttackHandler : MonoBehaviour
 
     public void SpawnVFX(int index)
     {
+        
         if (vfxHandler == null)
         {
             Debug.LogError("There is no VFXHandler on this object!");
             return;
         }
-        GameObject VFX = Instantiate(currentAttack.VFXs[index], vfxHandler.transform.position, vfxHandler.transform.rotation);
-        VFX.transform.localScale = vfxHandler.transform.localScale;
+        GameObject VFX;
+        if (currentAttack.VFXs[index].isParentedToHolder)
+        {
+
+            VFX = Instantiate(currentAttack.VFXs[index].Prefab, vfxHandler.transform);
+            VFX.transform.localPosition = Vector3.zero;
+        }
+        else
+        {
+            VFX = Instantiate(currentAttack.VFXs[index].Prefab, vfxHandler.transform.position, vfxHandler.transform.rotation);
+            VFX.transform.localScale = vfxHandler.transform.localScale;
+        }
+            
+        
+        vfxHandler.SpawnedVFX.Add(VFX);
     }
 
-
-
-
+    public void DestroyVFX()
+    {
+        foreach(GameObject vfx in vfxHandler.SpawnedVFX)
+        {
+            vfxHandler.SpawnedVFX.Remove(vfx);
+            Destroy(vfx);
+        }
+    }
 }

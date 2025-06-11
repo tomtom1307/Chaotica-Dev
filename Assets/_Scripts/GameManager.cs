@@ -151,7 +151,32 @@ public class GameManager : MonoBehaviour
         colorAdjustments.saturation.value = 0f;
     }
 
+    private bool isHitStopping = false;
 
+    public void TriggerHitStop(float duration)
+    {
+        if (!isHitStopping)
+            StartCoroutine(HitStopCoroutine(duration));
+    }
+
+    private IEnumerator HitStopCoroutine(float duration)
+    {
+        isHitStopping = true;
+
+        // Pause game time
+        Time.timeScale = 0f;
+        float pauseEndTime = Time.realtimeSinceStartup + duration;
+
+        // Wait using real time, not affected by Time.timeScale
+        while (Time.realtimeSinceStartup < pauseEndTime)
+        {
+            yield return null;
+        }
+
+        // Resume game time
+        Time.timeScale = 1f;
+        isHitStopping = false;
+    }
 
     public void EnemyKilled()
     {
