@@ -14,7 +14,7 @@ public class EnemyStateMachine
         CurrentEnemyState = startingState;
         CurrentEnemyState.EnterState();
         brain.currentStateName = CurrentEnemyState.Name;
-        Debug.Log("set currentStateName to " + CurrentEnemyState.Name);
+        //Debug.Log("set currentStateName to " + CurrentEnemyState.Name);
     }
 
     public void ChangeState(EnemyState newState)
@@ -23,6 +23,6 @@ public class EnemyStateMachine
         CurrentEnemyState = newState;
         CurrentEnemyState.EnterState();
         brain.currentStateName = CurrentEnemyState.Name;
-        Debug.Log("set currentStateName to " + CurrentEnemyState.Name);
+        //Debug.Log("set currentStateName to " + CurrentEnemyState.Name);
     }
 }

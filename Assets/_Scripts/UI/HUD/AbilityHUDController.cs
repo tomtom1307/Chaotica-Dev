@@ -7,8 +7,8 @@ using UnityEngine;
 public class AbilityHUDController : MonoBehaviour
 {
     public HUDAbility AbilityHudPrefab;
-    List<Ability> abilities;
-    List<HUDAbility> HUDAbilities;
+    List<Ability> abilities = new List<Ability>();
+    List<HUDAbility> HUDAbilities = new List<HUDAbility>();
     private void Start()
     {
         GetAbilities();
@@ -20,11 +20,16 @@ public class AbilityHUDController : MonoBehaviour
         List<AbilityHolder> abilityHolders = PlayerStats.instance.GetComponents<AbilityHolder>().ToList();
         foreach (var abilityHolder in abilityHolders)
         {
-            abilities.Add(abilityHolder.ability);
+            if (abilityHolder.ability != null) 
+            {
+                abilities.Add(abilityHolder.ability);
+                HUDAbility hUDAbility = Instantiate(AbilityHudPrefab, this.transform);
+                hUDAbility.SetAbility(abilityHolder);
+                HUDAbilities.Add(hUDAbility);
+                
+            }
 
-            HUDAbility hUDAbility = Instantiate(AbilityHudPrefab);
-            hUDAbility.SetAbility(abilityHolder.ability);
-            HUDAbilities.Add(hUDAbility);
+            
         }
 
     }

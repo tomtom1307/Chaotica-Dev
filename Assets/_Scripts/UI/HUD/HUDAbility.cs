@@ -3,11 +3,36 @@ using UnityEngine.UI;
 
 public class HUDAbility : MonoBehaviour
 {
-    public Image display;
+    public Color ActiveColor;
+    public Color ReadyColor;
 
-    public void SetAbility(Ability ability)
+    public Image display;
+    public Image CoolDownImage;
+    public AbilityHolder AH;
+
+    public void SetAbility(AbilityHolder abilityHolder)
     {
-        display.sprite = ability.Display;
+        AH = abilityHolder;
+        AH.SetHUD(this);
+        display.sprite = abilityHolder.ability.Display;
+        CoolDownImage.sprite = abilityHolder.ability.Display;
     }
+
+    public void AbilityReady()
+    {
+        CoolDownImage.fillAmount = 0;
+    }
+
+    public void AbilityActive()
+    {
+        display.color = ActiveColor;
+    }
+
+    public void AbilityCooldown(float CooldownTimer)
+    {
+        display.color = ReadyColor;
+        CoolDownImage.fillAmount = CooldownTimer/AH.ability.cooldownTime;
+    }
+
 
 }

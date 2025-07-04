@@ -5,7 +5,7 @@ public class AbilityHolder : MonoBehaviour
     public Ability ability;
     float cooldownTime;
     float activeTime;
-
+    HUDAbility hUD;
     
     enum AbilityState
     {
@@ -40,12 +40,14 @@ public class AbilityHolder : MonoBehaviour
                     ability.Activate(gameObject);
                     abilityState = AbilityState.active;
                     activeTime = ability.activeTime;
+                    
                 }
             break;
             case AbilityState.active:
                 //time that ability is used
                 if (activeTime > 0)
                 {
+                    hUD.AbilityActive();
                     activeTime -= Time.deltaTime;
                 }
                 else
@@ -58,14 +60,21 @@ public class AbilityHolder : MonoBehaviour
                 //time that ability cant be used
                 if (cooldownTime > 0)
                 {
+                    hUD.AbilityCooldown(cooldownTime);
                     cooldownTime -= Time.deltaTime;
                 }
                 else
                 {
+                    hUD.AbilityReady();
                     abilityState = AbilityState.ready;
                 }
             break;
         }
         
+    }
+
+    public void SetHUD(HUDAbility HUD)
+    {
+        hUD = HUD;
     }
 }
