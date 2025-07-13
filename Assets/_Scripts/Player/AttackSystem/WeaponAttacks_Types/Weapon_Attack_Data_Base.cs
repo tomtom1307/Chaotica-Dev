@@ -2,6 +2,8 @@ using Project;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 
@@ -61,11 +63,14 @@ public class Weapon_Attack_Data_Base
         return (DamageValue, isCrit);
     }
 
-    public void DealDamage(WeaponHolder W, Damagable damagable) {
+    public void DealDamage(WeaponHolder W, Damagable damagable) 
+    {
         float Damage = 0;
         bool isCrit = false;
         (Damage, isCrit) = DamageVal(W);
-        
+
+        TryEnablingPhysics(damagable);
+
         damagable.TakeDamage(Damage,crit: isCrit);
         W.instance.TryTriggerProcs(W, damagable, damage);
     }
@@ -76,9 +81,21 @@ public class Weapon_Attack_Data_Base
         bool isCrit = false;
         (Damage, isCrit) = DamageVal(W);
 
+        TryEnablingPhysics(damagable);
+
         damagable.TakeDamage(Damage, hit.point, hit.normal, isCrit);
         W.instance.TryTriggerProcs(W, damagable, damage, hit);
 
+    }
+
+    public static void TryEnablingPhysics(Damagable damagable)
+    {
+        DamagableEnemy damagableEnemy = damagable as DamagableEnemy;
+
+        if (damagableEnemy != null)
+        {
+            damagableEnemy.brain.TogglePhysics(true);
+        }
     }
 
     public void ApplyForceToPlayer(WeaponHolder W,int i)
@@ -94,6 +111,14 @@ public class Weapon_Attack_Data_Base
         if (c.gameObject.TryGetComponent<Rigidbody>(out hitrb))
         {
             hitrb.AddForce(KnockBackForce * v.normalized);
+        } else
+        {
+            hitrb = c.gameObject.GetComponentInParent<Rigidbody>();
+
+            if (hitrb != null)
+            {
+                hitrb.AddForce(KnockBackForce * v.normalized);
+            }
         }
     }
 
@@ -103,6 +128,14 @@ public class Weapon_Attack_Data_Base
         if (c.gameObject.TryGetComponent<Rigidbody>(out hitrb))
         {
             hitrb.AddForceAtPosition(KnockBackForce * v.normalized, point);
+        } else
+        {
+            hitrb = c.gameObject.GetComponentInParent<Rigidbody>();
+
+            if (hitrb != null)
+            {
+                hitrb.AddForce(KnockBackForce * v.normalized);
+            }
         }
     }
 

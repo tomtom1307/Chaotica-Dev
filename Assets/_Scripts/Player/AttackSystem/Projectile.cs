@@ -64,23 +64,13 @@ public class Projectile : MonoBehaviour
     {
         if(IsInLayerMask(collision.gameObject,LayerMask))
         {
-            OnHit(collision.gameObject, collision.GetContact(0), Crit);
+            OnHit(collision.gameObject, collision.GetContact(0), Crit, collision);
         }
         
-        Rigidbody hitrb;
-        
-        if(collision.gameObject.TryGetComponent<Rigidbody>(out hitrb))
-        {
-            hitrb.AddForceAtPosition(KnockBack * -collision.relativeVelocity, collision.contacts[0].point);
-        }
-        rb.isKinematic = true;
-        col.enabled = false;
-
-
     }
 
 
-    public virtual void OnHit(GameObject hitObj, ContactPoint col, bool isCrit)
+    public virtual void OnHit(GameObject hitObj, ContactPoint col, bool isCrit, Collision collision)
     {
         if (hitObj.tag == "Head")
         {
@@ -88,7 +78,25 @@ public class Projectile : MonoBehaviour
             hitObj = hitObj.GetComponentInParent<Damagable>().gameObject;
             Damage *= PlayerStats.instance.GetStat(StatType.CritMultiplier);
         }
-        Damagable.CheckForDamagable(hitObj).TakeDamage(Damage, col.point, col.normal, isCrit);
+
+        Damagable damagable = Damagable.CheckForDamagable(hitObj);
+
+        //Knockback on enemy by projectile -> no worky
+
+        Weapon_Attack_Data_Base.TryEnablingPhysics(damagable);
+
+        Rigidbody hitrb;
+
+        if (collision.gameObject.TryGetComponent<Rigidbody>(out hitrb))
+        {
+            hitrb.AddForceAtPosition(KnockBack * -collision.relativeVelocity.normalized, collision.contacts[0].point);
+        }
+        rb.isKinematic = true;
+        this.col.enabled = false;
+
+        //Damage pipeline
+
+        damagable.TakeDamage(Damage, col.point, col.normal, isCrit);
         TrailRenderer TR = GetComponentInChildren<TrailRenderer>();
         if (TR!=null)
         {

@@ -1,4 +1,6 @@
+using JetBrains.Annotations;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -35,6 +37,7 @@ public class EnemyBrain : MonoBehaviour
     EnemyAnimationEventHandler enemyAnimationevent;
     //Navmesh
     [HideInInspector] public NavMeshAgent navMesh;
+    [HideInInspector] public Rigidbody rigidBody;
 
     [Header("State Machine")]
     public EnemyStateMachine stateMachine;
@@ -46,6 +49,7 @@ public class EnemyBrain : MonoBehaviour
     [HideInInspector] public EnemyPerception perception;
     [HideInInspector] public EnemyActionHandler actionHandler;
     [HideInInspector] public EnemyAttackHandler attackHandler;
+    bool isKnocked;
 
 
     public UnityEvent OnPlayerAgro;
@@ -58,6 +62,7 @@ public class EnemyBrain : MonoBehaviour
         " {1 being raycast will hit regardless of player speed to " +
         "0 being will certainly miss when player moving}")]
     public float Accuracy; // Ranges from 0 to 1
+    public float EnemyMass;
 
 
     [Header("Debug")]
@@ -124,6 +129,13 @@ public class EnemyBrain : MonoBehaviour
         animator = GetComponent<Animator>();
 
 
+        // Rigidbody initialization
+
+        rigidBody = gameObject.AddComponent<Rigidbody>();
+        rigidBody.isKinematic = true;
+        rigidBody.freezeRotation = true;
+        EnemyMass = 1;
+        rigidBody.mass = EnemyMass;
 
 
 
@@ -142,9 +154,16 @@ public class EnemyBrain : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (!navMesh.enabled) return;
+        if (!navMesh.enabled) 
+        {
+            CheckKB();
+            return;
+        }
+        
         navMesh.speed = MoveSpeed;
         stateMachine.CurrentEnemyState.FrameUpdate();
+
+       
 
     }
 
@@ -187,6 +206,36 @@ public class EnemyBrain : MonoBehaviour
         damagableEnemy.Die();
     }
 
+    public void TogglePhysics(bool x)
+    {
+        rigidBody.isKinematic = !x;
+        navMesh.enabled = !x;
+        //animator.enabled = !x;
+        isKnocked = x;
+
+        if (isKnocked)
+        {
+            StartCoroutine(minKBwait());
+        }
+    }
+    
+    public void CheckKB()
+    {
+        if (!isKnocked)
+        {
+            if (rigidBody.linearVelocity.magnitude < 1)
+            {
+                TogglePhysics(false);
+            }
+        }
+    }
+
+    public IEnumerator minKBwait()
+    {
+        yield return new WaitForSeconds(0.5f);
+        isKnocked = false;
+    }
+    
 }
 
     

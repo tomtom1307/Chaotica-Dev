@@ -1037,6 +1037,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 99e8d519a2e698c41a95351245054637, type: 2}
+    - target: {fileID: 5866666021909216657, guid: cfe63c8c53187e041bf5c943b6fcab80, type: 3}
+      propertyPath: m_AnimatePhysics
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6340964709030651502, guid: cfe63c8c53187e041bf5c943b6fcab80, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 55.18864
@@ -1372,6 +1376,7 @@ MonoBehaviour:
   ded: 0
   hitParticleFX: {fileID: 0}
   InstantAgro: 5
+  moveDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &5166052328094798652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1413,6 +1418,7 @@ MonoBehaviour:
     m_Bits: 1089
   LookDirectionTransform: {fileID: 1735940120368718749}
   navMesh: {fileID: 0}
+  rigidBody: {fileID: 0}
   currentStateName: 
   stateList:
   - Name: Patrol
@@ -1568,6 +1574,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Accuracy: 0
+  EnemyMass: 0
   stateChangeDebug: 0
   animator: {fileID: 0}
 --- !u!4 &975054551621869494 stripped

@@ -36,7 +36,6 @@ public class Damagable : MonoBehaviour
         if (crit) OnDamageTaken(damage, new Color(247f/255f, 167f/255f, 5f/255f));
         else OnDamageTaken(damage, Color.white);
 
-
         if (Health <= 0)
         {
             Die();

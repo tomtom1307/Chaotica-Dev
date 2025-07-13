@@ -1,12 +1,15 @@
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 [RequireComponent(typeof(EnemySoundSource))]
 public class DamagableEnemy : Damagable
 {
-    EnemyBrain brain;
+    [HideInInspector] public EnemyBrain brain;
     EnemySoundSource soundSource;
     public GameObject hitParticleFX;
     public float InstantAgro = 5;
+
+    [HideInInspector] public Vector3 moveDirection;
     public override void OnDamageTaken(float damage, Color col)
     {
         soundSource.PlaySound(EnemySoundSource.SoundType.TakeDamageBladed, 2);
@@ -43,8 +46,7 @@ public class DamagableEnemy : Damagable
         if ( DCM != null)
         {
             DCM.ChangeCrack(1-Health / MaxHealth);
-        }
-        
+        } 
     }
 
 
