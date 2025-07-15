@@ -141,6 +141,8 @@ MonoBehaviour:
   DashDistance: 0
   DashTime: 0
   DashCoolDown: 0
+  Flying: 1
+  RB_Drag: 1.5
   DetectionRange: 20
   PerceptionStat: 0.2
   DetectionMeterDecay: 0.05
@@ -316,6 +318,7 @@ MonoBehaviour:
   perception: {fileID: 0}
   actionHandler: {fileID: 0}
   attackHandler: {fileID: 0}
+  DMGstate: 0
   OnPlayerAgro:
     m_PersistentCalls:
       m_Calls:
@@ -347,7 +350,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   Accuracy: 0.48
-  EnemyMass: 3
+  EnemyMass: 2
   stateChangeDebug: 0
   animator: {fileID: 0}
 --- !u!135 &6081056787126832431

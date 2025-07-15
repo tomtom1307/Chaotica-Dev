@@ -9,7 +9,6 @@ public class Enemy_FreezeDebuff : statusEffectBase
 
         if (enemy == null)
         {
-            Debug.LogError("FreezeStatus: Could not find enemy");
             return;
         }
 
@@ -20,7 +19,6 @@ public class Enemy_FreezeDebuff : statusEffectBase
     {
         if (enemy == null)
         {
-            Debug.LogError("FreezeStatus: Could not find enemy");
             return;
         }
 

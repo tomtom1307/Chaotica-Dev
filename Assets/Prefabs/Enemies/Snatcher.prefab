@@ -173,9 +173,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.44910905
-  m_Height: 2.23
+  m_Height: 3.0295582
   m_Direction: 1
-  m_Center: {x: 0, y: 0.12, z: 0}
+  m_Center: {x: 0, y: 0.5197791, z: 0}
 --- !u!1 &5081780520124264665
 GameObject:
   m_ObjectHideFlags: 0
@@ -1408,7 +1408,9 @@ MonoBehaviour:
   JumpPower: 5
   DashDistance: 7
   DashTime: 0.6
-  DashCoolDown: 3.2
+  DashCoolDown: 5
+  Flying: 1
+  RB_Drag: 3
   DetectionRange: 20
   PerceptionStat: 0.2
   DetectionMeterDecay: 0.2
@@ -1532,7 +1534,7 @@ MonoBehaviour:
         - checkTime: 0
           checkFloat: 0
           checkComparison: 0
-          input: 4
+          input: 6
         intChecks: []
       actionList:
       - brain: {fileID: 0}
@@ -1568,6 +1570,7 @@ MonoBehaviour:
   perception: {fileID: 0}
   actionHandler: {fileID: 0}
   attackHandler: {fileID: 0}
+  DMGstate: 0
   OnPlayerAgro:
     m_PersistentCalls:
       m_Calls: []

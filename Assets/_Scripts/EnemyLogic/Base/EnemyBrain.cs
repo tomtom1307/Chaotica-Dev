@@ -25,7 +25,8 @@ public class EnemyBrain : MonoBehaviour
     public float DashDistance;
     public float DashTime;
     public float DashCoolDown;
-
+    public bool Flying;
+    public float RB_Drag;
     [Header("Detection")]
     public float DetectionRange;
     public float PerceptionStat;
@@ -143,7 +144,8 @@ public class EnemyBrain : MonoBehaviour
         rigidBody.isKinematic = true;
         rigidBody.freezeRotation = true;
         rigidBody.mass = EnemyMass;
-
+        rigidBody.linearDamping = RB_Drag;
+        if (Flying) rigidBody.useGravity = false;
 
 
         //Initialize State machine + states
@@ -216,30 +218,38 @@ public class EnemyBrain : MonoBehaviour
         damagableEnemy.Die();
     }
 
-    Coroutine KnockedCorutine;
 
     public void TogglePhysics(bool x, EnemyDamageState _DMGState = EnemyDamageState.Knocked)
     {
-        TogglePhysics(x);
-        switch (DMGstate)
+        
+        switch (_DMGState)
         {
             case EnemyDamageState.Frozen:
-                StopCoroutine()
+                if (x) DMGstate = _DMGState;
+                else DMGstate = EnemyDamageState.Normal;
+                TogglePhysics(x);
+                
                 animator.enabled = !x;
                 return;
-            case EnemyDamageState.Knocked:
-                StartCoroutine(minKBwait());
-                break;
             default:
                 break;
         }
-        DMGstate = _DMGState;
 
-        
+        DMGstate = _DMGState;
+        if (DMGstate != EnemyDamageState.Normal && DMGstate != EnemyDamageState.Recover && DMGstate != EnemyDamageState.Knocked) return;
+        else
+        {
+            DMGstate = _DMGState;
+            TogglePhysics(x);
+            StartCoroutine(minKBwait());
+        }
+
     }
 
     private void TogglePhysics(bool x)
     {
+        actionHandler.enabled = !x;
+        attackHandler.enabled = !x;
         rigidBody.isKinematic = !x;
         navMesh.enabled = !x;
     }
@@ -253,7 +263,7 @@ public class EnemyBrain : MonoBehaviour
     {
         if (DMGstate == EnemyDamageState.Recover)
         {
-            if (rigidBody.linearVelocity.magnitude < 1)
+            if (rigidBody.linearVelocity.magnitude < 0.4f)
             {
                 TogglePhysics(false, EnemyDamageState.Normal);
             }
@@ -263,7 +273,11 @@ public class EnemyBrain : MonoBehaviour
     public IEnumerator minKBwait()
     {
         yield return new WaitForSeconds(0.5f);
-        DMGstate = EnemyDamageState.Recover;
+        if (DMGstate == EnemyDamageState.Knocked)
+        {
+            DMGstate = EnemyDamageState.Recover;
+        }
+            
     }
     
 }
