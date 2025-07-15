@@ -72,7 +72,7 @@ public class Weapon_Attack_Data_Base
         TryEnablingPhysics(damagable);
 
         damagable.TakeDamage(Damage,crit: isCrit);
-        W.instance.TryTriggerProcs(W, damagable, damage);
+        //W.instance.TryTriggerProcs(W, damagable, damage);
     }
 
     public void DealDamage(WeaponHolder W, Damagable damagable, RaycastHit hit)
@@ -84,7 +84,7 @@ public class Weapon_Attack_Data_Base
         TryEnablingPhysics(damagable);
 
         damagable.TakeDamage(Damage, hit.point, hit.normal, isCrit);
-        W.instance.TryTriggerProcs(W, damagable, damage, hit);
+        //W.instance.TryTriggerProcs(W, damagable, damage, hit);
 
     }
 

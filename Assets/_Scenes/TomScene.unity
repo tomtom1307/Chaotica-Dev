@@ -3708,6 +3708,8 @@ MonoBehaviour:
     KillCount: 0
     Threshold1: 0
     Threshold2: 0
+    ModifierSlots: []
+    weaponRarity: 0
   RarityVFX: {fileID: 0}
 --- !u!1001 &679866740
 PrefabInstance:
@@ -6397,6 +6399,8 @@ MonoBehaviour:
     KillCount: 0
     Threshold1: 0
     Threshold2: 0
+    ModifierSlots: []
+    weaponRarity: 0
   RarityVFX: {fileID: 0}
 --- !u!4 &1070162269
 Transform:
@@ -13310,6 +13314,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4485967108917030190, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: instance.ModifierSlots.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8248619696985984631, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
       propertyPath: m_Name
       value: Player
@@ -14018,10 +14026,6 @@ PrefabInstance:
     - target: {fileID: 1210316982324589196, guid: ce2744065acb73445a6259f819d37148, type: 3}
       propertyPath: m_Name
       value: CrystalHead
-      objectReference: {fileID: 0}
-    - target: {fileID: 5849893152138461132, guid: ce2744065acb73445a6259f819d37148, type: 3}
-      propertyPath: MaxHealth
-      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7953176507071246033, guid: ce2744065acb73445a6259f819d37148, type: 3}
       propertyPath: m_LocalPosition.x

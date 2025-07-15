@@ -87,9 +87,9 @@ public class Projectile : MonoBehaviour
 
         Rigidbody hitrb;
 
-        if (collision.gameObject.TryGetComponent<Rigidbody>(out hitrb))
+        if (damagable.TryGetComponent<Rigidbody>(out hitrb))
         {
-            hitrb.AddForceAtPosition(KnockBack * -collision.relativeVelocity.normalized, collision.contacts[0].point);
+            hitrb.AddForceAtPosition(1000000000000000000 * KnockBack * -collision.relativeVelocity.normalized, collision.contacts[0].point);
         }
         rb.isKinematic = true;
         this.col.enabled = false;

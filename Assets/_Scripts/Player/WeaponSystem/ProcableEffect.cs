@@ -3,11 +3,13 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public abstract class ProcableEffectBase
+public abstract class WeaponModifier
 {
     float probability;
+    public WeaponDataSO.Rarity rarity;
 
-    public ProcableEffectBase(float prob)
+
+    public WeaponModifier(float prob)
     {
         probability = prob;
     }
@@ -28,7 +30,7 @@ public abstract class ProcableEffectBase
 }
 
 
-public class LifestealEffect : ProcableEffectBase
+public class LifestealEffect : WeaponModifier
 {
     private float stealPercent = 0.5f;
 

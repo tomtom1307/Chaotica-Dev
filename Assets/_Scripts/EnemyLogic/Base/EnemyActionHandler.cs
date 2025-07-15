@@ -22,10 +22,14 @@ public class EnemyActionHandler : MonoBehaviour
         {
             ChangeToIdleState();
         }
-        if (Searching)
+        if (brain.navMesh.enabled)
         {
-            if(brain.navMesh.remainingDistance <1) { Invoke(nameof(EndAction), 1); }
+            if (Searching)
+            {
+                if (brain.navMesh.remainingDistance < 1) { Invoke(nameof(EndAction), 1); }
+            }
         }
+        
     }
 
     public void StartAction(System.Action someFunction)

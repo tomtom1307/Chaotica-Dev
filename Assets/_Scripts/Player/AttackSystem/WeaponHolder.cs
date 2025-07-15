@@ -132,7 +132,7 @@ public class WeaponHolder : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Alpha8))
         {
-            instance.ProcableAbilityList.Add(new LifestealEffect(0.5f, 0.5f));
+            //instance.ProcableAbilityList.Add(new LifestealEffect(0.5f, 0.5f));
         }
     }
 

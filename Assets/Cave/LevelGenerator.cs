@@ -5,77 +5,109 @@ public class HexLevelGenerator : MonoBehaviour
 {
     [Header("Prefabs & Settings")]
     public GameObject roomPrefab;
+    public GameObject roomStorePrefab;
     public float hexSize = 5f;       // center → corner
-    public int mainPathLength = 10;
 
-    // Pointy-top axial neighbor offsets (face adjacency)
-    static readonly Vector2Int[] directions = {
-        new Vector2Int(+1,  0), // East
-        new Vector2Int(+1, -1), // Northeast
-        new Vector2Int( 0, -1), // Northwest
-        new Vector2Int(-1,  0), // West
-        new Vector2Int(-1, +1), // Southwest
-        new Vector2Int( 0, +1), // Southeast
-    };
+    [Header("Path & Store Settings")]
+    public int mainPathLength = 12;      // total rooms (including start)
+    [Tooltip("Place a store every N rooms along the main path (skip the start).")]
+    public int storeInterval = 4;
+
+    // Axial neighbor offsets
+    static readonly Vector2Int E = new Vector2Int(+1, 0);
+    static readonly Vector2Int NE = new Vector2Int(+1, -1);
+    static readonly Vector2Int SE = new Vector2Int(0, +1);
 
     HashSet<Vector2Int> occupied = new HashSet<Vector2Int>();
 
     void Start()
     {
-        // carve out the main path
-        List<Vector2Int> mainPath = BuildPath(Vector2Int.zero, mainPathLength);
+        // 1) Compute store anchors along the pure‐east axis
+        var anchors = new List<Vector2Int> { Vector2Int.zero };
+        for (int i = storeInterval; i < mainPathLength; i += storeInterval)
+            anchors.Add(E * i);
+        // ensure last room is an anchor
+        var last = E * (mainPathLength - 1);
+        if (anchors[anchors.Count - 1] != last) anchors.Add(last);
 
-        // instantiate every occupied cell
-        foreach (var cell in occupied)
+        // 2) Carve each anchor→next as two directional siblings
+        var fullPath = new List<Vector2Int>();
+        for (int seg = 0; seg < anchors.Count - 1; seg++)
         {
-            Vector3 worldPos = AxialToWorld(cell);
-            Instantiate(roomPrefab, worldPos, Quaternion.identity, transform);
+            var start = anchors[seg];
+            var end = anchors[seg + 1];
+
+            // Branch A only uses [NE, E]
+            var pathA = CarveDirected(start, end, new[] { NE, E });
+
+            // Branch B only uses [SE, E]
+            var pathB = CarveDirected(start, end, new[] { SE, E });
+
+            // Append both (skip B’s first so we don’t dup the anchor)
+            fullPath.AddRange(pathA);
+            fullPath.AddRange(pathB.GetRange(1, pathB.Count - 1));
+        }
+
+        // 3) Instantiate: stores at anchors (except start), else rooms
+        foreach (var cell in fullPath)
+        {
+            bool isStore = anchors.Contains(cell) && cell != Vector2Int.zero;
+            var prefab = isStore ? roomStorePrefab : roomPrefab;
+            Instantiate(prefab, AxialToWorld(cell), Quaternion.identity, transform);
         }
     }
 
-    /// <summary>
-    /// Walks from `start`, carving exactly `length` steps,
-    /// always choosing an unoccupied face-adjacent neighbor.
-    /// </summary>
-    List<Vector2Int> BuildPath(Vector2Int start, int length)
+    List<Vector2Int> CarveDirected(
+        Vector2Int start,
+        Vector2Int end,
+        Vector2Int[] allowedDirs
+    )
     {
-        var path = new List<Vector2Int> { start };
+        var segment = new List<Vector2Int> { start };
         occupied.Add(start);
         var current = start;
 
-        for (int i = 1; i < length; i++)
+        // march until you hit exactly `end`
+        while (current != end)
         {
-            // collect all face-neighbors that aren’t already used
-            var free = new List<Vector2Int>();
-            foreach (var d in directions)
+            // pick from only the allowed directions that don't collide
+            var candidates = new List<Vector2Int>();
+            foreach (var d in allowedDirs)
             {
-                var candidate = current + d;
-                if (!occupied.Contains(candidate))
-                    free.Add(candidate);
+                var nxt = current + d;
+                if (!occupied.Contains(nxt))
+                    candidates.Add(nxt);
             }
 
-            if (free.Count == 0)
-            {
-                Debug.LogWarning($"[%] Stopped at length {i} — no free neighbors left.");
-                break;
-            }
+            if (candidates.Count == 0)
+                break; // totally boxed in
 
-            // pick one at random
-            current = free[Random.Range(0, free.Count)];
-            path.Add(current);
-            occupied.Add(current);
+            // prefer the one that gets you closer to the end anchor
+            candidates.Sort((a, b) =>
+                Vector2Int.Distance(a, end)
+                    .CompareTo(Vector2Int.Distance(b, end))
+            );
+
+            var chosen = candidates[0];
+            occupied.Add(chosen);
+            segment.Add(chosen);
+            current = chosen;
         }
 
-        return path;
+        // snap to the anchor if something went wrong
+        if (current != end)
+        {
+            occupied.Add(end);
+            segment.Add(end);
+        }
+
+        return segment;
     }
 
-    // Pointy-top axial (q,r) → Unity world (x,z)
     Vector3 AxialToWorld(Vector2Int hex)
     {
-        // hexSize = distance from center to any corner
         float x = hexSize * Mathf.Sqrt(3f) * (hex.x + hex.y * 0.5f);
         float z = hexSize * (1.5f * hex.y);
         return new Vector3(x, 0f, z);
     }
-
 }

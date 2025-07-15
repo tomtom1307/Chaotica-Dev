@@ -134,7 +134,6 @@ public class EnemyBrain : MonoBehaviour
         rigidBody = gameObject.AddComponent<Rigidbody>();
         rigidBody.isKinematic = true;
         rigidBody.freezeRotation = true;
-        EnemyMass = 1;
         rigidBody.mass = EnemyMass;
 
 

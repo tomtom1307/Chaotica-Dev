@@ -58,6 +58,7 @@ public class WeaponSpawner : MonoBehaviour
             return;
         }
         BC.gameObject.tag = "Interactable";
+        BC.size *= 2;
         BC.isTrigger = true;
         Interactable inter = BC.gameObject.AddComponent<Interactable>();
         inter.onInteraction.AddListener(WP.Pickup);

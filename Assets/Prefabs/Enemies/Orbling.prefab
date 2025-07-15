@@ -106,8 +106,10 @@ MonoBehaviour:
   spawnOffset: {x: 0, y: 0, z: 0}
   model: {fileID: 775067291979300683}
   ded: 0
+  brain: {fileID: 0}
   hitParticleFX: {fileID: 6229015314133012181, guid: 69d1dfa3e85f3e549bb742429f91c7b8, type: 3}
   InstantAgro: 10
+  moveDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &7248831718900849666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +151,7 @@ MonoBehaviour:
     m_Bits: 1089
   LookDirectionTransform: {fileID: 633037148495810285}
   navMesh: {fileID: 0}
+  rigidBody: {fileID: 0}
   currentStateName: 
   stateList:
   - Name: Idle
@@ -344,6 +347,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   Accuracy: 0.48
+  EnemyMass: 3
   stateChangeDebug: 0
   animator: {fileID: 0}
 --- !u!135 &6081056787126832431

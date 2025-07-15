@@ -1374,6 +1374,7 @@ MonoBehaviour:
   spawnOffset: {x: 0, y: 1.5, z: 0}
   model: {fileID: 112251356692335161}
   ded: 0
+  brain: {fileID: 0}
   hitParticleFX: {fileID: 0}
   InstantAgro: 5
   moveDirection: {x: 0, y: 0, z: 0}
@@ -1574,7 +1575,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Accuracy: 0
-  EnemyMass: 0
+  EnemyMass: 3
   stateChangeDebug: 0
   animator: {fileID: 0}
 --- !u!4 &975054551621869494 stripped

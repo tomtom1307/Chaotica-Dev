@@ -385,7 +385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5734c078d0bd4747911c7e5e6409562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 25
+  MaxHealth: 15
   Health: 0
   DamageNumbers: 1
   SpawnOnDeath:
@@ -396,8 +396,10 @@ MonoBehaviour:
   spawnOffset: {x: 0, y: 1, z: 0}
   model: {fileID: 5384560554013420759}
   ded: 0
+  brain: {fileID: 0}
   hitParticleFX: {fileID: 6229015314133012181, guid: 69d1dfa3e85f3e549bb742429f91c7b8, type: 3}
   InstantAgro: 10
+  moveDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &5281054923219915767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,6 +428,7 @@ MonoBehaviour:
     m_Bits: 3137
   LookDirectionTransform: {fileID: 6855167476882937937}
   navMesh: {fileID: 0}
+  rigidBody: {fileID: 0}
   currentStateName: 
   stateList:
   - Name: Idle
@@ -598,6 +601,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Accuracy: 0
+  EnemyMass: 3
   stateChangeDebug: 0
   animator: {fileID: 0}
 --- !u!1 &1309143756166751293
