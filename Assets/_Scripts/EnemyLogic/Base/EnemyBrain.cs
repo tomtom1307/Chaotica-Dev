@@ -50,7 +50,15 @@ public class EnemyBrain : MonoBehaviour
     [HideInInspector] public EnemyActionHandler actionHandler;
     [HideInInspector] public EnemyAttackHandler attackHandler;
     bool isKnocked;
+    public enum EnemyDamageState
+    {
+        Normal,
+        Frozen,
+        Knocked,
+        Recover
+    }
 
+    public EnemyDamageState DMGstate;
 
     public UnityEvent OnPlayerAgro;
     public UnityEvent OnPlayerLost;
@@ -153,6 +161,9 @@ public class EnemyBrain : MonoBehaviour
 
     protected virtual void Update()
     {
+        
+
+
         if (!navMesh.enabled) 
         {
             CheckKB();
@@ -205,26 +216,46 @@ public class EnemyBrain : MonoBehaviour
         damagableEnemy.Die();
     }
 
-    public void TogglePhysics(bool x)
+    Coroutine KnockedCorutine;
+
+    public void TogglePhysics(bool x, EnemyDamageState _DMGState = EnemyDamageState.Knocked)
+    {
+        TogglePhysics(x);
+        switch (DMGstate)
+        {
+            case EnemyDamageState.Frozen:
+                StopCoroutine()
+                animator.enabled = !x;
+                return;
+            case EnemyDamageState.Knocked:
+                StartCoroutine(minKBwait());
+                break;
+            default:
+                break;
+        }
+        DMGstate = _DMGState;
+
+        
+    }
+
+    private void TogglePhysics(bool x)
     {
         rigidBody.isKinematic = !x;
         navMesh.enabled = !x;
-        //animator.enabled = !x;
-        isKnocked = x;
+    }
 
-        if (isKnocked)
-        {
-            StartCoroutine(minKBwait());
-        }
+    public void Freeze(bool x)
+    {
+        TogglePhysics(x, EnemyDamageState.Frozen);
     }
     
     public void CheckKB()
     {
-        if (!isKnocked)
+        if (DMGstate == EnemyDamageState.Recover)
         {
             if (rigidBody.linearVelocity.magnitude < 1)
             {
-                TogglePhysics(false);
+                TogglePhysics(false, EnemyDamageState.Normal);
             }
         }
     }
@@ -232,7 +263,7 @@ public class EnemyBrain : MonoBehaviour
     public IEnumerator minKBwait()
     {
         yield return new WaitForSeconds(0.5f);
-        isKnocked = false;
+        DMGstate = EnemyDamageState.Recover;
     }
     
 }

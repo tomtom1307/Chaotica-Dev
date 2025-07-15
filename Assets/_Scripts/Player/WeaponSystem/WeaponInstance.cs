@@ -69,18 +69,15 @@ public class WeaponInstance
         return data.rarityDistribution.RollRarity();
     }
 
-    //public void TryTriggerProcs(WeaponHolder holder, Damagable damagable, float damage, RaycastHit? hit = null)
-    //{
-    //    if (ProcableAbilityList == null) return;
+    public void TryTriggerProcs(WeaponHolder holder, Damagable damagable, float damage, RaycastHit? hit = null)
+    {
+        if (ModifierSlots == null) return;
 
-    //    foreach (var proc in ProcableAbilityList)
-    //    {
-    //        if (proc.TryProc())
-    //        {
-    //            proc.Trigger(holder, damagable, damage, hit);
-    //        }
-    //    }
-    //}
+        foreach (var Slot in ModifierSlots)
+        {
+            Slot.TryProc(holder,damagable, damage, hit);
+        }
+    }
 
 
 

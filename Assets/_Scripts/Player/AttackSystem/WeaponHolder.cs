@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -70,6 +72,8 @@ public class WeaponHolder : MonoBehaviour
     public GameObject WeaponModel;
     public GameObject SecondaryModel;
 
+    private List<statusEffectBase> activeEffects = new List<statusEffectBase>();
+    
     public void HandleWeaponSwapping()
     {
         Destroy(WeaponModel);
@@ -125,6 +129,8 @@ public class WeaponHolder : MonoBehaviour
 
     private void Update()
     {
+        UpdateStatusEffects();
+
         if (Input.GetKey(KeyCode.Alpha9))
         {
             State = AttackState.Ready;
@@ -132,7 +138,11 @@ public class WeaponHolder : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Alpha8))
         {
-            //instance.ProcableAbilityList.Add(new LifestealEffect(0.5f, 0.5f));
+            instance.ModifierSlots[0].Equip(new LifestealEffectModifier(probability: 1f, Steal_percent: 1f));
+        }
+        if (Input.GetKey(KeyCode.Alpha7))
+        {
+            instance.ModifierSlots[0].Equip(new FreezeEffectModifier(probability: 1f, duration: 3));
         }
     }
 
@@ -415,6 +425,32 @@ public class WeaponHolder : MonoBehaviour
         PlayerHealth.instance.d_state = state;
     }
 
+    public void ApplyEffectToPlayer(statusEffectBase newEff)
+    {
+        activeEffects.Add(newEff);
+        newEff.StartEffect(gameObject);
+    }
+
+    public void ApplyEffectToEnemy(statusEffectBase newEff, DamagableEnemy enemy)
+    {
+        activeEffects.Add(newEff);
+        newEff.StartEffect(enemy.gameObject);
+    }
+
+    public void UpdateStatusEffects()
+    {
+        float dt = Time.deltaTime;
+        foreach (var effect in activeEffects)
+        {
+            if (effect.IsEffectDone())
+            {
+                activeEffects.Remove(effect);
+                return;
+            }
+            effect.UpdateEffect(dt);
+
+        }
+    }
 
 }
 
