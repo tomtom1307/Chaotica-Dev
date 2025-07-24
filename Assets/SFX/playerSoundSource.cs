@@ -36,8 +36,9 @@ public class PlayerSoundSource : SourceSoundManager<PlayerSoundSource.SoundType>
         DrawBow,
         ShootBow,
         CrystalPickup,
-        Parry
-
+        Parry,
+        Sliding,
+        SlideStop
     }
 
 #if UNITY_EDITOR

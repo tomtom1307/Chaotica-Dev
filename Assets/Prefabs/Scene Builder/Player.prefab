@@ -4739,16 +4739,22 @@ MonoBehaviour:
     KillCount: 12
     Threshold1: 5
     Threshold2: 10
+    ModifierSlots: []
+    weaponRarity: 0
   - data: {fileID: 11400000, guid: 123846b4addc23a4e882975908cc384d, type: 2}
     Level: 1
     KillCount: 12
     Threshold1: 5
     Threshold2: 10
+    ModifierSlots: []
+    weaponRarity: 0
   - data: {fileID: 11400000, guid: 348d376b3facb964fabdac8a007ee53a, type: 2}
     Level: 1
     KillCount: 12
     Threshold1: 5
     Threshold2: 10
+    ModifierSlots: []
+    weaponRarity: 0
   CrystalPickupPitch: 0
   CrystalPickupPitchDecay: 0.1
   CrystalPickupPitchBump: 0.1
@@ -4792,6 +4798,8 @@ MonoBehaviour:
     KillCount: 0
     Threshold1: 0
     Threshold2: 0
+    ModifierSlots: []
+    weaponRarity: 0
   data: {fileID: 0}
   SecondaryWeaponData: {fileID: 0}
   DamagableLayer:
@@ -6004,7 +6012,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1105958594109869285
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6032,7 +6040,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7652636751375952394}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0

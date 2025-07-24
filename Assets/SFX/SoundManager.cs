@@ -28,13 +28,14 @@ public abstract class SourceSoundManager<T> : MonoBehaviour where T: Enum
         {
             volume = clips[Convert.ToInt32(sound)].desiredVolume;
         }
+        float finalPitch = 1;
         if(pitch == -1)
         {
-            pitch = UnityEngine.Random.Range(clips[Convert.ToInt32(sound)].pitchVariation.x, clips[Convert.ToInt32(sound)].pitchVariation.y);
+            finalPitch = UnityEngine.Random.Range(clips[Convert.ToInt32(sound)].pitchVariation.x, clips[Convert.ToInt32(sound)].pitchVariation.y);
         }
         else
         {
-            audioSource.pitch = pitch;
+            audioSource.pitch = finalPitch;
         }
         if (looping)
         {

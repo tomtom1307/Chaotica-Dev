@@ -39,6 +39,7 @@ public class Projectile : MonoBehaviour
             rb.useGravity = false;
         }
         this.Damage = Damage;
+        this.KnockBack = KnockBack;
     }
 
 
@@ -66,7 +67,16 @@ public class Projectile : MonoBehaviour
         {
             OnHit(collision.gameObject, collision.GetContact(0), Crit, collision);
         }
-        
+
+        rb.isKinematic = true;
+        this.col.enabled = false;
+
+        TrailRenderer TR = GetComponentInChildren<TrailRenderer>();
+        if (TR != null)
+        {
+            TR.transform.parent = null;
+            Destroy(TR.gameObject, 4);
+        }
     }
 
 
@@ -89,20 +99,14 @@ public class Projectile : MonoBehaviour
 
         if (damagable.TryGetComponent<Rigidbody>(out hitrb))
         {
-            hitrb.AddForceAtPosition(1000000000000000000 * KnockBack * -collision.relativeVelocity.normalized, collision.contacts[0].point);
+            hitrb.AddForceAtPosition(KnockBack * -collision.relativeVelocity.normalized, collision.GetContact(0).point);
         }
-        rb.isKinematic = true;
-        this.col.enabled = false;
+        
 
         //Damage pipeline
 
         damagable.TakeDamage(Damage, col.point, col.normal, isCrit);
-        TrailRenderer TR = GetComponentInChildren<TrailRenderer>();
-        if (TR!=null)
-        {
-            TR.transform.parent = null;
-            Destroy(TR.gameObject, 4);
-        }
+
         Destroy(gameObject);
     }
 }

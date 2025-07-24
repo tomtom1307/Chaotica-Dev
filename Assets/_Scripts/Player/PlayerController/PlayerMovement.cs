@@ -53,7 +53,10 @@ public class PlayerMovement : MonoBehaviour
     public float SlideThresh;
     public float VelocityThresh;
     public float LandingSlide;
-
+    public float SlideMovementControl;
+    public AudioSource SlidingAS;
+    public float SlideVolLerpSpeed;
+    public float SlideMaxVol;
     [Header("Misc")]
     public AudioSource WindAS;
     public float VolLerpSpeed;
@@ -109,6 +112,7 @@ public class PlayerMovement : MonoBehaviour
         MyInput();
         ControlDrag();
         WindSFX();
+        SlidingSFX();
         if (OnSlope())
         {
 
@@ -188,6 +192,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (rb.linearVelocity.magnitude > VelocityThresh && state != PlayerMechanimState.Crouching) //Sliding
             {
+
                 FOVController.SetTargetFOV(FOVController.DefaultFOV + FOV_change);
                 state = PlayerMechanimState.Sliding;
                 Slide();
@@ -201,8 +206,9 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (isGrounded && Input.GetKeyUp(KeyCode.C))
         {
-            state = PlayerMechanimState.Walking;
             EndCrouch();
+            state = PlayerMechanimState.Walking;
+            
         }
         else
         {
@@ -308,7 +314,7 @@ public class PlayerMovement : MonoBehaviour
             Crouch();
             return;
         }
-        SetMoveSpeed(0);
+        SetMoveSpeed(SlideMovementControl);
         collider.height = 0.5f * ColliderHeight;
         rb.linearDamping = 0;
         timer += Time.deltaTime;
@@ -323,6 +329,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void Crouch()
     {
+        if(state == PlayerMechanimState.Sliding)
+        {
+            PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.SlideStop, SlideMaxVol, false, 1);
+        }
         state = PlayerMechanimState.Crouching;
         rb.linearDamping = _groundDrag;
         collider.height = 0.5f * ColliderHeight;
@@ -331,6 +341,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void EndCrouch()
     {
+        if(state == PlayerMechanimState.Sliding) PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.SlideStop, SlideMaxVol, false, 1);
         timer = 0;
         AttackMoveSpeed(attackMoveSpeed, true);
         collider.height = ColliderHeight;
@@ -340,13 +351,28 @@ public class PlayerMovement : MonoBehaviour
 
     public void WindSFX()
     {
+        
         if (!isGrounded)
         {
-            WindAS.volume = Mathf.Lerp(WindAS.volume, Mathf.Clamp(rb.linearVelocity.magnitude / 10, 0, MaxVol), VolLerpSpeed * Time.deltaTime);
+            WindAS.volume = Mathf.Lerp(WindAS.volume, Mathf.Clamp(Mathf.Pow((rb.linearVelocity.magnitude),2) / 10, 0, MaxVol), VolLerpSpeed * Time.deltaTime);
+        }
+        else
+        { 
+            WindAS.volume = 0;
+        }
+    }
+
+
+    public void SlidingSFX()
+    {
+        
+        if (state == PlayerMechanimState.Sliding)
+        {
+            SlidingAS.volume = Mathf.Clamp(Mathf.Lerp(SlidingAS.volume, Mathf.Pow(rb.linearVelocity.magnitude, 1)/5, SlideVolLerpSpeed * Time.deltaTime), 0, SlideMaxVol);
         }
         else
         {
-            WindAS.volume = 0;
+            SlidingAS.volume = 0;
         }
     }
 
