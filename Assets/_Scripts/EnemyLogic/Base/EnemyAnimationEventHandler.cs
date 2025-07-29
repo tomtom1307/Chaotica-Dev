@@ -6,6 +6,11 @@ public class EnemyAnimationEventHandler : MonoBehaviour
     public EnemyAttackHandler attackHandler;
 
     //THIS SCRIPT EXISTS TO SIMPLIFY THE UNITY UI WHEN DOING ANIMATION EVENTS
+    EnemySoundSource soundSource;
+    private void Start()
+    {
+        soundSource = GetComponent<EnemySoundSource>();
+    }
 
 
     public void ExitAttackCall() => attackHandler.ExitAttack();
@@ -32,6 +37,11 @@ public class EnemyAnimationEventHandler : MonoBehaviour
         Projectile
     }
     public void DisableCollider(int colliderGroup) => attackHandler.DisableColliderGroup(colliderGroup);
+
+    public void PlaySound(EnemySoundSource.SoundType soundType)
+    {
+        soundSource.PlaySound(soundType, -1);
+    }
 
     public void SpawnVFX(int i)
     {

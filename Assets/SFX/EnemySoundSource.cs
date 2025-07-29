@@ -18,6 +18,8 @@ public class EnemySoundSource : SourceSoundManager<EnemySoundSource.SoundType>
         FootSteps,
         TakeDamageBladed,
         TakeDamageBlunt,
+        AttackSFX,
+        AttackChargeup
         
 
     }
