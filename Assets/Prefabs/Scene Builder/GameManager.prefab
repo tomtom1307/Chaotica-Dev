@@ -137,9 +137,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80a93be122b561746aa2fb5b15c0a64d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyDifficultyLevel: 0
+  enemyDistributions:
+  - {fileID: 11400000, guid: fd174c691499f864aa27f1f6266312d9, type: 2}
+  - {fileID: 11400000, guid: d2d1710a76934ef4a915a2e8b02bb054, type: 2}
   patrolPoints: []
   availablePatrolPoints: []
   player: {fileID: 0}
+  postProcessVolume: {fileID: 0}
+  vignetteTarget: 0.5
+  saturationTarget: -50
+  chromaticAberationTarget: 0.5
+  bloomTarget: 0.9
 --- !u!1 &2339975733083840467
 GameObject:
   m_ObjectHideFlags: 0

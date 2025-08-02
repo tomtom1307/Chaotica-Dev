@@ -36,6 +36,7 @@ public class EnemyBrain : MonoBehaviour
     public LayerMask layerMask;
     public Transform LookDirectionTransform;
     EnemyAnimationEventHandler enemyAnimationevent;
+    RoomSpawner spawner;
     //Navmesh
     [HideInInspector] public NavMeshAgent navMesh;
     [HideInInspector] public Rigidbody rigidBody;
@@ -278,6 +279,17 @@ public class EnemyBrain : MonoBehaviour
             DMGstate = EnemyDamageState.Recover;
         }
             
+    }
+
+    public void SetSpawner(RoomSpawner spawner)
+    {
+        this.spawner = spawner;
+    }
+
+    public void NotifySpawner()
+    {
+        spawner.EnemiesLeft--;
+        spawner.spawnedEnemies.Remove(this);
     }
     
 }

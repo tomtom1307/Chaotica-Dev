@@ -15,6 +15,7 @@ namespace Project
         public CamShakeProperties onHit;
         public CamShakeProperties onAttack;
         public CamShakeProperties onAOE;
+        public CamShakeProperties onDestroy;
         public static CamShake instance;
         IEnumerator currentShakeCorutine;
 

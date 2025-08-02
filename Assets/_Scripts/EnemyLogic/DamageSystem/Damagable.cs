@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using Project;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -79,7 +80,7 @@ public class Damagable : MonoBehaviour
     {
         if(ded == true) { return; }
         ded = true;
-
+        CamShake.instance.StartShake(CamShake.instance.onDestroy);
         if (soundManager != null) soundManager.PlaySound(1);
 
         if (SpawnOnDeath.Count > 0)

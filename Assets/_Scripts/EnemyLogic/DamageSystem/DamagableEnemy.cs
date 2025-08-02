@@ -52,6 +52,9 @@ public class DamagableEnemy : Damagable
 
     public override void Die()
     {
+        brain.animator.enabled = false;
+        brain.attackHandler.DisableColliderGroup(0);
+        brain.NotifySpawner();
         GameManager.instance.EnemyKilled();
         base.Die();
     }

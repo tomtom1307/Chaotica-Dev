@@ -9,10 +9,14 @@ using UnityEngine.Rendering.Universal;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created]
+    public int EnemyDifficultyLevel;
+
+    [Tooltip("Place in order of difficulty scaling!!!!!")]
+    public List<EnemyDistributionBase> enemyDistributions;
+
 
     public static GameManager instance;
-
+    
     public List<EnemyPatrolPoint> patrolPoints;
     public List<EnemyPatrolPoint> availablePatrolPoints;
 

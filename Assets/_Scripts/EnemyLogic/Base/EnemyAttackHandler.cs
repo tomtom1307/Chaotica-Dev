@@ -158,6 +158,8 @@ public class EnemyAttackHandler : MonoBehaviour
     }
     public void DisableColliderGroup(int colliderGroupIndex)
     {
+        if (currentAttack == null) return;
+        if (currentAttack.colliderGroups.Count < colliderGroupIndex + 1) return;
         List<ColliderDetector> colliderGroupList = currentAttack.colliderGroups[colliderGroupIndex].colliderList;
         foreach(ColliderDetector col in colliderGroupList)
         {
