@@ -41,6 +41,7 @@ namespace Project
 
         public void StartShake(CamShakeProperties properties)
         {
+            print("DID CAMSHAKE");
             if(currentShakeCorutine != null) {
                 StopCoroutine(currentShakeCorutine);
             }
