@@ -61,11 +61,33 @@ public class EnemyActionHandler : MonoBehaviour
     }
     public void MoveToPlayer()
     {
+        if (!brain.navMesh.enabled)
+        {
+            EndAction();
+            return;
+        }
         brain.navMesh.stoppingDistance = DefaultStoppingDistance;
         brain.navMesh.SetDestination(brain.perception.player.position);
         brain.animator.SetBool("Walking", true);
         EndAction();
     }
+
+
+    public void Reposition()
+    {
+        if (!brain.navMesh.enabled)
+        {
+            EndAction();
+            return;
+        }
+        brain.navMesh.stoppingDistance = 0;
+        brain.animator.SetBool("Walking", true);
+        brain.navMesh.SetDestination(brain.perception.PlayerLastSeenPosition);
+        SearchNearby();
+        Searching = true;
+    }
+
+
     public void ChangeToIdleState()
     {
         if(brain.stateChangeDebug) Debug.Log("Changed to Idle State");
@@ -101,6 +123,11 @@ public class EnemyActionHandler : MonoBehaviour
 
     public void DoPatrol()
     {
+        if (!brain.navMesh.enabled)
+        {
+            EndAction();
+            return;
+        }
         brain.navMesh.stoppingDistance = 0;
         if(TargetpatrolPoint == null)
         {
@@ -124,6 +151,11 @@ public class EnemyActionHandler : MonoBehaviour
     bool Searching;
     public void SearchNearby()
     {
+        if (!brain.navMesh.enabled)
+        {
+            EndAction();
+            return;
+        }
         Debug.Log("SearchingNearby");
         brain.navMesh.stoppingDistance = 0;
         if (brain.perception.PlayerLastSeenPosition == Vector3.zero || Vector3.Distance(brain.perception.player.position, brain.perception.PlayerLastSeenPosition) > Vector3.Distance(transform.position, brain.perception.player.position))
@@ -142,7 +174,11 @@ public class EnemyActionHandler : MonoBehaviour
     #region Dash
     public void DashToPlayer()
     {
-        
+        if (!brain.navMesh.enabled)
+        {
+            EndAction();
+            return;
+        }
         if (canDash)
         {
             Debug.Log("Dash");
@@ -169,6 +205,7 @@ public class EnemyActionHandler : MonoBehaviour
         
 
     }
+
 
     public void EndDash()
     {

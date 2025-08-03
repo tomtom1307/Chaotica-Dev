@@ -285,13 +285,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
-      propertyPath: clips.Array.data[0].DetectionRadius
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 8414243873322991182, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
-      propertyPath: whatisGround.m_Bits
-      value: 65
+      propertyPath: _moveSpeed
+      value: 4.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -303,6 +299,61 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2498856036708082496, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
   m_PrefabInstance: {fileID: 56351971}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &392505226
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 392505228}
+  - component: {fileID: 392505227}
+  m_Layer: 0
+  m_Name: Bow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &392505227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 392505226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c21c9fcb2934d2940afd0b7a02bf7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpawnOnStart: 1
+  dataSO: {fileID: 11400000, guid: 123846b4addc23a4e882975908cc384d, type: 2}
+  weaponInstance:
+    data: {fileID: 0}
+    Level: 0
+    KillCount: 0
+    Threshold1: 0
+    Threshold2: 0
+    ModifierSlots: []
+    weaponRarity: 0
+  RarityVFX: {fileID: 0}
+--- !u!4 &392505228
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 392505226}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: -1.48}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &466791009
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,7 +452,7 @@ Transform:
   m_GameObject: {fileID: 633861611}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 1.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -560,5 +611,6 @@ SceneRoots:
   - {fileID: 49901645}
   - {fileID: 1137033018}
   - {fileID: 633861613}
+  - {fileID: 392505228}
   - {fileID: 1293901683}
   - {fileID: 466791011}

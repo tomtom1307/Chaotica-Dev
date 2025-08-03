@@ -63,29 +63,31 @@ public class Weapon_Attack_Data_Base
         return (DamageValue, isCrit);
     }
 
-    public void DealDamage(WeaponHolder W, Damagable damagable) 
+    public void DealDamage(WeaponHolder W, Damagable damagable, float Multiplier  =  1) 
     {
         float Damage = 0;
         bool isCrit = false;
         (Damage, isCrit) = DamageVal(W);
-       
+        Damage *= Multiplier;
         TryEnablingPhysics(damagable);
 
         damagable.TakeDamage(Damage,crit: isCrit);
-        W.instance.TryTriggerProcs(W, damagable, damage);
+        W.instance.TryTriggerProcs(W, damagable, Multiplier);
     }
 
-    public void DealDamage(WeaponHolder W, Damagable damagable, RaycastHit hit)
+    public void DealDamage(WeaponHolder W, Damagable damagable, RaycastHit hit, float Multiplier = 1)
     {
         float Damage = 0;
         bool isCrit = false;
         (Damage, isCrit) = DamageVal(W);
-        
+        Damage *= Multiplier;
         TryEnablingPhysics(damagable);
 
         damagable.TakeDamage(Damage, hit.point, hit.normal, isCrit);
 
         W.instance.TryTriggerProcs(W, damagable, damage, hit);
+
+
     }
 
     public static void TryEnablingPhysics(Damagable damagable)

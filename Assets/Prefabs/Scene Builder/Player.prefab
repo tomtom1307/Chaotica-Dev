@@ -4774,7 +4774,7 @@ MonoBehaviour:
   SprintMult: 1.5
   whatisGround:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 321
   orientation: {fileID: 7714421985405113136}
   isGrounded: 1
   slopeMoveDirection: {x: 0, y: 0, z: 0}
@@ -5194,46 +5194,55 @@ MonoBehaviour:
     - {fileID: 8300000, guid: fb9e7d25eb6dd8f43b59598346cf1e7a, type: 3}
     - {fileID: 8300000, guid: 93dae33fc28e75249af002826fbd7fa0, type: 3}
     - {fileID: 8300000, guid: 1fb499e5bfd55ec4397763c57c2186bc, type: 3}
+    DetectionRadius: 10
   - name: TakeDamage
     pitchVariation: {x: 0.8, y: 1.3}
     desiredVolume: 1
     sounds:
     - {fileID: 8300000, guid: e2a17044d6f252e4c871e9901bf6bf9e, type: 3}
+    DetectionRadius: 0
   - name: SwingSword
     pitchVariation: {x: 1, y: 1.7}
     desiredVolume: 0.4
     sounds:
     - {fileID: 8300000, guid: 914f9547b7fe7664c99fa87b1dac4edc, type: 3}
+    DetectionRadius: 0
   - name: DrawBow
     pitchVariation: {x: 0.9, y: 1.1}
     desiredVolume: 2
     sounds:
     - {fileID: 8300000, guid: 8c4a382f7a1b6c94ea97960f503f770b, type: 3}
+    DetectionRadius: 0
   - name: ShootBow
     pitchVariation: {x: 0.8, y: 1.2}
     desiredVolume: 2
     sounds:
     - {fileID: 8300000, guid: 67aa978a2c8f708478f724492be818e8, type: 3}
+    DetectionRadius: 0
   - name: CrystalPickup
     pitchVariation: {x: 1, y: 1}
     desiredVolume: 1
     sounds:
     - {fileID: 8300000, guid: d96b59cb1d634ea478b5a65d64b15f4e, type: 3}
+    DetectionRadius: 0
   - name: Parry
     pitchVariation: {x: 1, y: 1}
     desiredVolume: 1
     sounds:
     - {fileID: 8300000, guid: 41d9ea0a9bf09ff449c98c5e084c856d, type: 3}
+    DetectionRadius: 0
   - name: Sliding
     pitchVariation: {x: 1, y: 1}
     desiredVolume: 1
     sounds:
     - {fileID: 8300000, guid: 449991140a8ac564baf5d4ee8813828d, type: 3}
+    DetectionRadius: 0
   - name: SlideStop
     pitchVariation: {x: 1, y: 1.2}
     desiredVolume: 1
     sounds:
     - {fileID: 8300000, guid: 8c3f46ac304cf53419d82368066c57c9, type: 3}
+    DetectionRadius: 0
 --- !u!114 &6510342939511281708
 MonoBehaviour:
   m_ObjectHideFlags: 0
