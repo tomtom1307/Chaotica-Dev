@@ -68,6 +68,8 @@ public class EnemyAttackHandler : MonoBehaviour
         transform.position = newPos;
     }
 
+    Vector3 TargetPos;
+
     private void Update()
     {
         if (attacking)
@@ -81,8 +83,8 @@ public class EnemyAttackHandler : MonoBehaviour
         {
             AttackTimer += Time.deltaTime;
         }
-        AimDirection = (player.position + Vector3.up - brain.LookDirectionTransform.position).normalized;
-        AimDirection += -0.1f * (1 - brain.Accuracy) * _playerRb.linearVelocity;
+        TargetPos = Vector3.Lerp(TargetPos, player.position+ 1.5f *Vector3.up, Time.deltaTime * brain.Accuracy);
+        AimDirection = - TRTools.VecOp.Direction(transform.position, TargetPos);
 
     }
 

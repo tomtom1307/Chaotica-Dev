@@ -71,11 +71,8 @@ public class EnemyBrain : MonoBehaviour
     //Health
     private DamagableEnemy damagableEnemy;
     [Header("Stats")]
-    [Range(0.0f, 1.0f)]
-    [Tooltip("Changes how velocity dependent raycast is:" +
-        " {1 being raycast will hit regardless of player speed to " +
-        "0 being will certainly miss when player moving}")]
-    public float Accuracy; // Ranges from 0 to 1
+    [Range(0.0f, 20.0f)]
+    public float Accuracy; 
     public float EnemyMass;
 
 
