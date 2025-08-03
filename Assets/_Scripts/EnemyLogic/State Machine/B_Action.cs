@@ -21,7 +21,8 @@ public class B_Action
         SearchNearby,
         AttackSet, 
         Attack,
-        DashToPlayer
+        DashToPlayer,
+        Repoisiton
     }
 
     
@@ -45,6 +46,8 @@ public class B_Action
                 return brain.actionHandler.SearchNearby;
             case b_Action.DashToPlayer:
                 return brain.actionHandler.DashToPlayer;
+            case b_Action.Repoisiton:
+                return brain.actionHandler.Reposition;
             default:
                 return brain.actionHandler.DoError;
         }

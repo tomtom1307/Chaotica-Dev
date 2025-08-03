@@ -1,5 +1,4 @@
-using System.Drawing;
-using Unity.VisualScripting;
+
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -50,7 +49,7 @@ public class Projectile : MonoBehaviour
             if (rb.linearVelocity.magnitude > 0.2f)
             {
                 //Aligns Z direction with velocity
-                transform.LookAt(transform.position + rb.linearVelocity);
+                transform.LookAt(transform.position + rb.linearVelocity.normalized);
                 rb.AddForce(Vector3.up * AntiGrav, ForceMode.Acceleration);
             }
         }
@@ -65,7 +64,7 @@ public class Projectile : MonoBehaviour
     {
         if(IsInLayerMask(collision.gameObject,LayerMask))
         {
-            OnHit(collision.gameObject, collision.GetContact(0), Crit, collision);
+            OnHit(collision.collider.gameObject, collision.GetContact(0), Crit, collision);
         }
 
         rb.isKinematic = true;
@@ -82,16 +81,18 @@ public class Projectile : MonoBehaviour
 
     public virtual void OnHit(GameObject hitObj, ContactPoint col, bool isCrit, Collision collision)
     {
-        if (hitObj.tag == "Head")
+        bool CritHit = isCrit;
+        Debug.Log("HitOBj tag:" + hitObj.tag);
+        if (collision.collider.tag == "Head")
         {
-            isCrit = true;
+            Debug.Log("HeadSHOT!");
+            CritHit = true;
             hitObj = hitObj.GetComponentInParent<Damagable>().gameObject;
             Damage *= PlayerStats.instance.GetStat(StatType.CritMultiplier);
         }
 
         Damagable damagable = Damagable.CheckForDamagable(hitObj);
 
-        //Knockback on enemy by projectile -> no worky
 
         Weapon_Attack_Data_Base.TryEnablingPhysics(damagable);
 
@@ -105,7 +106,7 @@ public class Projectile : MonoBehaviour
 
         //Damage pipeline
 
-        damagable.TakeDamage(Damage, col.point, col.normal, isCrit);
+        damagable.TakeDamage(Damage, col.point, col.normal, CritHit);
 
         Destroy(gameObject);
     }

@@ -732,6 +732,7 @@ GameObject:
   - component: {fileID: 4063818281007205583}
   - component: {fileID: 60687561449176507}
   - component: {fileID: 1312249632760013834}
+  - component: {fileID: 8346285596149070878}
   m_Layer: 0
   m_Name: UpgradeTome
   m_TagString: Interactable
@@ -870,7 +871,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 0
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 20
+  outlineWidth: 40
   precomputeOutline: 1
   bakeKeys:
   - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
@@ -1074,6 +1075,27 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!135 &8346285596149070878
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6026374433315584126}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 3.4680753
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6522872268852558756
 GameObject:
   m_ObjectHideFlags: 0

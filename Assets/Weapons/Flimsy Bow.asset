@@ -15,13 +15,12 @@ MonoBehaviour:
   _Name: Bow
   model: {fileID: 8348362843108236407, guid: 96d487f57a14d78459be8a1a84293582, type: 3}
   secondaryModel: {fileID: 6817403599729623704, guid: 3420ab1c1471dfa42a5df420e86d3553, type: 3}
-  WeaponDamage: 10
+  WeaponDamage: 7.5
   Anim_controller: {fileID: 9100000, guid: 9fe8c0fc8029ebb4e9ab6dd7228a9f97, type: 2}
   hand: 0
   Weapon_Attacks:
   - rid: 1142560951034445932
   - rid: 1142560951034445958
-  - rid: 4875732898165293139
   rarity: 0
   InventorySprite: {fileID: 21300000, guid: b87b967d2eda3564a8480b2ad42ce52c, type: 3}
   DroppedWeaponSize: {x: 74.315, y: 10.62956, z: 10.62956}
@@ -83,26 +82,3 @@ MonoBehaviour:
         spread: 0.11
         speed: 24.81
         gravity: 1
-    - rid: 4875732898165293139
-      type: {class: Weapon_Attack_Data_Melee, ns: , asm: Assembly-CSharp}
-      data:
-        Name: Swipe
-        Description: 
-        weaponInputLogic: {fileID: 0}
-        attackType: 0
-        damageType: 0
-        damage: 100
-        ComboLength: 1
-        StaggerDamage: 5
-        AttackWeight: 1
-        MoveSpeedMult: 1
-        hasCooldown: 1
-        cooldown: 0.1
-        AllowAgility: 0
-        KnockBackForce: 100
-        FinalHitMultiplier: 100
-        HitFOV: 120
-        Forces: []
-        VFX: {fileID: 0}
-        attack_range: 3
-        MaxViewAngle: 45

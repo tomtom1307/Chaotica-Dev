@@ -136,7 +136,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TimeBetweenAttacks: 2
-  MoveSpeed: 5
+  MoveSpeed: 3
+  RepositionDistance: 5
   JumpPower: 0
   DashDistance: 0
   DashTime: 0
@@ -219,10 +220,10 @@ MonoBehaviour:
         - checkTime: 0
           checkBool: 1
         floatChecks:
-        - checkTime: 0.1
+        - checkTime: 0
           checkFloat: 0
           checkComparison: 1
-          input: 13
+          input: 15
         intChecks: []
       actionList: []
       attackList:
@@ -234,8 +235,26 @@ MonoBehaviour:
           Prefab: {fileID: 3502805797185333702, guid: 9c666225b4dd1e14fba0878a3eafebae, type: 3}
           isParentedToHolder: 1
       name: 
-    - Name: Move To player
-      priority: 2
+    - Name: PushIn
+      priority: 1
+      conditions:
+        brain: {fileID: 0}
+        boolChecks: []
+        floatChecks:
+        - checkTime: 0
+          checkFloat: 0
+          checkComparison: 0
+          input: 15
+        intChecks: []
+      actionList:
+      - brain: {fileID: 0}
+        B_action: 3
+        Override: 1
+        Weight: 0
+      attackList: []
+      name: 
+    - Name: Retreat
+      priority: 3
       conditions:
         brain: {fileID: 0}
         boolChecks: []
@@ -244,32 +263,14 @@ MonoBehaviour:
           checkFloat: 1
           checkComparison: 1
           input: 3
-        intChecks: []
-      actionList:
-      - brain: {fileID: 0}
-        B_action: 3
-        Override: 0
-        Weight: 0
-      attackList: []
-      name: 
-    - Name: Move To playerDistance
-      priority: 1
-      conditions:
-        brain: {fileID: 0}
-        boolChecks: []
-        floatChecks:
         - checkTime: 0
           checkFloat: 0
           checkComparison: 1
-          input: 6
-        - checkTime: 0
-          checkFloat: 1
-          checkComparison: 1
-          input: 10
+          input: 9
         intChecks: []
       actionList:
       - brain: {fileID: 0}
-        B_action: 3
+        B_action: 10
         Override: 0
         Weight: 0
       attackList: []
@@ -283,7 +284,7 @@ MonoBehaviour:
         - checkTime: 0
           checkFloat: 1
           checkComparison: 0
-          input: 5
+          input: 7
         intChecks: []
       actionList:
       - brain: {fileID: 0}
@@ -293,7 +294,7 @@ MonoBehaviour:
       attackList: []
       name: 
     - Name: BackToIdle
-      priority: 3
+      priority: 0
       conditions:
         brain: {fileID: 0}
         boolChecks: []
@@ -490,6 +491,7 @@ MonoBehaviour:
     pitchVariation: {x: 0, y: 0}
     desiredVolume: 0
     sounds: []
+    DetectionRadius: 0
   - name: TakeDamageBladed
     pitchVariation: {x: 0.9, y: 1.1}
     desiredVolume: 1
@@ -498,20 +500,24 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 9e6c5d5620c8fb948b92cff8298a2bc6, type: 3}
     - {fileID: 8300000, guid: fd4cafb995c7be44d8a7c87b53e81760, type: 3}
     - {fileID: 8300000, guid: 5665604e0e593134181969a263df259f, type: 3}
+    DetectionRadius: 0
   - name: TakeDamageBlunt
     pitchVariation: {x: 0, y: 0}
     desiredVolume: 0
     sounds: []
+    DetectionRadius: 0
   - name: AttackSFX
     pitchVariation: {x: 1, y: 1}
     desiredVolume: 2
     sounds:
     - {fileID: 8300000, guid: f573bed234427f246829002f3633fc38, type: 3}
+    DetectionRadius: 0
   - name: AttackChargeup
     pitchVariation: {x: 1, y: 1}
     desiredVolume: 1
     sounds:
     - {fileID: 8300000, guid: 517274387e9f17c4fada8a7511fe9b1c, type: 3}
+    DetectionRadius: 0
 --- !u!1 &775067291979300683
 GameObject:
   m_ObjectHideFlags: 0

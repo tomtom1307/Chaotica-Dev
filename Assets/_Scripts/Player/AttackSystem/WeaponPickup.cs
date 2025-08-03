@@ -10,11 +10,15 @@ public class WeaponPickup : MonoBehaviour
     {
         Interactable = GetComponent<Interactable>();
         WeaponHolder WH = Interactable.interactor.GetComponent<WeaponHolder>();
-        WH.SetWeaponInstance(instance);
-        UpDown.Kill();
-        rot.Kill();
-        Destroy(this.gameObject);
-        if (!WH.enabled) WH.enabled = true;
+        if (WH.State == WeaponHolder.AttackState.Ready)
+        {
+            WH.SetWeaponInstance(instance);
+            UpDown.Kill();
+            rot.Kill();
+            Destroy(this.gameObject);
+            if (!WH.enabled) WH.enabled = true;
+        }
+        
         
     }
     Tween UpDown;

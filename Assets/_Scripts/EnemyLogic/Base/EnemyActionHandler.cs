@@ -11,6 +11,15 @@ public class EnemyActionHandler : MonoBehaviour
     public bool DoingAction;
     public string CurrentAction;
 
+    public enum EnemyActionState
+    {
+        Ready,
+        Moving,
+        Misc
+    }
+
+    public EnemyActionState State;
+
     private void Start()
     {
         DefaultStoppingDistance = brain.navMesh.stoppingDistance;
@@ -52,6 +61,7 @@ public class EnemyActionHandler : MonoBehaviour
     public void EndAction()
     {
         CurrentAction = "";
+
         DoingAction = false;
     }
 
@@ -69,7 +79,6 @@ public class EnemyActionHandler : MonoBehaviour
         brain.navMesh.stoppingDistance = DefaultStoppingDistance;
         brain.navMesh.SetDestination(brain.perception.player.position);
         brain.animator.SetBool("Walking", true);
-        EndAction();
     }
 
 
@@ -82,9 +91,11 @@ public class EnemyActionHandler : MonoBehaviour
         }
         brain.navMesh.stoppingDistance = 0;
         brain.animator.SetBool("Walking", true);
-        brain.navMesh.SetDestination(brain.perception.PlayerLastSeenPosition);
-        SearchNearby();
+        Vector3 directionVec = (transform.position - brain.perception.player.position).normalized;
+        brain.navMesh.SetDestination(transform.position + brain.RepositionDistance * directionVec);
+        
         Searching = true;
+        EndAction();
     }
 
 
