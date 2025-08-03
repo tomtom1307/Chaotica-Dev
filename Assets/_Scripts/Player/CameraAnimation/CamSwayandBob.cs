@@ -36,7 +36,15 @@ public class CamSwayandBob : MonoBehaviour
         if (Mathf.Abs(Mathf.Cos(SpeedCurve)) > 0.9f && !playedSFX && rb.linearVelocity.magnitude > 0.1f && pm.isGrounded && pm.state != PlayerMovement.PlayerMechanimState.Sliding)
         {
             playedSFX = true;
-            PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.FootSteps);
+            if(pm.state == PlayerMovement.PlayerMechanimState.Crouching)
+            {
+                PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.FootSteps, DetectionRadius: 0);
+            }
+            else
+            {
+                PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.FootSteps);
+            }
+            
         }
         if(Mathf.Abs(curveCos) < 0.5f)
         {

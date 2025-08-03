@@ -45,7 +45,6 @@ public class EnemyAnimationEventHandler : MonoBehaviour
 
     public void SpawnVFX(int i)
     {
-        print("SpawnVFX");
         attackHandler.SpawnVFX(i);
     }
     public void DestroyVFX() => attackHandler.DestroyVFX();

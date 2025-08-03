@@ -25,9 +25,7 @@ public class DamagableEnemy : Damagable
                     brain.perception.DetectionMeter = 1;
                     brain.perception.LSP_time = 0;
                 }
-                brain.navMesh.stoppingDistance = 0;
-                brain.actionHandler.StartActionOverride(brain.actionHandler.MoveToPlayer);
-                brain.actionHandler.StartActionOverride(brain.actionHandler.ChangeToPatrolState);
+                brain.Agro();
                 
                 return;
             }

@@ -74,14 +74,16 @@ public class EnemyActionHandler : MonoBehaviour
         //brain.onPlayerLost();
         EndAction();
     }
-    public void ChangeToPatrolState()
+    public void ChangeToAgroState()
     {
         if(brain.stateChangeDebug) Debug.Log("Changed to Patrol State");
-        brain.stateMachine.ChangeState(brain.patrolState); 
+        brain.stateMachine.ChangeState(brain.patrolState);
+        print("EnteredAgroState");
         brain.OnAgro(); //TODO Handle in seperate action or include in change to attack state logic
 
         EndAction();
     }
+
 
 
     public EnemyPatrolPoint TargetpatrolPoint;
@@ -155,7 +157,7 @@ public class EnemyActionHandler : MonoBehaviour
                 Dist = Dir.magnitude-2;
             }
             Dir = Dist*Dir.normalized;
-            brain.transform.DOMove(transform.position - Dir, brain.DashTime).SetEase(Ease.Flash).OnComplete(EndDash);
+            brain.transform.DOMove(transform.position - Dir, brain.DashTime*(transform.position - Dir).magnitude).SetEase(Ease.Flash).OnComplete(EndDash);
         }
         else
         {

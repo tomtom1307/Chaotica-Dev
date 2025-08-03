@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemySoundSource : SourceSoundManager<EnemySoundSource.SoundType>
 {
-    public override void PlaySound(SoundType sound, float volume, bool looping = false, float pitch = -1)
+    public override void PlaySound(SoundType sound, float volume, bool looping = false, float pitch = -1, float DetectionRadius = -1)
     {
         base.PlaySound(sound, volume, looping);
     }
@@ -20,8 +20,6 @@ public class EnemySoundSource : SourceSoundManager<EnemySoundSource.SoundType>
         TakeDamageBlunt,
         AttackSFX,
         AttackChargeup
-        
-
     }
 
 #if UNITY_EDITOR

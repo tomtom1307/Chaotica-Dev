@@ -36,7 +36,7 @@ public class B_Action
             case b_Action.MoveToPatrol:
                 return brain.actionHandler.DoPatrol;
             case b_Action.ChangeToPatrol:
-                return brain.actionHandler.ChangeToPatrolState;
+                return brain.actionHandler.ChangeToAgroState;
             case b_Action.ChangeToIdle:
                 return brain.actionHandler.ChangeToIdleState;
             case b_Action.MoveToLSP:

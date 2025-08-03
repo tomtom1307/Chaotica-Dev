@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -29,6 +30,7 @@ public class EnemyBrain : MonoBehaviour
     public float RB_Drag;
     [Header("Detection")]
     public float DetectionRange;
+    public float RelayRange;
     public float PerceptionStat;
     public float DetectionMeterDecay;
     public float ViewAngle;
@@ -37,6 +39,7 @@ public class EnemyBrain : MonoBehaviour
     public Transform LookDirectionTransform;
     EnemyAnimationEventHandler enemyAnimationevent;
     RoomSpawner spawner;
+
     //Navmesh
     [HideInInspector] public NavMeshAgent navMesh;
     [HideInInspector] public Rigidbody rigidBody;
@@ -183,7 +186,8 @@ public class EnemyBrain : MonoBehaviour
     public virtual void OnAgro()
     {
         OnPlayerAgro.Invoke();
-        perception.DI.IsAgro(true);
+        //perception.DI.IsAgro(true);
+        RelayAgro();
     }
 
     public virtual void onPlayerLost()
@@ -288,10 +292,38 @@ public class EnemyBrain : MonoBehaviour
 
     public void NotifySpawner()
     {
+        if (spawner == null) return;
         spawner.EnemiesLeft--;
         spawner.spawnedEnemies.Remove(this);
     }
     
+    public void RelayAgro()
+    {
+        Debug.Log("Relay Agro!");
+        List<Collider> cols = Physics.OverlapSphere(transform.position, RelayRange).ToList();
+        
+        foreach (Collider col in cols)
+        {
+            print(col.gameObject);
+            EnemyBrain EB;
+            if(col.gameObject.TryGetComponent<EnemyBrain>(out EB))
+            {
+                EB.Agro();
+            }
+        }
+    }
+
+    public void Agro()
+    {
+        if (stateMachine.CurrentEnemyState == patrolState) return; // If already Agro
+        Debug.Log("Agro!");
+        perception.DetectionMeter = 1;
+        perception.LSP_time = 0;
+        perception.PlayerLastSeenPosition = perception.player.position;
+        actionHandler.StartActionOverride(actionHandler.ChangeToAgroState);
+    }
+
+
 }
 
     

@@ -17,7 +17,7 @@ public abstract class SourceSoundManager<T> : MonoBehaviour where T: Enum
 
     [HideInInspector]public AudioSource audioSource;
     public SoundList[] clips;
-    public virtual void PlaySound(T sound, float volume = -1, bool looping = false, float pitch = -1)
+    public virtual void PlaySound(T sound, float volume = -1, bool looping = false, float pitch = -1, float DetectionRadius = -1)
     {
         
         AudioClip[] _clips = clips[Convert.ToInt32(sound)].Sounds;
@@ -83,6 +83,7 @@ public struct SoundList
     [SerializeField] public Vector2 pitchVariation;
     [SerializeField] public float desiredVolume;
     [SerializeField] public AudioClip[] sounds;
+    [SerializeField] public float DetectionRadius;
 }
 
 

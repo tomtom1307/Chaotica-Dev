@@ -105,7 +105,6 @@ public class Damagable : MonoBehaviour
     public virtual void OnDamageTaken(float damage, Color col)
     {
         Color finalColor = col;
-        Debug.Log("Color used: " + finalColor);
     
 
         if (DamageNumbers)
@@ -117,7 +116,7 @@ public class Damagable : MonoBehaviour
 
     public virtual void SpawnDamageNumbers(float damage, Color Col)
     {
-        Debug.Log(Col);
+        
         Vector3 offsetVector = spawnOffset.x * transform.right + spawnOffset.y * transform.up + spawnOffset.z * transform.forward;
         GameObject number = Instantiate(DamageNumber,offsetVector+ transform.position+0.3f*(Camera.main.transform.position-transform.position).normalized, Quaternion.identity);
         number.GetComponent<DamageNumber>().SetValue(damage, Col);
@@ -125,7 +124,6 @@ public class Damagable : MonoBehaviour
 
     public virtual void SpawnDamageNumbers(float damage, Vector3 HitPos, Color Col)
     {
-        Debug.Log(Col);
         Vector3 offsetVector = spawnOffset.x * transform.right + spawnOffset.y * transform.up + spawnOffset.z * transform.forward;
         GameObject number = Instantiate(DamageNumber, offsetVector + transform.position + 0.3f * (Camera.main.transform.position - transform.position).normalized, Quaternion.identity);
         number.GetComponent<DamageNumber>().SetValue(damage, Col);
