@@ -202,23 +202,24 @@ public class Outline : MonoBehaviour {
       }
     }
 
-    // Clear UV3 on skinned mesh renderers
-    foreach (var skinnedMeshRenderer in GetComponentsInChildren<SkinnedMeshRenderer>()) {
+    foreach (var skinnedMeshRenderer in GetComponentsInChildren<SkinnedMeshRenderer>())
+    {
+        if (!registeredMeshes.Add(skinnedMeshRenderer.sharedMesh)) continue;
 
-      // Skip if UV3 has already been reset
-      if (!registeredMeshes.Add(skinnedMeshRenderer.sharedMesh)) {
-        continue;
-      }
+        // 💥 This line just clears UVs, doesn't do what it does for MeshFilter
+        // skinnedMeshRenderer.sharedMesh.uv4 = new Vector2[skinnedMeshRenderer.sharedMesh.vertexCount];
 
-      // Clear UV3
-      skinnedMeshRenderer.sharedMesh.uv4 = new Vector2[skinnedMeshRenderer.sharedMesh.vertexCount];
+        // ✅ Instead, do this like the MeshFilter case:
+        var index = bakeKeys.IndexOf(skinnedMeshRenderer.sharedMesh);
+        var smoothNormals = (index >= 0) ? bakeValues[index].data : SmoothNormals(skinnedMeshRenderer.sharedMesh);
+        skinnedMeshRenderer.sharedMesh.SetUVs(3, smoothNormals);
 
-      // Combine submeshes
-      CombineSubmeshes(skinnedMeshRenderer.sharedMesh, skinnedMeshRenderer.sharedMaterials);
+        CombineSubmeshes(skinnedMeshRenderer.sharedMesh, skinnedMeshRenderer.sharedMaterials);
     }
-  }
 
-  List<Vector3> SmoothNormals(Mesh mesh) {
+    }
+
+    List<Vector3> SmoothNormals(Mesh mesh) {
 
     // Group vertices by location
     var groups = mesh.vertices.Select((vertex, index) => new KeyValuePair<Vector3, int>(vertex, index)).GroupBy(pair => pair.Key);

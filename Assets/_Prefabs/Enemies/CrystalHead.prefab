@@ -119,6 +119,7 @@ GameObject:
   - component: {fileID: 8582637678927594095}
   - component: {fileID: 5849893152138461132}
   - component: {fileID: 5281054923219915767}
+  - component: {fileID: 2251180822368428590}
   m_Layer: 8
   m_Name: CrystalHead
   m_TagString: Untagged
@@ -600,6 +601,24 @@ MonoBehaviour:
   EnemyMass: 1.8
   stateChangeDebug: 0
   animator: {fileID: 0}
+--- !u!114 &2251180822368428590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1210316982324589196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.6415094, g: 0, b: 0, a: 1}
+  outlineWidth: 7.7
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &1309143756166751293
 GameObject:
   m_ObjectHideFlags: 0

@@ -1160,6 +1160,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cfe63c8c53187e041bf5c943b6fcab80, type: 3}
       insertIndex: -1
       addedObject: {fileID: 916339523809837447}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cfe63c8c53187e041bf5c943b6fcab80, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -9176869074678739507}
     - targetCorrespondingSourceObject: {fileID: 7368002659860420144, guid: cfe63c8c53187e041bf5c943b6fcab80, type: 3}
       insertIndex: -1
       addedObject: {fileID: 293902723490088794}
@@ -1338,6 +1341,7 @@ MonoBehaviour:
     pitchVariation: {x: 0, y: 0}
     desiredVolume: 0
     sounds: []
+    DetectionRadius: 0
   - name: TakeDamageBladed
     pitchVariation: {x: 0.9, y: 1.1}
     desiredVolume: 1
@@ -1346,10 +1350,12 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 9e6c5d5620c8fb948b92cff8298a2bc6, type: 3}
     - {fileID: 8300000, guid: fd4cafb995c7be44d8a7c87b53e81760, type: 3}
     - {fileID: 8300000, guid: 5665604e0e593134181969a263df259f, type: 3}
+    DetectionRadius: 0
   - name: TakeDamageBlunt
     pitchVariation: {x: 0, y: 0}
     desiredVolume: 0
     sounds: []
+    DetectionRadius: 0
 --- !u!114 &6466258615183946434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1405,6 +1411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TimeBetweenAttacks: 1.6
   MoveSpeed: 8
+  RepositionDistance: 0
   JumpPower: 5
   DashDistance: 7
   DashTime: 0.6
@@ -1582,6 +1589,24 @@ MonoBehaviour:
   EnemyMass: 3
   stateChangeDebug: 0
   animator: {fileID: 0}
+--- !u!114 &-9176869074678739507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 487451292801484044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.6415094, g: 0, b: 0, a: 1}
+  outlineWidth: 7.7
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!4 &975054551621869494 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cfe63c8c53187e041bf5c943b6fcab80, type: 3}
