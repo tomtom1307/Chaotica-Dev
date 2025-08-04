@@ -31,6 +31,7 @@ public class Weapon_Attack_Data_BlockParry : Weapon_Attack_Data_Melee
     public override void ExitAttack(WeaponHolder W)
     {
         base.ExitAttack(W);
+        W.Weapon_anim.SetInteger("ComboInt", 0);
         W.TriggerBlock(false);
     }
 }

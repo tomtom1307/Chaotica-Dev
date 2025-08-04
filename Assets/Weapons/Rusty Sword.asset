@@ -97,7 +97,9 @@ MonoBehaviour:
         KnockBackForce: 500
         FinalHitMultiplier: 1
         HitFOV: 120
-        Forces: []
+        Forces:
+        - {x: 0, y: 0, z: 0}
+        - {x: 0, y: 0, z: 0}
         VFX: {fileID: 0}
         attack_range: 3
         MaxViewAngle: 45

@@ -9,24 +9,30 @@ public class WI_HoldRelease : Weapon_Input
     bool performedHold;
     public override void _Input(int AttackNum, WeaponHolder WH, InputAction.CallbackContext ctx)
     {
-        if (ctx.interaction is HoldInteraction)
+        
+        if (ctx.started)
         {
-            if (ctx.started)
+            WH.Weapon_anim.SetInteger("ComboInt", 0);
+            if (CheckState(AttackNum, WH))
             {
-                if (CheckState(AttackNum, WH))
-                {
-                    WH.EnterAttack(AttackNum, true);
-                    Debug.Log("IsHold");
-                }
-                else
-                {
-                    WH.QueueAttack(AttackNum, ctx, queueExpirationTime, alt: true);
-                }
+                
+                WH.ComboCounter = 0;
+                WH.EnterAttack(AttackNum, true);
             }
-            if (WH.Weapon_anim.GetBool("Alt") && ctx.canceled && !CheckState(AttackNum, WH))
+            else
             {
-                WH.Weapon_anim.SetBool("Attacking", false);
+                WH.QueueAttack(AttackNum, ctx, queueExpirationTime, alt: true);
             }
         }
+
+        //Button UP
+        if (ctx.ReadValue<float>() == 0)
+        {
+            Debug.Log("Button Up");
+            WH.Weapon_anim.SetInteger("ComboInt", 1);
+        }
+
+
     }
+
 }

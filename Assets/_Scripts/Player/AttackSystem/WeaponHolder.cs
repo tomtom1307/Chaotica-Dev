@@ -182,6 +182,8 @@ public class WeaponHolder : MonoBehaviour
         //Set State and variables
         State = AttackState.Attacking;
 
+        
+
         //
         CurrentAttackData = data.Weapon_Attacks[i];
         playerMovement.AttackMoveSpeed(CurrentAttackData.MoveSpeedMult, CurrentAttackData.AllowAgility);
@@ -191,6 +193,8 @@ public class WeaponHolder : MonoBehaviour
         
 
         Weapon_anim.SetInteger("AttackType", i);
+
+        
 
         if (!alt)
         {
@@ -266,7 +270,7 @@ public class WeaponHolder : MonoBehaviour
     private InputAction.CallbackContext queuedContext;
     private float queueTime;
     private float queueExpirationTime;
-
+    [HideInInspector] public bool QueuedRelease;
     public void QueueAttack(int attackNum, InputAction.CallbackContext ctx, float expirationTime, bool alt = false)
     {
         if(QueueDebugMessages) Debug.Log("Queued Attack");
@@ -287,6 +291,7 @@ public class WeaponHolder : MonoBehaviour
         {
             if (QueueDebugMessages) Debug.Log("Queue Expired");
             queuedAttack = false;
+            QueuedRelease = false;
             return;
         }
 
