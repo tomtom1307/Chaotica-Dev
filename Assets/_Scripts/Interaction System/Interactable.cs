@@ -21,11 +21,10 @@ public class Interactable : MonoBehaviour
     }
 
 
-    public void Interact(GameObject player)
+    public virtual void Interact(GameObject player)
     {
         interactor = player;
         onInteraction.Invoke();
-
     }
 
 

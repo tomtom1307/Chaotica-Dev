@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d778cab78522de240ba07a15bc87860c, type: 3}
+  m_Name: CrateLootTable
+  m_EditorClassIdentifier: 
+  lootTableElements:
+  - LootName: Bread
+    LootItems:
+    - gameObject: {fileID: 4187174722898204378, guid: cc35e87e0ffb3244ba5dc2acc9e1f766, type: 3}
+      Probability: 50
+      amount: 0
+    - gameObject: {fileID: 4187174722898204378, guid: cc35e87e0ffb3244ba5dc2acc9e1f766, type: 3}
+      Probability: 20
+      amount: 1
+    - gameObject: {fileID: 4187174722898204378, guid: cc35e87e0ffb3244ba5dc2acc9e1f766, type: 3}
+      Probability: 10
+      amount: 2
+    - gameObject: {fileID: 4187174722898204378, guid: cc35e87e0ffb3244ba5dc2acc9e1f766, type: 3}
+      Probability: 5
+      amount: 3
