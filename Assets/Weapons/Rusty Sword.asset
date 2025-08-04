@@ -54,7 +54,7 @@ MonoBehaviour:
         - {x: 0, y: 0, z: 6}
         VFX: {fileID: 5314773374567602985, guid: 9da12960a7ac7ed429f8cca416b18a77, type: 3}
         attack_range: 3
-        MaxViewAngle: 45
+        MaxViewAngle: 75
         secondaryDamageMultiplier: 0.4
     - rid: 3205115430689309103
       type: {class: Weapon_Attack_Data_AOE, ns: , asm: Assembly-CSharp}
@@ -86,7 +86,7 @@ MonoBehaviour:
         weaponInputLogic: {fileID: 11400000, guid: 3a3c10ed0c3707e4285081cab138191a, type: 2}
         attackType: 4
         damageType: 0
-        damage: 30
+        damage: 25
         ComboLength: 1
         StaggerDamage: 5
         AttackWeight: 1
@@ -101,7 +101,7 @@ MonoBehaviour:
         - {x: 0, y: 0, z: 0}
         - {x: 0, y: 0, z: 0}
         VFX: {fileID: 0}
-        attack_range: 3
-        MaxViewAngle: 45
+        attack_range: 2.5
+        MaxViewAngle: 90
         secondaryDamageMultiplier: 1
         DamageReduction: 0.2

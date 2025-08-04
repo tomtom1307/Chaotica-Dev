@@ -5,7 +5,10 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
     public Image UIHealthBarImage; 
+    public Image UIHealthEaseBarImage;
 
+    [SerializeField ]private float lerpspeed1 = 0.01f;
+    [SerializeField ]private float lerpspeed2 = 0.01f;
 
     [SerializeField] float health;
 
@@ -51,7 +54,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void Heal(float Amount)
     {
-        health += Mathf.Clamp(Amount, 0, maxHealth);
+        health = Mathf.Clamp(health + Amount, 0, maxHealth);
         //OtherStuff like SFX + visuals
     }
 
@@ -124,7 +127,8 @@ public class PlayerHealth : MonoBehaviour
     }
 
     public void UpdateHealthBar() {
-        UIHealthBarImage.fillAmount = health / maxHealth;
+        if(UIHealthBarImage.fillAmount != health/maxHealth) { UIHealthBarImage.fillAmount = Mathf.Lerp(UIHealthBarImage.fillAmount, health/maxHealth, lerpspeed1); }
+        if(UIHealthBarImage.fillAmount != UIHealthEaseBarImage.fillAmount) { UIHealthEaseBarImage.fillAmount = Mathf.Lerp(UIHealthEaseBarImage.fillAmount, health/maxHealth, lerpspeed2); }
     }
 
 

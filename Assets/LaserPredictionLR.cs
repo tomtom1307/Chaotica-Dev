@@ -17,7 +17,7 @@ public class LaserPredictionLR : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         lr.SetPosition(0, transform.position);
 
