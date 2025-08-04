@@ -273,6 +273,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2576812946705734547, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: ede1b6340de25a644b77507b0ece97de, type: 2}
     - target: {fileID: 3009824610264121424, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -280,6 +284,10 @@ PrefabInstance:
     - target: {fileID: 3009824610264121424, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4485967108917030190, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: QueueDebugMessages
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8248619696985984631, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
       propertyPath: m_Name

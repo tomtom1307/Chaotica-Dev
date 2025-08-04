@@ -290,7 +290,7 @@ public class WeaponHolder : MonoBehaviour
             return;
         }
 
-        if (State == AttackState.Ready || (State == AttackState.Combo && data.Weapon_Attacks[queuedAttackNum].ComboLength>1)) // Player can attack now
+        if (State == AttackState.Ready || (State == AttackState.Combo )) // Player can attack now
         {
             if (QueueDebugMessages) Debug.Log("Executing Queued Attack");
             
