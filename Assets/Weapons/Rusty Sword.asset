@@ -64,7 +64,7 @@ MonoBehaviour:
         weaponInputLogic: {fileID: 11400000, guid: 64e432b799d9359488024441752d2110, type: 2}
         attackType: 3
         damageType: 0
-        damage: 500
+        damage: 1
         ComboLength: 1
         StaggerDamage: 5
         AttackWeight: 3
@@ -86,7 +86,7 @@ MonoBehaviour:
         weaponInputLogic: {fileID: 11400000, guid: 3a3c10ed0c3707e4285081cab138191a, type: 2}
         attackType: 4
         damageType: 0
-        damage: 100
+        damage: 30
         ComboLength: 1
         StaggerDamage: 5
         AttackWeight: 1
@@ -94,9 +94,12 @@ MonoBehaviour:
         hasCooldown: 1
         cooldown: 0.1
         AllowAgility: 0
-        KnockBackForce: 100
-        FinalHitMultiplier: 100
+        KnockBackForce: 500
+        FinalHitMultiplier: 1
         HitFOV: 120
         Forces: []
         VFX: {fileID: 0}
+        attack_range: 3
+        MaxViewAngle: 45
+        secondaryDamageMultiplier: 1
         DamageReduction: 0.2

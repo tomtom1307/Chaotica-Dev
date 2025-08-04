@@ -412,6 +412,8 @@ public class WeaponHolder : MonoBehaviour
     {
         if (TF)
         {
+            Weapon_Attack_Data_BlockParry data = CurrentAttackData as Weapon_Attack_Data_BlockParry;
+            if (data != null) { data.Parry(this); }
             SetPlayerHealthState(PlayerHealth.DamageState.Parrying);
         }
         else

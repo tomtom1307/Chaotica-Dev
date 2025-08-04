@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Weapon_Attack_Data_BlockParry : Weapon_Attack_Data_Base
+public class Weapon_Attack_Data_BlockParry : Weapon_Attack_Data_Melee
 {
     public float DamageReduction;
     public Weapon_Attack_Data_BlockParry()
@@ -12,12 +12,14 @@ public class Weapon_Attack_Data_BlockParry : Weapon_Attack_Data_Base
 
     public override void PerformAttack(WeaponHolder W)
     {
-        base.PerformAttack(W);
         W.TriggerBlock(true);
         Debug.Log("Did the thing");
-        
     }
 
+    public void Parry(WeaponHolder W)
+    {
+        base.PerformAttack(W);
+    }
 
     public override void EnterAttack(WeaponHolder W)
     {

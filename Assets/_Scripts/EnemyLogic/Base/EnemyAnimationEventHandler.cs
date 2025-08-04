@@ -40,7 +40,7 @@ public class EnemyAnimationEventHandler : MonoBehaviour
 
     public void PlaySound(EnemySoundSource.SoundType soundType)
     {
-        soundSource.PlaySound(soundType, -1);
+        soundSource.PlaySound(soundType);
     }
 
     public void SpawnVFX(int i)
