@@ -11,7 +11,7 @@ public class Food : Interactable
 
         PlayerHealth.instance.Heal(HealAmount);
         //DO SFX AND VFX
-
+        PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.Eat);
         Destroy(gameObject);
     }
 

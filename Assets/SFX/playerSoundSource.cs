@@ -50,7 +50,8 @@ public class PlayerSoundSource : SourceSoundManager<PlayerSoundSource.SoundType>
         CrystalPickup,
         Parry,
         Sliding,
-        SlideStop
+        SlideStop,
+        Eat
     }
 
 

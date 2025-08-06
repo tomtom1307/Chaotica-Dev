@@ -233,6 +233,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1339538049585677, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: lerpspeed1
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 2498856036708082496, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -285,6 +289,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: clips.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: clips.Array.data[9].name
+      value: Eat
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: clips.Array.data[9].desiredVolume
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: clips.Array.data[9].pitchVariation.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: clips.Array.data[9].pitchVariation.y
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: clips.Array.data[9].sounds.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398970947235143369, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: 'clips.Array.data[9].sounds.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: f80a7001ec7d2044da6b77533c978de1, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
