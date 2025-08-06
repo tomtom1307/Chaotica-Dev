@@ -61,13 +61,13 @@ VisualEffect:
       m_Array: []
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 6.574697, y: 0.54789144, z: 0, w: 1}
+      - m_Value: {x: 26.298792, y: 2.191566, z: 0, w: 1}
         m_Name: Sparks Color
         m_Overridden: 1
-      - m_Value: {x: 20.865906, y: 1.7388256, z: 0, w: 1}
+      - m_Value: {x: 83.46362, y: 6.9553022, z: 0, w: 1}
         m_Name: FlashColor
         m_Overridden: 1
-      - m_Value: {x: 8.777736, y: 0.7353077, z: 0, w: 1}
+      - m_Value: {x: 35.110947, y: 2.941231, z: 0, w: 1}
         m_Name: FlameColor1
         m_Overridden: 1
       - m_Value: {x: 6.574696, y: 0, z: 0, w: 1}
@@ -146,7 +146,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3beb604ba82adfc45be4d596328b40fa, type: 3}
   Range: 10
   Force: 77805
-  UpForce: 1
+  UpForce: 2
   camShakeProperties:
     angle: 3.13
     strenght: 1.22
@@ -264,7 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7d626cff35e25e48914239bc39bb21b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Lifetime: 2
+  Lifetime: 5
 --- !u!114 &2184841804577053342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,4 +277,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ad410e6a538c5c4ba9cc871edb66c1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playRate: 0.1
+  playRate: 0.7
