@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class AbilityHolder : MonoBehaviour
@@ -37,8 +39,8 @@ public class AbilityHolder : MonoBehaviour
                 if (Input.GetKeyDown(key))
                 {
                     // activate
-                    ability.Activate(gameObject);
                     abilityState = AbilityState.active;
+                    ability.Activate(gameObject, this);
                     activeTime = ability.activeTime;
                     
                 }
@@ -47,12 +49,14 @@ public class AbilityHolder : MonoBehaviour
                 //time that ability is used
                 if (activeTime > 0)
                 {
+                    ability.AbilityUpdate(gameObject, this);
                     hUD.AbilityActive();
                     activeTime -= Time.deltaTime;
                 }
                 else
                 {
                     abilityState = AbilityState.cooldown;
+                    ability.Deactivate(gameObject, this);
                     cooldownTime = ability.cooldownTime;
                 }
             break;
@@ -77,4 +81,24 @@ public class AbilityHolder : MonoBehaviour
     {
         hUD = HUD;
     }
+
+    public void StartCoroutineUpdateLineRenderer(GameObject lineR, Transform startPos, Transform endPos)
+    {
+        StartCoroutine(UpdateLineRenderer(lineR, startPos, endPos));
+    }
+
+    float RefreshRate = 0.01f;
+
+    IEnumerator UpdateLineRenderer(GameObject lineR, Transform startPos, Transform endPos)
+    {
+        if(abilityState  == AbilityState.active)
+        {
+            Debug.Log("Updated LR");
+            lineR.GetComponent<LightningLR>().SetPosition(startPos, endPos);
+            RefreshRate = 0.01f;
+            yield return new WaitForSeconds(RefreshRate);
+            StartCoroutine(UpdateLineRenderer(lineR, startPos, endPos));
+        }
+    }
+
 }

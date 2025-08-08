@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 2251180822368428590}
   m_Layer: 8
   m_Name: CrystalHead
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -598,7 +598,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Accuracy: 0
-  EnemyMass: 1.8
+  EnemyMass: 50
   stateChangeDebug: 0
   animator: {fileID: 0}
 --- !u!114 &2251180822368428590

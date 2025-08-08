@@ -6,7 +6,7 @@ public class SloMo : Ability
     public float SlowPercent;
     
 
-    public override void Activate(GameObject parent)
+    public override void Activate(GameObject parent, AbilityHolder holder)
     {
         GameManager.instance.SlowTimeScale(SlowPercent, activeTime);
     }

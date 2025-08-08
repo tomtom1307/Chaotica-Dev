@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8e84239589a3cb498abba76e1da88ff, type: 3}
+  m_Name: ChainLightning
+  m_EditorClassIdentifier: 
+  Display: {fileID: 0}
+  name: JumpAbility
+  activeTime: 5
+  cooldownTime: 1
+  EnemyLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  DPS: 3
+  JumpRange: 10
+  MaxViewAngle: 15
+  LightningPrefab: {fileID: 5330476123782702174, guid: aa09df9d38b1d1945a1d72928a58f57f, type: 3}

@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: -5221572623527121588}
   m_Layer: 8
   m_Name: Orbling
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -377,7 +377,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   Accuracy: 9.93
-  EnemyMass: 2
+  EnemyMass: 30
   stateChangeDebug: 0
   animator: {fileID: 0}
 --- !u!135 &6081056787126832431

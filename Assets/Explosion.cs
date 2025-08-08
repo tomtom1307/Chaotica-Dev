@@ -1,6 +1,7 @@
 using Project;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
@@ -8,6 +9,7 @@ public class Explosion : MonoBehaviour
 {
     public List<AudioClip> audioClips;
     public float Range;
+    public float Damage;
     public float Force;
     public float UpForce;
     public CamShake.CamShakeProperties camShakeProperties;
@@ -23,10 +25,27 @@ public class Explosion : MonoBehaviour
         foreach(Collider collider in colliders)
         {
             Rigidbody rb;
-            if(collider.TryGetComponent<Rigidbody>(out rb))
+            rb = collider.GetComponent<Rigidbody>();
+            if(rb == null) rb = collider.GetComponentInChildren<Rigidbody>();
+            if (rb == null) continue;
+
+
+            if (rb.CompareTag("Enemy"))
             {
-                rb.AddExplosionForce(Force, transform.position, Range, UpForce);
+                EnemyBrain Eb = rb.GetComponent<EnemyBrain>();
+                if(Eb != null)
+                    Eb.TogglePhysics(true);
             }
+
+            Damagable damagable;
+            if(rb.TryGetComponent<Damagable>(out damagable))
+            {
+                damagable.TakeDamage(Damage);
+            }
+
+            
+            rb.AddExplosionForce(Force, transform.position, Range, UpForce);
+
         }
 
     }

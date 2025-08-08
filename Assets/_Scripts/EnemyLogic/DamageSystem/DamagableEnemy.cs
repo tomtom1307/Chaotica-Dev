@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
 
@@ -76,4 +78,37 @@ public class DamagableEnemy : Damagable
     {
         base.Update();
     }
+
+    
+    public GameObject GetClosestEnemy(float Radius)
+    {
+        List<Collider> enemiesInRange = new List<Collider>();
+        enemiesInRange = Physics.OverlapSphere(transform.position, Radius, gameObject.layer).ToList();
+
+        if (enemiesInRange.Count > 0)
+        {
+            GameObject bestTarget = null;
+            float closestDistance = Mathf.Infinity;
+            Vector3 currentPosition = transform.position;
+
+            foreach (Collider enemy in enemiesInRange)
+            {
+                Vector3 directionToTarget = enemy.transform.position - currentPosition;
+                float distToTarget = directionToTarget.sqrMagnitude;
+
+                if (distToTarget < closestDistance)
+                {
+                    closestDistance = distToTarget;
+                    bestTarget = enemy.gameObject;
+                }
+            }
+            return bestTarget;
+        }
+        else
+        {
+            return null;
+        }
+
+    }
+
 }

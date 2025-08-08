@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 4059585169910681716}
   - component: {fileID: -2001072704662514215}
   - component: {fileID: 2184841804577053342}
+  - component: {fileID: 8460752383685350047}
+  - component: {fileID: -6455520075070956263}
   m_Layer: 0
   m_Name: Explosion
   m_TagString: Untagged
@@ -32,7 +34,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.8728395, y: 13.4934, z: -33.82012}
-  m_LocalScale: {x: 3.91, y: 3.91, z: 3.91}
+  m_LocalScale: {x: 3.1800003, y: 3.1800003, z: 3.1800003}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -64,13 +66,13 @@ VisualEffect:
       - m_Value: {x: 26.298792, y: 2.191566, z: 0, w: 1}
         m_Name: Sparks Color
         m_Overridden: 1
-      - m_Value: {x: 83.46362, y: 6.9553022, z: 0, w: 1}
+      - m_Value: {x: 148.76843, y: 39.671585, z: 0, w: 1}
         m_Name: FlashColor
         m_Overridden: 1
-      - m_Value: {x: 35.110947, y: 2.941231, z: 0, w: 1}
+      - m_Value: {x: 35.11095, y: 13.459198, z: 0, w: 1}
         m_Name: FlameColor1
         m_Overridden: 1
-      - m_Value: {x: 6.574696, y: 0, z: 0, w: 1}
+      - m_Value: {x: 13.149394, y: 0, z: 0, w: 1}
         m_Name: FlameColor2
         m_Overridden: 1
     m_Uint:
@@ -143,9 +145,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioClips:
-  - {fileID: 8300000, guid: 3beb604ba82adfc45be4d596328b40fa, type: 3}
+  - {fileID: 8300000, guid: d44957c1bd60caf43a15c79eca13ea27, type: 3}
   Range: 10
-  Force: 77805
+  Damage: 0
+  Force: 70000
   UpForce: 2
   camShakeProperties:
     angle: 3.13
@@ -168,7 +171,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.535
+  m_Volume: 0.925
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -277,4 +280,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ad410e6a538c5c4ba9cc871edb66c1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playRate: 0.7
+  playRate: 1
+--- !u!170 &8460752383685350047
+AudioDistortionFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6014223698007260587}
+  m_Enabled: 1
+  m_DistortionLevel: 0.9
+--- !u!164 &-6455520075070956263
+AudioReverbFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6014223698007260587}
+  m_Enabled: 1
+  m_DryLevel: 0
+  m_Room: -1000
+  m_RoomHF: -300
+  m_DecayTime: 2.31
+  m_DecayHFRatio: 0.64
+  m_ReflectionsLevel: -711
+  m_ReverbLevel: 83
+  m_ReverbDelay: 0.017
+  m_Diffusion: 100
+  m_Density: 100
+  m_HFReference: 5000
+  m_RoomLF: 0
+  m_LFReference: 250
+  m_ReflectionsDelay: 0
+  m_ReverbPreset: 6
