@@ -1,7 +1,7 @@
-using NUnit.Framework;
-using System;
+
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using UnityEditor.Playables;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -9,22 +9,33 @@ using static UnityEngine.GraphicsBuffer;
 public class ChainLightning : Ability
 {
     public float DPS = 3;
-    public int EnemyNumber;
+    public int MaxEnemiesInChain = 1;
     public float JumpRange = 10;
     public float MaxViewAngle = 15;
     [SerializeField] GameObject LightningPrefab;
+    //time between each hop
+    public float LinkDelay = 0.12f;
 
     List<GameObject> spawnedLRs = new List<GameObject>();
+
+
+    public override bool Check(GameObject parent, AbilityHolder holder)
+    {
+        var target = GetBestEnemy(JumpRange, MaxViewAngle, parent);
+        return target != null && base.Check(parent, holder);
+    }
 
     public override void Activate(GameObject parent, AbilityHolder holder)
     {
         base.Activate(parent, holder);
-        GameObject target = GetBestEnemy(JumpRange, MaxViewAngle, parent);
-        if(target != null)
-        {
-            StartShooting(parent,target);
-        }
 
+        // Ensure there is a runtime component on the caster
+        var rt = parent.GetComponent<ChainLightningRuntime>();
+        if (rt == null) rt = parent.AddComponent<ChainLightningRuntime>();
+
+        // Initialize and begin
+        rt.Init(this, holder, LightningPrefab);
+        rt.Begin();
     }
 
     public override void AbilityUpdate(GameObject parent, AbilityHolder holder)
@@ -35,36 +46,25 @@ public class ChainLightning : Ability
     public override void Deactivate(GameObject parent, AbilityHolder holder)
     {
         base.Deactivate(parent, holder);
-        StopShooting();
+
+        var rt = parent.GetComponent<ChainLightningRuntime>();
+        if (rt != null) rt.End();
     }
 
 
 
 
-    public void StartShooting(GameObject parent, GameObject target)
-    {
-        if(LightningPrefab != null)
-        {
-            NewLineRenderer(parent.transform, target.transform);
-        }
-    }
 
-    public void StopShooting()
-    {
-        for(int i = 0; i < spawnedLRs.Count; i++)
-        {
-            Destroy(spawnedLRs[i]);
-        }
-        spawnedLRs.Clear();
-    }
 
-    public void NewLineRenderer(Transform startPos, Transform endPos)
+    public void NewLineRenderer(Transform startPos, Transform endPos, bool fromPlayer = false)
     {
         GameObject lineRend = Instantiate(LightningPrefab);
         Debug.Log(lineRend);
         spawnedLRs.Add(lineRend);
-        holder.StartCoroutineUpdateLineRenderer(lineRend, startPos, endPos);
+        holder.StartCoroutineUpdateLineRenderer(lineRend, startPos, endPos, fromPlayer);
     }
+
+
 
 }
 

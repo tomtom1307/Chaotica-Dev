@@ -13,6 +13,12 @@ public class Ability : ScriptableObject
     public float cooldownTime;
     [SerializeField] protected LayerMask EnemyLayerMask;
     protected AbilityHolder holder;
+
+    public virtual bool Check(GameObject parent, AbilityHolder holder)
+    {
+        return true;
+    }
+
     public virtual void Activate(GameObject parent, AbilityHolder holder)
     {
         this.holder = holder;

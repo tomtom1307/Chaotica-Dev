@@ -137,11 +137,14 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
+    public Vector3 groundSphereOffset;
+    public float groundSphereRadius;
+
     public void Grounding()
     {
         if (!isGrounded)
         {
-            isGrounded = Physics.CheckSphere(transform.position + 0.3f * Vector3.up, 0.4f, whatisGround);
+            isGrounded = Physics.CheckSphere(transform.position + groundSphereOffset, groundSphereRadius, whatisGround);
             if (isGrounded) // OnLanding
             {
                 state = PlayerMechanimState.Walking;
@@ -158,7 +161,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            isGrounded = Physics.CheckSphere(transform.position + 0.3f * Vector3.up, 0.4f, whatisGround);
+            isGrounded = Physics.CheckSphere(transform.position + groundSphereOffset, groundSphereRadius, whatisGround);
         }
     }
 

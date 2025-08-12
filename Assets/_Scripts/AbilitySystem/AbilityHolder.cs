@@ -8,7 +8,9 @@ public class AbilityHolder : MonoBehaviour
     float cooldownTime;
     float activeTime;
     HUDAbility hUD;
-    
+
+    public bool IsAbilityActive => abilityState == AbilityState.active;
+
     enum AbilityState
     {
         ready,
@@ -39,6 +41,10 @@ public class AbilityHolder : MonoBehaviour
                 if (Input.GetKeyDown(key))
                 {
                     // activate
+                    if(!ability.Check(gameObject, this))
+                    {
+                        return;
+                    }
                     abilityState = AbilityState.active;
                     ability.Activate(gameObject, this);
                     activeTime = ability.activeTime;
@@ -82,23 +88,38 @@ public class AbilityHolder : MonoBehaviour
         hUD = HUD;
     }
 
-    public void StartCoroutineUpdateLineRenderer(GameObject lineR, Transform startPos, Transform endPos)
+
+    #region Chain Lightning
+
+    public void StartCoroutineUpdateLineRenderer(GameObject lineR, Transform startPos, Transform endPos, bool fromPlayer = false)
     {
-        StartCoroutine(UpdateLineRenderer(lineR, startPos, endPos));
+        StartCoroutine(UpdateLineRenderer(lineR, startPos, endPos, fromPlayer));
     }
 
     float RefreshRate = 0.01f;
 
-    IEnumerator UpdateLineRenderer(GameObject lineR, Transform startPos, Transform endPos)
+    IEnumerator UpdateLineRenderer(GameObject lineR, Transform startPos, Transform endPos, bool fromPlayer = false)
     {
-        if(abilityState  == AbilityState.active)
+        ChainLightning CL_ability = ability as ChainLightning;
+        if (abilityState  == AbilityState.active)
         {
             Debug.Log("Updated LR");
             lineR.GetComponent<LightningLR>().SetPosition(startPos, endPos);
             RefreshRate = 0.01f;
             yield return new WaitForSeconds(RefreshRate);
-            StartCoroutine(UpdateLineRenderer(lineR, startPos, endPos));
+
+            if (fromPlayer)
+            {
+                
+                StartCoroutine(UpdateLineRenderer(lineR, startPos, ability.GetBestEnemy(CL_ability.JumpRange, CL_ability.MaxViewAngle, gameObject).transform));
+            }
+            else
+            {
+                StartCoroutine(UpdateLineRenderer(lineR, startPos, endPos));
+            }
+
+            
         }
     }
-
+    #endregion
 }
