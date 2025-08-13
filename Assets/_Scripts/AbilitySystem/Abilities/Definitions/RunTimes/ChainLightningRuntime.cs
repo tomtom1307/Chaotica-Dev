@@ -124,13 +124,16 @@ public class ChainLightningRuntime : MonoBehaviour
             var first = config.GetBestEnemy(config.JumpRange, config.MaxViewAngle, gameObject);
             if (first != null)
             {
-                chainTargets.Add(first.transform);
-                changed = true;
-
-                // only when we go from 0 -> 1 do we delay the next hop
-                nextLinkAllowedAt = Time.time + config.LinkDelay;
-                lastPrimaryOkTime = Time.time;
+                var anchor = GetAnchorFromGO(first);
+                if (anchor != null)
+                {
+                    chainTargets.Add(anchor);            //  anchor, not first.transform
+                    changed = true;
+                    nextLinkAllowedAt = Time.time + config.LinkDelay;
+                    lastPrimaryOkTime = Time.time;
+                }
             }
+
         }
         else // we have a primary, check stickiness
         {
@@ -146,10 +149,13 @@ public class ChainLightningRuntime : MonoBehaviour
                 }
                 else if (first.transform != chainTargets[0])
                 {
-                    chainTargets[0] = first.transform;
-                    changed = true;
-                    lastPrimaryOkTime = Time.time;
-                    // note: don't touch nextLinkAllowedAt here
+                    var anchor = GetAnchorFromGO(first);
+                    if (anchor != null)
+                    {
+                        chainTargets[0] = anchor;            //  anchor, not root
+                        changed = true;
+                        lastPrimaryOkTime = Time.time;
+                    }
                 }
             }
         }
@@ -205,47 +211,63 @@ public class ChainLightningRuntime : MonoBehaviour
 
     private Transform FindNextLink(Transform from)
     {
-        // Simple nearest-in-sphere not already in chain
-        // Replace with your own enemy query / layer mask / LOS checks as needed.
-        var hits = Physics.OverlapSphere(from.position, config.JumpRange);
+        if (!from) return null;
+
+        var hits = Physics.OverlapSphere(from.position, config.JumpRange, ~0, QueryTriggerInteraction.Ignore);
+
         float bestDist = float.MaxValue;
-        Transform best = null;
+        Transform bestAnchor = null;
 
         foreach (var h in hits)
         {
-            var tr = h.transform;
-            if (tr == from) continue;
-            if (tr == transform) continue; // skip self
-            if (chainTargets.Contains(tr)) continue;
-            if (!IsEnemy(tr)) continue;
+            if (!h) continue;
 
-            float d = (tr.position - from.position).sqrMagnitude;
+            // always resolve to Damagable + anchor
+            var anchor = GetAnchorFromGO(h.gameObject);
+            if (!anchor) continue;
+
+            // skip self/caster
+            if (anchor.root == from.root) continue;
+            if (anchor.root == transform.root) continue;
+
+            // skip if this enemy (by root) is already in the chain
+            bool already = false;
+            for (int i = 0; i < chainTargets.Count; i++)
+            {
+                var t = chainTargets[i];
+                if (t && t.root == anchor.root) { already = true; break; }
+            }
+            if (already) continue;
+
+            // distance test
+            float d = (anchor.position - from.position).sqrMagnitude;
             if (d < bestDist)
             {
                 bestDist = d;
-                best = tr;
+                bestAnchor = anchor;  // always anchor
             }
         }
 
-        return best;
+        return bestAnchor;
     }
+
 
     private bool IsEnemy(Transform t)
     {
-        // Customize: tag, layer, component check, etc.
-        return t.CompareTag("Enemy");
+        var dmg = Damagable.CheckForDamagable(t ? t.gameObject : null);
+        return dmg && dmg.CompareTag("Enemy");
     }
 
     private void RebuildChain(bool forceReacquireFirst)
     {
         chainTargets.Clear();
 
-        Transform first = null;
         var go = config.GetBestEnemy(config.JumpRange, config.MaxViewAngle, gameObject);
-        if (go != null) first = go.transform;
-
-        if (first != null) chainTargets.Add(first);
+        var anchor = GetAnchorFromGO(go);
+        if (anchor != null)
+            chainTargets.Add(anchor);          
     }
+
 
 
     #endregion
@@ -301,7 +323,7 @@ public class ChainLightningRuntime : MonoBehaviour
 
             // Adapt to your damage system:
             // IDamageable, Health, or SendMessage
-            var dmg = t.GetComponent<Damagable>();
+            var dmg = Damagable.CheckForDamagable(t.gameObject);
             if (dmg != null)
             {
                 dmg.TakeDamage(amountThisTick);
@@ -321,6 +343,18 @@ public class ChainLightningRuntime : MonoBehaviour
             if (spawnedLines[i]) Destroy(spawnedLines[i]);
         }
         spawnedLines.Clear();
+    }
+
+    private Transform GetAnchorFromGO(GameObject go)
+    {
+        if (!go) return null;
+        var dmg = Damagable.CheckForDamagable(go);
+        return dmg ? dmg.GetTargetPos() : null;
+    }
+
+    private Transform GetAnchorFromTransform(Transform t)
+    {
+        return t ? GetAnchorFromGO(t.gameObject) : null;
     }
 
     #endregion

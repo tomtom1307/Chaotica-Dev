@@ -81,7 +81,7 @@ public class Ability : ScriptableObject
             Vector3 dirToEnemy = (col.transform.position - Camera.main.transform.position).normalized;
             float angle = Vector3.Angle(Camera.main.transform.forward, dirToEnemy);
 
-            if (angle < MaxAngle && angle < closestAngle)
+            if (angle < MaxAngle && angle < closestAngle && col.CompareTag("Enemy"))
             {
                 closestAngle = angle;
                 if(col != null) bestTarget = col.gameObject;
