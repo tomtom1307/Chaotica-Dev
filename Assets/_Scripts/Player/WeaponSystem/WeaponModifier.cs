@@ -7,7 +7,7 @@ public abstract class WeaponModifier
 {
     public string name; 
     float probability;
-    public WeaponDataSO.Rarity rarity;
+    public Rarity rarity;
 
 
     public WeaponModifier(float prob)

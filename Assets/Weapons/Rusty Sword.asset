@@ -64,7 +64,7 @@ MonoBehaviour:
         weaponInputLogic: {fileID: 11400000, guid: 64e432b799d9359488024441752d2110, type: 2}
         attackType: 3
         damageType: 0
-        damage: 1
+        damage: 200
         ComboLength: 1
         StaggerDamage: 5
         AttackWeight: 3
@@ -92,7 +92,7 @@ MonoBehaviour:
         AttackWeight: 1
         MoveSpeedMult: 0.5
         hasCooldown: 1
-        cooldown: 0.1
+        cooldown: 0.3
         AllowAgility: 0
         KnockBackForce: 500
         FinalHitMultiplier: 1

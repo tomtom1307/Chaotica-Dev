@@ -9,7 +9,7 @@ public class WeaponInstance
 {
     //public List<WeaponModifier> ProcableAbilityList = new List<WeaponModifier>();
 
-    public WeaponInstance(WeaponDataSO weaponDataSO, int KillThresh1 = 10, int KillThresh2 = 50, WeaponDataSO.Rarity rarity = WeaponDataSO.Rarity.Random)
+    public WeaponInstance(WeaponDataSO weaponDataSO, int KillThresh1 = 10, int KillThresh2 = 50, Rarity rarity = Rarity.Random)
     {
         Level = 1;
         data = weaponDataSO;
@@ -31,7 +31,7 @@ public class WeaponInstance
     public int Threshold2;
 
     public List<ModifierSlot> ModifierSlots = new List<ModifierSlot>();
-    public WeaponDataSO.Rarity weaponRarity;
+    public Rarity weaponRarity;
 
     public void LevelUp()
     {
@@ -46,15 +46,15 @@ public class WeaponInstance
         {
             ModifierSlots.Add(new ModifierSlot
             {
-                RarityTier = (WeaponDataSO.Rarity.Mythic)
+                RarityTier = (Rarity.Mythic)
             });
 
         }
     }
 
-    public WeaponDataSO.Rarity DetermineRarity(WeaponDataSO.Rarity rarity)
+    public Rarity DetermineRarity(Rarity rarity)
     {
-        if(rarity == WeaponDataSO.Rarity.Random)
+        if(rarity == Rarity.Random)
         {
             return RollRarity(data);
         }
@@ -64,7 +64,7 @@ public class WeaponInstance
         }
     }
 
-    public WeaponDataSO.Rarity RollRarity(WeaponDataSO data)
+    public Rarity RollRarity(WeaponDataSO data)
     {
         return data.rarityDistribution.RollRarity();
     }

@@ -9,7 +9,7 @@ public class ModifierSlot
 {
     
 
-    public WeaponDataSO.Rarity RarityTier;
+    public Rarity RarityTier;
     public WeaponModifier Equipped;
     public string ModifierName;
 

@@ -30,16 +30,7 @@ public class WeaponDataSO : ScriptableObject
     }
 
 
-    public enum Rarity
-    {
-        Common,
-        Uncommon,
-        Rare,
-        Epic,
-        Legendary,
-        Mythic,
-        Random // This is for weapon generation DONT ASSIGN TO WEAPONS
-    }
+    
 
     public static Color GetColorByRarity(Rarity rarity)
     {
@@ -78,8 +69,8 @@ public class RarityDistribution
 
     private void OnValidate()
     {
-        var allRarityValues = Enum.GetValues(typeof(WeaponDataSO.Rarity));
-        foreach (WeaponDataSO.Rarity r in allRarityValues)
+        var allRarityValues = Enum.GetValues(typeof(Rarity));
+        foreach (Rarity r in allRarityValues)
         {
             if (!weights.Exists(w => w.rarity == r))
                 weights.Add(new RarityWeight { rarity = r, weight = 0f });
@@ -107,6 +98,18 @@ public class RarityDistribution
         // fallback (shouldn’t happen if total>0)
         return Rarity.Common;
     }
+}
+
+
+public enum Rarity
+{
+    Common,
+    Uncommon,
+    Rare,
+    Epic,
+    Legendary,
+    Mythic,
+    Random // This is for weapon generation DONT ASSIGN TO WEAPONS
 }
 
 

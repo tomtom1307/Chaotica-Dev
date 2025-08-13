@@ -1,8 +1,17 @@
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Food : Interactable
 {
     public float HealAmount;
+    public Rarity rarity;
+    GameObject RarityVFX;
+
+    public override void Start()
+    {
+        base.Start();
+        RarityVFX = GameManager.instance.SpawnRarityVFX(transform, rarity);
+    }
 
 
     public override void Interact(GameObject player)
@@ -14,6 +23,8 @@ public class Food : Interactable
         PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.Eat);
         Destroy(gameObject);
     }
+
+
 
 
 }

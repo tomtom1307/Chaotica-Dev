@@ -14,7 +14,7 @@ public class Interactable : MonoBehaviour
 
 
     //Get Outline Component
-    void Start()
+    public virtual void Start()
     {
         outline = GetComponent<Outline>();
         outline.enabled = false;
