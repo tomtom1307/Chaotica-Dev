@@ -63,7 +63,7 @@ public class Projectile : MonoBehaviour
             }
             else
             {
-                TR.enabled = false;
+                if(TR != null) { TR.enabled = false; }
             }
         }
     }

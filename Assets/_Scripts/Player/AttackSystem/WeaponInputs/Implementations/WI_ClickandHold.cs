@@ -20,7 +20,7 @@ public class WI_ClickandHold : Weapon_Input
                 }
                 else
                 {
-                    WH.QueueAttack(AttackNum, ctx, queueExpirationTime, alt: true);
+                    WH.QueueAttack(AttackNum, ctx, queueExpirationTime, isAlt: true);
                 }
             }
             if (WH.Weapon_anim.GetBool("Alt") && ctx.canceled && !CheckState(AttackNum, WH))

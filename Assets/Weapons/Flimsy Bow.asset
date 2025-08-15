@@ -21,6 +21,15 @@ MonoBehaviour:
   Weapon_Attacks:
   - rid: 1142560951034445932
   - rid: 1142560951034445958
+  blockAttacksWhenAmmoEmpty: 1
+  HideWeaponWhenAmmoEmpty: 1
+  usesAmmo: 0
+  maxAmmo: 3
+  ammoOnStart: -1
+  ammoRegenPerSecond: 0.5
+  ammoRegenDelay: 1.25
+  regenOnlyWhenReadyState: 0
+  WeaponFOVZoom: -20
   InventorySprite: {fileID: 273461087, guid: 6cd98e8cdda7ee74a8a58259b61237b4, type: 3}
   DroppedWeaponSize: {x: 74.315, y: 10.62956, z: 10.62956}
   DroppedWeaponQuaternion: {x: 0, y: 0, z: 90}
@@ -55,6 +64,7 @@ MonoBehaviour:
         HitFOV: 150
         Forces: []
         VFX: {fileID: 0}
+        ammoCost: 0
         projectile: {fileID: 140453258620981734, guid: 53e853c3264383c43818968a62e4b6fc, type: 3}
         Projectile_Amount: 1
         spread: 0
@@ -81,6 +91,7 @@ MonoBehaviour:
         HitFOV: 120
         Forces: []
         VFX: {fileID: 0}
+        ammoCost: 0
         projectile: {fileID: 140453258620981734, guid: 53e853c3264383c43818968a62e4b6fc, type: 3}
         Projectile_Amount: 3
         spread: 0.074

@@ -33,6 +33,12 @@ public class WeaponInstance
     public List<ModifierSlot> ModifierSlots = new List<ModifierSlot>();
     public Rarity weaponRarity;
 
+    // WeaponInstance (add fields)
+    public bool ammoInitialized = false;
+    public int currentAmmo;
+    public float regenBlockedUntil; // Time.time when regen can resume
+    public float ammoFractionalCarry; // accumulate fractional regen
+
     public void LevelUp()
     {
         Level++;

@@ -51,7 +51,7 @@ VisualEffect:
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
-  m_ResetSeedOnPlay: 1
+  m_ResetSeedOnPlay: 0
   m_AllowInstancing: 1
   m_ResourceVersion: 1
   m_PropertySheet:
@@ -65,16 +65,16 @@ VisualEffect:
       m_Array:
       - m_Value: {x: 26.298792, y: 2.191566, z: 0, w: 1}
         m_Name: Sparks Color
-        m_Overridden: 1
+        m_Overridden: 0
       - m_Value: {x: 148.76843, y: 39.671585, z: 0, w: 1}
         m_Name: FlashColor
-        m_Overridden: 1
+        m_Overridden: 0
       - m_Value: {x: 35.11095, y: 13.459198, z: 0, w: 1}
         m_Name: FlameColor1
-        m_Overridden: 1
+        m_Overridden: 0
       - m_Value: {x: 13.149394, y: 0, z: 0, w: 1}
         m_Name: FlameColor2
-        m_Overridden: 1
+        m_Overridden: 0
     m_Uint:
       m_Array: []
     m_Int:
@@ -131,7 +131,7 @@ VFXRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
 --- !u!114 &5111479360074960529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,7 +147,7 @@ MonoBehaviour:
   audioClips:
   - {fileID: 8300000, guid: d44957c1bd60caf43a15c79eca13ea27, type: 3}
   Range: 10
-  Damage: 0
+  Damage: 20
   Force: 70000
   UpForce: 2
   camShakeProperties:

@@ -23,7 +23,7 @@ public class ChargeHoldRelease: Weapon_Input
             HoldLogic(AttackNum, WH, ctx);
         }
 
-        if (!CheckState(AttackNum ,WH))
+        if (!CheckState(AttackNum ,WH) || (WH.State == WeaponHolder.AttackState.Combo))
         {
             
             if (ctx.started)

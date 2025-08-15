@@ -21,7 +21,7 @@ public class WI_HoldRelease : Weapon_Input
             }
             else
             {
-                WH.QueueAttack(AttackNum, ctx, queueExpirationTime, alt: true);
+                WH.QueueAttack(AttackNum, ctx, queueExpirationTime, isAlt: true);
             }
         }
 

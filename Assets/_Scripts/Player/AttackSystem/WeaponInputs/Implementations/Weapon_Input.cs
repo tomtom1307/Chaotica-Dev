@@ -15,6 +15,6 @@ public class Weapon_Input : ScriptableObject
 
 
     public bool CheckState(int attackNum,WeaponHolder WH) { 
-        return (WH.State == WeaponHolder.AttackState.Ready || (WH.State == WeaponHolder.AttackState.Combo));
+        return (WH.State == WeaponHolder.AttackState.Ready || ((WH.State == WeaponHolder.AttackState.Combo)));
     }
 }

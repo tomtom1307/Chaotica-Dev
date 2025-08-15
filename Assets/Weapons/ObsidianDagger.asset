@@ -15,12 +15,21 @@ MonoBehaviour:
   _Name: Obsidian Dagger
   model: {fileID: 2700825007940643205, guid: 13f44335bd89116449b9340e0fd0ba18, type: 3}
   secondaryModel: {fileID: 0}
-  WeaponDamage: 3
+  WeaponDamage: 2.5
   Anim_controller: {fileID: 9100000, guid: deefb9640a1baa24e8eec28a1834cad7, type: 2}
   hand: 1
   Weapon_Attacks:
   - rid: 4102713627304001603
   - rid: 4102713627304001619
+  blockAttacksWhenAmmoEmpty: 1
+  HideWeaponWhenAmmoEmpty: 1
+  usesAmmo: 1
+  maxAmmo: 3
+  ammoOnStart: -1
+  ammoRegenPerSecond: 0.4
+  ammoRegenDelay: 0.5
+  regenOnlyWhenReadyState: 0
+  WeaponFOVZoom: -30
   InventorySprite: {fileID: 379528173, guid: a4e554aecddd4e445ade65f4eec0a596, type: 3}
   DroppedWeaponSize: {x: 4.69, y: 4.69, z: 4.69}
   DroppedWeaponQuaternion: {x: 0, y: 0, z: 90}
@@ -54,6 +63,7 @@ MonoBehaviour:
         Forces:
         - {x: 0, y: 0, z: 6}
         VFX: {fileID: 3923219993234306259, guid: ed86a495ee60eda44ad0534b013779ab, type: 3}
+        ammoCost: 0
         attack_range: 2
         MaxViewAngle: 90
         secondaryDamageMultiplier: 0.2
@@ -62,10 +72,10 @@ MonoBehaviour:
       data:
         Name: Throwing Knife
         Description: 
-        weaponInputLogic: {fileID: 11400000, guid: fa62de39fcdf5ac419138ca13612768e, type: 2}
+        weaponInputLogic: {fileID: 11400000, guid: e590e2e7e5a20434ba6afd998ece63a2, type: 2}
         attackType: 1
         damageType: 0
-        damage: 100
+        damage: 400
         ComboLength: 1
         StaggerDamage: 5
         AttackWeight: 1
@@ -78,6 +88,7 @@ MonoBehaviour:
         HitFOV: 120
         Forces: []
         VFX: {fileID: 0}
+        ammoCost: 1
         projectile: {fileID: 2999725350419090432, guid: 1fd385ab72eea654ca548ec63f5ab678, type: 3}
         Projectile_Amount: 1
         spread: 0

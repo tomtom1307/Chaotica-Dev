@@ -26,12 +26,12 @@ public class Weapon_Attack_Data_Base
     public bool AllowAgility = false;
     public float KnockBackForce = 100;
     public float FinalHitMultiplier = 100;
-    public float HitFOV = 120;
+    public float HitFOV = 10;
     public List<Vector3> Forces;
     public GameObject VFX;
 
-
-
+    [Header("Ammo Cost (weapon-wide pool)")]
+    [Min(0)] public int ammoCost = 0; // 0 = fre
 
     //TODO: Store attack chargeup time on here instead of on weapon input (Custom Editor)
     public virtual void EnterAttack(WeaponHolder W) 
@@ -39,7 +39,7 @@ public class Weapon_Attack_Data_Base
         
     }
     public virtual void PerformAttack(WeaponHolder W) {
-        FOVFXController.instance.PunchFOV(HitFOV, 0.2f, 0.1f, 0.2f);
+        FOVFXController.instance.PlayImpulse(HitFOV, 0.1f, 0.2f);
     }
     public virtual void ExitAttack(WeaponHolder W) { }
 

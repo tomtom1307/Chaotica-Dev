@@ -51,7 +51,8 @@ public class PlayerSoundSource : SourceSoundManager<PlayerSoundSource.SoundType>
         Parry,
         Sliding,
         SlideStop,
-        Eat
+        Eat,
+        SwingDagger
     }
 
 

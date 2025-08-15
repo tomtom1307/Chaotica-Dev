@@ -41,7 +41,6 @@ public class WeaponAnimationEventHandler : MonoBehaviour
 
     public void OnVfxSet(int i)
     {
-        Debug.Log($"Animation Event called with i = {i}");
         OnVFXCalled.Invoke(i);
     }
 
@@ -49,6 +48,18 @@ public class WeaponAnimationEventHandler : MonoBehaviour
     public void CloseComboWindow()
     {
         onComboWindowClosed.Invoke();
+    }
+
+    
+
+    public void ZoomInFOV()
+    {
+        FOVFXController.instance.SetOffset(FovChannel.Zoom, WeaponHolder.Singleton.data.WeaponFOVZoom);
+    }
+
+    public void ZoomOutFOV()
+    {
+        FOVFXController.instance.SetOffset(FovChannel.Zoom, 0);
     }
 
     public void PlaySound(PlayerSoundSource.SoundType soundType)

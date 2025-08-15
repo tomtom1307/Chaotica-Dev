@@ -33,7 +33,7 @@ public class Weapon_Attack_Data_Projectile : Weapon_Attack_Data_Base
             dir += W.cam.transform.right * UnityEngine.Random.Range(-spread, spread);
             dir.Normalize(); 
 
-            GameObject proj = W.SpawnObject(projectile, W.cam.transform.position, Quaternion.identity);
+            GameObject proj = W.SpawnObject(projectile, W.cam.transform.position + W.cam.transform.forward, Quaternion.LookRotation(W.cam.transform.forward));
             float Damageval = 0;
             bool crit = false;
             (Damageval, crit) = DamageVal(W);

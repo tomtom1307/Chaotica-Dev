@@ -17,6 +17,24 @@ public class WeaponDataSO : ScriptableObject
     public Hand hand;
     [SerializeReference] // This enables polymorphic serialization
     public List<Weapon_Attack_Data_Base> Weapon_Attacks = new List<Weapon_Attack_Data_Base>();
+    [Tooltip("If true, when ammo reaches 0, ALL attacks are blocked until ammo >= 1.")]
+    public bool blockAttacksWhenAmmoEmpty = true;
+    public bool HideWeaponWhenAmmoEmpty = true;
+    // WeaponDataSO
+    [Header("Weapon-wide Ammo")]
+    public bool usesAmmo = false;
+    [Min(1)] public int maxAmmo = 3;
+    [Tooltip("If < 0, start full; otherwise start here.")]
+    public int ammoOnStart = -1;
+    [Tooltip("Units per second. E.g., 0.5 = 1 ammo every 2s.")]
+    public float ammoRegenPerSecond = 0.5f;
+    [Tooltip("Wait this long after spending before regen resumes (s).")]
+    public float ammoRegenDelay = 1.25f;
+    // Optional: only regen while holder is idle/ready
+    public bool regenOnlyWhenReadyState = false;
+
+    public float WeaponFOVZoom;
+
     //public Rarity rarity;
     public Sprite InventorySprite;
     public Vector3 DroppedWeaponSize = Vector3.one;

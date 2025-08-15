@@ -1,248 +1,361 @@
-using NUnit.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class WeaponHolder : MonoBehaviour
 {
+    // ================================
+    //             CONFIG
+    // ================================
     public bool QueueDebugMessages;
-    private PlayerInput playerInput;
+    public static WeaponHolder Singleton;
 
-    public int ComboCounter;
-    
-    [HideInInspector]public Weapon_Attack_Data_Base CurrentAttackData;
+    [Header("Refs")]
+    public Animator Weapon_anim;
+    public Camera cam;
+    public PlayerMovement playerMovement;
+    public Transform RhandPos;
+    public Transform LhandPos;
+    public Transform secondaryPos;
 
-    HandIKHandler IK_Handler;
-    //Define statemachine states
-    public enum AttackState
-    {
-        Attacking,
-        Ready,
-        Combo,
-        Cooldown,
-        Charging
-    }
-
-    //State variable
-    [SerializeField]public AttackState State = AttackState.Ready;
-
+    [Header("Weapon Data")]
     [SerializeField] public WeaponInstance instance = null;
     [SerializeField] public WeaponDataSO data;
     [SerializeField] public Secondary_Weapon_Base SecondaryWeaponData;
     [SerializeField] public LayerMask DamagableLayer;
-    public Animator Weapon_anim;
-    public Camera cam;
-    public float ChargeAmount;
 
-    public PlayerMovement playerMovement;
+    [Header("Runtime")]
+    public int ComboCounter;
+    public float ChargeAmount = 1f;
+    [HideInInspector] public Weapon_Attack_Data_Base CurrentAttackData;
 
-    bool IsAttack2;
-    bool IsAttack3;
-    //Called to set the weapon data once weapon swapping is implemented
-    public void SetWeaponInstance(WeaponInstance instance, bool A2 =false, bool A3 = false)
+    // Unlock flags
+    private bool _isAttack2Unlocked;
+    private bool _isAttack3Unlocked;
+
+    // Models
+    public GameObject WeaponModel;
+    public GameObject SecondaryModel;
+
+    // IK
+    private HandIKHandler IK_Handler;
+
+    // Input
+    private PlayerInput _playerInput;
+
+    // Physics
+    [HideInInspector] public Rigidbody rb;
+
+    // Status effects
+    private readonly List<statusEffectBase> _activeEffects = new();
+
+    // State
+    public enum AttackState { Attacking, Ready, Combo, Cooldown, Charging }
+    [SerializeField] public AttackState State = AttackState.Ready;
+
+    // Attack queue
+    private bool _queuedAttack;
+    private int _queuedAttackNum;
+    private InputAction.CallbackContext _queuedContext;
+    private float _queueTime;
+    private float _queueExpirationTime;
+    [HideInInspector] public bool QueuedRelease;
+    [HideInInspector] public bool alt;
+
+    private Coroutine _cooldownRoutine;
+
+    // ================================
+    //             AMMO
+    // ================================
+    private void InitWeaponAmmo()
     {
-        //if (!enabled && instance != null) enabled = true;
-        IsAttack2 = A2;
-        IsAttack3 = A3;
-        if (instance == this.instance) return;
-        else if(this.instance.data != null)
+        if (data == null || !data.usesAmmo)
         {
-            SpawnWeapon(this.instance);
+            if (HUDController.instance != null)
+                HUDController.instance.weaponAmmoUI.Hide();
+            return;
         }
-        this.instance = instance;
-        this.data = instance.data;
-        
+
+        if (HUDController.instance != null)
+        {
+            HUDController.instance.weaponAmmoUI.Show();
+            HUDController.instance.weaponAmmoUI.SetAmmoPips(data.maxAmmo);
+        }
+
+        if (!instance.ammoInitialized)
+        {
+            instance.currentAmmo = (data.ammoOnStart >= 0)
+                ? Mathf.Clamp(data.ammoOnStart, 0, data.maxAmmo)
+                : data.maxAmmo;
+
+            instance.regenBlockedUntil = 0f;
+            instance.ammoFractionalCarry = 0f;
+            instance.ammoInitialized = true;
+        }
+    }
+
+    private void UpdateWeaponAmmoRegen(float dt)
+    {
+        if (data == null || !data.usesAmmo || instance == null) return;
+
+        // hide/show weapon on empty if requested
+        if (WeaponModel != null)
+        {
+            bool hide = data.HideWeaponWhenAmmoEmpty && instance.currentAmmo == 0;
+            WeaponModel.SetActive(!hide);
+        }
+
+        // regen only when allowed
+        if (data.regenOnlyWhenReadyState && State != AttackState.Ready) return;
+        if (Time.time < instance.regenBlockedUntil) return;
+        if (instance.currentAmmo >= data.maxAmmo) { instance.ammoFractionalCarry = 0f; return; }
+
+        float toAdd = data.ammoRegenPerSecond * dt + instance.ammoFractionalCarry;
+        int whole = Mathf.FloorToInt(toAdd);
+        instance.ammoFractionalCarry = toAdd - whole;
+
+        if (whole > 0)
+            instance.currentAmmo = Mathf.Min(data.maxAmmo, instance.currentAmmo + whole);
+    }
+
+    public int GetWeaponAmmo() =>
+        (data != null && data.usesAmmo && instance != null) ? instance.currentAmmo : 0;
+
+    public int GetWeaponMaxAmmo() =>
+        (data != null && data.usesAmmo) ? data.maxAmmo : 0;
+
+    public float GetWeaponFractionalRegen() =>
+        (data != null && data.usesAmmo && instance != null) ? instance.ammoFractionalCarry : 0;
+
+    // ================================
+    //           LIFECYCLE
+    // ================================
+    private void Awake()
+    {
+        if (Singleton != null && Singleton != this) { Destroy(gameObject); return; }
+        Singleton = this;
+    }
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        playerMovement = GetComponent<PlayerMovement>();
+        _playerInput = GetComponent<PlayerInput>();
+        cam = Camera.main;
+        State = AttackState.Ready;
+
+        if (cam != null) IK_Handler = cam.GetComponentInChildren<HandIKHandler>();
+
+        ComboCounter = 0;
+        CurrentAttackData = null;
+
+        if (data == null || instance == null)
+        {
+            enabled = false;
+            return;
+        }
+
+        HandleWeaponSwapping(); // builds models + animator
+    }
+
+    private void OnDisable()
+    {
+        // prevent stray cooldown coroutines dangling
+        if (_cooldownRoutine != null) StopCoroutine(_cooldownRoutine);
+    }
+
+    private void Update()
+    {
+        UpdateStatusEffects();
+        UpdateWeaponAmmoRegen(Time.deltaTime);
+
+#if UNITY_EDITOR
+        // quick test keys
+        if (Input.GetKey(KeyCode.Alpha9)) { State = AttackState.Ready; ComboCounter = 0; }
+        if (Input.GetKeyDown(KeyCode.Alpha8)) instance.ModifierSlots[0].Equip(new LifestealEffectModifier(1f, 1f));
+        if (Input.GetKeyDown(KeyCode.Alpha7)) instance.ModifierSlots[0].Equip(new FreezeEffectModifier(1f, 3f));
+#endif
+    }
+
+    // ================================
+    //        WEAPON SWAP / SPAWN
+    // ================================
+    public void SetWeaponInstance(WeaponInstance newInstance, bool unlockA2 = false, bool unlockA3 = false)
+    {
+        _isAttack2Unlocked = unlockA2;
+        _isAttack3Unlocked = unlockA3;
+
+        if (newInstance == instance) return;
+
+        // drop current weapon if any
+        if (instance != null && instance.data != null)
+            SpawnWeapon(instance);
+
+        instance = newInstance;
+        data = instance != null ? instance.data : null;
+
+        if (data == null) { enabled = false; return; }
+
         HandleWeaponSwapping();
     }
 
     public void SpawnWeapon(WeaponInstance weaponInstance)
     {
-        GameObject spawner = new GameObject("WeaponSpawner");
-
+        var spawner = new GameObject("WeaponSpawner");
         spawner.transform.position = transform.position + playerMovement.orientation.transform.forward + Vector3.up;
         spawner.AddComponent<WeaponSpawner>().CreateWeapon(weaponInstance);
     }
 
-
-    public Transform RhandPos;
-    public Transform LhandPos;
-    public Transform secondaryPos;
-    public GameObject WeaponModel;
-    public GameObject SecondaryModel;
-
-    private List<statusEffectBase> activeEffects = new List<statusEffectBase>();
-    
     public void HandleWeaponSwapping()
     {
-        Destroy(WeaponModel);
-        if(data.hand == WeaponDataSO.Hand.right)
-        {
-            WeaponModel = Instantiate(data.model, RhandPos);
-        }
-        else
-        {
-            WeaponModel = Instantiate(data.model, LhandPos);
-        }
+        // clear old models
+        if (WeaponModel != null) Destroy(WeaponModel);
+        if (SecondaryModel != null) Destroy(SecondaryModel);
 
-        WeaponModel.layer = 7;
-
-        Destroy(SecondaryModel);
-        if (data.secondaryModel != null) SecondaryModel = Instantiate(data.secondaryModel, secondaryPos);
-
-        
-        ChargeAmount = 1;
-        Weapon_anim.runtimeAnimatorController = data.Anim_controller;
-
-        if (instance.KillCount >= instance.Threshold1)
+        // primary
+        Transform parent = (data.hand == WeaponDataSO.Hand.right) ? RhandPos : LhandPos;
+        if (data.model != null && parent != null)
         {
-            IsAttack2 = true;
-        }
-        if (instance.KillCount >= instance.Threshold2)
-        {
-            IsAttack3 = true;
+            WeaponModel = Instantiate(data.model, parent);
+            WeaponModel.layer = 7; // your gameplay layer
         }
 
-    }
-    [HideInInspector]public Rigidbody rb;
-    //Initialization steps
-    private void Start()
-    {
-        
-        rb = GetComponent<Rigidbody>();
-        playerMovement = GetComponent<PlayerMovement>();
-        playerInput = GetComponent<PlayerInput>();
-        cam = Camera.main;
-        State = AttackState.Ready;
-        IK_Handler = cam.GetComponentInChildren<HandIKHandler>();
-        //handPos = GameObject.Find("HandModel").transform;
-        ComboCounter = 0;
-        CurrentAttackData = null;
-        if(data == null)
-        {
-            enabled = false;
-        }
+        // secondary
+        if (data.secondaryModel != null && secondaryPos != null)
+            SecondaryModel = Instantiate(data.secondaryModel, secondaryPos);
 
+        // animator
+        if (Weapon_anim != null && data.Anim_controller != null)
+            Weapon_anim.runtimeAnimatorController = data.Anim_controller;
+
+        // unlocks by kills
+        _isAttack2Unlocked |= instance.KillCount >= instance.Threshold1;
+        _isAttack3Unlocked |= instance.KillCount >= instance.Threshold2;
+
+        // ammo
+        InitWeaponAmmo();
+
+        // reset charge
+        ChargeAmount = 1f;
     }
 
-
-    private void Update()
+    // ================================
+    //           INPUT HANDLERS
+    // ================================
+    public void DoQueuedInput(int i, InputAction.CallbackContext ctx, bool isAlt = false)
     {
-        UpdateStatusEffects();
+        if (!enabled || data == null) return;
+        if (!IndexValid(i)) return;
+        data.Weapon_Attacks[i].weaponInputLogic.QueuedInput(i, this, ctx, isAlt);
+    }
 
-        if (Input.GetKey(KeyCode.Alpha9))
+    public void Attack1Input(InputAction.CallbackContext ctx) => HandleAttackInput(0, ctx);
+    public void Attack2Input(InputAction.CallbackContext ctx) { if (_isAttack2Unlocked) HandleAttackInput(1, ctx); }
+    public void Attack3Input(InputAction.CallbackContext ctx) { if (_isAttack3Unlocked) HandleAttackInput(2, ctx); }
+
+    private void HandleAttackInput(int attackIndex, InputAction.CallbackContext ctx)
+    {
+        if (!enabled || data == null) return;
+        if (!IndexValid(attackIndex)) return;
+        if (!CanAttemptAttack(attackIndex)) return;
+
+        data.Weapon_Attacks[attackIndex].weaponInputLogic._Input(attackIndex, this, ctx);
+    }
+
+    private bool IndexValid(int i) => data != null && data.Weapon_Attacks != null && i >= 0 && i < data.Weapon_Attacks.Count;
+
+    private bool CanAttemptAttack(int attackIndex)
+    {
+        if (data == null || instance == null) return false;
+        if (!IndexValid(attackIndex)) return false;
+
+        if (!data.usesAmmo) return true;
+
+        // Empty-lock: block all attacks when empty, if enabled
+        if (data.blockAttacksWhenAmmoEmpty && instance.currentAmmo <= 0)
+            return false;
+
+        // Per-attack cost
+        var nextData = data.Weapon_Attacks[attackIndex];
+        if (nextData.ammoCost > 0 && instance.currentAmmo < nextData.ammoCost)
+            return false;
+
+        return true;
+    }
+
+    // ================================
+    //        ATTACK FLOW / STATE
+    // ================================
+    public void EnterAttack(int i, bool isAlt = false)
+    {
+        if (!enabled || data == null || instance == null) return;
+        if (!IndexValid(i)) return;
+
+        var nextData = data.Weapon_Attacks[i];
+
+        // spend ammo
+        if (data.usesAmmo && nextData.ammoCost > 0)
         {
-            State = AttackState.Ready;
-            ComboCounter = 0;
+            instance.currentAmmo = Mathf.Max(0, instance.currentAmmo - nextData.ammoCost);
+            instance.regenBlockedUntil = Time.time + data.ammoRegenDelay;
         }
-        if (Input.GetKey(KeyCode.Alpha8))
-        {
-            instance.ModifierSlots[0].Equip(new LifestealEffectModifier(probability: 1f, Steal_percent: 1f));
-        }
-        if (Input.GetKey(KeyCode.Alpha7))
-        {
-            instance.ModifierSlots[0].Equip(new FreezeEffectModifier(probability: 1f, duration: 3));
-        }
-    }
 
-    //Calling Input from Queue
-    public void DoQueuedInput(int i, InputAction.CallbackContext ctx, bool alt = false)
-    {
-        if(!enabled) return;
-        data.Weapon_Attacks[i].weaponInputLogic.QueuedInput(i, this, ctx, alt);
-    }
-
-
-    //Check inputs for different attacks 1, 2, 3 (Handled with 3 functions since this is how the input system works best [I think])
-    public void Attack1Input(InputAction.CallbackContext ctx)
-    {
-        if (!enabled) return;
-        data.Weapon_Attacks[0].weaponInputLogic._Input(0, this, ctx);
-    }
-
-    public void Attack2Input(InputAction.CallbackContext ctx)
-    {
-        if (!enabled || !IsAttack2) return;
-        data.Weapon_Attacks[1].weaponInputLogic._Input(1, this, ctx);
-    }
-
-    public void Attack3Input(InputAction.CallbackContext ctx)
-    {
-        if (!enabled || !IsAttack3) return;
-        data.Weapon_Attacks[2].weaponInputLogic._Input(2, this, ctx);
-    }
-
-    //Called from weapon Input logic when conditions are met
-    public void EnterAttack(int i, bool alt = false)
-    {
-        
-        Weapon_anim.SetBool("Alt", false);
-        if (!this.enabled) return;
-        //Set State and variables
         State = AttackState.Attacking;
+        alt = isAlt;
 
-        
-
-        //
-        CurrentAttackData = data.Weapon_Attacks[i];
+        CurrentAttackData = nextData;
         playerMovement.AttackMoveSpeed(CurrentAttackData.MoveSpeedMult, CurrentAttackData.AllowAgility);
         CurrentAttackData.EnterAttack(this);
 
-        //Handle Animation stuff
-        
-
-        Weapon_anim.SetInteger("AttackType", i);
-
-        
-
-        if (!alt)
+        // Anim params
+        if (Weapon_anim != null)
         {
-            this.alt = false;
-            Weapon_anim.SetInteger("ComboInt", ComboCounter);
+            Weapon_anim.SetBool("Alt", alt);
+            Weapon_anim.SetInteger("AttackType", i);
+
+            if (!alt)
+                Weapon_anim.SetInteger("ComboInt", ComboCounter);
+
+            Weapon_anim.SetBool("Attacking", true);
+            Weapon_anim.SetBool("Combo", false);
+            Weapon_anim.SetBool("Charging", false);
         }
-        else
-        {
-            this.alt = true;
-            Weapon_anim.SetBool("Alt", true);
-        }
-        Weapon_anim.SetBool("Attacking", true);
-        //Combocounter allows different animations for the same attack
+
+        // combo progress
         ComboCounter++;
         if (ComboCounter >= CurrentAttackData.ComboLength) ComboCounter = 0;
-
-        //Testing
-        //CurrentAttackData.PerformAttack(this);
-
     }
-    [HideInInspector]public bool alt;
 
     public void ExitAttack()
     {
-        //Reset basically
+        if (CurrentAttackData == null) return;
+
         playerMovement.AttackResetMoveSpeed();
-        Weapon_anim.SetBool("Attacking", false);
-        HandleCooldownStuff();
+        if (Weapon_anim != null)
+        {
+            Weapon_anim.SetBool("Attacking", false);
+            Weapon_anim.SetBool("Alt", false);
+            Weapon_anim.SetBool("Combo", false);
+            Weapon_anim.SetBool("Charging", false);
+        }
+
+        HandleCooldownOrReady();
         CurrentAttackData.ExitAttack(this);
         CurrentAttackData = null;
-        
-        
+
         ComboCounter = 0;
-        ChargeAmount = 1;
-        
-        //Handle Animation stuff
-        
-        Weapon_anim.SetBool("Alt", false);
-        Weapon_anim.SetBool("Combo", false);
-        Weapon_anim.SetBool("Charging", false);
+        ChargeAmount = 1f;
     }
 
-    public void HandleCooldownStuff()
+    private void HandleCooldownOrReady()
     {
-        if (CurrentAttackData.hasCooldown)
+        if (CurrentAttackData != null && CurrentAttackData.hasCooldown)
         {
             State = AttackState.Cooldown;
-            StartCoroutine(Cooldown(CurrentAttackData.cooldown));
+            if (_cooldownRoutine != null) StopCoroutine(_cooldownRoutine);
+            _cooldownRoutine = StartCoroutine(Cooldown(CurrentAttackData.cooldown));
         }
         else
         {
@@ -251,174 +364,131 @@ public class WeaponHolder : MonoBehaviour
         }
     }
 
-    //Allows for a cooldown of attacks
-    IEnumerator Cooldown(float t)
+    private IEnumerator Cooldown(float t)
     {
         yield return new WaitForSeconds(t);
-        if(State != AttackState.Charging) {
-            State = AttackState.Ready;
-        }
+        if (State != AttackState.Charging) State = AttackState.Ready;
         TryExecuteQueuedAttack();
+        _cooldownRoutine = null;
     }
 
-
-    #region Input Queuing
-    //Input Queuing
-
-    private bool queuedAttack = false;
-    private int queuedAttackNum;
-    private InputAction.CallbackContext queuedContext;
-    private float queueTime;
-    private float queueExpirationTime;
-    [HideInInspector] public bool QueuedRelease;
-    public void QueueAttack(int attackNum, InputAction.CallbackContext ctx, float expirationTime, bool alt = false)
+    // ================================
+    //           ATTACK QUEUE
+    // ================================
+    public void QueueAttack(int attackNum, InputAction.CallbackContext ctx, float expirationTime, bool isAlt = false)
     {
-        if(QueueDebugMessages) Debug.Log("Queued Attack");
-        queuedAttack = true;
-        queuedAttackNum = attackNum;
-        queuedContext = ctx;
-        queueTime = Time.time;
-        queueExpirationTime = expirationTime;
-        this.alt = alt;
+        if (QueueDebugMessages) Debug.Log("Queued Attack");
+        _queuedAttack = true;
+        _queuedAttackNum = attackNum;
+        _queuedContext = ctx;
+        _queueTime = Time.time;
+        _queueExpirationTime = expirationTime;
+        alt = isAlt;
     }
 
     public void TryExecuteQueuedAttack()
     {
-        if (!queuedAttack) return;
+        if (!_queuedAttack) return;
 
-        // Check if the queued attack has expired
-        if (Time.time - queueTime > queueExpirationTime)
+        if (Time.time - _queueTime > _queueExpirationTime)
         {
             if (QueueDebugMessages) Debug.Log("Queue Expired");
-            queuedAttack = false;
-            QueuedRelease = false;
+            _queuedAttack = false; QueuedRelease = false;
             return;
         }
 
-        if (State == AttackState.Ready || (State == AttackState.Combo )) // Player can attack now
+        if (State == AttackState.Ready || State == AttackState.Combo)
         {
-            if (QueueDebugMessages) Debug.Log("Executing Queued Attack");
-            
-            // Do attack BEFORE resetting the queue
-            DoQueuedInput(queuedAttackNum, queuedContext, alt);
+            if (!CanAttemptAttack(_queuedAttackNum))
+            {
+                if (QueueDebugMessages) Debug.Log("Blocked by empty-lock / insufficient ammo");
+                return; // keep queued until it expires or ammo returns
+            }
 
-            // reset queue after attack
-            queuedAttack = false;
+            if (QueueDebugMessages) Debug.Log("Executing Queued Attack");
+            DoQueuedInput(_queuedAttackNum, _queuedContext, alt);
+            _queuedAttack = false;
         }
     }
 
-    #endregion
+    // ================================
+    //           ANIM EVENTS
+    // ================================
+    public void AttackPerformed() => CurrentAttackData?.PerformAttack(this);
 
-
-    //Spawns objects could be projectiles or particles 
-    public GameObject SpawnObject(GameObject go, Vector3 pos, Quaternion rot, Transform parent = null)
-    {
-        GameObject inst = Instantiate(go, pos, rot, parent);
-        return inst;
-    }
-
-    //All functions below are called by animation event handler
-    public void AttackPerformed()
-    {
-        CurrentAttackData.PerformAttack(this);
-    }
-
-    //Allows the player to chain attacks
     public void OpenComboWindow()
     {
         State = AttackState.Combo;
         TryExecuteQueuedAttack();
-        Weapon_anim.SetBool("Combo", true);
+        if (Weapon_anim != null) Weapon_anim.SetBool("Combo", true);
     }
 
-    //Closes the opportunity to chain attacks
     public void CloseComboWindow()
     {
         State = AttackState.Attacking;
-        Weapon_anim.SetBool("Combo", false);
+        if (Weapon_anim != null) Weapon_anim.SetBool("Combo", false);
     }
 
-    //the 
-    public void StartAttackCharging(int Attack)
+    public void StartAttackCharging(int attackIndex)
     {
-        CurrentAttackData = data.Weapon_Attacks[Attack];
-        State = AttackState.Charging;
-        playerMovement.AttackMoveSpeed(CurrentAttackData.MoveSpeedMult, CurrentAttackData.AllowAgility);
-        Weapon_anim.SetBool("Charging", true);
-        Weapon_anim.SetInteger("AttackType", Attack);
+        if (!IndexValid(attackIndex)) return;
 
+        CurrentAttackData = data.Weapon_Attacks[attackIndex];
+        State = AttackState.Charging;
+
+        playerMovement.AttackMoveSpeed(CurrentAttackData.MoveSpeedMult, CurrentAttackData.AllowAgility);
+
+        if (Weapon_anim != null)
+        {
+            Weapon_anim.SetBool("Charging", true);
+            Weapon_anim.SetInteger("AttackType", attackIndex);
+        }
+    }
+
+    public void AttackForce(int i)
+    {
+        if (playerMovement.state == PlayerMovement.PlayerMechanimState.Jumping ||
+            playerMovement.state == PlayerMovement.PlayerMechanimState.Sliding) return;
+
+        CurrentAttackData?.ApplyForceToPlayer(this, i);
     }
 
     public void EnemyKilled()
     {
+        if (instance == null) return;
         instance.KillCount++;
-        if(instance.KillCount >= instance.Threshold1)
-        {
-            IsAttack2 = true;   
-        }
-        if(instance.KillCount >= instance.Threshold2)
-        {
-            IsAttack3 = true;
-        }
-    }
-    
-    public void AttackForce(int i)
-    {
-        if (playerMovement.state == PlayerMovement.PlayerMechanimState.Jumping || playerMovement.state == PlayerMovement.PlayerMechanimState.Sliding) return;
-        CurrentAttackData.ApplyForceToPlayer(this, i);
+        if (instance.KillCount >= instance.Threshold1) _isAttack2Unlocked = true;
+        if (instance.KillCount >= instance.Threshold2) _isAttack3Unlocked = true;
     }
 
-    
+    // ================================
+    //        DAMAGE / EFFECTS
+    // ================================
     public float DamageBonus(DamageType damageType)
     {
-        float damagebonus = PlayerStats.instance.GetStat(StatType.AllDamageBuff);
+        float bonus = PlayerStats.instance.GetStat(StatType.AllDamageBuff);
         switch (damageType)
         {
-            case DamageType.Standard:
-                damagebonus += 0;
-                break;
-            case DamageType.Umbraveil:
-                damagebonus += PlayerStats.instance.GetStat(StatType.UmbravailDamageBuff);
-                break;
-            case DamageType.Scarforge:
-                damagebonus += PlayerStats.instance.GetStat(StatType.ScarForgeDamageBuff);
-                break;
-            case DamageType.Verdancy:
-                damagebonus += PlayerStats.instance.GetStat(StatType.VerdancyDamageBuff);
-                break;
-            case DamageType.Aetherflow:
-                damagebonus += PlayerStats.instance.GetStat(StatType.AetherflowDamageBuff);
-                break;
-            default:
-                break;
+            case DamageType.Umbraveil: bonus += PlayerStats.instance.GetStat(StatType.UmbravailDamageBuff); break;
+            case DamageType.Scarforge: bonus += PlayerStats.instance.GetStat(StatType.ScarForgeDamageBuff); break;
+            case DamageType.Verdancy: bonus += PlayerStats.instance.GetStat(StatType.VerdancyDamageBuff); break;
+            case DamageType.Aetherflow: bonus += PlayerStats.instance.GetStat(StatType.AetherflowDamageBuff); break;
         }
-        return damagebonus/100;
+        return bonus / 100f;
     }
 
-    //Currently on supports singular FX per attack
-    public void SpawnVFX(int i)
-    {
-        PlayerVFXHandler.instance.SpawnVFX(CurrentAttackData.VFX, i);
-    }
+    public void SpawnVFX(int i) => PlayerVFXHandler.instance?.SpawnVFX(CurrentAttackData?.VFX, i);
 
-    public void TriggerBlock(bool TF)
-    {
-        if (TF)
-        {
-            SetPlayerHealthState(PlayerHealth.DamageState.Blocking);
-        }
-        else
-        {
-            SetPlayerHealthState(PlayerHealth.DamageState.Normal);
-        }
-    }
+    public GameObject SpawnObject(GameObject go, Vector3 pos, Quaternion rot, Transform parent = null) { GameObject inst = Instantiate(go, pos, rot, parent); return inst; }
 
-    public void ParryWindow(bool TF)
+    public void TriggerBlock(bool tf) =>
+        SetPlayerHealthState(tf ? PlayerHealth.DamageState.Blocking : PlayerHealth.DamageState.Normal);
+
+    public void ParryWindow(bool tf)
     {
-        if (TF)
+        if (tf)
         {
-            Weapon_Attack_Data_BlockParry data = CurrentAttackData as Weapon_Attack_Data_BlockParry;
-            if (data != null) { data.Parry(this); }
+            if (CurrentAttackData is Weapon_Attack_Data_BlockParry b) b.Parry(this);
             SetPlayerHealthState(PlayerHealth.DamageState.Parrying);
         }
         else
@@ -427,39 +497,37 @@ public class WeaponHolder : MonoBehaviour
         }
     }
 
-    public void SetPlayerHealthState(PlayerHealth.DamageState state)
-    {
+    public void SetPlayerHealthState(PlayerHealth.DamageState state) =>
         PlayerHealth.instance.d_state = state;
+
+    public void ApplyEffectToPlayer(statusEffectBase eff)
+    {
+        if (eff == null) return;
+        _activeEffects.Add(eff);
+        eff.StartEffect(gameObject);
     }
 
-    public void ApplyEffectToPlayer(statusEffectBase newEff)
+    public void ApplyEffectToEnemy(statusEffectBase eff, DamagableEnemy enemy)
     {
-        activeEffects.Add(newEff);
-        newEff.StartEffect(gameObject);
-    }
-
-    public void ApplyEffectToEnemy(statusEffectBase newEff, DamagableEnemy enemy)
-    {
-        activeEffects.Add(newEff);
-        newEff.StartEffect(enemy.gameObject);
+        if (eff == null || enemy == null) return;
+        _activeEffects.Add(eff);
+        eff.StartEffect(enemy.gameObject);
     }
 
     public void UpdateStatusEffects()
     {
         float dt = Time.deltaTime;
-        foreach (var effect in activeEffects)
+        for (int i = _activeEffects.Count - 1; i >= 0; i--)
         {
-            if (effect.IsEffectDone())
-            {
-                activeEffects.Remove(effect);
-                return;
-            }
-            effect.UpdateEffect(dt);
+            var eff = _activeEffects[i];
+            if (eff == null) { _activeEffects.RemoveAt(i); continue; }
 
+            if (eff.IsEffectDone())
+            {
+                _activeEffects.RemoveAt(i);
+                continue;
+            }
+            eff.UpdateEffect(dt);
         }
     }
-
 }
-
-
-
