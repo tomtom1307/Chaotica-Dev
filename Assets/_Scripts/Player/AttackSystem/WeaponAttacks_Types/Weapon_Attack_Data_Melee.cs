@@ -15,6 +15,11 @@ public class Weapon_Attack_Data_Melee : Weapon_Attack_Data_Base
         
     }
 
+    public Weapon_Attack_Data_Melee()
+    {
+
+    }
+
     public float secondaryDamageMultiplier = 100;
 
     public override void PerformAttack(WeaponHolder W)

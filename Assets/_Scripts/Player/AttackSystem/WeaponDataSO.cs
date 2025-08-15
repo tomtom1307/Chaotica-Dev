@@ -17,10 +17,15 @@ public class WeaponDataSO : ScriptableObject
     public Hand hand;
     [SerializeReference] // This enables polymorphic serialization
     public List<Weapon_Attack_Data_Base> Weapon_Attacks = new List<Weapon_Attack_Data_Base>();
-    public Rarity rarity;
+    //public Rarity rarity;
     public Sprite InventorySprite;
-    public Vector3 DroppedWeaponSize;
-    public Vector3 DroppedWeaponQuaternion;
+    public Vector3 DroppedWeaponSize = Vector3.one;
+    public Vector3 DroppedWeaponQuaternion = Vector3.zero;
+
+
+    [Header("Default Modifiers")]
+    [SerializeReference] // This enables polymorphic serialization
+    public List<WeaponModifier> defaultModifiers = new();
 
     public enum Hand
     {

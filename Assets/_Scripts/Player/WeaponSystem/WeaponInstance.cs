@@ -26,9 +26,9 @@ public class WeaponInstance
     public int Level;
     public int KillCount;
     
-    // To Unlock Weapon Attacks
-    public int Threshold1;
-    public int Threshold2;
+    // To Unlock Weapon Attacks (Might Remove TBH)
+    [HideInInspector] public int Threshold1;
+    [HideInInspector] public int Threshold2;
 
     public List<ModifierSlot> ModifierSlots = new List<ModifierSlot>();
     public Rarity weaponRarity;
@@ -47,9 +47,24 @@ public class WeaponInstance
             ModifierSlots.Add(new ModifierSlot
             {
                 RarityTier = (Rarity.Mythic)
+                
             });
-
+            
         }
+        foreach (var Mod in data.defaultModifiers)
+        {
+            ModifierSlot modSlot = new ModifierSlot
+            {
+                RarityTier = (Rarity.Mythic)
+
+            };
+
+            modSlot.Equip(Mod);
+
+            ModifierSlots.Add(modSlot);
+        }
+
+
     }
 
     public Rarity DetermineRarity(Rarity rarity)

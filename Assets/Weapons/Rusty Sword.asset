@@ -22,12 +22,16 @@ MonoBehaviour:
   - rid: 3205115419090485444
   - rid: 4875732898165293138
   - rid: 3205115430689309103
-  rarity: 0
-  InventorySprite: {fileID: 21300000, guid: b87b967d2eda3564a8480b2ad42ce52c, type: 3}
+  InventorySprite: {fileID: 379528173, guid: a4e554aecddd4e445ade65f4eec0a596, type: 3}
   DroppedWeaponSize: {x: 82.19, y: 82.19, z: 82.19}
   DroppedWeaponQuaternion: {x: 90, y: 0, z: 0}
+  defaultModifiers: []
   rarityDistribution:
-    weights: []
+    weights:
+    - rarity: 0
+      weight: 1
+    - rarity: 1
+      weight: 1
   references:
     version: 2
     RefIds:

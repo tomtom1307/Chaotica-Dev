@@ -12,6 +12,7 @@ public class ModifierSlot
     public Rarity RarityTier;
     public WeaponModifier Equipped;
     public string ModifierName;
+    public Sprite sprite;
 
 
     public bool CanEquip(WeaponModifier mod)

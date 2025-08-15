@@ -15,13 +15,13 @@ MonoBehaviour:
   Display: {fileID: 0}
   name: JumpAbility
   activeTime: 5
-  cooldownTime: 1
+  cooldownTime: 5
   EnemyLayerMask:
     serializedVersion: 2
     m_Bits: 256
-  DPS: 24.9
-  MaxEnemiesInChain: 10
+  DPS: 35
+  MaxEnemiesInChain: 4
   JumpRange: 38.5
   MaxViewAngle: 42.7
   LightningPrefab: {fileID: 5330476123782702174, guid: aa09df9d38b1d1945a1d72928a58f57f, type: 3}
-  LinkDelay: 0.1
+  LinkDelay: 0.05

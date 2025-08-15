@@ -1,14 +1,21 @@
+using System;
 using UnityEngine;
 
+[Serializable]
 public class LifestealEffectModifier : WeaponModifier
 {
 
 
-    private float stealPercent = 0.5f;
+    [SerializeField] private float stealPercent = 0.5f;
 
     public LifestealEffectModifier(float probability,float Steal_percent) : base(probability)
     {
         stealPercent = Steal_percent;
+        name = "lifeSteal";
+    }
+
+    public LifestealEffectModifier()
+    {
         name = "lifeSteal";
     }
 

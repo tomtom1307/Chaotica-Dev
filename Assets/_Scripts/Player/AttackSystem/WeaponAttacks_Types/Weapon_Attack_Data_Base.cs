@@ -14,7 +14,7 @@ public class Weapon_Attack_Data_Base
     [TextArea(4, 1)]
     public string Description;
     public Weapon_Input weaponInputLogic;
-    [ReadOnlyy, SerializeField]protected AttackType attackType;
+    [ReadOnlyy, SerializeField]public AttackType attackType;
     public DamageType damageType = DamageType.Standard;
     public float damage = 100;
     public float ComboLength = 1;

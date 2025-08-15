@@ -41,6 +41,7 @@ public class WeaponAnimationEventHandler : MonoBehaviour
 
     public void OnVfxSet(int i)
     {
+        Debug.Log($"Animation Event called with i = {i}");
         OnVFXCalled.Invoke(i);
     }
 

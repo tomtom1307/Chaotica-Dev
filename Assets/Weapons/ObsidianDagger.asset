@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f97d5a5f37eac5f4db92ac9fa4e8c399, type: 3}
+  m_Name: ObsidianDagger
+  m_EditorClassIdentifier: 
+  _Name: Obsidian Dagger
+  model: {fileID: 2700825007940643205, guid: 13f44335bd89116449b9340e0fd0ba18, type: 3}
+  secondaryModel: {fileID: 0}
+  WeaponDamage: 3
+  Anim_controller: {fileID: 9100000, guid: deefb9640a1baa24e8eec28a1834cad7, type: 2}
+  hand: 1
+  Weapon_Attacks:
+  - rid: 4102713627304001603
+  - rid: 4102713627304001619
+  InventorySprite: {fileID: 379528173, guid: a4e554aecddd4e445ade65f4eec0a596, type: 3}
+  DroppedWeaponSize: {x: 4.69, y: 4.69, z: 4.69}
+  DroppedWeaponQuaternion: {x: 0, y: 0, z: 90}
+  defaultModifiers: []
+  rarityDistribution:
+    weights:
+    - rarity: 2
+      weight: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: 4102713627304001603
+      type: {class: Weapon_Attack_Data_Melee, ns: , asm: Assembly-CSharp}
+      data:
+        Name: Slash
+        Description: 
+        weaponInputLogic: {fileID: 11400000, guid: fa62de39fcdf5ac419138ca13612768e, type: 2}
+        attackType: 0
+        damageType: 0
+        damage: 100
+        ComboLength: 5
+        StaggerDamage: 5
+        AttackWeight: 0.5
+        MoveSpeedMult: 0.8
+        hasCooldown: 1
+        cooldown: 0.1
+        AllowAgility: 0
+        KnockBackForce: 50
+        FinalHitMultiplier: 1
+        HitFOV: 90
+        Forces:
+        - {x: 0, y: 0, z: 6}
+        VFX: {fileID: 3923219993234306259, guid: ed86a495ee60eda44ad0534b013779ab, type: 3}
+        attack_range: 2
+        MaxViewAngle: 90
+        secondaryDamageMultiplier: 0.2
+    - rid: 4102713627304001619
+      type: {class: Weapon_Attack_Data_Projectile, ns: , asm: Assembly-CSharp}
+      data:
+        Name: Throwing Knife
+        Description: 
+        weaponInputLogic: {fileID: 11400000, guid: fa62de39fcdf5ac419138ca13612768e, type: 2}
+        attackType: 1
+        damageType: 0
+        damage: 100
+        ComboLength: 1
+        StaggerDamage: 5
+        AttackWeight: 1
+        MoveSpeedMult: 1
+        hasCooldown: 1
+        cooldown: 0.1
+        AllowAgility: 0
+        KnockBackForce: 100
+        FinalHitMultiplier: 1
+        HitFOV: 120
+        Forces: []
+        VFX: {fileID: 0}
+        projectile: {fileID: 2999725350419090432, guid: 1fd385ab72eea654ca548ec63f5ab678, type: 3}
+        Projectile_Amount: 1
+        spread: 0
+        speed: 70
+        gravity: 1
