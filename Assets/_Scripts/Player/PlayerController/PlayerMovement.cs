@@ -408,9 +408,9 @@ public class PlayerMovement : MonoBehaviour
     private void SlideUpdateIfNeeded()
     {
         if (state != PlayerMechanimState.Sliding) return;
-
+        
         _slideTimer += Time.deltaTime;
-
+        SetMoveSpeed(SlideMovementControl);
         if (_slideTimer > SlideTime)
         {
             // proper transition: slide -> crouch

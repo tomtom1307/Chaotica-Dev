@@ -29,7 +29,7 @@ MonoBehaviour:
   ammoRegenPerSecond: 0.5
   ammoRegenDelay: 1.25
   regenOnlyWhenReadyState: 0
-  WeaponFOVZoom: -20
+  WeaponFOVZoom: -30
   InventorySprite: {fileID: 273461087, guid: 6cd98e8cdda7ee74a8a58259b61237b4, type: 3}
   DroppedWeaponSize: {x: 74.315, y: 10.62956, z: 10.62956}
   DroppedWeaponQuaternion: {x: 0, y: 0, z: 90}
@@ -61,7 +61,7 @@ MonoBehaviour:
         AllowAgility: 0
         KnockBackForce: 1000
         FinalHitMultiplier: 1
-        HitFOV: 150
+        HitFOV: 30
         Forces: []
         VFX: {fileID: 0}
         ammoCost: 0
