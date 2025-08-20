@@ -17,9 +17,20 @@ public class WeaponDataSO : ScriptableObject
     public Hand hand;
     [SerializeReference] // This enables polymorphic serialization
     public List<Weapon_Attack_Data_Base> Weapon_Attacks = new List<Weapon_Attack_Data_Base>();
-    [Tooltip("If true, when ammo reaches 0, ALL attacks are blocked until ammo >= 1.")]
-    public bool blockAttacksWhenAmmoEmpty = true;
-    public bool HideWeaponWhenAmmoEmpty = true;
+    
+    public float WeaponFOVZoom;
+
+    //public Rarity rarity;
+    public Sprite InventorySprite;
+    public Vector3 DroppedWeaponSize = Vector3.one;
+    public Vector3 DroppedWeaponQuaternion = Vector3.zero;
+
+
+    [Header("Default Modifiers")]
+    [SerializeReference] // This enables polymorphic serialization
+    public List<WeaponModifier> defaultModifiers = new();
+
+
     // WeaponDataSO
     [Header("Weapon-wide Ammo")]
     public bool usesAmmo = false;
@@ -32,18 +43,9 @@ public class WeaponDataSO : ScriptableObject
     public float ammoRegenDelay = 1.25f;
     // Optional: only regen while holder is idle/ready
     public bool regenOnlyWhenReadyState = false;
-
-    public float WeaponFOVZoom;
-
-    //public Rarity rarity;
-    public Sprite InventorySprite;
-    public Vector3 DroppedWeaponSize = Vector3.one;
-    public Vector3 DroppedWeaponQuaternion = Vector3.zero;
-
-
-    [Header("Default Modifiers")]
-    [SerializeReference] // This enables polymorphic serialization
-    public List<WeaponModifier> defaultModifiers = new();
+    [Tooltip("If true, when ammo reaches 0, ALL attacks are blocked until ammo >= 1.")]
+    public bool blockAttacksWhenAmmoEmpty = true;
+    public bool HideWeaponWhenAmmoEmpty = true;
 
     public enum Hand
     {
@@ -68,7 +70,7 @@ public class WeaponDataSO : ScriptableObject
             default: return Color.white;
         }
     }
-
+    [Header("Rarity")]
     public RarityDistribution rarityDistribution;
 
 }

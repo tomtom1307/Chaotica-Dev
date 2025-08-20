@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(CombatInput))]
 public class WeaponHolder : MonoBehaviour
 {
     // ================================
@@ -56,13 +57,11 @@ public class WeaponHolder : MonoBehaviour
     [SerializeField] public AttackState State = AttackState.Ready;
 
     // Attack queue
-    private bool _queuedAttack;
-    private int _queuedAttackNum;
-    private InputAction.CallbackContext _queuedContext;
-    private float _queueTime;
-    private float _queueExpirationTime;
-    [HideInInspector] public bool QueuedRelease;
     [HideInInspector] public bool alt;
+
+    [Header("Input (New)")]
+    [HideInInspector]public CombatInput combatInput;          // assign in Inspector
+    [Range(0.05f, 1.0f)] public float inputBufferWindow = 0.45f;
 
     private Coroutine _cooldownRoutine;
 
@@ -158,6 +157,9 @@ public class WeaponHolder : MonoBehaviour
         }
 
         HandleWeaponSwapping(); // builds models + animator
+
+        combatInput = gameObject.GetComponent<CombatInput>();
+
     }
 
     private void OnDisable()
@@ -170,6 +172,14 @@ public class WeaponHolder : MonoBehaviour
     {
         UpdateStatusEffects();
         UpdateWeaponAmmoRegen(Time.deltaTime);
+        ProcessBufferedInputs();
+
+
+        if (State == AttackState.Charging && _awaitingReleaseIndex >= 0 && IndexValid(_awaitingReleaseIndex))
+        {
+            var logic = data.Weapon_Attacks[_awaitingReleaseIndex].weaponInputLogic;
+            logic?.OnHoldTick(_awaitingReleaseIndex, this);
+        }
 
 #if UNITY_EDITOR
         // quick test keys
@@ -244,25 +254,98 @@ public class WeaponHolder : MonoBehaviour
     // ================================
     //           INPUT HANDLERS
     // ================================
-    public void DoQueuedInput(int i, InputAction.CallbackContext ctx, bool isAlt = false)
+
+    private void ProcessBufferedInputs()
     {
-        if (!enabled || data == null) return;
-        if (!IndexValid(i)) return;
-        data.Weapon_Attacks[i].weaponInputLogic.QueuedInput(i, this, ctx, isAlt);
+        if (combatInput == null || data == null) return;
+
+        combatInput.bufferWindow = inputBufferWindow;
+        combatInput.CleanupExpired();
+
+        // --- NEW: allow charge to start during Attacking if the attack opts in ---
+        if (State == AttackState.Attacking && combatInput.TryPeekOldest(out var eAtt) && eAtt.phase == InputPhase.Pressed)
+        {
+            int idx = (int)eAtt.action;
+            if (IndexValid(idx) && IsAttackUnlocked(idx))
+            {
+                var ad = data.Weapon_Attacks[idx];
+                var logic = ad.weaponInputLogic;
+                if (logic != null && logic.StartsChargingOnPress && ad.allowAttackInterupt && CanAttemptAttack(idx))
+                {
+                    SoftInterruptCurrentAttack();                 // stop current swing (no cooldown)
+                    logic.OnPress(idx, this, eAtt.alt);           // this will call StartAttackCharging(idx)
+                    combatInput.ConsumeOldest();
+                    // Releases will be handled by DrainReleases()
+                    DrainReleases();
+                    return;
+                }
+            }
+            // If not allowed, leave it buffered until Ready/Combo
+        }
+
+        // --- existing path: consume presses in Ready/Combo ---
+        if (State == AttackState.Ready || State == AttackState.Combo)
+            ConsumeOnePressIfAvailable();
+
+        // Always clear releases at the end (routes to OnRelease only if Charging & matching)
+        DrainReleases();
     }
 
-    public void Attack1Input(InputAction.CallbackContext ctx) => HandleAttackInput(0, ctx);
-    public void Attack2Input(InputAction.CallbackContext ctx) { if (_isAttack2Unlocked) HandleAttackInput(1, ctx); }
-    public void Attack3Input(InputAction.CallbackContext ctx) { if (_isAttack3Unlocked) HandleAttackInput(2, ctx); }
 
-    private void HandleAttackInput(int attackIndex, InputAction.CallbackContext ctx)
+
+    private bool IsAttackUnlocked(int i) =>
+    i == 0 || (i == 1 && _isAttack2Unlocked) || (i == 2 && _isAttack3Unlocked);
+
+    // Ensures we never consume more than one press in the same frame
+    private int _lastPressConsumedFrame = -1;
+
+
+    
+
+    private bool ConsumeOnePressIfAvailable()
     {
-        if (!enabled || data == null) return;
-        if (!IndexValid(attackIndex)) return;
-        if (!CanAttemptAttack(attackIndex)) return;
+        if (_lastPressConsumedFrame == Time.frameCount) return false;
+        if (!combatInput.TryPeekOldest(out var e) || e.phase != InputPhase.Pressed) return false;
 
-        data.Weapon_Attacks[attackIndex].weaponInputLogic._Input(attackIndex, this, ctx);
+        int idx = (int)e.action;
+        if (!IndexValid(idx) || !IsAttackUnlocked(idx)) { combatInput.ConsumeOldest(); return false; }
+        if (!CanAttemptAttack(idx)) return false; // leave in buffer; try again later
+
+        data.Weapon_Attacks[idx].weaponInputLogic.OnPress(idx, this, e.alt);
+        combatInput.ConsumeOldest();
+        _lastPressConsumedFrame = Time.frameCount;
+        return true;
     }
+
+    private void DrainReleases()
+    {
+        // Consume releases so they never block, and trigger OnRelease only when actually charging that attack
+        while (combatInput.TryPeekOldest(out var head) && head.phase == InputPhase.Released)
+        {
+            int ai = (int)head.action;
+
+            bool isChargingMatch =
+                State == AttackState.Charging &&
+                IndexValid(ai) &&
+                CurrentAttackData == data.Weapon_Attacks[ai];
+
+            if (isChargingMatch)
+            {
+                data.Weapon_Attacks[ai].weaponInputLogic.OnRelease(ai, this, head.alt);
+            }
+
+            combatInput.ConsumeOldest();
+        }
+    }
+
+    private void TryConsumeForComboNow()
+    {
+        // 1) Try a press immediately (snappy chaining)
+        ConsumeOnePressIfAvailable();
+        // 2) Then drain releases so a just-finished charge can complete
+        DrainReleases();
+    }
+
 
     private bool IndexValid(int i) => data != null && data.Weapon_Attacks != null && i >= 0 && i < data.Weapon_Attacks.Count;
 
@@ -292,7 +375,6 @@ public class WeaponHolder : MonoBehaviour
     {
         if (!enabled || data == null || instance == null) return;
         if (!IndexValid(i)) return;
-
         var nextData = data.Weapon_Attacks[i];
 
         // spend ammo
@@ -314,12 +396,10 @@ public class WeaponHolder : MonoBehaviour
         {
             Weapon_anim.SetBool("Alt", alt);
             Weapon_anim.SetInteger("AttackType", i);
-
-            if (!alt)
-                Weapon_anim.SetInteger("ComboInt", ComboCounter);
+            print("ComboCounter: " + ComboCounter);
+            Weapon_anim.SetInteger("ComboInt", ComboCounter);
 
             Weapon_anim.SetBool("Attacking", true);
-            Weapon_anim.SetBool("Combo", false);
             Weapon_anim.SetBool("Charging", false);
         }
 
@@ -344,8 +424,7 @@ public class WeaponHolder : MonoBehaviour
         HandleCooldownOrReady();
         CurrentAttackData.ExitAttack(this);
         CurrentAttackData = null;
-
-        ComboCounter = 0;
+        
         ChargeAmount = 1f;
     }
 
@@ -360,7 +439,6 @@ public class WeaponHolder : MonoBehaviour
         else
         {
             State = AttackState.Ready;
-            TryExecuteQueuedAttack();
         }
     }
 
@@ -368,47 +446,27 @@ public class WeaponHolder : MonoBehaviour
     {
         yield return new WaitForSeconds(t);
         if (State != AttackState.Charging) State = AttackState.Ready;
-        TryExecuteQueuedAttack();
+        ComboCounter = 0;             
         _cooldownRoutine = null;
     }
 
-    // ================================
-    //           ATTACK QUEUE
-    // ================================
-    public void QueueAttack(int attackNum, InputAction.CallbackContext ctx, float expirationTime, bool isAlt = false)
+    private void SoftInterruptCurrentAttack()
     {
-        if (QueueDebugMessages) Debug.Log("Queued Attack");
-        _queuedAttack = true;
-        _queuedAttackNum = attackNum;
-        _queuedContext = ctx;
-        _queueTime = Time.time;
-        _queueExpirationTime = expirationTime;
-        alt = isAlt;
-    }
+        // Clean up current attack without putting you into cooldown
+        playerMovement.AttackResetMoveSpeed();
 
-    public void TryExecuteQueuedAttack()
-    {
-        if (!_queuedAttack) return;
-
-        if (Time.time - _queueTime > _queueExpirationTime)
+        if (Weapon_anim != null)
         {
-            if (QueueDebugMessages) Debug.Log("Queue Expired");
-            _queuedAttack = false; QueuedRelease = false;
-            return;
+            Weapon_anim.SetBool("Attacking", false);
+            Weapon_anim.SetBool("Combo", false);
+            // Don't touch "Charging" here; OnPress will set it
         }
 
-        if (State == AttackState.Ready || State == AttackState.Combo)
-        {
-            if (!CanAttemptAttack(_queuedAttackNum))
-            {
-                if (QueueDebugMessages) Debug.Log("Blocked by empty-lock / insufficient ammo");
-                return; // keep queued until it expires or ammo returns
-            }
+        // If you have custom cleanup per attack, add a hook:
+        // CurrentAttackData?.OnInterrupted(this);
 
-            if (QueueDebugMessages) Debug.Log("Executing Queued Attack");
-            DoQueuedInput(_queuedAttackNum, _queuedContext, alt);
-            _queuedAttack = false;
-        }
+        CurrentAttackData = null;
+        State = AttackState.Ready; // so the next OnPress can proceed safely
     }
 
     // ================================
@@ -419,9 +477,13 @@ public class WeaponHolder : MonoBehaviour
     public void OpenComboWindow()
     {
         State = AttackState.Combo;
-        TryExecuteQueuedAttack();
         if (Weapon_anim != null) Weapon_anim.SetBool("Combo", true);
+
+        // Try to chain instantly this frame; per-frame guard prevents double consumption
+        TryConsumeForComboNow();
     }
+
+
 
     public void CloseComboWindow()
     {
@@ -429,13 +491,20 @@ public class WeaponHolder : MonoBehaviour
         if (Weapon_anim != null) Weapon_anim.SetBool("Combo", false);
     }
 
+    private int _awaitingReleaseIndex = -1;
+    private float _awaitingSetTime;
+
     public void StartAttackCharging(int attackIndex)
     {
         if (!IndexValid(attackIndex)) return;
 
+        _awaitingReleaseIndex = attackIndex;
+        _awaitingSetTime = Time.time;
+
         CurrentAttackData = data.Weapon_Attacks[attackIndex];
         State = AttackState.Charging;
-
+        ChargeAmount = 0f;
+        Debug.Log("AttackCharging");
         playerMovement.AttackMoveSpeed(CurrentAttackData.MoveSpeedMult, CurrentAttackData.AllowAgility);
 
         if (Weapon_anim != null)
@@ -444,6 +513,10 @@ public class WeaponHolder : MonoBehaviour
             Weapon_anim.SetInteger("AttackType", attackIndex);
         }
     }
+
+
+
+
 
     public void AttackForce(int i)
     {

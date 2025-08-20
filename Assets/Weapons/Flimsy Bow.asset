@@ -48,7 +48,7 @@ MonoBehaviour:
       data:
         Name: Arrow br
         Description: It's bow.. what do you expect?
-        weaponInputLogic: {fileID: 11400000, guid: 9f7385efd906cab4c90af0c476313a9d, type: 2}
+        weaponInputLogic: {fileID: 11400000, guid: e590e2e7e5a20434ba6afd998ece63a2, type: 2}
         attackType: 1
         damageType: 0
         damage: 100
@@ -65,6 +65,8 @@ MonoBehaviour:
         Forces: []
         VFX: {fileID: 0}
         ammoCost: 0
+        ChargeTime: 0.4
+        allowAttackInterupt: 0
         projectile: {fileID: 140453258620981734, guid: 53e853c3264383c43818968a62e4b6fc, type: 3}
         Projectile_Amount: 1
         spread: 0
@@ -75,7 +77,7 @@ MonoBehaviour:
       data:
         Name: Arrow BRRRRRRRR
         Description: 'like first attack but more arrows '
-        weaponInputLogic: {fileID: 11400000, guid: 108328bb3050661409ff377a729dab2f, type: 2}
+        weaponInputLogic: {fileID: 11400000, guid: e590e2e7e5a20434ba6afd998ece63a2, type: 2}
         attackType: 1
         damageType: 0
         damage: 70
@@ -92,6 +94,8 @@ MonoBehaviour:
         Forces: []
         VFX: {fileID: 0}
         ammoCost: 0
+        ChargeTime: 1
+        allowAttackInterupt: 0
         projectile: {fileID: 140453258620981734, guid: 53e853c3264383c43818968a62e4b6fc, type: 3}
         Projectile_Amount: 3
         spread: 0.074

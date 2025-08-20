@@ -64,6 +64,8 @@ MonoBehaviour:
         - {x: 0, y: 0, z: 6}
         VFX: {fileID: 3923219993234306259, guid: ed86a495ee60eda44ad0534b013779ab, type: 3}
         ammoCost: 0
+        ChargeTime: 0
+        allowAttackInterupt: 0
         attack_range: 2
         MaxViewAngle: 90
         secondaryDamageMultiplier: 0.2
@@ -89,6 +91,8 @@ MonoBehaviour:
         Forces: []
         VFX: {fileID: 0}
         ammoCost: 1
+        ChargeTime: 0
+        allowAttackInterupt: 0
         projectile: {fileID: 2999725350419090432, guid: 1fd385ab72eea654ca548ec63f5ab678, type: 3}
         Projectile_Amount: 1
         spread: 0

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Weapon_Attack_Data_Raycast : Weapon_Attack_Data_Base
 {
+    [Header("Raycast Stats")]
     public float Range;
 
     // Constructor for Weapon_Attack_Melee

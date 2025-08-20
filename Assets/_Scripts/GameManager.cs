@@ -195,11 +195,12 @@ public class GameManager : MonoBehaviour
 
     public GameObject SpawnRarityVFX(Transform parent, Rarity rarity)
     {
+        
         //VFX
         VisualEffectAsset RarityVFX = Resources.Load<VisualEffectAsset>("Rarity");
         GameObject vfxHolder = new GameObject("VFXHolder");
         VisualEffect vfx = vfxHolder.AddComponent<VisualEffect>();
-        vfxHolder.transform.parent = this.transform;
+        vfxHolder.transform.parent = parent;
         vfxHolder.transform.localPosition = Vector3.zero;
         vfx.visualEffectAsset = RarityVFX;
         vfx.SetVector4("Color", GetColorByRarity(rarity));

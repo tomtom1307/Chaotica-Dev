@@ -7,8 +7,8 @@ using System.Linq;
 public class Weapon_Attack_Data_AOE : Weapon_Attack_Data_Base
 {
     PlayerMovement playerMovement;
-    
-    
+
+    [Header("AOE Stats")]
     public float attack_range;
 
 

@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f97d5a5f37eac5f4db92ac9fa4e8c399, type: 3}
+  m_Name: Iron Sword
+  m_EditorClassIdentifier: 
+  _Name: Iron Sword
+  model: {fileID: 919132149155446097, guid: 8cf737e232f6b45448f49a5a3b98cf7b, type: 3}
+  secondaryModel: {fileID: 0}
+  WeaponDamage: 6
+  Anim_controller: {fileID: 9100000, guid: ed4ab23aa9477fa41a49f039aa055cbe, type: 2}
+  hand: 1
+  Weapon_Attacks:
+  - rid: 4102713688700485773
+  - rid: 4102713688700485774
+  WeaponFOVZoom: 0
+  InventorySprite: {fileID: 379528173, guid: a4e554aecddd4e445ade65f4eec0a596, type: 3}
+  DroppedWeaponSize: {x: 24, y: 24, z: 24}
+  DroppedWeaponQuaternion: {x: 180, y: 0, z: 0}
+  defaultModifiers: []
+  usesAmmo: 0
+  maxAmmo: 3
+  ammoOnStart: -1
+  ammoRegenPerSecond: 0.5
+  ammoRegenDelay: 1.25
+  regenOnlyWhenReadyState: 0
+  blockAttacksWhenAmmoEmpty: 1
+  HideWeaponWhenAmmoEmpty: 1
+  rarityDistribution:
+    weights:
+    - rarity: 2
+      weight: 56
+    - rarity: 1
+      weight: 2
+  references:
+    version: 2
+    RefIds:
+    - rid: 4102713688700485773
+      type: {class: Weapon_Attack_Data_Melee, ns: , asm: Assembly-CSharp}
+      data:
+        Name: Swing
+        Description: 
+        weaponInputLogic: {fileID: 11400000, guid: fa62de39fcdf5ac419138ca13612768e, type: 2}
+        attackType: 0
+        damageType: 0
+        damage: 100
+        StaggerDamage: 5
+        ChargeTime: 0
+        KnockBackForce: 100
+        AttackWeight: 1
+        HitFOV: 5
+        Forces:
+        - {x: 0, y: 0, z: 1}
+        VFX: {fileID: 0}
+        ComboLength: 2
+        FinalHitMultiplier: 2
+        MoveSpeedMult: 0.5
+        AllowAgility: 1
+        hasCooldown: 1
+        cooldown: 0.1
+        ammoCost: 0
+        allowAttackInterupt: 0
+        attack_range: 3
+        MaxViewAngle: 90
+        secondaryDamageMultiplier: 0.2
+    - rid: 4102713688700485774
+      type: {class: Weapon_Attack_Data_Projectile, ns: , asm: Assembly-CSharp}
+      data:
+        Name: Magic Swing Thing
+        Description: 
+        weaponInputLogic: {fileID: 11400000, guid: e590e2e7e5a20434ba6afd998ece63a2, type: 2}
+        attackType: 1
+        damageType: 0
+        damage: 200
+        StaggerDamage: 5
+        ChargeTime: 1.5
+        KnockBackForce: 100
+        AttackWeight: 1
+        HitFOV: 10
+        Forces: []
+        VFX: {fileID: 0}
+        ComboLength: 1
+        FinalHitMultiplier: 1
+        MoveSpeedMult: 1
+        AllowAgility: 0
+        hasCooldown: 1
+        cooldown: 0.1
+        ammoCost: 0
+        allowAttackInterupt: 0
+        projectile: {fileID: 140453258620981734, guid: 53e853c3264383c43818968a62e4b6fc, type: 3}
+        Projectile_Amount: 1
+        spread: 0
+        speed: 42.9
+        gravity: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 [Serializable]
 public class Weapon_Attack_Data_Projectile : Weapon_Attack_Data_Base
 {
-
+    [Header("Projectile Stats")]
     public GameObject projectile;
     public int Projectile_Amount = 1;
     public float spread = 5;

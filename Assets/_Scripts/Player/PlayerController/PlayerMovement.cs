@@ -56,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Grounding Check")]
     public Vector3 groundSphereOffset = new Vector3(0, -0.9f, 0);
     public float groundSphereRadius = 0.25f;
+    public float groundSphereDist = 0.25f;
 
     // ================================
     //           RUNTIME STATE
@@ -72,6 +73,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpBufferTime = 0.12f;   // press jump slightly early
     private float _coyoteTimer;
     private float _jumpBufferTimer;
+
+    [Header("Step Assist")]
+    [SerializeField] private bool enableStepAssist = true;
+    [SerializeField] private float stepMaxHeight = 0.4f;     // max curb to auto-climb
+    [SerializeField] private float stepMinHeight = 0.05f;    // ignore tiny bumps
+    [SerializeField] private float stepCheckDistance = 0.35f;// how far to probe ahead
+    [SerializeField] private float stepUpSpeed = 6f;         // how fast we lift up (m/s)
+    [SerializeField] private LayerMask stepMask;             // usually same as 'whatisGround'
+
 
 
     [HideInInspector] public Vector2 moveInput;
@@ -98,6 +108,9 @@ public class PlayerMovement : MonoBehaviour
     // cached inputs
     float _hor, _ver;
 
+    private float _stateSpeedMult = 1f;   // from movement state (walk/sprint/crouch/slide)
+    private float attackSpeedMult = 1f;   // from AttackMoveSpeed gate (external systems)
+
     private void Start()
     {
         _collider = GetComponent<CapsuleCollider>();
@@ -110,6 +123,8 @@ public class PlayerMovement : MonoBehaviour
 
         _currentMoveSpeed = _moveSpeed;
         state = PlayerMechanimState.Walking;
+
+        if (stepMask.value == 0) stepMask = whatisGround;
     }
 
     private void Update()
@@ -132,6 +147,7 @@ public class PlayerMovement : MonoBehaviour
     {
         ControlDrag();
         SlideUpdateIfNeeded();       // per-frame slide force/timer while in Sliding
+        UpdateSpeedAuthority();
         MovePlayer();
     }
 
@@ -251,23 +267,8 @@ public class PlayerMovement : MonoBehaviour
         FOVFXController.instance.SetOffset(FovChannel.Crouch, state == PlayerMechanimState.Crouching ? crouchFOV : 0f);
 
 
-#if UNITY_EDITOR
-        DebugSprintGate(wantsSprint, canSprint);
-#endif
     }
 
-#if UNITY_EDITOR
-    void DebugSprintGate(bool wantsSprint, bool canSprint)
-    {
-
-            Debug.Log(
-                $"[Sprint Gate] canSprint={canSprint}, " +
-                $"isGrounded={isGrounded}, hasMove={(_inp.move.sqrMagnitude > 0.0001f)}, " +
-                $"state={state}, AttackAgile={AttackAgile}, attackMoveSpeed={attackMoveSpeed}"
-            );
-        
-    }
-#endif
 
     private void OnEnterState(PlayerMechanimState s, bool applyJumpImpulse = false)
     {
@@ -278,7 +279,7 @@ public class PlayerMovement : MonoBehaviour
                 break;
 
             case PlayerMechanimState.Sprinting:
-                SetMoveSpeed(SprintMult);
+                
                 break;
 
             case PlayerMechanimState.Sliding:
@@ -300,8 +301,7 @@ public class PlayerMovement : MonoBehaviour
             case PlayerMechanimState.Sprinting:
                 // If we’re going to walking (or anything that doesn’t set speed on enter),
                 // reset to base speed.
-                if (to == PlayerMechanimState.Walking)
-                    ResetMoveSpeed();
+               
                 break;
 
             case PlayerMechanimState.Crouching:
@@ -350,6 +350,36 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void UpdateSpeedAuthority()
+    {
+        // Decide state multiplier from current state.
+        // IMPORTANT: Treat _CrouchMoveSpeed and SlideMovementControl as MULTIPLIERS (e.g. 0.6f, 1.1f).
+        // If you stored absolute speeds instead, convert: crouchMult = _CrouchMoveSpeed / _moveSpeed;
+
+        switch (state)
+        {
+            case PlayerMechanimState.Sprinting:
+                _stateSpeedMult = SprintMult;                
+                break;
+            case PlayerMechanimState.Crouching:
+                _stateSpeedMult = _CrouchMoveSpeed;          
+                break;
+            case PlayerMechanimState.Sliding:
+                _stateSpeedMult = SlideMovementControl;       
+                break;
+            default:
+                _stateSpeedMult = 1f;                        
+                break;
+        }
+
+        _currentMoveSpeed = _moveSpeed * _stateSpeedMult * attackSpeedMult;
+    }
+
+
+
+
+
+
     // ================================
     //            JUMP
     // ================================
@@ -387,13 +417,11 @@ public class PlayerMovement : MonoBehaviour
 
         _rb.linearDamping = _groundDrag;
         _collider.height = 0.5f * _colliderHeight;
-        SetMoveSpeed(_CrouchMoveSpeed * attackMoveSpeed);
     }
 
     private void CrouchExit()
     {
         _slideTimer = 0f;
-        AttackMoveSpeed(attackMoveSpeed, true);
         _collider.height = _colliderHeight;   // ensure full height on ANY crouch exit
     }
 
@@ -402,7 +430,6 @@ public class PlayerMovement : MonoBehaviour
         _slideTimer = 0f;
         _collider.height = 0.5f * _colliderHeight;
         _rb.linearDamping = 0f;
-        SetMoveSpeed(SlideMovementControl);
     }
 
     private void SlideUpdateIfNeeded()
@@ -410,7 +437,6 @@ public class PlayerMovement : MonoBehaviour
         if (state != PlayerMechanimState.Sliding) return;
         
         _slideTimer += Time.deltaTime;
-        SetMoveSpeed(SlideMovementControl);
         if (_slideTimer > SlideTime)
         {
             // proper transition: slide -> crouch
@@ -433,7 +459,6 @@ public class PlayerMovement : MonoBehaviour
         {
             _collider.height = _colliderHeight;
             _slideTimer = 0f;
-            AttackMoveSpeed(attackMoveSpeed, true);
             _rb.linearDamping = isGrounded ? _groundDrag : _airDrag;
         }
         // If we go into crouch, CrouchEnter() will keep half height.
@@ -442,26 +467,22 @@ public class PlayerMovement : MonoBehaviour
     // ================================
     //          GROUNDING / SLOPE
     // ================================
+    [SerializeField] private float minGroundDot = 0.55f; // ~ cos(56°). Tweak 0.5–0.7
+
     private void UpdateGrounded()
     {
-        bool wasGrounded = isGrounded;
-        isGrounded = Physics.CheckSphere(transform.position + groundSphereOffset, groundSphereRadius, whatisGround);
-
-        if (!wasGrounded && isGrounded)
+        Vector3 origin = transform.position + groundSphereOffset;
+        if (Physics.SphereCast(origin, groundSphereRadius, Vector3.down, out var hit, groundSphereDist, whatisGround, QueryTriggerInteraction.Ignore))
         {
-            // Landing
-            state = PlayerMechanimState.Walking;
-
-            if (Input.GetKey(KeyCode.C))
-            {
-                Vector3 vel = Vector3.ProjectOnPlane(_rb.linearVelocity, _slopeHit.normal).normalized;
-                _rb.AddForce(vel * LandingSlide, ForceMode.VelocityChange);
-            }
-
-            _camAttackAnim.RotateCamera(Vector2.down, 0.8f);
-            PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.FootSteps, Mathf.Clamp(1 * _rb.linearVelocity.magnitude, 0.5f, 1.5f));
+            isGrounded = hit.normal.y >= minGroundDot;
+            if (isGrounded) _slopeHit = hit;
+        }
+        else
+        {
+            isGrounded = false;
         }
     }
+
 
     private bool CheckSlope(out RaycastHit hit)
     {
@@ -523,14 +544,13 @@ public class PlayerMovement : MonoBehaviour
 
     public void AttackMoveSpeed(float val, bool Agile)
     {
-        SetMoveSpeed(val);
-        attackMoveSpeed = val;
+        attackSpeedMult = val;
         AttackAgile = Agile;
     }
 
     public void AttackResetMoveSpeed()
     {
-        attackMoveSpeed = 1f;
+        attackSpeedMult = 1;
         AttackAgile = true;
         ResetMoveSpeed();
     }

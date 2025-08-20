@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c68dca958e307224ab3dcd9dc431e03d, type: 3}
-  m_Name: WI_ClickandHold
+  m_Script: {fileID: 11500000, guid: 584a4368bc47f6a4597249ced68fd127, type: 3}
+  m_Name: WI_ChargeHoldRelease
   m_EditorClassIdentifier: 
-  queueExpirationTime: 0.7
+  queueExpirationTime: 1
+  ChargeTime: 0.1
