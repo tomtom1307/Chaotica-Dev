@@ -21,19 +21,19 @@ MonoBehaviour:
   Weapon_Attacks:
   - rid: 1142560951034445932
   - rid: 1142560951034445958
-  blockAttacksWhenAmmoEmpty: 1
-  HideWeaponWhenAmmoEmpty: 1
+  WeaponFOVZoom: -30
+  InventorySprite: {fileID: 273461087, guid: 6cd98e8cdda7ee74a8a58259b61237b4, type: 3}
+  DroppedWeaponSize: {x: 74.315, y: 10.62956, z: 10.62956}
+  DroppedWeaponQuaternion: {x: 0, y: 0, z: 90}
+  defaultModifiers: []
   usesAmmo: 0
   maxAmmo: 3
   ammoOnStart: -1
   ammoRegenPerSecond: 0.5
   ammoRegenDelay: 1.25
   regenOnlyWhenReadyState: 0
-  WeaponFOVZoom: -30
-  InventorySprite: {fileID: 273461087, guid: 6cd98e8cdda7ee74a8a58259b61237b4, type: 3}
-  DroppedWeaponSize: {x: 74.315, y: 10.62956, z: 10.62956}
-  DroppedWeaponQuaternion: {x: 0, y: 0, z: 90}
-  defaultModifiers: []
+  blockAttacksWhenAmmoEmpty: 1
+  HideWeaponWhenAmmoEmpty: 1
   rarityDistribution:
     weights:
     - rarity: 0
@@ -52,20 +52,20 @@ MonoBehaviour:
         attackType: 1
         damageType: 0
         damage: 100
-        ComboLength: 1
         StaggerDamage: 5
-        AttackWeight: 1
-        MoveSpeedMult: 0.2
-        hasCooldown: 1
-        cooldown: 0.1
-        AllowAgility: 0
+        ChargeTime: 0.4
         KnockBackForce: 1000
-        FinalHitMultiplier: 1
+        AttackWeight: 1
         HitFOV: 30
         Forces: []
         VFX: {fileID: 0}
+        ComboLength: 1
+        FinalHitMultiplier: 1
+        MoveSpeedMult: 0.2
+        AllowAgility: 0
+        hasCooldown: 1
+        cooldown: 0.1
         ammoCost: 0
-        ChargeTime: 0.4
         allowAttackInterupt: 0
         projectile: {fileID: 140453258620981734, guid: 53e853c3264383c43818968a62e4b6fc, type: 3}
         Projectile_Amount: 1
@@ -81,20 +81,20 @@ MonoBehaviour:
         attackType: 1
         damageType: 0
         damage: 70
-        ComboLength: 1
         StaggerDamage: 5
-        AttackWeight: 0
-        MoveSpeedMult: 0.3
-        hasCooldown: 1
-        cooldown: 0.1
-        AllowAgility: 0
+        ChargeTime: 1
         KnockBackForce: 1000
-        FinalHitMultiplier: 1
-        HitFOV: 120
+        AttackWeight: 0
+        HitFOV: 20
         Forces: []
         VFX: {fileID: 0}
+        ComboLength: 1
+        FinalHitMultiplier: 1
+        MoveSpeedMult: 0.3
+        AllowAgility: 0
+        hasCooldown: 1
+        cooldown: 0.1
         ammoCost: 0
-        ChargeTime: 1
         allowAttackInterupt: 0
         projectile: {fileID: 140453258620981734, guid: 53e853c3264383c43818968a62e4b6fc, type: 3}
         Projectile_Amount: 3

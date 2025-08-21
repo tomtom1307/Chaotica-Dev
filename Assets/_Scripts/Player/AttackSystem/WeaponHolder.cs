@@ -229,6 +229,7 @@ public class WeaponHolder : MonoBehaviour
         if (data.model != null && parent != null)
         {
             WeaponModel = Instantiate(data.model, parent);
+            WeaponModel.transform.localPosition = Vector3.zero;
             WeaponModel.layer = 7; // your gameplay layer
         }
 
