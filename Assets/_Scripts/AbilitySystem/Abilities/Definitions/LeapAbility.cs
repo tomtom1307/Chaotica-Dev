@@ -6,7 +6,7 @@ public class LeapAbility : Ability
     public float LeapForce;
     public float UpForce;
 
-    public override void Activate(GameObject parent)
+    public override void Activate(GameObject parent, AbilityHolder holder)
     {
         //PlayerMovement movement = parent.GetComponent<PlayerMovement>();
         Rigidbody rigidbody = parent.GetComponent<Rigidbody>();

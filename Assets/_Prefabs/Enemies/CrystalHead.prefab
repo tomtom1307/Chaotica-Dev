@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 2251180822368428590}
   m_Layer: 8
   m_Name: CrystalHead
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,6 +143,7 @@ Transform:
   - {fileID: 924703641180540184}
   - {fileID: 5630202114526026225}
   - {fileID: 3118559796196905534}
+  - {fileID: 7623660391702249368}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 178, z: 0}
 --- !u!114 &4735989702125445224
@@ -388,6 +389,7 @@ MonoBehaviour:
   spawnOffset: {x: 0, y: 1, z: 0}
   model: {fileID: 5384560554013420759}
   ded: 0
+  targetPos: {fileID: 7623660391702249368}
   brain: {fileID: 0}
   hitParticleFX: {fileID: 6229015314133012181, guid: 69d1dfa3e85f3e549bb742429f91c7b8, type: 3}
   InstantAgro: 10
@@ -598,7 +600,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Accuracy: 0
-  EnemyMass: 1.8
+  EnemyMass: 50
   stateChangeDebug: 0
   animator: {fileID: 0}
 --- !u!114 &2251180822368428590
@@ -1054,6 +1056,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5370271236920138981}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3555659502079006353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7623660391702249368}
+  m_Layer: 8
+  m_Name: TargetPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7623660391702249368
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3555659502079006353}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.6145834, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7953176507071246033}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3560619065657578236
 GameObject:

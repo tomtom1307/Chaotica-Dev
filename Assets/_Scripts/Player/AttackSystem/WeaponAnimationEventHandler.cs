@@ -50,6 +50,18 @@ public class WeaponAnimationEventHandler : MonoBehaviour
         onComboWindowClosed.Invoke();
     }
 
+    
+
+    public void ZoomInFOV()
+    {
+        FOVFXController.instance.SetOffset(FovChannel.Zoom, WeaponHolder.Singleton.data.WeaponFOVZoom);
+    }
+
+    public void ZoomOutFOV()
+    {
+        FOVFXController.instance.SetOffset(FovChannel.Zoom, 0);
+    }
+
     public void PlaySound(PlayerSoundSource.SoundType soundType)
     {
         PlayerSoundSource.instance.PlaySound(soundType);

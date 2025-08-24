@@ -6,6 +6,7 @@ using System.Linq;
 [Serializable]
 public class Weapon_Attack_Data_Melee : Weapon_Attack_Data_Base
 {
+    [Header("Melee Stats")]
     public float attack_range = 3;
     public float MaxViewAngle = 45;
 
@@ -15,7 +16,12 @@ public class Weapon_Attack_Data_Melee : Weapon_Attack_Data_Base
         
     }
 
-    public float secondaryDamageMultiplier = 100;
+    public Weapon_Attack_Data_Melee()
+    {
+
+    }
+
+    public float secondaryDamageMultiplier = 1;
 
     public override void PerformAttack(WeaponHolder W)
     {

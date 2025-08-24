@@ -15,8 +15,14 @@ public class Damagable : MonoBehaviour
     public Vector3 spawnOffset;
     public GameObject model;
     public bool ded;
-
+    public Transform targetPos;
     GenericSoundManager soundManager;
+
+    public Transform GetTargetPos()
+    {
+        if (targetPos == null) return this.transform;
+        else return targetPos;  
+    }
 
     protected virtual void Start()
     {

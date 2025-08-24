@@ -905,6 +905,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: cfe63c8c53187e041bf5c943b6fcab80, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 1171420450549969872, guid: cfe63c8c53187e041bf5c943b6fcab80, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -42.39101
@@ -1586,7 +1590,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Accuracy: 0
-  EnemyMass: 3
+  EnemyMass: 70
   stateChangeDebug: 0
   animator: {fileID: 0}
 --- !u!114 &-9176869074678739507

@@ -7,8 +7,8 @@ using System.Linq;
 public class Weapon_Attack_Data_AOE : Weapon_Attack_Data_Base
 {
     PlayerMovement playerMovement;
-    
-    
+
+    [Header("AOE Stats")]
     public float attack_range;
 
 
@@ -18,7 +18,10 @@ public class Weapon_Attack_Data_AOE : Weapon_Attack_Data_Base
         attackType = type;
     }
 
+    public Weapon_Attack_Data_AOE()
+    {
 
+    }
 
     public override void PerformAttack(WeaponHolder W)
     {

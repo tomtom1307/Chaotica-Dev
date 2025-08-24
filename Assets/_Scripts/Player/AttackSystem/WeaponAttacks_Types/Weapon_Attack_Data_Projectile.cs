@@ -5,7 +5,7 @@ using UnityEngine;
 [Serializable]
 public class Weapon_Attack_Data_Projectile : Weapon_Attack_Data_Base
 {
-
+    [Header("Projectile Stats")]
     public GameObject projectile;
     public int Projectile_Amount = 1;
     public float spread = 5;
@@ -33,7 +33,7 @@ public class Weapon_Attack_Data_Projectile : Weapon_Attack_Data_Base
             dir += W.cam.transform.right * UnityEngine.Random.Range(-spread, spread);
             dir.Normalize(); 
 
-            GameObject proj = W.SpawnObject(projectile, W.cam.transform.position, Quaternion.identity);
+            GameObject proj = W.SpawnObject(projectile, W.cam.transform.position + W.cam.transform.forward, Quaternion.LookRotation(W.cam.transform.forward));
             float Damageval = 0;
             bool crit = false;
             (Damageval, crit) = DamageVal(W);

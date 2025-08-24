@@ -5,7 +5,7 @@ public class JumpAbility : Ability
 {
     public float jumpForce;
 
-    public override void Activate(GameObject parent)
+    public override void Activate(GameObject parent, AbilityHolder holder)
     {
         //PlayerMovement movement = parent.GetComponent<PlayerMovement>();
         Rigidbody rigidbody = parent.GetComponent<Rigidbody>();

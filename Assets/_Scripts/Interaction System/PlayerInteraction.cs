@@ -33,7 +33,7 @@ public class PlayerInteraction : MonoBehaviour
                 //If looking at a new interactable
                 if(currentInteractable && newInteractable != currentInteractable)
                 {
-                    currentInteractable.DisableOutline();
+                    currentInteractable.StoppedLookingAt();
                 }
 
                 //If interatable is enabled then set new to current interactable
@@ -58,7 +58,7 @@ public class PlayerInteraction : MonoBehaviour
 
     void SetNewCurrentInteractable(Interactable interactable){
         currentInteractable = interactable;
-        currentInteractable.EnableOutline();
+        currentInteractable.LookedAt();
         HUDController.instance.EnableInteractionText(currentInteractable.message);
     }
 
@@ -68,7 +68,7 @@ public class PlayerInteraction : MonoBehaviour
         HUDController.instance.DisableInteractionText();
         if (currentInteractable)
         {
-            currentInteractable.DisableOutline();
+            currentInteractable.StoppedLookingAt();
             currentInteractable = null;
         }
     }

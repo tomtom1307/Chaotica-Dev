@@ -1,20 +1,28 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Weapon_Input : ScriptableObject
 {
-    public float queueExpirationTime = 0.5f; // Input expires after 0.5 seconds
-    public virtual void _Input(int AttackNum, WeaponHolder WH, InputAction.CallbackContext ctx)
+    [Tooltip("How long a buffered press stays valid.")]
+    public float queueExpirationTime = 0.5f;
+
+    public virtual void OnPress(int attackIndex, WeaponHolder wh, bool alt)
     {
+        Debug.Log("Pressed");
+        wh.EnterAttack(attackIndex, false);
     }
 
-    public virtual void QueuedInput(int AttackNum, WeaponHolder WH, InputAction.CallbackContext ctx, bool alt = false)
+    public virtual void OnRelease(int attackIndex, WeaponHolder wh, bool alt)
     {
-        WH.EnterAttack(AttackNum, alt);
+        
+        Debug.Log("Released");
     }
 
+    public virtual void OnHoldTick(int attackIndex, WeaponHolder wh) { }
 
-    public bool CheckState(int attackNum,WeaponHolder WH) { 
-        return (WH.State == WeaponHolder.AttackState.Ready || (WH.State == WeaponHolder.AttackState.Combo));
-    }
+   
+    public virtual bool StartsChargingOnPress => false;
+
+    public bool CheckStateOK(WeaponHolder wh)
+        => wh.State == WeaponHolder.AttackState.Ready || wh.State == WeaponHolder.AttackState.Combo;
 }
+

@@ -5,9 +5,13 @@ using UnityEngine;
 [Serializable]
 public abstract class WeaponModifier
 {
-    public string name; 
-    float probability;
-    public WeaponDataSO.Rarity rarity;
+    [HideInInspector]public string name;
+
+    [Range(0f,1f)]
+    [SerializeField] float probability;
+    [SerializeField] public Rarity rarity;
+
+    protected WeaponModifier() { }
 
 
     public WeaponModifier(float prob)
@@ -26,6 +30,7 @@ public abstract class WeaponModifier
     }
 
     public abstract void Trigger(WeaponHolder W, Damagable target, float damage, RaycastHit? hit = null);
+
 
 
 }

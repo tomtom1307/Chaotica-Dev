@@ -5,64 +5,43 @@ using UnityEngine.InputSystem.Interactions;
 [CreateAssetMenu(fileName = "WI_ChargeHoldRelease", menuName = "WeaponInputs/ChargeHoldRelease")]
 public class ChargeHoldRelease: Weapon_Input
 {
-    public float ChargeTime;
-    private float chargeStartTime; // Store when charging starts
-    private bool isCharging; // Track if we are charging
-
-
-    public override void QueuedInput(int AttackNum, WeaponHolder WH, InputAction.CallbackContext ctx, bool alt)
+    private float _pressTime;
+    float minHold = 0.05f;
+    public override void OnPress(int attackIndex, WeaponHolder wh, bool alt)
     {
-        HoldLogic(AttackNum, WH, ctx);
+        _pressTime = Time.time;
+        wh.StartAttackCharging(attackIndex);
+        HUDController.instance.StartFill(wh.CurrentAttackData.ChargeTime);
     }
 
-    public override void _Input(int AttackNum, WeaponHolder WH, InputAction.CallbackContext ctx)
+    public override void OnHoldTick(int attackIndex, WeaponHolder wh)
     {
-        if(WH.State == WeaponHolder.AttackState.Charging)
-        {
-            if (WH.Weapon_anim.GetInteger("AttackType") != AttackNum) return;
-            HoldLogic(AttackNum, WH, ctx);
-        }
-
-        if (!CheckState(AttackNum ,WH))
-        {
-            
-            if (ctx.started)
-            {
-                WH.QueueAttack(AttackNum, ctx, queueExpirationTime);
-            }
-            return;
-        }
-        HoldLogic(AttackNum, WH, ctx);
-
-
+        base.OnHoldTick(attackIndex, wh);
     }
 
-    public void HoldLogic(int AttackNum, WeaponHolder WH, InputAction.CallbackContext ctx)
+
+    public override void OnRelease(int attackIndex, WeaponHolder wh, bool alt)
     {
-        if ((ctx.started ||ctx.performed)&& !isCharging) // Button pressed down
-        {
-            WH.StartAttackCharging(AttackNum);
-            chargeStartTime = Time.time;
-            isCharging = true;
-            HUDController.instance.StartFill(ChargeTime);
-        }
-        else if (ctx.canceled && isCharging) // Button released
-        {
-            HUDController.instance.StopFill();
-            float totalCharge = Time.time - chargeStartTime;
-            isCharging = false;
+        HUDController.instance.StopFill();
+        // Prefer the attack that started charging; fall back to the data list if needed
+        var ad = wh.CurrentAttackData ?? (wh.data != null && attackIndex >= 0 && attackIndex < wh.data.Weapon_Attacks.Count
+                   ? wh.data.Weapon_Attacks[attackIndex]
+                   : null);
 
-            if (totalCharge >= ChargeTime)
-            {
-                WH.ChargeAmount = 1;
-            }
-            else
-            {
-                WH.ChargeAmount = totalCharge / ChargeTime;
-            }
+        // Use per-attack values (with safe fallbacks)
+        float full = ad != null ? ad.ChargeTime : 0.8f;
+        float min = ad != null ? minHold : 0.15f;
 
-            WH.EnterAttack(AttackNum);
-        }
+        // Avoid divide-by-zero; treat <=0 as instant full charge
+        float held = Mathf.Max(0f, Time.time - _pressTime);
+        wh.ChargeAmount = (full <= 0f) ? 1f : Mathf.Clamp01(held / full);
+
+        // (Optional) if you want tap behavior when released too early:
+        // if (held < min) { /* handle tap variant if needed */ }
+
+        wh.EnterAttack(attackIndex, alt); // fires on release
     }
+
+    public override bool StartsChargingOnPress => true;
 
 }

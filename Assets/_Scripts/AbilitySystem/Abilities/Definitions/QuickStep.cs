@@ -4,9 +4,9 @@ using UnityEngine;
 public class QuickStep : Ability
 {
     public float StepSpeed;
-    public override void Activate(GameObject parent)
+    public override void Activate(GameObject parent, AbilityHolder holder)
     {
-        base.Activate(parent);
+        base.Activate(parent, holder);
         PlayerMovement pm = parent.GetComponent<PlayerMovement>();
         Vector3 Dir;
         if (pm.OnSlope())

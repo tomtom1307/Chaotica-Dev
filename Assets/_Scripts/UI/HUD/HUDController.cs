@@ -12,6 +12,7 @@ public class HUDController : MonoBehaviour
     public GameObject DetectionMeter;
     public Transform DetectionTransform;
     public CanvasGroup DetectionUICanvasGroup;
+    public WeaponAmmoHUD weaponAmmoUI;
     [SerializeField] Image ChargeMeter;
     private void Awake()
     {

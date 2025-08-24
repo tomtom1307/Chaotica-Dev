@@ -14,24 +14,42 @@ public class Weapon_Attack_Data_Base
     [TextArea(4, 1)]
     public string Description;
     public Weapon_Input weaponInputLogic;
-    [ReadOnlyy, SerializeField]protected AttackType attackType;
+    [ReadOnlyy, SerializeField]public AttackType attackType;
     public DamageType damageType = DamageType.Standard;
+
+    [Header("Stats")]
     public float damage = 100;
-    public float ComboLength = 1;
     public float StaggerDamage = 5;
-    public float AttackWeight = 1;
-    public float MoveSpeedMult = 1;
-    public bool hasCooldown = true;
-    public float cooldown = 0.1f;
-    public bool AllowAgility = false;
+    [Min(0)] public float ChargeTime;
     public float KnockBackForce = 100;
-    public float FinalHitMultiplier = 100;
-    public float HitFOV = 120;
+
+    [Header("Juice")]
+    public float AttackWeight = 1;
+    public float HitFOV = 10;
     public List<Vector3> Forces;
     public GameObject VFX;
+    
+
+    [Header("Combo")]
+    public float ComboLength = 1;
+    public float FinalHitMultiplier = 1;
+    
+    
+    
+    public float MoveSpeedMult = 1;
+    public bool AllowAgility = false;
+    
+    public bool hasCooldown = true;
+    public float cooldown = 0.1f;
+
+    [Header("Ammo Cost (weapon-wide pool)")]
+    [Min(0)] public int ammoCost = 0; // 0 = fre
 
 
+    [Header("Interrupt")]
+    public bool allowAttackInterupt = false;
 
+    
 
     //TODO: Store attack chargeup time on here instead of on weapon input (Custom Editor)
     public virtual void EnterAttack(WeaponHolder W) 
@@ -39,7 +57,7 @@ public class Weapon_Attack_Data_Base
         
     }
     public virtual void PerformAttack(WeaponHolder W) {
-        FOVFXController.instance.PunchFOV(HitFOV, 0.2f, 0.1f, 0.2f);
+        FOVFXController.instance.PlayImpulse(HitFOV, 0.1f, 0.2f);
     }
     public virtual void ExitAttack(WeaponHolder W) { }
 

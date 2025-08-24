@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class AbilityHolder : MonoBehaviour
@@ -6,7 +8,9 @@ public class AbilityHolder : MonoBehaviour
     float cooldownTime;
     float activeTime;
     HUDAbility hUD;
-    
+
+    public bool IsAbilityActive => abilityState == AbilityState.active;
+
     enum AbilityState
     {
         ready,
@@ -37,8 +41,12 @@ public class AbilityHolder : MonoBehaviour
                 if (Input.GetKeyDown(key))
                 {
                     // activate
-                    ability.Activate(gameObject);
+                    if(!ability.Check(gameObject, this))
+                    {
+                        return;
+                    }
                     abilityState = AbilityState.active;
+                    ability.Activate(gameObject, this);
                     activeTime = ability.activeTime;
                     
                 }
@@ -47,12 +55,14 @@ public class AbilityHolder : MonoBehaviour
                 //time that ability is used
                 if (activeTime > 0)
                 {
+                    ability.AbilityUpdate(gameObject, this);
                     hUD.AbilityActive();
                     activeTime -= Time.deltaTime;
                 }
                 else
                 {
                     abilityState = AbilityState.cooldown;
+                    ability.Deactivate(gameObject, this);
                     cooldownTime = ability.cooldownTime;
                 }
             break;
@@ -77,4 +87,39 @@ public class AbilityHolder : MonoBehaviour
     {
         hUD = HUD;
     }
+
+
+    #region Chain Lightning
+
+    public void StartCoroutineUpdateLineRenderer(GameObject lineR, Transform startPos, Transform endPos, bool fromPlayer = false)
+    {
+        StartCoroutine(UpdateLineRenderer(lineR, startPos, endPos, fromPlayer));
+    }
+
+    float RefreshRate = 0.01f;
+
+    IEnumerator UpdateLineRenderer(GameObject lineR, Transform startPos, Transform endPos, bool fromPlayer = false)
+    {
+        ChainLightning CL_ability = ability as ChainLightning;
+        if (abilityState  == AbilityState.active)
+        {
+            Debug.Log("Updated LR");
+            lineR.GetComponent<LightningLR>().SetPosition(startPos, endPos);
+            RefreshRate = 0.01f;
+            yield return new WaitForSeconds(RefreshRate);
+
+            if (fromPlayer)
+            {
+                
+                StartCoroutine(UpdateLineRenderer(lineR, startPos, ability.GetBestEnemy(CL_ability.JumpRange, CL_ability.MaxViewAngle, gameObject).transform));
+            }
+            else
+            {
+                StartCoroutine(UpdateLineRenderer(lineR, startPos, endPos));
+            }
+
+            
+        }
+    }
+    #endregion
 }

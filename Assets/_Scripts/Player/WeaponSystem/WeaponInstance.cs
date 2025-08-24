@@ -9,7 +9,7 @@ public class WeaponInstance
 {
     //public List<WeaponModifier> ProcableAbilityList = new List<WeaponModifier>();
 
-    public WeaponInstance(WeaponDataSO weaponDataSO, int KillThresh1 = 10, int KillThresh2 = 50, WeaponDataSO.Rarity rarity = WeaponDataSO.Rarity.Random)
+    public WeaponInstance(WeaponDataSO weaponDataSO, int KillThresh1 = 10, int KillThresh2 = 50, Rarity rarity = Rarity.Random)
     {
         Level = 1;
         data = weaponDataSO;
@@ -26,12 +26,18 @@ public class WeaponInstance
     public int Level;
     public int KillCount;
     
-    // To Unlock Weapon Attacks
-    public int Threshold1;
-    public int Threshold2;
+    // To Unlock Weapon Attacks (Might Remove TBH)
+    [HideInInspector] public int Threshold1;
+    [HideInInspector] public int Threshold2;
 
     public List<ModifierSlot> ModifierSlots = new List<ModifierSlot>();
-    public WeaponDataSO.Rarity weaponRarity;
+    public Rarity weaponRarity;
+
+    // WeaponInstance (add fields)
+    public bool ammoInitialized = false;
+    public int currentAmmo;
+    public float regenBlockedUntil; // Time.time when regen can resume
+    public float ammoFractionalCarry; // accumulate fractional regen
 
     public void LevelUp()
     {
@@ -46,15 +52,30 @@ public class WeaponInstance
         {
             ModifierSlots.Add(new ModifierSlot
             {
-                RarityTier = (WeaponDataSO.Rarity.Mythic)
+                RarityTier = (Rarity.Mythic)
+                
             });
-
+            
         }
+        foreach (var Mod in data.defaultModifiers)
+        {
+            ModifierSlot modSlot = new ModifierSlot
+            {
+                RarityTier = (Rarity.Mythic)
+
+            };
+
+            modSlot.Equip(Mod);
+
+            ModifierSlots.Add(modSlot);
+        }
+
+
     }
 
-    public WeaponDataSO.Rarity DetermineRarity(WeaponDataSO.Rarity rarity)
+    public Rarity DetermineRarity(Rarity rarity)
     {
-        if(rarity == WeaponDataSO.Rarity.Random)
+        if(rarity == Rarity.Random)
         {
             return RollRarity(data);
         }
@@ -64,7 +85,7 @@ public class WeaponInstance
         }
     }
 
-    public WeaponDataSO.Rarity RollRarity(WeaponDataSO data)
+    public Rarity RollRarity(WeaponDataSO data)
     {
         return data.rarityDistribution.RollRarity();
     }

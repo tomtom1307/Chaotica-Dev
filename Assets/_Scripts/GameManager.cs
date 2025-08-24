@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.VFX;
+using static WeaponDataSO;
 
 public class GameManager : MonoBehaviour
 {
@@ -188,5 +190,20 @@ public class GameManager : MonoBehaviour
         {
             player.GetComponent<WeaponHolder>().EnemyKilled();
         }
+    }
+
+
+    public GameObject SpawnRarityVFX(Transform parent, Rarity rarity)
+    {
+        
+        //VFX
+        VisualEffectAsset RarityVFX = Resources.Load<VisualEffectAsset>("Rarity");
+        GameObject vfxHolder = new GameObject("VFXHolder");
+        VisualEffect vfx = vfxHolder.AddComponent<VisualEffect>();
+        vfxHolder.transform.parent = parent;
+        vfxHolder.transform.localPosition = Vector3.zero;
+        vfx.visualEffectAsset = RarityVFX;
+        vfx.SetVector4("Color", GetColorByRarity(rarity));
+        return vfxHolder;
     }
 }

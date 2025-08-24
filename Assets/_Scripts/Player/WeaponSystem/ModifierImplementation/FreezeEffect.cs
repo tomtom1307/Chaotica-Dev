@@ -12,6 +12,12 @@ public class FreezeEffectModifier : WeaponModifier
         name = "Freeze Modifier";
     }
 
+    public FreezeEffectModifier()
+    {
+        name = "Freeze Modifier";
+    }
+
+
     public override void Trigger(WeaponHolder holder, Damagable target, float damage, RaycastHit? hit = null)
     {
         DamagableEnemy enemy = target as DamagableEnemy;

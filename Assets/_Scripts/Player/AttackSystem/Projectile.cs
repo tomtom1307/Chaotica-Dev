@@ -13,13 +13,18 @@ public class Projectile : MonoBehaviour
     Rigidbody rb;
     public float KnockBack;
 
-    Collider col; 
-
-
+    Collider col;
+    TrailRenderer TR;
+    private void Awake()
+    {
+        col = GetComponent<Collider>();
+        Destroy(gameObject, MaxLifeTime);
+    }
     public virtual void Start()
     {
         col = GetComponent<Collider>();
         Destroy(gameObject, MaxLifeTime);
+        TR = GetComponentInChildren<TrailRenderer>();
     }
 
     public virtual void Init(Vector3 dir, float speed, float Damage, bool gravity, float KnockBack = 0, bool crit = false)
@@ -48,9 +53,17 @@ public class Projectile : MonoBehaviour
         {
             if (rb.linearVelocity.magnitude > 0.2f)
             {
+                if(TR != null)
+                {
+                    TR.enabled = true;
+                }
                 //Aligns Z direction with velocity
                 transform.LookAt(transform.position + rb.linearVelocity.normalized);
                 rb.AddForce(Vector3.up * AntiGrav, ForceMode.Acceleration);
+            }
+            else
+            {
+                if(TR != null) { TR.enabled = false; }
             }
         }
     }
@@ -70,7 +83,7 @@ public class Projectile : MonoBehaviour
         rb.isKinematic = true;
         this.col.enabled = false;
 
-        TrailRenderer TR = GetComponentInChildren<TrailRenderer>();
+        
         if (TR != null)
         {
             TR.transform.parent = null;

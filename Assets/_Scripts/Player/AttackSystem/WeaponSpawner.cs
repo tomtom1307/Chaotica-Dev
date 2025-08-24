@@ -49,7 +49,7 @@ public class WeaponSpawner : MonoBehaviour
         else
         {
             
-            BC = r.gameObject.AddComponent<BoxCollider>();
+            BC = model.gameObject.AddComponent<BoxCollider>();
             BC.gameObject.layer = 0;
         }
         if (BC == null || r == null)
@@ -60,8 +60,6 @@ public class WeaponSpawner : MonoBehaviour
         BC.gameObject.tag = "Interactable";
         BC.size *= 2;
         BC.isTrigger = true;
-        Interactable inter = BC.gameObject.AddComponent<Interactable>();
-        inter.onInteraction.AddListener(WP.Pickup);
 
 
         //VFX
@@ -71,7 +69,7 @@ public class WeaponSpawner : MonoBehaviour
         vfxHolder.transform.parent = model.transform;
         vfxHolder.transform.localPosition = Vector3.zero; 
         vfx.visualEffectAsset = RarityVFX;
-        vfx.SetVector4("Color", WeaponDataSO.GetColorByRarity(data.rarity));
+        vfx.SetVector4("Color", WeaponDataSO.GetColorByRarity(weaponInstance.weaponRarity));
 
         Destroy(gameObject);
     }
