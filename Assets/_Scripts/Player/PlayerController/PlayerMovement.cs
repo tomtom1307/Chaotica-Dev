@@ -74,12 +74,7 @@ public class PlayerMovement : MonoBehaviour
     private float _coyoteTimer;
     private float _jumpBufferTimer;
 
-    [Header("Step Assist")]
-    [SerializeField] private bool enableStepAssist = true;
-    [SerializeField] private float stepMaxHeight = 0.4f;     // max curb to auto-climb
-    [SerializeField] private float stepMinHeight = 0.05f;    // ignore tiny bumps
-    [SerializeField] private float stepCheckDistance = 0.35f;// how far to probe ahead
-    [SerializeField] private float stepUpSpeed = 6f;         // how fast we lift up (m/s)
+    
     [SerializeField] private LayerMask stepMask;             // usually same as 'whatisGround'
 
 
@@ -486,8 +481,14 @@ public class PlayerMovement : MonoBehaviour
 
     private bool CheckSlope(out RaycastHit hit)
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.5f))
-            return hit.normal != Vector3.up;
+       
+        Vector3 origin = transform.position + Vector3.up * 0.05f;
+        if (Physics.Raycast(origin, Vector3.down, out hit, 1.5f, whatisGround, QueryTriggerInteraction.Ignore))
+        {
+            // Consider it a slope if not almost flat
+            return Vector3.Angle(hit.normal, Vector3.up) > 0.01f;
+        }
+
         return false;
     }
 

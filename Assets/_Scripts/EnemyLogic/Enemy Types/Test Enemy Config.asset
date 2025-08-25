@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 513bf0c075791704ba0a735e5392966f, type: 3}
+  m_Name: Test Enemy Config
+  m_EditorClassIdentifier: 
+  preferredMin: 5
+  preferredMax: 10
+  approachSpeed: 8
+  orbitSpeedRad: 8206
+  strafeWeight: 11.28
+  altitudeOffset: 0.73
+  primaryAbility: {fileID: 0}
+  burstCount: 3
+  timeBetweenShots: 0.12
+  burstInterval: 2.2
+  burstJitter: 0.4
+  losRadius: 0.25
+  SearchDuration: 10
+  SearchRingRadius: 3
+  searchLookSegments: 6
+  searchDwell: 0.5
+  searchRingSteps: 3
+  searchSpeedMult: 0.9
+  searchArrivalDistance: 1
+  GoBackToSearchTime: 8
