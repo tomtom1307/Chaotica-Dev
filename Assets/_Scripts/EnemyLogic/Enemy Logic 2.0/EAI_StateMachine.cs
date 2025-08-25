@@ -18,6 +18,12 @@ public class EAI_StateMachine : MonoBehaviour
 
     [SerializeField] string currentStateName;
 
+    EnemyContext ctx;
+    private void Start()
+    {
+        ctx = GetComponent<EnemyContext>();
+    }
+
     public void Set(IState s)
     {
         if (Current == s) return;
@@ -33,6 +39,7 @@ public class EAI_StateMachine : MonoBehaviour
     void Update() 
     {
         currentStateName = Current.GetType().Name;
+        ctx.bb.CurrentState = currentStateName;
         Current?.Tick(); 
         var n = Current?.Next(); 
         if (n != null) Set(n);
@@ -84,4 +91,5 @@ public static class SteeringHelpers
         if (d > max) return (to.normalized) * speed;  // close in
         return Vector3.zero;                             // already in band
     }
+
 }

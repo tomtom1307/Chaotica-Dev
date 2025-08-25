@@ -16,5 +16,5 @@ public class IdleState : BaseState
 
     }
     public override void OnExit() { }
-    public override IState Next() => c.bb.DetectionMeter == 1 ? new KeepRangeState(c) : null;
+    public override IState Next() => c.bb.DetectionMeter >= 0.4f ? new SearchState(c) : null;
 }

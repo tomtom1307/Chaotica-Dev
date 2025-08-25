@@ -23,6 +23,19 @@ public class EnemyTuningSO : ScriptableObject
     public float burstInterval = 2.2f;
     public float burstJitter = 0.4f;
     public float losRadius = 0.25f;
+
+    [Header("Detection")]
+    public float SearchDuration = 6;
+    public float SearchRingRadius = 3;
+    public int searchLookSegments = 6;
+    public float searchDwell = 0.5f;
+    public int searchRingSteps = 3;
+    public float searchSpeedMult = 0.9f;
+    public float searchArrivalDistance = 1;
+    public float GoBackToSearchTime;
+
+
+
 }
 
 public abstract class AbilitySO : ScriptableObject

@@ -12,15 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513bf0c075791704ba0a735e5392966f, type: 3}
   m_Name: Test Enemy Config
   m_EditorClassIdentifier: 
-  preferredMin: 10
-  preferredMax: 16
+  preferredMin: 5
+  preferredMax: 10
   approachSpeed: 8
-  orbitSpeedRad: 1.3
-  strafeWeight: 1
-  altitudeOffset: 2.72
+  orbitSpeedRad: 8206
+  strafeWeight: 11.28
+  altitudeOffset: 0.73
   primaryAbility: {fileID: 0}
   burstCount: 3
   timeBetweenShots: 0.12
   burstInterval: 2.2
   burstJitter: 0.4
   losRadius: 0.25
+  SearchDuration: 10
+  SearchRingRadius: 3
+  searchLookSegments: 6
+  searchDwell: 0.5
+  searchRingSteps: 3
+  searchSpeedMult: 0.9
+  searchArrivalDistance: 1
+  GoBackToSearchTime: 8

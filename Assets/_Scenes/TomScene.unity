@@ -6578,14 +6578,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36618aed9de651049a0955346ad01175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distanceCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 3
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   playerTag: Player
   refreshHz: 10
   maxDetectRange: 30
   fovDegrees: 120
-  memorySeconds: 2
   losMask:
     serializedVersion: 2
     m_Bits: 2113
+  DetectionMeter: 0
+  DetectionSpeed: 4.5
+  DetectionDecay: 1.5
 --- !u!114 &979606358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6599,9 +6625,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  DetectionMeter: 0
+  LastSeenPlayerTime: 0
   lastKnownTargetPos: {x: 0, y: 0, z: 0}
   distanceToTarget: 0
   hasLOS: 0
+  CurrentState: 
 --- !u!4 &979606359
 Transform:
   m_ObjectHideFlags: 0
@@ -6673,6 +6702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f1c1dfda1a2e7409fe754662d510c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flat_rotation: 0
   turnSpeed: 8
 --- !u!114 &979606364
 MonoBehaviour:
@@ -6686,12 +6716,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6bae483fd752d24583495e96d253597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 7.64
-  maxAccel: 12.5
+  maxSpeed: 3
+  maxAccel: 1.5
   drag: 0.5
-  hoverP: 7.5
+  hoverP: 0.37
   hoverD: 3
-  maxUpForce: 60
+  maxUpForce: 13
 --- !u!54 &979606365
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -14778,8 +14808,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.064}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.51, y: 0.51, z: 0.51}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1406148426}
   - {fileID: 1492604352}
@@ -16762,6 +16792,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8414243873322991182, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: whatisGround.m_Bits
+      value: 320
+      objectReference: {fileID: 0}
     - target: {fileID: 8712550736687314194, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -16854,14 +16888,6 @@ PrefabInstance:
     - target: {fileID: 4187174722898204378, guid: cc35e87e0ffb3244ba5dc2acc9e1f766, type: 3}
       propertyPath: m_Name
       value: Bread
-      objectReference: {fileID: 0}
-    - target: {fileID: 8794693034016841189, guid: cc35e87e0ffb3244ba5dc2acc9e1f766, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 40.05185
-      objectReference: {fileID: 0}
-    - target: {fileID: 8794693034016841189, guid: cc35e87e0ffb3244ba5dc2acc9e1f766, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 16.892097
       objectReference: {fileID: 0}
     - target: {fileID: 8794693034016841189, guid: cc35e87e0ffb3244ba5dc2acc9e1f766, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17440,6 +17466,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1198127930}
     m_Modifications:
+    - target: {fileID: 1777263914912881473, guid: d2feb22b65e793248a0f636229f2d470, type: 3}
+      propertyPath: clips.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1777263914912881473, guid: d2feb22b65e793248a0f636229f2d470, type: 3}
+      propertyPath: clips.Array.data[3].name
+      value: AttackSFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 1777263914912881473, guid: d2feb22b65e793248a0f636229f2d470, type: 3}
+      propertyPath: clips.Array.data[4].name
+      value: AttackChargeup
+      objectReference: {fileID: 0}
     - target: {fileID: 7467748477885451363, guid: d2feb22b65e793248a0f636229f2d470, type: 3}
       propertyPath: m_LocalPosition.x
       value: 36.98121

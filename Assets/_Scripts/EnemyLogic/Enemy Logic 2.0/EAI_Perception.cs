@@ -83,6 +83,7 @@ public class Perception : MonoBehaviour, IPerception
         else DetectionMeter -= DetectionDecay * Time.deltaTime;
         DetectionMeter = Mathf.Clamp01(DetectionMeter);
         bb.DetectionMeter = DetectionMeter;
+        bb.LastSeenPlayerTime = Time.time - lastSeenTime; 
     }
 
     
@@ -103,8 +104,9 @@ public class Perception : MonoBehaviour, IPerception
     {
         if (fovDegrees >= 360f) return 1f;
         float half = fovDegrees * 0.5f;
+        float w = Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(half, 0f, Mathf.Abs(ang)));
         w = Mathf.Max(w, 0.1f);
-        return Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(half, 0f, Mathf.Abs(ang)));
+        return w;
     }
 
     private float DistanceWeight(float dist)

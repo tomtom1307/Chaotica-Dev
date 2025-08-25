@@ -19,6 +19,8 @@ public class KeepRangeState : BaseState
     public override void OnExit() { }
     public override IState Next()
     {
+        if (c.bb.LastSeenPlayerTime > c.cfg.GoBackToSearchTime) { return new SearchState(c); }
+
         bool inBand = c.bb.distanceToTarget >= c.cfg.preferredMin && c.bb.distanceToTarget <= c.cfg.preferredMax;
         return inBand ? new OrbitAttackState(c) : null;
     }

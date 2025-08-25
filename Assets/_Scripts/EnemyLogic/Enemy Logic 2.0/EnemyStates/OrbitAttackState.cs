@@ -24,8 +24,7 @@ public class OrbitAttackState : BaseState
         // Orbit velocity (seek ring + strafe)
         var self = c.transform;
         var target = c.bb.target;
-        Vector3 vel = Vector3.zero;
-        OrbitLogic(target, self, vel);
+        var vel = OrbitLogic(target, self);
         
 
         c.motor.SetVelocity(vel);
@@ -38,15 +37,20 @@ public class OrbitAttackState : BaseState
 
     public override IState Next()
     {
+
+        if (c.bb.LastSeenPlayerTime > c.cfg.GoBackToSearchTime) { return new SearchState(c); }
+
         bool outOfBand = c.bb.distanceToTarget < c.cfg.preferredMin || c.bb.distanceToTarget > c.cfg.preferredMax;
         return outOfBand ? new KeepRangeState(c) : null;
     }
 
 
-    public void OrbitLogic(Transform target, Transform self, Vector3 vel)
+    public Vector3 OrbitLogic(Transform target, Transform self)
     {
+        Vector3 vel = Vector3.zero;
         if (target)
         {
+            
             angle += c.cfg.orbitSpeedRad * Time.deltaTime;
 
             Vector3 toT = target.position - self.position;
@@ -63,9 +67,11 @@ public class OrbitAttackState : BaseState
 
             var v = seek + strafe;
             vel = new Vector3(v.x, 0f, v.z);
-
+            
             c.aimer.AimAt(target.position + Vector3.up * 0.5f);
+            return vel;
         }
+        return Vector3.zero;
     }
 }
 
