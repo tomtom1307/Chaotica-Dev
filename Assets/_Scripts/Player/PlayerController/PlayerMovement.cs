@@ -406,9 +406,7 @@ public class PlayerMovement : MonoBehaviour
     // ================================
     private void CrouchEnter()
     {
-        // If we were sliding, play stop sound
-        if (state == PlayerMechanimState.Sliding)
-            PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.SlideStop, SlideMaxVol, false, 1);
+        
 
         _rb.linearDamping = _groundDrag;
         _collider.height = 0.5f * _colliderHeight;
@@ -420,11 +418,13 @@ public class PlayerMovement : MonoBehaviour
         _collider.height = _colliderHeight;   // ensure full height on ANY crouch exit
     }
 
+    public float SlideEnterDownForce;
     private void SlideEnter()
     {
+        _rb.AddForce(SlideEnterDownForce * Vector3.down);
         _slideTimer = 0f;
         _collider.height = 0.5f * _colliderHeight;
-        _rb.linearDamping = 0f;
+        
     }
 
     private void SlideUpdateIfNeeded()
@@ -432,6 +432,7 @@ public class PlayerMovement : MonoBehaviour
         if (state != PlayerMechanimState.Sliding) return;
         
         _slideTimer += Time.deltaTime;
+        
         if (_slideTimer > SlideTime)
         {
             // proper transition: slide -> crouch
@@ -443,7 +444,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (_slideTimer < SlideThresh)
         {
+            _rb.linearDamping = 0;
             _rb.AddForce(_rb.linearVelocity * (SlideForce * Time.deltaTime), ForceMode.Acceleration);
+        }
+        else
+        {
+            _rb.linearDamping = SlideDrag * Mathf.Pow(_rb.linearVelocity.magnitude, 2);
         }
     }
 
@@ -457,6 +463,8 @@ public class PlayerMovement : MonoBehaviour
             _rb.linearDamping = isGrounded ? _groundDrag : _airDrag;
         }
         // If we go into crouch, CrouchEnter() will keep half height.
+        // If we were sliding, play stop sound
+        PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.SlideStop, SlideMaxVol, false, 1);
     }
 
     // ================================

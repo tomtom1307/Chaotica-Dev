@@ -16793,6 +16793,30 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8414243873322991182, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: SlideDrag
+      value: 0.004
+      objectReference: {fileID: 0}
+    - target: {fileID: 8414243873322991182, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: SlideForce
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 8414243873322991182, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: coyoteTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8414243873322991182, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: jumpBufferTime
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 8414243873322991182, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: stepMask.m_Bits
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 8414243873322991182, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
+      propertyPath: SlideEnterDownForce
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8414243873322991182, guid: 2b8fad1153ac8b7458c10848dc70f52e, type: 3}
       propertyPath: whatisGround.m_Bits
       value: 320
       objectReference: {fileID: 0}
