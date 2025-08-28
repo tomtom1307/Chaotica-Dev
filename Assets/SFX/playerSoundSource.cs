@@ -62,10 +62,11 @@ public class PlayerSoundSource : SourceSoundManager<PlayerSoundSource.SoundType>
         List<Collider> cols = Physics.OverlapSphere(transform.position, Range).ToList();
         foreach (Collider col in cols)
         {
-            EnemyBrain EB;
-            if (col.gameObject.TryGetComponent<EnemyBrain>(out EB))
+            EnemyContext ctx;
+            ctx = col.GetComponentInParent<EnemyContext>();
+            if (ctx != null)
             {
-                EB.actionHandler.StartActionOverride(EB.actionHandler.MoveToPlayer);
+                ctx.Listen(transform.position);
             }
         }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 //Holds all Relevant information from perception
 public class Blackboard : MonoBehaviour
 {
+    
     public Transform target;
     public float DetectionMeter;
     public float LastSeenPlayerTime;
@@ -11,5 +12,11 @@ public class Blackboard : MonoBehaviour
     public float distanceToTarget;
     public bool hasLOS;
     public string CurrentState;
+    public bool isInRange;
+    public bool InvestigateSound;
+    public bool ReadyToAttack;
+
+    
+
 }
 

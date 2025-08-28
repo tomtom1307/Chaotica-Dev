@@ -107,6 +107,7 @@ MonoBehaviour:
   spawnOffset: {x: 0, y: 0, z: 0}
   model: {fileID: 775067291979300683}
   ded: 0
+  targetPos: {fileID: 0}
   brain: {fileID: 0}
   hitParticleFX: {fileID: 6229015314133012181, guid: 69d1dfa3e85f3e549bb742429f91c7b8, type: 3}
   InstantAgro: 10
@@ -541,7 +542,7 @@ MonoBehaviour:
     pitchVariation: {x: 1, y: 1}
     desiredVolume: 1
     sounds:
-    - {fileID: 8300000, guid: 517274387e9f17c4fada8a7511fe9b1c, type: 3}
+    - {fileID: 8300000, guid: 4d5475c91b26b4547a3a7dbb6d4de32b, type: 3}
     DetectionRadius: 0
 --- !u!114 &-5221572623527121588
 MonoBehaviour:

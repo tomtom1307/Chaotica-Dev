@@ -2,11 +2,7 @@ using UnityEngine;
 
 public class KeepRangeState : BaseState
 {
-
-    public new string Name => "KeepRange";
-
-    readonly EnemyContext c;
-    public KeepRangeState(EnemyContext c) { this.c = c; }
+    public KeepRangeState(EnemyContext c) : base(c) { }
 
     public override void OnEnter() {}
     public override void Tick()
@@ -17,11 +13,4 @@ public class KeepRangeState : BaseState
         if (c.bb.target) c.aimer.AimAt(c.bb.target.position + Vector3.up * 0.5f);
     }
     public override void OnExit() { }
-    public override IState Next()
-    {
-        if (c.bb.LastSeenPlayerTime > c.cfg.GoBackToSearchTime) { return new SearchState(c); }
-
-        bool inBand = c.bb.distanceToTarget >= c.cfg.preferredMin && c.bb.distanceToTarget <= c.cfg.preferredMax;
-        return inBand ? new OrbitAttackState(c) : null;
-    }
 }

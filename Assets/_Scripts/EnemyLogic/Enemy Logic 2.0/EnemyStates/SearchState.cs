@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class SearchState : BaseState
 {
-    EnemyContext c;
+    
 
     SearchPhase phase;
-    float StartedAt;
+    public float StartedAt;
     Vector3 anchor;
     int lookIndex;
     float nextLookAtTime;
@@ -14,28 +14,8 @@ public class SearchState : BaseState
     float Speed => c.cfg.approachSpeed * c.cfg.searchSpeedMult;
     enum SearchPhase { Travel, Scan, Done}
     public float focusApproachSpeedMult = 0.5f; // gentle drift toward player while filling meter
-    public SearchState(EnemyContext ctx)
-    {
-        this.c = ctx;
-    }
+    public SearchState(EnemyContext c) : base(c) { }
 
-    public override IState Next()
-    {
-        // If player is seen again, go to combat
-        if (c.bb.DetectionMeter == 1 && c.bb.hasLOS)
-        {
-            
-            return new KeepRangeState(c);
-        }
-
-        // Go back to Idle
-        if (phase == SearchPhase.Done)
-        {
-            return new IdleState(c);
-        }
-
-        return null;
-    }
 
     public override void OnEnter()
     {
@@ -46,6 +26,7 @@ public class SearchState : BaseState
         nextLookAtTime = 0;
         ringStepIndex = 0;
         currentStepTarget = anchor;
+        c.bb.InvestigateSound = false;
     }
 
     public override void OnExit()
@@ -55,8 +36,12 @@ public class SearchState : BaseState
 
     public override void Tick()
     {
-        
         bool timeUp = Time.time - StartedAt >= c.cfg.SearchDuration;
+        if (c.bb.InvestigateSound)
+        {
+            OnEnter();
+            return;
+        }
         switch (phase)
         {
             case SearchPhase.Travel:
@@ -88,6 +73,7 @@ public class SearchState : BaseState
                     {
                         phase = SearchPhase.Travel;
                         anchor = c.bb.lastKnownTargetPos;
+                        base.c.aimer.AimAt(anchor);
                     }
                     else
                     {
@@ -141,9 +127,6 @@ public class SearchState : BaseState
                     break;
                 }
         }
-
-
-
     }
 
 

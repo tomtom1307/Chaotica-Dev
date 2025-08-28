@@ -6701,12 +6701,12 @@ MonoBehaviour:
   SprintMult: 1.5
   whatisGround:
     serializedVersion: 2
-    m_Bits: 321
+    m_Bits: 320
   orientation: {fileID: 7714421985405113136}
   headPos: {fileID: 6987454334613743101}
   SlideTime: 100
-  SlideDrag: 0.2
-  SlideForce: 100
+  SlideDrag: 0.004
+  SlideForce: 150
   SlideThresh: 0.1
   VelocityThresh: 3
   LandingSlide: 1
@@ -6729,19 +6729,15 @@ MonoBehaviour:
   groundSphereRadius: 0.1
   groundSphereDist: 1
   state: 0
-  coyoteTime: 0.01
-  jumpBufferTime: 0.12
-  enableStepAssist: 0
-  stepMaxHeight: 0.4
-  stepMinHeight: 0
-  stepCheckDistance: 0.35
-  stepUpSpeed: 6
+  coyoteTime: 0.1
+  jumpBufferTime: 0.05
   stepMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65
   moveInput: {x: 0, y: 0}
   MoveDir: {x: 0, y: 0, z: 0}
   slopeMoveDirection: {x: 0, y: 0, z: 0}
+  SlideEnterDownForce: 100
   minGroundDot: 0.55
 --- !u!114 &8091079049166687030
 MonoBehaviour:

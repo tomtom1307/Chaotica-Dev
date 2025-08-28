@@ -464,7 +464,14 @@ public class PlayerMovement : MonoBehaviour
         }
         // If we go into crouch, CrouchEnter() will keep half height.
         // If we were sliding, play stop sound
-        PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.SlideStop, SlideMaxVol, false, 1);
+        if(to == PlayerMechanimState.Jumping)
+        {
+            PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.FootSteps, SlideMaxVol, false, 1);
+        }
+        else
+        {
+            PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.SlideStop, SlideMaxVol, false, 1);
+        }
     }
 
     // ================================

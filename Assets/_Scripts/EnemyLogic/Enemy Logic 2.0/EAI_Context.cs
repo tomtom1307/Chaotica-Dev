@@ -14,6 +14,7 @@ public class EnemyContext : MonoBehaviour
     [HideInInspector] public IAbilityRunner abilities;
     [HideInInspector] public IPerception sense;
     [HideInInspector] public float nextBurstAt;
+    EAI_StateMachine EAI_StateMachine;
 
     void Awake()
     {
@@ -23,4 +24,20 @@ public class EnemyContext : MonoBehaviour
         abilities = GetComponent<IAbilityRunner>();
         sense = GetComponent<IPerception>();
     }
+
+    private void Update()
+    {
+        bb.isInRange = bb.distanceToTarget <= cfg.preferredMax && bb.distanceToTarget >= cfg.preferredMin;
+    }
+
+    public void Listen(Vector3 pos)
+    {
+        Debug.Log("Listened");
+        if (!bb.hasLOS)
+        {
+            bb.lastKnownTargetPos = pos;
+            bb.InvestigateSound = true;
+        }
+    }
+
 }

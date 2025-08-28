@@ -3,20 +3,14 @@ using static UnityEngine.GraphicsBuffer;
 
 public class OrbitAttackState : BaseState
 {
-    public new string Name => "AttackOrbit";
-
-    readonly EnemyContext c;
     float angle;          // state-owned orbit phase
-    int shotsLeft;
-    float nextShotAt;
+    
 
-    public OrbitAttackState(EnemyContext c) { this.c = c; angle = Random.Range(0f, Mathf.PI * 2f); }
+    public OrbitAttackState(EnemyContext c) : base(c) { angle = Random.Range(0f, Mathf.PI * 2f); }
 
     public override void OnEnter()
     {
         angle = Random.Range(0f, Mathf.PI * 2f);
-        shotsLeft = 0; nextShotAt = 0f; 
-        c.nextBurstAt = Time.time + c.cfg.burstInterval + Random.Range(0f, c.cfg.burstJitter);
     }
 
     public override void Tick()
@@ -25,24 +19,12 @@ public class OrbitAttackState : BaseState
         var self = c.transform;
         var target = c.bb.target;
         var vel = OrbitLogic(target, self);
-        
-
         c.motor.SetVelocity(vel);
         c.motor.SetAltitude(c.cfg.altitudeOffset, c.bb.target);
-
-        
     }
 
     public override void OnExit() { }
 
-    public override IState Next()
-    {
-
-        if (c.bb.LastSeenPlayerTime > c.cfg.GoBackToSearchTime) { return new SearchState(c); }
-
-        bool outOfBand = c.bb.distanceToTarget < c.cfg.preferredMin || c.bb.distanceToTarget > c.cfg.preferredMax;
-        return outOfBand ? new KeepRangeState(c) : null;
-    }
 
 
     public Vector3 OrbitLogic(Transform target, Transform self)
