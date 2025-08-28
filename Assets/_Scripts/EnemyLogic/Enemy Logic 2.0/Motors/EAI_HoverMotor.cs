@@ -5,24 +5,24 @@ public class HoverMotor3D : MonoBehaviour, IGoalMotor
 {
     [Header("Motion")]
     public float maxSpeed = 8f;
-    public float accel = 25f;               // m/s� lateral accel
-    public float turnRate = 720f;           // deg/s facing toward velocity
-    public float arriveRadius = 0.5f;       // goal reached within this (horizontal)
-    public float slowRadius = 3.0f;         // start slowing within this (horizontal)
+    public float accel = 25f;               
+    public float turnRate = 720f;           
+    public float arriveRadius = 0.5f;       
+    public float slowRadius = 3.0f;         
 
     [Header("Altitude Hold")]
-    public float defaultAltitude = 3.0f;    // meters AGL if you use ground
-    public bool useGroundRef = false;      // if true, altitude is relative to ground hit
-    public LayerMask groundMask = ~0;       // used when useGroundRef is true
+    public float defaultAltitude = 3.0f;    
+    public bool useGroundRef = false;      
+    public LayerMask groundMask = ~0;       
     public float altKp = 4.0f;              // PD gains
     public float altKd = 1.0f;
-    public float altTolerance = 0.4f;       // considered �at alt� within this
+    public float altTolerance = 0.4f;      
 
     [Header("Obstacle Avoidance")]
     public LayerMask obstacleMask = ~0;
-    public float avoidProbe = 3.0f;         // forward probe distance
-    public float sideProbe = 2.0f;          // side probes
-    public float avoidWeight = 1.5f;        // steering weight
+    public float avoidProbe = 3.0f;         
+    public float sideProbe = 2.0f;          
+    public float avoidWeight = 1.5f;        
 
     [Header("Misc")]
     public bool controlRotation = true;
