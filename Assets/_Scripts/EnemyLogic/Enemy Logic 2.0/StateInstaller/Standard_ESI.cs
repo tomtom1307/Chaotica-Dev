@@ -13,6 +13,7 @@ public sealed class Standard_ESI : EnemyStateInstaller
         var search = sm.Register(new SearchState(ctx));
 
         // Local transitions (declare inside the states)
+        /*
         idle.AddTransition(() => ctx.bb.DetectionMeter == 1f, chase);
         idle.AddTransition(() => ctx.bb.DetectionMeter >= 0.4f, search);
 
@@ -27,11 +28,11 @@ public sealed class Standard_ESI : EnemyStateInstaller
         orbit.AddTransition(() => !ctx.bb.hasLOS && ctx.bb.LastSeenPlayerTime >= ctx.cfg.GoBackToSearchTime, search);
         orbit.AddTransition(() => ctx.bb.isInRange && ctx.bb.ReadyToAttack, attack);
         orbit.AddTransition(() => !ctx.bb.isInRange, chase);
+        */
 
+        sm.Set(chase);
 
-        sm.Set(idle);
-
-        sm.AddAnyTransition<SearchState>(() => ctx.bb.InvestigateSound && !ctx.bb.hasLOS);
+        //sm.AddAnyTransition<SearchState>(() => ctx.bb.InvestigateSound && !ctx.bb.hasLOS);
 
     }
 }

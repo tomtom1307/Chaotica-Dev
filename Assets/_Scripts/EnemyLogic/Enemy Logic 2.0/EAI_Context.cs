@@ -9,7 +9,7 @@ public class EnemyContext : MonoBehaviour
     public Transform muzzle;
     public bool DebugStates;
     [HideInInspector] public Blackboard bb;
-    [HideInInspector] public IMotor motor;
+    [HideInInspector] public IGoalMotor motor;
     [HideInInspector] public Aimer aimer;
     [HideInInspector] public IAbilityRunner abilities;
     [HideInInspector] public IPerception sense;
@@ -19,7 +19,7 @@ public class EnemyContext : MonoBehaviour
     void Awake()
     {
         bb = GetComponent<Blackboard>();
-        motor = GetComponent<IMotor>();
+        motor = GetComponent<IGoalMotor>();
         aimer = GetComponent<Aimer>();
         abilities = GetComponent<IAbilityRunner>();
         sense = GetComponent<IPerception>();

@@ -170,29 +170,22 @@ public class EAI_StateMachine : MonoBehaviour
 
 public static class SteeringHelpers
 {
-    public static Vector3 Chase(Transform self, Transform target, float speed)
+    public static Vector3 MoveTo(Transform self, Transform target)
     {
-        if (!target) return Vector3.zero;
-        var to = (target.position - self.position).normalized * speed;
-        return new Vector3(to.x, 0f, to.z);
+        return (target.position);
     }
 
-    public static Vector3 Flee(Transform self, Transform target, float speed)
-    {
-        if (!target) return Vector3.zero;
-        var away = (self.position - target.position).normalized * speed;
-        return new Vector3(away.x, 0f, away.z);
-    }
 
-    public static Vector3 KeepRange(Transform self, Transform target, float speed, float min, float max)
+    public static Vector3 KeepRange(Transform self, Transform target, float min, float max)
     {
         if (!target) return Vector3.zero;
         var to = target.position - self.position;
         float d = to.magnitude;
-        if (d < 0.001f) return Vector3.zero;
-        if (d < min) return (-to.normalized) * speed;  // back off
-        if (d > max) return (to.normalized) * speed;  // close in
-        return Vector3.zero;                             // already in band
+        float optimal = (min + max) * 0.5f;
+        if (d < 0.001f) return self.transform.position;
+        if(d > max || d < min) return (optimal * (target.position - to.normalized));
+        else { return self.transform.position; }
+
     }
 
 }
