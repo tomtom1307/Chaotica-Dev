@@ -467,20 +467,6 @@ MonoBehaviour:
         Weight: 0
       attackList: []
       name: 
-    - Name: Patrol
-      priority: 2
-      conditions:
-        brain: {fileID: 0}
-        boolChecks: []
-        floatChecks: []
-        intChecks: []
-      actionList:
-      - brain: {fileID: 0}
-        B_action: 4
-        Override: 0
-        Weight: 0
-      attackList: []
-      name: 
   - Name: AttackState
     enemyBehaviours:
     - Name: CloseAttack
