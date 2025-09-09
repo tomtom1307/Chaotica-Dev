@@ -11481,9 +11481,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4683688006639281620, guid: fa13cdde8c8a3874ea4f5e55e4665717, type: 3}
+      propertyPath: dataSO
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5356743958078980246, guid: fa13cdde8c8a3874ea4f5e55e4665717, type: 3}
       propertyPath: m_Name
-      value: WeaponSpawner
+      value: LWeaponSpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 5356743958078980246, guid: fa13cdde8c8a3874ea4f5e55e4665717, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15786,6 +15794,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1385750551}
+  - component: {fileID: 1385750552}
   m_Layer: 0
   m_Name: WeaponPicker
   m_TagString: Untagged
@@ -15810,6 +15819,23 @@ Transform:
   - {fileID: 1429620525}
   m_Father: {fileID: 193598095}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1385750552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385750550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ce71d90c20301943837a2a5c4632b50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponTable: {fileID: 11400000, guid: ba82ba80e1579a2409ad20a3427f17eb, type: 2}
+  weaponSpawners:
+  - {fileID: 2006221314}
+  - {fileID: 1429620526}
+  pickedWeapons: []
 --- !u!1001 &1409245782
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15919,9 +15945,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4683688006639281620, guid: fa13cdde8c8a3874ea4f5e55e4665717, type: 3}
+      propertyPath: dataSO
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5356743958078980246, guid: fa13cdde8c8a3874ea4f5e55e4665717, type: 3}
       propertyPath: m_Name
-      value: WeaponSpawner (1)
+      value: RWeaponSpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 5356743958078980246, guid: fa13cdde8c8a3874ea4f5e55e4665717, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15933,6 +15967,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1128773464334094304, guid: fa13cdde8c8a3874ea4f5e55e4665717, type: 3}
   m_PrefabInstance: {fileID: 1429620524}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1429620526 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4683688006639281620, guid: fa13cdde8c8a3874ea4f5e55e4665717, type: 3}
+  m_PrefabInstance: {fileID: 1429620524}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c21c9fcb2934d2940afd0b7a02bf7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1501625550
 GameObject:
   m_ObjectHideFlags: 0
@@ -16180,6 +16225,10 @@ PrefabInstance:
       propertyPath: dataSO
       value: 
       objectReference: {fileID: 11400000, guid: 116d85b2292f29249bbb2350b2fa2fd4, type: 2}
+    - target: {fileID: 4683688006639281620, guid: fa13cdde8c8a3874ea4f5e55e4665717, type: 3}
+      propertyPath: SpawnOnStart
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5356743958078980246, guid: fa13cdde8c8a3874ea4f5e55e4665717, type: 3}
       propertyPath: m_Name
       value: WeaponSpawner
@@ -16960,6 +17009,34 @@ PrefabInstance:
       propertyPath: spawnOnSceneLoad
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5148057897521529417, guid: 1b9fad7d6da42e4448ce190e936f6b5e, type: 3}
+      propertyPath: defeatEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5148057897521529417, guid: 1b9fad7d6da42e4448ce190e936f6b5e, type: 3}
+      propertyPath: defeatEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5148057897521529417, guid: 1b9fad7d6da42e4448ce190e936f6b5e, type: 3}
+      propertyPath: defeatEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1385750552}
+    - target: {fileID: 5148057897521529417, guid: 1b9fad7d6da42e4448ce190e936f6b5e, type: 3}
+      propertyPath: defeatEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5148057897521529417, guid: 1b9fad7d6da42e4448ce190e936f6b5e, type: 3}
+      propertyPath: defeatEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SpawnWeapons
+      objectReference: {fileID: 0}
+    - target: {fileID: 5148057897521529417, guid: 1b9fad7d6da42e4448ce190e936f6b5e, type: 3}
+      propertyPath: defeatEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: WeaponPicker, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5148057897521529417, guid: 1b9fad7d6da42e4448ce190e936f6b5e, type: 3}
+      propertyPath: defeatEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16979,6 +17056,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2689793b5b62ef343b36724d1c3dd9f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2006221314 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4683688006639281620, guid: fa13cdde8c8a3874ea4f5e55e4665717, type: 3}
+  m_PrefabInstance: {fileID: 662909360}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c21c9fcb2934d2940afd0b7a02bf7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2024047314
