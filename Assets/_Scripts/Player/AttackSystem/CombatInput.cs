@@ -21,7 +21,7 @@ public class CombatInput : MonoBehaviour
     public InputActionReference attack1;
     public InputActionReference attack2;
     public InputActionReference attack3;
-    public InputActionReference alt;   // held modifier (e.g., Left Alt / Gamepad LT)
+    public InputActionReference alt;   
 
     [Header("Buffer Settings")]
     [Range(0.05f, 1.0f)] public float bufferWindow = 0.45f;
@@ -68,7 +68,7 @@ public class CombatInput : MonoBehaviour
         a.action.canceled -= canceled;
     }
 
-    // ——— External push API (use from PlayerInput callbacks if you prefer) ———
+    
     public void Push(CombatAction act, InputPhase phase)
     {
         if (_buffer.Count >= maxBuffer) _buffer.RemoveAt(0);

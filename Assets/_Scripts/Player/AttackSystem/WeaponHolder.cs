@@ -263,18 +263,17 @@ public class WeaponHolder : MonoBehaviour
         combatInput.bufferWindow = inputBufferWindow;
         combatInput.CleanupExpired();
 
-        // --- NEW: allow charge to start during Attacking if the attack opts in ---
         if (State == AttackState.Attacking && combatInput.TryPeekOldest(out var eAtt) && eAtt.phase == InputPhase.Pressed)
         {
-            int idx = (int)eAtt.action;
-            if (IndexValid(idx) && IsAttackUnlocked(idx))
+            int i = (int)eAtt.action;
+            if (IndexValid(i) && IsAttackUnlocked(i))
             {
-                var ad = data.Weapon_Attacks[idx];
+                var ad = data.Weapon_Attacks[i];
                 var logic = ad.weaponInputLogic;
-                if (logic != null && logic.StartsChargingOnPress && ad.allowAttackInterupt && CanAttemptAttack(idx))
+                if (logic != null && logic.StartsChargingOnPress && ad.allowAttackInterupt && CanAttemptAttack(i))
                 {
                     SoftInterruptCurrentAttack();                 // stop current swing (no cooldown)
-                    logic.OnPress(idx, this, eAtt.alt);           // this will call StartAttackCharging(idx)
+                    logic.OnPress(i, this, eAtt.alt);           // this will call StartAttackCharging(idx)
                     combatInput.ConsumeOldest();
                     // Releases will be handled by DrainReleases()
                     DrainReleases();

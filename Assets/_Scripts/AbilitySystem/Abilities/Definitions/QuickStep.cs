@@ -8,6 +8,7 @@ public class QuickStep : Ability
     {
         base.Activate(parent, holder);
         PlayerMovement pm = parent.GetComponent<PlayerMovement>();
+        pm.ResetYVelocity();
         Vector3 Dir;
         if (pm.OnSlope())
         {
@@ -18,6 +19,8 @@ public class QuickStep : Ability
 
             Dir = pm.MoveDir;
         }
-        parent.GetComponent<Rigidbody>().AddForce(StepSpeed * Dir);
+        Rigidbody rb = parent.GetComponent<Rigidbody>();
+       
+        rb.AddForce(StepSpeed * Dir);
     }
 }

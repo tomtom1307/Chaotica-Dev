@@ -581,5 +581,8 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isAttackAgile() => AttackAgile;
 
-    
+    public void ResetYVelocity()
+    {
+        _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, 0, _rb.linearVelocity.z);
+    }
 }
