@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _airDrag = 0.5f;
     [SerializeField] private float _airMoveMultiplier = 0.8f;
     [SerializeField] private float _groundMoveMultiply = 1.0f;
+    [SerializeField] private float _airVelocityDependence = 1.0f;
 
     [Header("Setup")]
     public float MaxSlopeAngle = 50f;
@@ -177,7 +178,8 @@ public class PlayerMovement : MonoBehaviour
 
         // direction
         MoveDir = (orientation.forward * _inp.move.y + orientation.right * _inp.move.x).normalized;
-        if (Vector3.Dot(_rb.linearVelocity, MoveDir) < 0) MoveDir *= 2f;
+        float DotProd = Vector3.Dot(_rb.linearVelocity, MoveDir);
+        if (DotProd < 0) MoveDir *= 2f;
     }
 
     // ================================
@@ -310,7 +312,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-
+    
     private void SetState(PlayerMechanimState s) => state = s;
 
     // ================================
@@ -326,7 +328,12 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             _rb.linearDamping = _airDrag;
-            _moveMultiply = _groundMoveMultiply * _airMoveMultiplier;
+            float DotProd = Vector3.Dot(MoveDir, _rb.linearVelocity.normalized);
+            float airVelCalib = _airVelocityDependence * Mathf.Abs(1 - DotProd);
+            if(airVelCalib == 0) airVelCalib = 1;
+
+
+            _moveMultiply = _groundMoveMultiply * _airMoveMultiplier * airVelCalib;
         }
     }
 
@@ -334,6 +341,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!_onSlopeCached)
         {
+            
             _rb.AddForce(MoveDir * _currentMoveSpeed * (1 + 0.01f * PlayerStats.instance.GetStat(StatType.MoveSpeedIncrease)) * _moveMultiply, ForceMode.Acceleration);
         }
         else if (isGrounded)
