@@ -62,4 +62,11 @@ public class CameraController : MonoBehaviour
 
     }
 
+    public void OrientPlayer(Quaternion newOrientation)
+    {
+        cam.transform.rotation = newOrientation;
+        xRot = cam.transform.localRotation.eulerAngles.x;
+        yRot = cam.transform.localRotation.eulerAngles.y;
+    }
+
 }
