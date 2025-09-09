@@ -21,7 +21,7 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor
     private Vector3 lastIssuedDest;
     private float desiredStopDistance;
 
-    public MotorCaps Caps => MotorCaps.Destination | MotorCaps.Pathfinding;
+    
     public float MaxSpeed { get => agent.speed; set => agent.speed = value; }
     public bool Enabled { get => agent.enabled; set => agent.enabled = value; }
     public bool ReachedGoal => !agent.pathPending && agent.remainingDistance <= Mathf.Max(agent.stoppingDistance, desiredStopDistance);

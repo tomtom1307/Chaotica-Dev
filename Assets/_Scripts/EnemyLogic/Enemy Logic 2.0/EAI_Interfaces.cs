@@ -9,11 +9,8 @@ public interface IMotor
     void SetAltitude(float? height, Transform rel);   // ignore on ground
 }
 
-[Flags]
-public enum MotorCaps { None = 0, Destination = 1, Pathfinding = 2, Hover3D = 4 }
 public interface IGoalMotor : IMotor
 {
-    MotorCaps Caps { get; }
 
     // Goal-based control (works for both ground + hover).
     bool ReachedGoal { get; }
