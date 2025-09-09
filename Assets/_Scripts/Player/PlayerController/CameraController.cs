@@ -59,7 +59,7 @@ public class CameraController : MonoBehaviour
         xRot -= mousey * sensY * multiplier;
 
         xRot = Mathf.Clamp(xRot, -90, 90);
-
     }
 
+    
 }
