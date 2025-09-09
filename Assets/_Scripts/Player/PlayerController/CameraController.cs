@@ -60,6 +60,13 @@ public class CameraController : MonoBehaviour
 
         xRot = Mathf.Clamp(xRot, -90, 90);
     }
+    // Make player face direction of newOrientation
+    public void OrientPlayer(Quaternion newOrientation)
+    {
+        cam.transform.rotation = newOrientation;
+        xRot = cam.transform.localRotation.eulerAngles.x;
+        yRot = cam.transform.localRotation.eulerAngles.y;
+    }
 
     
 }

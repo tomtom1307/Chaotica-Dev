@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8668bd4eaf4d1cc43b1de0371bd1b7e3, type: 3}
+  m_Name: Tower Table TEST
+  m_EditorClassIdentifier: 
+  possibleWeapons:
+  - weaponData: {fileID: 11400000, guid: 22ce9109b89889b4eb84ab762c4faab8, type: 2}
+    weight: 30
+  - weaponData: {fileID: 11400000, guid: 6a6ed6d2d22562f41980347c99415507, type: 2}
+    weight: 50
+  - weaponData: {fileID: 11400000, guid: 348d376b3facb964fabdac8a007ee53a, type: 2}
+    weight: 10
+  - weaponData: {fileID: 11400000, guid: 116d85b2292f29249bbb2350b2fa2fd4, type: 2}
+    weight: 100
+  - weaponData: {fileID: 11400000, guid: 123846b4addc23a4e882975908cc384d, type: 2}
+    weight: 80

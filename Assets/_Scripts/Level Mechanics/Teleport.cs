@@ -9,9 +9,12 @@ public class Teleport : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(!enabled) return;
+        other.attachedRigidbody.linearVelocity = Vector3.zero;
         if (destination != null)
         {
-            other.transform.position = destination.position; other.transform.rotation = destination.rotation;
+            CameraController camController = Camera.main.transform.parent.gameObject.GetComponent<CameraController>();
+            other.transform.position = destination.position;
+            camController.OrientPlayer(destination.rotation);
         }
         else if (displacement != null)
         {
