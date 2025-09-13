@@ -27,6 +27,10 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor
     public bool ReachedGoal => !agent.pathPending && agent.remainingDistance <= Mathf.Max(agent.stoppingDistance, desiredStopDistance);
     public Vector3 Destination => agent.hasPath ? agent.destination : lastIssuedDest;
 
+    public Vector3 Velocity => agent.velocity;
+
+    
+
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -89,7 +93,7 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor
         if ((followTarget == null) && (!agent.hasPath || ReachedGoal) && v.sqrMagnitude > 0.001f)
             MoveTo(transform.position + v.normalized * 2f, 0f);
     }
-    public void SetAltitude(float? height, Transform relTo) {}
+    public void SetAltitude(float height, Transform relTo) {}
 
     void TryRepathToFollow()
     {

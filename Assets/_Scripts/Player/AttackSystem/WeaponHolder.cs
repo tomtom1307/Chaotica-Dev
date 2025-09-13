@@ -307,11 +307,11 @@ public class WeaponHolder : MonoBehaviour
         if (_lastPressConsumedFrame == Time.frameCount) return false;
         if (!combatInput.TryPeekOldest(out var e) || e.phase != InputPhase.Pressed) return false;
 
-        int idx = (int)e.action;
-        if (!IndexValid(idx) || !IsAttackUnlocked(idx)) { combatInput.ConsumeOldest(); return false; }
-        if (!CanAttemptAttack(idx)) return false; // leave in buffer; try again later
+        int i = (int)e.action;
+        if (!IndexValid(i) || !IsAttackUnlocked(i)) { combatInput.ConsumeOldest(); return false; }
+        if (!CanAttemptAttack(i)) return false; // leave in buffer; try again later
 
-        data.Weapon_Attacks[idx].weaponInputLogic.OnPress(idx, this, e.alt);
+        data.Weapon_Attacks[i].weaponInputLogic.OnPress(i, this, e.alt);
         combatInput.ConsumeOldest();
         _lastPressConsumedFrame = Time.frameCount;
         return true;
@@ -478,7 +478,6 @@ public class WeaponHolder : MonoBehaviour
     {
         State = AttackState.Combo;
         if (Weapon_anim != null) Weapon_anim.SetBool("Combo", true);
-
         // Try to chain instantly this frame; per-frame guard prevents double consumption
         TryConsumeForComboNow();
     }
@@ -604,3 +603,4 @@ public class WeaponHolder : MonoBehaviour
         }
     }
 }
+

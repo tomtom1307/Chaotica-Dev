@@ -114,7 +114,7 @@ public class Weapon_Attack_Data_Base
 
         if (damagableEnemy != null)
         {
-            damagableEnemy.brain.TogglePhysics(true);
+            //damagableEnemy.brain.TogglePhysics(true);
         }
     }
 

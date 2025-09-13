@@ -39,7 +39,6 @@ public abstract class BaseState : IState
 
     public virtual IState Next()
     {
-        Debug.Log("Next:"+_transitions.Count);
         for (int i = 0; i < _transitions.Count; i++)
         {
             var (when, to) = _transitions[i];
@@ -178,12 +177,12 @@ public static class SteeringHelpers
 
     public static Vector3 KeepRange(Transform self, Transform target, float min, float max)
     {
-        if (!target) return Vector3.zero;
+        if (target == null) return self.transform.position;
         var to = target.position - self.position;
         float d = to.magnitude;
         float optimal = (min + max) * 0.5f;
         if (d < 0.001f) return self.transform.position;
-        if(d > max || d < min) return (optimal * (target.position - to.normalized));
+        if(d > max || d < min) return ((target.position - optimal * to.normalized));
         else { return self.transform.position; }
 
     }

@@ -12,6 +12,7 @@ public class PlayerPushArea : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        other.gameObject.GetComponent<Rigidbody>().AddForce(Force*transform.forward);
+        Rigidbody _rb = other.gameObject.GetComponent<Rigidbody>();
+        if(_rb != null ) _rb.AddForce(Force * transform.forward);
     }
 }

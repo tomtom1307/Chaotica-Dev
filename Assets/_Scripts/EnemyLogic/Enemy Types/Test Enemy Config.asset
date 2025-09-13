@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   preferredMin: 5
   preferredMax: 10
+  DefaultGroundAltitude: 2.61
+  AltitudeFromPlayer: 0.97
   approachSpeed: 3.2
-  orbitSpeedRad: 0.00001
-  strafeWeight: 3.38
+  orbitSpeedRad: 1.23
+  strafeWeight: 0.1
   altitudeOffset: 0.73
   primaryAbility: {fileID: 0}
   burstCount: 3
@@ -31,4 +33,4 @@ MonoBehaviour:
   searchRingSteps: 3
   searchSpeedMult: 0.9
   searchArrivalDistance: 1
-  GoBackToSearchTime: 8
+  GoBackToSearchTime: 52.37

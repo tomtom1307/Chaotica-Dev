@@ -1,7 +1,5 @@
 using UnityEngine;
 
-// File: AI/Data/EnemyTuningSO.cs
-using UnityEngine;
 
 [CreateAssetMenu(menuName = "AI/Enemy Tuning")]
 public class EnemyTuningSO : ScriptableObject
@@ -9,6 +7,8 @@ public class EnemyTuningSO : ScriptableObject
     [Header("Range band")]
     public float preferredMin = 10f;
     public float preferredMax = 16f;
+    public float DefaultGroundAltitude = 4;
+    public float AltitudeFromPlayer = 2;
 
     [Header("Motion")]
     public float approachSpeed = 8f;

@@ -9,7 +9,7 @@ public class Perception : MonoBehaviour, IPerception
 {
     [SerializeField]
     AnimationCurve distanceCurve =
-    AnimationCurve.EaseInOut(0f, 1f, 1f, 0f); // x = dist/maxRange
+    AnimationCurve.EaseInOut(0f, 1f, 1f, 0f); 
 
     [Header("Targeting")]
     public string playerTag = "Player";

@@ -16,6 +16,7 @@ public class DamagableEnemy : Damagable
     {
         soundSource.PlaySound(EnemySoundSource.SoundType.TakeDamageBladed, 2);
         base.OnDamageTaken(damage, col);
+        /*
         brain.animator.SetTrigger("Hit");
         if(brain.stateMachine.CurrentEnemyState == brain.idleState)
         {
@@ -35,7 +36,7 @@ public class DamagableEnemy : Damagable
             {
                 brain.actionHandler.StartActionOverride(brain.actionHandler.SearchNearby);
             }
-        }
+        }*/
         if (hitParticleFX != null)
         {
             var ps = Instantiate(hitParticleFX, transform.position + spawnOffset, Quaternion.LookRotation(brain.perception.player.position - transform.position));
@@ -52,9 +53,9 @@ public class DamagableEnemy : Damagable
 
     public override void Die()
     {
-        brain.animator.enabled = false;
-        brain.attackHandler.DisableColliderGroup(0);
-        brain.NotifySpawner();
+        //brain.animator.enabled = false;
+        //brain.attackHandler.DisableColliderGroup(0);
+        //brain.NotifySpawner();
         GameManager.instance.EnemyKilled();
         base.Die();
     }
@@ -64,7 +65,7 @@ public class DamagableEnemy : Damagable
     {
         
         base.Start();
-        brain = GetComponent<EnemyBrain>();
+        //brain = GetComponent<EnemyBrain>();
         soundSource = GetComponent<EnemySoundSource>();
 
         DCM = GetComponent<DamageCrackingManager>();

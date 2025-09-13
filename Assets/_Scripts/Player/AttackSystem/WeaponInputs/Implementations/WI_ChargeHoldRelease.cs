@@ -37,11 +37,13 @@ public class ChargeHoldRelease: Weapon_Input
         wh.ChargeAmount = (full <= 0f) ? 1f : Mathf.Clamp01(held / full);
 
         // (Optional) if you want tap behavior when released too early:
-        // if (held < min) { /* handle tap variant if needed */ }
+        if (held < min) { wh.ExitAttack(); return; }
 
         wh.EnterAttack(attackIndex, alt); // fires on release
     }
 
-    public override bool StartsChargingOnPress => true;
+    public override bool StartsChargingOnPress => false;
 
 }
+
+

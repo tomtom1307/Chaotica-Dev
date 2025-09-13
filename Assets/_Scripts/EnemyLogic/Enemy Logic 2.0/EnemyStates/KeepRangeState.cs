@@ -7,10 +7,12 @@ public class KeepRangeState : BaseState
     public override void OnEnter() {}
     public override void Tick()
     {
+        
         var pos = SteeringHelpers.KeepRange(c.transform, c.bb.target, c.cfg.preferredMin, c.cfg.preferredMax);
         c.motor.MoveTo(pos);
-        //c.motor.SetAltitude(c.cfg.altitudeOffset, c.bb.target);
-        //if (c.bb.target) c.aimer.AimAt(c.bb.target.position + Vector3.up * 0.5f);
+        c.motor.SetAltitude(c.cfg.AltitudeFromPlayer, c.bb.target);
+        if (c.bb.hasLOS) c.aimer.AimAt(c.bb.target.position + Vector3.up * 0.5f);
+        else c.aimer.AimAt(c.transform.position + c.motor.Velocity);
     }
     public override void OnExit() { }
 }
