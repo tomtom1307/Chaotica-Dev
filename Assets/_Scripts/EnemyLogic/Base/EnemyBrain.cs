@@ -297,12 +297,10 @@ public class EnemyBrain : MonoBehaviour
     
     public void RelayAgro()
     {
-        Debug.Log("Relay Agro!");
         List<Collider> cols = Physics.OverlapSphere(transform.position, RelayRange).ToList();
         
         foreach (Collider col in cols)
         {
-            print(col.gameObject);
             EnemyBrain EB;
             if(col.gameObject.TryGetComponent<EnemyBrain>(out EB))
             {
@@ -314,7 +312,6 @@ public class EnemyBrain : MonoBehaviour
     public void Agro()
     {
         if (stateMachine.CurrentEnemyState == patrolState) return; // If already Agro
-        Debug.Log("Agro!");
         perception.DetectionMeter = 1;
         perception.LSP_time = 0;
         perception.PlayerLastSeenPosition = perception.player.position;

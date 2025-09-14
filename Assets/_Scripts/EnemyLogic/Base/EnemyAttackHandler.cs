@@ -45,7 +45,6 @@ public class EnemyAttackHandler : MonoBehaviour
         brain.navMesh.updateRotation = false;
         if (currentAttack.attackData.rootMotion)
         {
-            Debug.Log("enabled root motion and disabled navmeshagent.");
             brain.navMesh.isStopped = true;
             
             //brain.navMesh.speed = 0;
