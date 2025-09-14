@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 2525360076427935927}
   - component: {fileID: 2962649431288507644}
   - component: {fileID: 9047144924334778401}
+  - component: {fileID: 5180308335110095675}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -149,6 +150,26 @@ MonoBehaviour:
   saturationTarget: -50
   chromaticAberationTarget: 0.5
   bloomTarget: 0.9
+--- !u!114 &5180308335110095675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758233759682976738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb121c10687f23a4c9e6f1248ca6137f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Standard: {r: 1, g: 1, b: 1, a: 1}
+  Crit: {r: 1, g: 0.7118232, b: 0, a: 1}
+  Verdancy: {r: 0, g: 0.4339623, b: 0.13774315, a: 1}
+  Scarforge: {r: 1, g: 0, b: 0, a: 1}
+  Umbraveil: {r: 1, g: 0, b: 0.83895683, a: 1}
+  Aetherflow: {r: 0, g: 0.66610146, b: 1, a: 1}
+  Healing: {r: 0.5896226, g: 1, b: 0.5913184, a: 1}
+  Number_prefab: {fileID: 7128721333898359954, guid: 007be7e6658912046bab0cfa152b925f, type: 3}
 --- !u!1 &2339975733083840467
 GameObject:
   m_ObjectHideFlags: 0
