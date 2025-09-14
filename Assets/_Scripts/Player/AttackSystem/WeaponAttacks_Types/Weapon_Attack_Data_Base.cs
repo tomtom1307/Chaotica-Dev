@@ -114,14 +114,20 @@ public class Weapon_Attack_Data_Base
         W.rb.AddForce(Force,ForceMode.VelocityChange);
     }
 
-    public static void ApplyKnockback(Collider c, Vector3 v)
+    public void ApplyKnockback(Collider c, Vector3 v)
     {
         var knockbackable = GetKnockbackAble(c);
-        knockbackable?.GetKnockedBack(v);
+        knockbackable?.GetKnockedBack(KnockBackForce * v);
         
     }
 
-    public static void ApplyKnockback(Collider c, Vector3 v, Vector3 point)
+    public void ApplyKnockback(Collider c, Vector3 v, Vector3 point)
+    {
+        var knockbackable = GetKnockbackAble(c);
+        knockbackable?.GetKnockedBack(KnockBackForce*v, point);
+    }
+
+    public static void ApplyKnockback_Mag(Collider c, Vector3 v, Vector3 point)
     {
         var knockbackable = GetKnockbackAble(c);
         knockbackable?.GetKnockedBack(v, point);

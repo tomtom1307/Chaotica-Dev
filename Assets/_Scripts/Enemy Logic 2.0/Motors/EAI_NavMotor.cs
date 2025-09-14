@@ -134,7 +134,7 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
         yield return new WaitForFixedUpdate();
         yield return new WaitUntil(() => rb.linearVelocity.magnitude < StillThreshold);
         
-        //EnablePhysics(false);
+        EnablePhysics(false);
     }
 
 }

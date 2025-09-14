@@ -105,7 +105,7 @@ public class Projectile : MonoBehaviour
         }
 
         Damagable damagable = Damagable.CheckForDamagable(hitObj);
-        Weapon_Attack_Data_Base.ApplyKnockback(collision.collider, KnockBack * -collision.relativeVelocity.normalized, collision.GetContact(0).point);
+        Weapon_Attack_Data_Base.ApplyKnockback_Mag(collision.collider, KnockBack * -collision.relativeVelocity.normalized, collision.GetContact(0).point);
         //Damage pipeline
         damagable.TakeDamage(Damage, col.point, col.normal, CritHit);
 

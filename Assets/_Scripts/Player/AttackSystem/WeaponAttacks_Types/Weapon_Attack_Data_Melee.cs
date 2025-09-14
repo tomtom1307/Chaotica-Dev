@@ -71,9 +71,10 @@ public class Weapon_Attack_Data_Melee : Weapon_Attack_Data_Base
         // SECONDARY TARGETS
         foreach (Collider c in validTargets)
         {
-            if (c == primaryTarget) continue;
+            
 
             Damagable D_secondary = Damagable.CheckForDamagable(c.gameObject);
+            if (D_secondary == D_primary) continue;
             Vector3 dirToSecondary = c.transform.position - Camera.main.transform.position;
 
             if (Physics.Raycast(Camera.main.transform.position, dirToSecondary.normalized, out hit, attack_range, W.DamagableLayer))
