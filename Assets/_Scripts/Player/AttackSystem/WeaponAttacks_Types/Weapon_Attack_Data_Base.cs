@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
@@ -87,7 +88,6 @@ public class Weapon_Attack_Data_Base
         bool isCrit = false;
         (Damage, isCrit) = DamageVal(W);
         Damage *= Multiplier;
-        TryEnablingPhysics(damagable);
 
         damagable.TakeDamage(Damage,crit: isCrit);
         W.instance.TryTriggerProcs(W, damagable, Multiplier);
@@ -99,7 +99,6 @@ public class Weapon_Attack_Data_Base
         bool isCrit = false;
         (Damage, isCrit) = DamageVal(W);
         Damage *= Multiplier;
-        TryEnablingPhysics(damagable);
 
         damagable.TakeDamage(Damage, hit.point, hit.normal, isCrit);
 
@@ -108,55 +107,44 @@ public class Weapon_Attack_Data_Base
 
     }
 
-    public static void TryEnablingPhysics(Damagable damagable)
-    {
-        DamagableEnemy damagableEnemy = damagable as DamagableEnemy;
-
-        if (damagableEnemy != null)
-        {
-            //damagableEnemy.brain.TogglePhysics(true);
-        }
-    }
 
     public void ApplyForceToPlayer(WeaponHolder W,int i)
     {
-        
         Vector3 Force = Forces[i].x * W.playerMovement.orientation.right +  Forces[i].y * Vector3.up +Forces[i].z*W.playerMovement.orientation.forward ;
         W.rb.AddForce(Force,ForceMode.VelocityChange);
     }
 
-    public void ApplyKnockback(Collider c, Vector3 v)
+    public static void ApplyKnockback(Collider c, Vector3 v)
     {
-        Rigidbody hitrb;
-        if (c.gameObject.TryGetComponent<Rigidbody>(out hitrb))
-        {
-            hitrb.AddForce(KnockBackForce * v.normalized);
-        } else
-        {
-            hitrb = c.gameObject.GetComponentInParent<Rigidbody>();
-
-            if (hitrb != null)
-            {
-                hitrb.AddForce(KnockBackForce * v.normalized);
-            }
-        }
+        var knockbackable = GetKnockbackAble(c);
+        knockbackable?.GetKnockedBack(v);
+        
     }
 
-    public void ApplyKnockback(Collider c, Vector3 v, Vector3 point)
+    public static void ApplyKnockback(Collider c, Vector3 v, Vector3 point)
     {
-        Rigidbody hitrb;
-        if (c.gameObject.TryGetComponent<Rigidbody>(out hitrb))
-        {
-            hitrb.AddForceAtPosition(KnockBackForce * v.normalized, point);
-        } else
-        {
-            hitrb = c.gameObject.GetComponentInParent<Rigidbody>();
+        var knockbackable = GetKnockbackAble(c);
+        knockbackable?.GetKnockedBack(v, point);
+    }
 
-            if (hitrb != null)
-            {
-                hitrb.AddForce(KnockBackForce * v.normalized);
-            }
+    public static IKnockbackable GetKnockbackAble(Collider c)
+    {
+        IKnockbackable knockbackable;
+        if (c.TryGetComponent<IKnockbackable>(out knockbackable))
+        {
+            return knockbackable;
         }
+        knockbackable = c.GetComponentInParent<IKnockbackable>();
+        if(knockbackable != null)
+        {
+            return knockbackable;
+        }
+        knockbackable = c.GetComponentInChildren<IKnockbackable>();
+        if (knockbackable != null)
+        {
+            return knockbackable;
+        }
+        else return null;
     }
 
 

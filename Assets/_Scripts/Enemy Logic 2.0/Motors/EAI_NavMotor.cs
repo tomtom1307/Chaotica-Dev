@@ -1,26 +1,23 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class NavMeshMotor : MonoBehaviour, IGoalMotor
+[RequireComponent(typeof(Rigidbody))]
+public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
 {
     [Header("Repathing")]
-    public float minRepathInterval = 0.15f;
-    public float repathMoveThreshold = 0.6f;
+    public float repathMoveThreshold = 0.3f;
 
-    [Header("Sampling")]
-    public float targetSampleRadius = 2f;
 
     [Header("Rotation")]
     public bool controlRotation = true;
     public float faceTurnSpeed = 720f;
 
     private NavMeshAgent agent;
-    private Transform followTarget;
-    private float nextRepathAt;
     private Vector3 lastIssuedDest;
     private float desiredStopDistance;
-
+    [Range(0.001f, 0.1f)]public float StillThreshold = 0.05f;
     
     public float MaxSpeed { get => agent.speed; set => agent.speed = value; }
     public bool Enabled { get => agent.enabled; set => agent.enabled = value; }
@@ -39,83 +36,105 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor
         agent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
     }
 
+    Rigidbody rb;
+    private void Start()
+    {
+        agent.updateRotation = controlRotation;
+        rb = GetComponent<Rigidbody>();
+    }
+
     void Update()
     {
-        if (followTarget) TryRepathToFollow();
-        if (controlRotation && agent.velocity.sqrMagnitude > 0.01f)
-        {
-            var fwd = agent.velocity; fwd.y = 0;
-            if (fwd.sqrMagnitude > 0.001f)
-            {
-                var tgt = Quaternion.LookRotation(fwd.normalized, Vector3.up);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, tgt, faceTurnSpeed * Time.deltaTime);
-            }
-        }
+        
     }
 
     public void MoveTo(Vector3 dest, float stopDistance = 0.25f, float? altitude = null)
     {
-        followTarget = null;
-        desiredStopDistance = Mathf.Max(0, stopDistance);
-        if (!NavMesh.SamplePosition(dest, out var hit, targetSampleRadius, agent.areaMask))
-            hit.position = dest;
-        IssueDestination(hit.position);
+        if (CheckDestination(dest)) 
+        {
+            if (agent.SetDestination(dest))
+            {
+                agent.isStopped = false;
+                lastIssuedDest = transform.position;
+            }
+            
+        }
     }
 
-    public void Follow(Transform target, float updateDist = 0.75f, float updateSeconds = 0.2f, float? altitudeOffset = null)
-    {
-        followTarget = target;
-        repathMoveThreshold = Mathf.Max(0.05f, updateDist);
-        minRepathInterval = Mathf.Max(0.05f, updateSeconds);
-        desiredStopDistance = agent.stoppingDistance;
-        nextRepathAt = 0f;
-        TryRepathToFollow();
-    }
 
     public void Stop()
     {
-        followTarget = null;
         agent.ResetPath();
         lastIssuedDest = transform.position;
     }
 
     public bool CanPathTo(Vector3 dest)
     {
-        if (!NavMesh.SamplePosition(dest, out var hit, targetSampleRadius, agent.areaMask)) return false;
-        var path = new NavMeshPath();
-        return agent.enabled && NavMesh.CalculatePath(transform.position, hit.position, agent.areaMask, path) && path.status == NavMeshPathStatus.PathComplete;
+        return true;
     }
 
     // velocity based IMotor compatibility
     public void SetVelocity(Vector3 v)
     {
         if (!agent.enabled) return;
-        if ((followTarget == null) && (!agent.hasPath || ReachedGoal) && v.sqrMagnitude > 0.001f)
-            MoveTo(transform.position + v.normalized * 2f, 0f);
+        agent.isStopped = true;
     }
+
+    
     public void SetAltitude(float height, Transform relTo) {}
 
-    void TryRepathToFollow()
+    //Makes Path refresh a bit more chill
+    bool CheckDestination(Vector3 p)
     {
-        if (!followTarget || !agent.enabled) return;
-        if (Time.time < nextRepathAt) return;
+        return (Vector3.Distance(p, lastIssuedDest) > repathMoveThreshold) && agent.isActiveAndEnabled;
+    }
 
-        var pos = followTarget.position;
-        if (!NavMesh.SamplePosition(pos, out var hit, targetSampleRadius, agent.areaMask)) hit.position = pos;
-
-        if ((hit.position - lastIssuedDest).sqrMagnitude >= repathMoveThreshold * repathMoveThreshold
-            || agent.pathStatus == NavMeshPathStatus.PathInvalid)
+    public void EnablePhysics(bool x)
+    {
+        
+        rb.useGravity = x;
+        rb.isKinematic = !x;
+        rb.freezeRotation = x;
+        if (!x)
         {
-            IssueDestination(hit.position);
+            agent.Warp(transform.position);
         }
+        agent.enabled = !x;
     }
 
-    void IssueDestination(Vector3 p)
+    public void GetKnockedBack(Vector3 force)
     {
-        nextRepathAt = Time.time + minRepathInterval;
-        lastIssuedDest = p;
-        agent.stoppingDistance = desiredStopDistance;
-        agent.isStopped = false;
-        agent.SetDestination(p);
+        StartCoroutine(ApplyKnockBack(force));
     }
+
+    public void GetKnockedBack(Vector3 force, Vector3 point)
+    {
+        StartCoroutine(ApplyKnockBack(force, point));
+    }
+
+    private IEnumerator ApplyKnockBack(Vector3 force)
+    {
+        Debug.Log("KB!");
+        yield return null;
+        EnablePhysics(true);
+        rb.AddForce(force);
+
+        yield return new WaitForFixedUpdate();
+        yield return new WaitUntil(() => rb.linearVelocity.magnitude < StillThreshold);
+        EnablePhysics(false);   
+    }
+
+    private IEnumerator ApplyKnockBack(Vector3 force, Vector3 point)
+    {
+        Debug.Log("KB point!");
+        yield return null;
+        EnablePhysics(true);
+        rb.AddForceAtPosition(force, point);
+
+        yield return new WaitForFixedUpdate();
+        yield return new WaitUntil(() => rb.linearVelocity.magnitude < StillThreshold);
+        
+        //EnablePhysics(false);
+    }
+
 }

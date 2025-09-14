@@ -7,6 +7,8 @@ public interface IMotor
     bool Enabled { get; set; }   // brain can disable during stun/KB
     void SetVelocity(Vector3 worldVel);               // XZ intent
     void SetAltitude(float height, Transform rel = null);   // ignore on ground
+
+    void EnablePhysics(bool x);
 }
 
 public interface IGoalMotor : IMotor
@@ -18,7 +20,6 @@ public interface IGoalMotor : IMotor
 
     Vector3 Velocity { get;}
     void MoveTo(Vector3 dest, float stopDistance = 0.25f, float? altitude = null);
-    void Follow(Transform target, float updateDist = 0.75f, float updateSeconds = 0.2f, float? altitudeOffset = null);
     void Stop();
 
     // Path test: true for hover (always can), or NavMesh.CalculatePath for ground.
@@ -27,8 +28,8 @@ public interface IGoalMotor : IMotor
 
 public interface IAbilityRunner
 {
-    bool CanUse(AbilitySO ability);
-    void Use(AbilitySO ability, in AbilityContext ctx);
+    bool CanUse(EAI_AbilitySO ability);
+    void Use(EAI_AbilitySO ability, in AbilityContext ctx);
 }
 
 public interface IPerception
@@ -37,5 +38,11 @@ public interface IPerception
     bool HasLOS(Vector3 from, Vector3 to, float radius);
 
     float DistanceToTarget { get; }
+}
+
+public interface IKnockbackable
+{
+    void GetKnockedBack(Vector3 force);
+    void GetKnockedBack(Vector3 force, Vector3 point);
 }
 

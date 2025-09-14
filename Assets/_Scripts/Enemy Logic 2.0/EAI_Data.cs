@@ -1,4 +1,7 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 
 [CreateAssetMenu(menuName = "AI/Enemy Tuning")]
@@ -17,7 +20,9 @@ public class EnemyTuningSO : ScriptableObject
     public float altitudeOffset = 3.5f; // flyers
 
     [Header("Combat")]
-    public AbilitySO primaryAbility;
+    public float BaseDamage;
+    public List<EAI_AttackSO> Attacks;
+    public List<EAI_AbilitySO> Abilities;
 
     [Header("Detection")]
     public float SearchDuration = 6;
@@ -33,12 +38,35 @@ public class EnemyTuningSO : ScriptableObject
 
 }
 
-public abstract class AbilitySO : ScriptableObject
+public abstract class EAI_AbilitySO : ScriptableObject
 {
     public string abilityId = "AbilityID";
     public float cooldown = 1.0f;
+    public abstract void Enter(GameObject owner, in AbilityContext ctx);
     public abstract void Execute(GameObject owner, in AbilityContext ctx);
+    public abstract void Exit(GameObject owner, in AbilityContext ctx);
 }
+
+public class EAI_AttackSO : EAI_AbilitySO
+{
+    public float Damage;
+
+    public override void Enter(GameObject owner, in AbilityContext ctx)
+    {
+        
+    }
+
+    public override void Execute(GameObject owner, in AbilityContext ctx)
+    {
+        
+    }
+
+    public override void Exit(GameObject owner, in AbilityContext ctx)
+    {
+        
+    }
+}
+
 
 public struct AbilityContext
 {

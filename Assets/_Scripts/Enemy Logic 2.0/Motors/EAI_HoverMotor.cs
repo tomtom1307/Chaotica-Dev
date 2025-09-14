@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [DefaultExecutionOrder(50)]
-public class HoverMotor : MonoBehaviour, IGoalMotor
+public class HoverMotor : MonoBehaviour, IGoalMotor, IKnockbackable
 {
     [Header("Motion")]
     public float maxSpeed = 8f;
@@ -167,14 +167,10 @@ public class HoverMotor : MonoBehaviour, IGoalMotor
         if (altitude != null) SetAltitude((float)altitude);
     }
 
-    public void Follow(Transform target, float updateDist = 0.75f, float updateSeconds = 0.2f, float? altitudeOffset = null)
-    {
-        
-    }
 
     public void Stop()
     {
-        
+        _goal = transform.position;
     }
 
     public bool CanPathTo(Vector3 dest) => true; // no ground pathfinding for hover
@@ -389,5 +385,18 @@ public class HoverMotor : MonoBehaviour, IGoalMotor
         Gizmos.DrawSphere(pos, 0.4f);
     }
 
+    public void EnablePhysics(bool x)
+    {
+        return;
+    }
 
+    public void GetKnockedBack(Vector3 force)
+    {
+        _rb.AddForce(force);
+    }
+
+    public void GetKnockedBack(Vector3 force, Vector3 point)
+    {
+        _rb.AddForceAtPosition(force, point);
+    }
 }

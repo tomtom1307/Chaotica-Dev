@@ -7,7 +7,7 @@ public class Damagable : MonoBehaviour
 {
     public float MaxHealth = 10;
     public float Health;
-
+    
     public bool DamageNumbers = true;
     [HideInInspector] GameObject DamageNumber;
     public List<GameObject> SpawnOnDeath;
@@ -28,7 +28,8 @@ public class Damagable : MonoBehaviour
     {
         soundManager = GetComponent<GenericSoundManager>();
         DamageNumber = Resources.Load<GameObject>("DamageNumber");
-        Health = MaxHealth; 
+        Health = MaxHealth;
+        
     }
 
 
@@ -135,4 +136,7 @@ public class Damagable : MonoBehaviour
         }
         return D;
     }
+
+    
 }
+
