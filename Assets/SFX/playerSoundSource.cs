@@ -64,9 +64,13 @@ public class PlayerSoundSource : SourceSoundManager<PlayerSoundSource.SoundType>
         {
             EnemyContext ctx;
             ctx = col.GetComponentInParent<EnemyContext>();
+            if(ctx == null)
+            {
+                ctx = col.GetComponent<EnemyContext>();
+            }
             if (ctx != null)
             {
-                ctx.Listen(transform.position);
+                ctx.HeardNoise(transform.position);
             }
         }
 

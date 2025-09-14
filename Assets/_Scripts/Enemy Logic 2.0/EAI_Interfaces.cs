@@ -6,7 +6,7 @@ public interface IMotor
     float MaxSpeed { get; set; }
     bool Enabled { get; set; }   // brain can disable during stun/KB
     void SetVelocity(Vector3 worldVel);               // XZ intent
-    void SetAltitude(float height, Transform rel);   // ignore on ground
+    void SetAltitude(float height, Transform rel = null);   // ignore on ground
 }
 
 public interface IGoalMotor : IMotor
@@ -35,6 +35,7 @@ public interface IPerception
 {
     Transform PrimaryTarget { get; }
     bool HasLOS(Vector3 from, Vector3 to, float radius);
+
     float DistanceToTarget { get; }
 }
 

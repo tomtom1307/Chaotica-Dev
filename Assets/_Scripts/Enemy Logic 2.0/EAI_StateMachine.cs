@@ -2,77 +2,30 @@ using System;
 using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
-
-public interface IState
-{
-    string Name { get; }
-    void OnEnter();
-    void Tick();
-    void OnExit();
-    public IState Next();  // return new state to transition, or null to stay
-}
-
-public abstract class BaseState : IState
-{
-    protected readonly EnemyContext c;
-
-    protected BaseState(EnemyContext ctx) => this.c = ctx;
-
-    public virtual string Name => GetType().Name;
-
-    protected Func<IState> nextFn;
-    public virtual void OnEnter() { }
-    public virtual void Tick() { }
-    public virtual void OnExit() { }
-
-    public void AddTransition(Func<bool> when, IState to)
-    {
-        var Test = (when, to);
-        Debug.Log(Test);
-        _transitions.Add((when, to));
-        Debug.Log("Transition Added" + to.Name + _transitions.Count);
-        
-    }
-
-    private List<(Func<bool> when, IState to)> _transitions = new();
-
-    public virtual IState Next()
-    {
-        for (int i = 0; i < _transitions.Count; i++)
-        {
-            var (when, to) = _transitions[i];
-            if (when()) return to;
-        }
-        return null; // stay in state
-    }
-}
-
-
-// Optional global-transition
-internal sealed class Transition
-{
-    public readonly Func<bool> When;
-    public readonly IState To;
-    public Transition(Func<bool> when, IState to) { When = when; To = to; }
-}
 
 
 public class EAI_StateMachine : MonoBehaviour
 {
+
     public IState Current { get; private set; }
     [SerializeField] string currentStateName;
-
     private EnemyContext ctx;
 
     private readonly Dictionary<Type, IState> _states = new();
     private readonly List<Transition> _anyTransitions = new();
 
+    
+
 
     private void Awake()
     {
         ctx = GetComponent<EnemyContext>();
+    }
 
+    private void Start()
+    {
         var installer = GetComponent<EnemyStateInstaller>();
         if (!installer)
         {
@@ -83,7 +36,7 @@ public class EAI_StateMachine : MonoBehaviour
 
 
         installer.Install(this, ctx);
-
+        Destroy(installer);
         if (Current == null)
         {
             Debug.LogError("No initial state set in installer.");
@@ -93,11 +46,6 @@ public class EAI_StateMachine : MonoBehaviour
         {
             currentStateName = Current.Name;
         }
-    }
-
-    private void Start()
-    {
-        
     }
 
     public void Set(IState s)
@@ -160,9 +108,84 @@ public class EAI_StateMachine : MonoBehaviour
         _anyTransitions.Add(new Transition(when, to));
     }
 
+
 }
 
 
+
+public interface IState
+{
+    public enum StateAggroType
+    {
+        Aggro,
+        NonAggro,
+        Search
+    }
+
+    public StateAggroType stateAggroType { get; }
+
+    string Name { get; }
+    void OnEnter();
+    void Tick();
+    void OnExit();
+    public IState Next();  // return new state to transition, or null to stay
+
+    bool CanEnter();               // preconditions for entering this state
+    bool CanBeInterruptedBy(IState next); // can current be interrupted by 'next'?
+
+}
+
+public abstract class BaseState : IState
+{
+
+
+    protected readonly EnemyContext c;
+    protected BaseState(EnemyContext ctx) => this.c = ctx;
+
+    public virtual string Name => GetType().Name;
+
+    public virtual IState.StateAggroType stateAggroType => IState.StateAggroType.Aggro;
+
+    protected Func<IState> nextFn;
+    public virtual void OnEnter() { if (stateAggroType == IState.StateAggroType.Aggro) c.bb.isAggro = true; else c.bb.isAggro = false; }
+    public virtual void Tick() { }
+    public virtual void OnExit() { }
+
+    public void AddTransition(Func<bool> when, IState to)
+    {
+        var Test = (when, to);
+        Debug.Log(Test);
+        _transitions.Add((when, to));
+        Debug.Log("Transition Added" + to.Name + _transitions.Count);
+
+    }
+
+    private List<(Func<bool> when, IState to)> _transitions = new();
+
+    public virtual IState Next()
+    {
+        for (int i = 0; i < _transitions.Count; i++)
+        {
+            var (when, to) = _transitions[i];
+            if (when()) return to;
+        }
+        return null; // stay in state
+    }
+
+
+    //Add extra gates for soft trigger logic
+    public virtual bool CanEnter() => true;
+    public virtual bool CanBeInterruptedBy(IState next) => true;
+}
+
+
+// Optional global-transition
+internal sealed class Transition
+{
+    public readonly Func<bool> When;
+    public readonly IState To;
+    public Transition(Func<bool> when, IState to) { When = when; To = to; }
+}
 
 
 

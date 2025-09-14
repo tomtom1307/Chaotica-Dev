@@ -12,12 +12,13 @@ public class DamageNumber : MonoBehaviour
     Vector3 upVector;
     public float PopupTime = 0.2f;
     public float Size;
+    public float StartSize;
     public float ExistanceTime = 0.2f;
     public float MoveAmount;
     public float OffsetAmount;
     private void Start()
     {
-        transform.localScale = Vector3.zero;
+        transform.localScale = StartSize*Vector3.one;
         transform.LookAt(Camera.main.transform.position, upVector);
         transform.position += Random.Range(-OffsetAmount, OffsetAmount) * transform.right;
         transform.DOScale(Size*Vector3.one, PopupTime).SetEase(Ease.OutElastic);

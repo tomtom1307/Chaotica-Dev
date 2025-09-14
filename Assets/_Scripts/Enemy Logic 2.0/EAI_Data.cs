@@ -18,11 +18,6 @@ public class EnemyTuningSO : ScriptableObject
 
     [Header("Combat")]
     public AbilitySO primaryAbility;
-    public int burstCount = 3;
-    public float timeBetweenShots = 0.12f;
-    public float burstInterval = 2.2f;
-    public float burstJitter = 0.4f;
-    public float losRadius = 0.25f;
 
     [Header("Detection")]
     public float SearchDuration = 6;

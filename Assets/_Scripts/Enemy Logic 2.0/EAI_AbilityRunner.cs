@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilityRunner : MonoBehaviour, IAbilityRunner
+public class EnemyAbilityRunner : MonoBehaviour, IAbilityRunner
 {
     Dictionary<string, float> nextReady = new();
 

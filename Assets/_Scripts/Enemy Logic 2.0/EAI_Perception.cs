@@ -4,8 +4,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-[RequireComponent(typeof(Blackboard))]
-public class Perception : MonoBehaviour, IPerception
+[RequireComponent(typeof(EAI_Blackboard))]
+public class EAI_Perception : MonoBehaviour, IPerception
 {
     [SerializeField]
     AnimationCurve distanceCurve =
@@ -25,10 +25,10 @@ public class Perception : MonoBehaviour, IPerception
     public float DetectionSpeed = 1;
     public float DetectionDecay = 1.5f;
 
-    Blackboard bb;
+    EAI_Blackboard bb;
     float t, lastSeenTime;
 
-    void Awake() { bb = GetComponent<Blackboard>(); }
+    void Awake() { bb = GetComponent<EAI_Blackboard>(); }
 
     void Update()
     {
@@ -114,5 +114,13 @@ public class Perception : MonoBehaviour, IPerception
         float x = Mathf.Clamp01(dist / maxDetectRange);
         return Mathf.Clamp01(distanceCurve.Evaluate(x));
     }
+
+    public void SetDetectionMeter(float SetVal)
+    {
+        DetectionMeter = Mathf.Clamp01(SetVal);
+    }
+
+
+    
 }
 

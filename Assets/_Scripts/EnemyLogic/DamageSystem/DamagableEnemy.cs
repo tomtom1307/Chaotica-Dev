@@ -1,21 +1,54 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
 
 [RequireComponent(typeof(EnemySoundSource))]
 public class DamagableEnemy : Damagable
 {
     [HideInInspector] public EnemyBrain brain;
     EnemySoundSource soundSource;
+    EnemyContext ctx;
     public GameObject hitParticleFX;
     public float InstantAgro = 5;
+    [Tooltip("If enemy is flying how much downforce is applied on hit")]
+    public float DropForce;
+
+    bool IsFloating = false;
+    
+
 
     [HideInInspector] public Vector3 moveDirection;
-    public override void OnDamageTaken(float damage, Color col)
+    public override void OnDamageTaken(float damage, DamageTypeDisplay damageType)
     {
         soundSource.PlaySound(EnemySoundSource.SoundType.TakeDamageBladed, 2);
-        base.OnDamageTaken(damage, col);
+        base.OnDamageTaken(damage, damageType);
+        if(ctx.bb.distanceToTarget < InstantAgro)
+        {
+            ctx.Agro(true);
+        }
+        else
+        {
+            ctx.Search();
+        }
+
+
+        if (IsFloating)
+        {
+            GetComponent<Rigidbody>().AddForce(DropForce * Vector3.down, ForceMode.Impulse);
+        }
+
+        if (hitParticleFX != null)
+        {
+            var ps = Instantiate(hitParticleFX, transform.position + spawnOffset, Quaternion.LookRotation(brain.perception.player.position - transform.position));
+
+
+        }
+        
+        if ( DCM != null)
+        {
+            DCM.ChangeCrack(1-Health / MaxHealth);
+        }
+
         /*
         brain.animator.SetTrigger("Hit");
         if(brain.stateMachine.CurrentEnemyState == brain.idleState)
@@ -37,17 +70,6 @@ public class DamagableEnemy : Damagable
                 brain.actionHandler.StartActionOverride(brain.actionHandler.SearchNearby);
             }
         }*/
-        if (hitParticleFX != null)
-        {
-            var ps = Instantiate(hitParticleFX, transform.position + spawnOffset, Quaternion.LookRotation(brain.perception.player.position - transform.position));
-
-
-        }
-        
-        if ( DCM != null)
-        {
-            DCM.ChangeCrack(1-Health / MaxHealth);
-        } 
     }
 
 
@@ -65,9 +87,10 @@ public class DamagableEnemy : Damagable
     {
         
         base.Start();
+        ctx = GetComponent<EnemyContext>();
+        if(GetComponent<HoverMotor>()) IsFloating = true;
         //brain = GetComponent<EnemyBrain>();
         soundSource = GetComponent<EnemySoundSource>();
-
         DCM = GetComponent<DamageCrackingManager>();
         if (DCM == null)
         {

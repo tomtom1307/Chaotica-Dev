@@ -9,9 +9,9 @@ public class TrainingDummy : Damagable
         Health = MaxHealth;
     }
 
-    public override void OnDamageTaken(float damage, Color col)
+    public override void OnDamageTaken(float damage, DamageTypeDisplay damageType)
     {
-        base.OnDamageTaken(damage, col);
+        base.OnDamageTaken(damage, damageType);
         Debug.Log("Is Called");
         animator.SetTrigger("Hit");
         

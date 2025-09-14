@@ -206,4 +206,6 @@ public class GameManager : MonoBehaviour
         vfx.SetVector4("Color", GetColorByRarity(rarity));
         return vfxHolder;
     }
+
+    
 }

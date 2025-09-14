@@ -40,8 +40,8 @@ public class Damagable : MonoBehaviour
         if(HitFX) OnHitSpawn();
 
       
-        if (crit) OnDamageTaken(damage, new Color(247f/255f, 167f/255f, 5f/255f));
-        else OnDamageTaken(damage, Color.white);
+        if (crit) OnDamageTaken(damage, DamageTypeDisplay.Crit);
+        else OnDamageTaken(damage, DamageTypeDisplay.Standard);
 
         if (Health <= 0)
         {
@@ -108,32 +108,15 @@ public class Damagable : MonoBehaviour
         
     }
 
-    public virtual void OnDamageTaken(float damage, Color col)
+    public virtual void OnDamageTaken(float damage, DamageTypeDisplay damageType)
     {
-        Color finalColor = col;
-    
-
         if (DamageNumbers)
         {
-            SpawnDamageNumbers(damage, finalColor);
+            DamagePopupGenerator.Instance.CreateDamageNumber(damage, transform.position,damageType);
         }
     }
 
 
-    public virtual void SpawnDamageNumbers(float damage, Color Col)
-    {
-        
-        Vector3 offsetVector = spawnOffset.x * transform.right + spawnOffset.y * transform.up + spawnOffset.z * transform.forward;
-        GameObject number = Instantiate(DamageNumber,offsetVector+ transform.position+0.3f*(Camera.main.transform.position-transform.position).normalized, Quaternion.identity);
-        number.GetComponent<DamageNumber>().SetValue(damage, Col);
-    }
-
-    public virtual void SpawnDamageNumbers(float damage, Vector3 HitPos, Color Col)
-    {
-        Vector3 offsetVector = spawnOffset.x * transform.right + spawnOffset.y * transform.up + spawnOffset.z * transform.forward;
-        GameObject number = Instantiate(DamageNumber, offsetVector + transform.position + 0.3f * (Camera.main.transform.position - transform.position).normalized, Quaternion.identity);
-        number.GetComponent<DamageNumber>().SetValue(damage, Col);
-    }
 
 
     // Update is called once per frame

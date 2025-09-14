@@ -5,10 +5,10 @@ public class DamageableBrainLessEnemy : Damagable
 {
     
     EnemySoundSource soundSource;
-    public override void OnDamageTaken(float damage, Color col)
+    public override void OnDamageTaken(float damage, DamageTypeDisplay damageType)
     {
         soundSource.PlaySound(EnemySoundSource.SoundType.TakeDamageBladed, 2);
-        base.OnDamageTaken(damage, col);
+        base.OnDamageTaken(damage, damageType);
         if (DCM != null)
         {
             DCM.ChangeCrack(1 - Health / MaxHealth);
