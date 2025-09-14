@@ -18,10 +18,10 @@ public class WeaponSpawner : MonoBehaviour
         CreateWeapon(dataSO);
     }
 
-    public void CreateWeapon(WeaponDataSO data)
+    public void CreateWeapon(WeaponDataSO data, bool generateInstance = false)
     {
+        if (generateInstance) { weaponInstance = new WeaponInstance(data, 0, 0); Debug.Log("Weapon instance generated."); }
         AddWeaponVisual(data);
-
     }
     WeaponPickup WP;
     public void AddWeaponVisual(WeaponDataSO data)

@@ -43,7 +43,7 @@ public class WeaponPicker : MonoBehaviour
     {
         for(int j = 0;j < weaponSpawners.Length;j++) 
         {
-            weaponSpawners[j].CreateWeapon(pickedWeapons[j]);
+            weaponSpawners[j].CreateWeapon(data: pickedWeapons[j], generateInstance: true);
         }
     }
 }
