@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -24,9 +25,13 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
     public bool ReachedGoal => !agent.pathPending && agent.remainingDistance <= Mathf.Max(agent.stoppingDistance, desiredStopDistance);
     public Vector3 Destination => agent.hasPath ? agent.destination : lastIssuedDest;
 
-    public Vector3 Velocity => agent.velocity;
+    public Vector3 Velocity => getCorrectVelocity();
 
-    
+    public Vector3 getCorrectVelocity()
+    {
+        if (agent.isActiveAndEnabled) return agent.velocity;
+        else return rb.linearVelocity;
+    }
 
     void Awake()
     {
@@ -86,7 +91,7 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
     //Makes Path refresh a bit more chill
     bool CheckDestination(Vector3 p)
     {
-        return (Vector3.Distance(p, lastIssuedDest) > repathMoveThreshold) && agent.isActiveAndEnabled;
+        return (Vector3.Distance(p, lastIssuedDest) > repathMoveThreshold || agent.isPathStale) && agent.isActiveAndEnabled;
     }
 
     public void EnablePhysics(bool x)
@@ -100,6 +105,7 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
             agent.Warp(transform.position);
         }
         agent.enabled = !x;
+        MoveTo(lastIssuedDest);
     }
 
     public void GetKnockedBack(Vector3 force)
@@ -137,4 +143,8 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
         EnablePhysics(false);
     }
 
+    public void SetPosition(Vector3 dest)
+    {
+        agent.Warp(dest);
+    }
 }

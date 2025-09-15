@@ -1,14 +1,14 @@
+using UnityEditor.Animations;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 
 //Holds all references
-[RequireComponent(typeof(EAI_Blackboard))]
 [RequireComponent(typeof(Aimer))]
 [RequireComponent(typeof(EAI_Perception))]
-[RequireComponent(typeof(EAI_StateMachine))]
-[RequireComponent(typeof(EnemyAbilityRunner))]
 [RequireComponent (typeof(DamagableEnemy))]
+[RequireComponent (typeof(EAI_AnimatorController))]
 public class EnemyContext : MonoBehaviour
 {
     public EnemyTuningSO cfg;
@@ -21,15 +21,26 @@ public class EnemyContext : MonoBehaviour
     [HideInInspector] public EAI_Perception sense;
     [HideInInspector] public float nextBurstAt;
     [HideInInspector] public EAI_StateMachine stateMachine;
+    [HideInInspector] public Animator animator;
+    [HideInInspector] public AnimatorController anim;
 
     void Awake()
     {
-        bb = GetComponent<EAI_Blackboard>();
+        
+
+        bb = gameObject.AddComponent<EAI_Blackboard>();
+        stateMachine = gameObject.AddComponent<EAI_StateMachine>();
+        abilities = gameObject.AddComponent<EnemyAbilityRunner>();
+
         motor = GetComponent<IGoalMotor>();
+        if (motor == null) Debug.LogWarning("Enemy Does not have a motor attached, please attach one");
         aimer = GetComponent<Aimer>();
-        abilities = GetComponent<IAbilityRunner>();
         sense = GetComponent<EAI_Perception>();
-        stateMachine = GetComponent<EAI_StateMachine>();
+        anim = GetComponent<AnimatorController>();
+    }
+
+    private void Start()
+    {
     }
 
     private void Update()
@@ -38,11 +49,6 @@ public class EnemyContext : MonoBehaviour
 
     }
 
-
-    public void PostTrigger(EAI_TriggerID triggerID, IEAI_TriggerPayload? triggerPayload)
-    {
-
-    }
 
     public void HeardNoise(Vector3 pos)
     {

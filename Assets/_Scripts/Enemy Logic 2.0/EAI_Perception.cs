@@ -4,7 +4,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-[RequireComponent(typeof(EAI_Blackboard))]
 public class EAI_Perception : MonoBehaviour, IPerception
 {
     [SerializeField]

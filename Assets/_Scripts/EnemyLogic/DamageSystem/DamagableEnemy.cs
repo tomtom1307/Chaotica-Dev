@@ -88,6 +88,7 @@ public class DamagableEnemy : Damagable
         
         base.Start();
         ctx = GetComponent<EnemyContext>();
+        gameObject.layer = 8;
         if(GetComponent<HoverMotor>()) IsFloating = true;
         //brain = GetComponent<EnemyBrain>();
         soundSource = GetComponent<EnemySoundSource>();

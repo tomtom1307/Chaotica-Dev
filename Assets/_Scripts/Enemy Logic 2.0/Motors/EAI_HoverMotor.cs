@@ -399,4 +399,9 @@ public class HoverMotor : MonoBehaviour, IGoalMotor, IKnockbackable
     {
         _rb.AddForceAtPosition(force, point);
     }
+
+    public void SetPosition(Vector3 dest)
+    {
+        _rb.MovePosition(dest);
+    }
 }

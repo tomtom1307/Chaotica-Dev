@@ -32,4 +32,22 @@ namespace TRTools
 
 
     }
+
+    public static class Helpers
+    {
+        public static bool TryFind<T>(GameObject go, out T comp) where T : Component
+        {
+            if(go.TryGetComponent<T>(out comp))
+            {
+                return true;
+            }
+            comp = go.GetComponentInParent<T>();
+            if (comp != null) return true;
+            comp = go.GetComponentInChildren<T>();
+            if(comp != null) return true;
+            else return false;
+            
+        }
+ 
+    }
 }
