@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IKnockbackable
 {
     // ================================
     //            CONFIG
@@ -584,5 +584,15 @@ public class PlayerMovement : MonoBehaviour
     public void ResetYVelocity()
     {
         _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, 0, _rb.linearVelocity.z);
+    }
+
+    public void GetKnockedBack(Vector3 force)
+    {
+        _rb.AddForce(force);
+    }
+
+    public void GetKnockedBack(Vector3 force, Vector3 point)
+    {
+        _rb.AddForce(force);
     }
 }

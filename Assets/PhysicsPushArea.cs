@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
-public class PlayerPushArea : MonoBehaviour
+public class PhysicsPushArea : MonoBehaviour
 {
     public float Force;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -12,7 +12,9 @@ public class PlayerPushArea : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        Rigidbody _rb = other.gameObject.GetComponent<Rigidbody>();
-        if(_rb != null ) _rb.AddForce(Force * transform.forward);
+        if(TRTools.Helpers.TryFind<IKnockbackable>(other.gameObject, out IKnockbackable knockbackable))
+        {
+            knockbackable.GetKnockedBack(Force*Time.deltaTime*transform.forward);
+        }
     }
 }

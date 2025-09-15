@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class Knockbackable : MonoBehaviour, IKnockbackable
 {
+    public float Mult;
+
     public virtual void GetKnockedBack(Vector3 force)
     {
         if (TryGetComponent<Rigidbody>(out Rigidbody rb))
         {
-            rb.AddForce(force);
+            rb.AddForce(Mult * force);
         }
     }
 
@@ -14,7 +16,7 @@ public class Knockbackable : MonoBehaviour, IKnockbackable
     {
         if (TryGetComponent<Rigidbody>(out Rigidbody rb))
         {
-            rb.AddForceAtPosition(force, point);
+            rb.AddForceAtPosition(Mult * force, point);
         }
     }
 }

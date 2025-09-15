@@ -93,7 +93,7 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
     //Makes Path refresh a bit more chill
     bool CheckDestination(Vector3 p, out Vector3 TweakPos)
     {
-        bool ValidPos = TRTools.NavMeshUtil.TryGetNearestOnNavMesh(p, 5, out TweakPos);
+        bool ValidPos = TRTools.NavMeshUtil.TryGetNearestOnNavMesh(p, 15, out TweakPos);
         bool Optim = (Vector3.Distance(p, lastIssuedDest) > repathMoveThreshold || agent.isPathStale) && agent.isActiveAndEnabled;
         return ValidPos && Optim;
     }
@@ -136,7 +136,7 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
         rb.AddForce(force);
 
         yield return new WaitForFixedUpdate();
-        yield return new WaitUntil(() => rb.linearVelocity.magnitude < StillThreshold);
+        yield return new WaitUntil(() => rb.linearVelocity.magnitude < StillThreshold && TRTools.NavMeshUtil.IsOnNavmesh(transform.position,2));
         EnablePhysics(false);   
     }
 
@@ -148,7 +148,7 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
         rb.AddForceAtPosition(force, point);
 
         yield return new WaitForFixedUpdate();
-        yield return new WaitUntil(() => rb.linearVelocity.magnitude < StillThreshold);
+        yield return new WaitUntil(() => rb.linearVelocity.magnitude < StillThreshold && TRTools.NavMeshUtil.IsOnNavmesh(transform.position, 2));
         
         EnablePhysics(false);
     }

@@ -12,15 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513bf0c075791704ba0a735e5392966f, type: 3}
   m_Name: Test Enemy Config
   m_EditorClassIdentifier: 
-  preferredMin: 1.86
-  preferredMax: 2.29
+  preferredMin: 4
+  preferredMax: 4
   DefaultGroundAltitude: 2.61
   AltitudeFromPlayer: 0.97
   approachSpeed: 3.2
   orbitSpeedRad: 1.23
   strafeWeight: 0.1
   altitudeOffset: 0.73
-  primaryAbility: {fileID: 0}
+  BaseDamage: 0
+  Attacks:
+  - {fileID: 0}
+  Abilities: []
   SearchDuration: 10
   SearchRingRadius: 3
   searchLookSegments: 6

@@ -9,7 +9,7 @@ public class PlayerHealth : MonoBehaviour
 
     [SerializeField ]private float lerpspeed1 = 0.01f;
     [SerializeField ]private float lerpspeed2 = 0.01f;
-
+    public float KnockBackOnCollisionMult;
     [SerializeField] float health;
 
     float maxHealth { get { return stats.GetStat(StatType.MaxHealth) * (1 + 0.01f * stats.GetStat(StatType.MaxHealthIncrease)); } }
@@ -59,7 +59,7 @@ public class PlayerHealth : MonoBehaviour
     }
 
     //Take damage with UI handling
-    public void TakeDamage(float Amount, EnemyBrain EB = null, bool paryable = false, bool blockable = false)
+    public void TakeDamage(float Amount, DamagableEnemy DE = null, bool paryable = false, bool blockable = false)
     {
         switch (d_state)
         {
@@ -78,7 +78,7 @@ public class PlayerHealth : MonoBehaviour
             }
             case (DamageState.Parrying):
             {
-                if(EB == null || !paryable)
+                if(DE == null || !paryable)
                 {
                     d_state = DamageState.Normal;
                     TakeDamage(Amount);
@@ -86,7 +86,7 @@ public class PlayerHealth : MonoBehaviour
                 }
                 else if (paryable)
                 {
-                    Parry(EB);
+                    Parry(DE);
                 }
                 break;
             }
@@ -119,11 +119,11 @@ public class PlayerHealth : MonoBehaviour
 
     public GameObject ParryVFX;
 
-    public void Parry(EnemyBrain EB)
+    public void Parry(DamagableEnemy DE)
     {
         PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.Parry);
         Instantiate(ParryVFX, transform);
-        EB.Stun();
+        DE.Stun();
     }
 
     public void UpdateHealthBar() {
@@ -131,7 +131,13 @@ public class PlayerHealth : MonoBehaviour
         if(UIHealthBarImage.fillAmount != UIHealthEaseBarImage.fillAmount) { UIHealthEaseBarImage.fillAmount = Mathf.Lerp(UIHealthEaseBarImage.fillAmount, health/maxHealth, lerpspeed2); }
     }
 
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.TryGetComponent<IKnockbackable>(out IKnockbackable knockbackable))
+        {
+            knockbackable.GetKnockedBack(KnockBackOnCollisionMult * -collision.relativeVelocity);
+        }
+    }
     public void Die()
     {
         Debug.Log("You Have Died!");

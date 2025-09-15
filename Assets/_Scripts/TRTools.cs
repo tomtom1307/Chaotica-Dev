@@ -36,7 +36,7 @@ namespace TRTools
 
     public static class Helpers
     {
-        public static bool TryFind<T>(GameObject go, out T comp) where T : Component
+        public static bool TryFind<T>(GameObject go, out T comp) where T : class
         {
             if(go.TryGetComponent<T>(out comp))
             {
@@ -69,6 +69,19 @@ namespace TRTools
 
             nearest = worldPos;
             return false;
+        }
+
+
+        public static bool IsOnNavmesh(Vector3 pos ,float Range)
+        {
+            if (TryGetNearestOnNavMesh(pos, Range, out Vector3 near))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 

@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 2413880509124694275}
   - component: {fileID: 8692059697031382493}
   - component: {fileID: 8531710972458571460}
+  - component: {fileID: 5000778099670733914}
+  - component: {fileID: 8249277729333443232}
   m_Layer: 8
   m_Name: WoodCrate
   m_TagString: Untagged
@@ -137,7 +139,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &2413880509124694275
@@ -163,6 +165,9 @@ MonoBehaviour:
   spawnOffset: {x: 0, y: 0, z: 0}
   model: {fileID: 1348341369236309344}
   ded: 0
+  targetPos: {fileID: 0}
+  KnockBackOnCollision: 1
+  KnockBackOnCollisionMult: 0.5
 --- !u!82 &8692059697031382493
 AudioSource:
   m_ObjectHideFlags: 0
@@ -281,3 +286,29 @@ MonoBehaviour:
   - name: CrateDestroy
     DefaultVolume: 1
     clips: []
+--- !u!114 &5000778099670733914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348341369236309344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f6a0da9cacfef47b25cdc9d2fb2a4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Mult: 1.2
+--- !u!114 &8249277729333443232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348341369236309344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f6a0da9cacfef47b25cdc9d2fb2a4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Mult: 1

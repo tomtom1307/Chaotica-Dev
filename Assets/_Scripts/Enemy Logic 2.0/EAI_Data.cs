@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
@@ -21,7 +22,7 @@ public class EnemyTuningSO : ScriptableObject
 
     [Header("Combat")]
     public float BaseDamage;
-    public List<EAI_AttackSO> Attacks;
+    public List<EAI_AttackSO_Base> Attacks;
     public List<EAI_AbilitySO> Abilities;
 
     [Header("Detection")]
@@ -47,25 +48,7 @@ public abstract class EAI_AbilitySO : ScriptableObject
     public abstract void Exit(GameObject owner, in AbilityContext ctx);
 }
 
-public class EAI_AttackSO : EAI_AbilitySO
-{
-    public float Damage;
 
-    public override void Enter(GameObject owner, in AbilityContext ctx)
-    {
-        
-    }
-
-    public override void Execute(GameObject owner, in AbilityContext ctx)
-    {
-        
-    }
-
-    public override void Exit(GameObject owner, in AbilityContext ctx)
-    {
-        
-    }
-}
 
 
 public struct AbilityContext

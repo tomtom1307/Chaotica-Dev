@@ -4,20 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EnemyAttackHandler : MonoBehaviour
+public class EAI_AttackHandler : MonoBehaviour
 {
-    [HideInInspector] public EnemyBrain brain;
-    [HideInInspector] public EnemyAttack currentAttack;
+    EnemyContext ctx;
+    [HideInInspector] public EAI_AttackSO_Base currentAttack;
+    public List<colliderGroup> ColliderGroups;
     [HideInInspector] public EnemyVFXHandler vfxHandler;
     List<bool> groupDidDamage;
     public bool attacking;
-    
+
     Rigidbody rb;
     Transform player;
     Rigidbody _playerRb;
-
-    float AttackTimer;
-
 
     private void Start()
     {
@@ -26,95 +24,53 @@ public class EnemyAttackHandler : MonoBehaviour
     }
 
 
-    public void Init(EnemyBrain brain)
+    public void Init(EnemyContext ctx)
     {
-        this.brain = brain;
+        this.ctx = ctx;
         player = GameManager.instance.player;
         _playerRb = player.GetComponent<Rigidbody>();
         vfxHandler = GetComponentInChildren<EnemyVFXHandler>();
-    }
-
-
-    public void EnterAttack(EnemyAttack EA)
-    {
-        transform.rotation.SetLookRotation(player.position, Vector3.up);
-        if (attacking || AttackTimer <= brain.TimeBetweenAttacks) { return; }
-        currentAttack = EA;
-        
-        attacking = true;
-        brain.navMesh.updateRotation = false;
-        if (currentAttack.attackData.rootMotion)
-        {
-            brain.navMesh.isStopped = true;
-            
-            //brain.navMesh.speed = 0;
-            //brain.navMesh.enabled = false;
-        }
-        else Debug.Log("rootmotion in data is set to false.");
-            brain.animator.SetInteger("AT", currentAttack.attackAnimation);
-        currentAttack.attackData.EnterAttack(this);
-        if(currentAttack.attackData.doCollider) groupDidDamage = Enumerable.Repeat(false, currentAttack.colliderGroups.Count).ToList();
-
-        brain.animator.SetBool("Attacking", attacking);
-    }
-
-
-
-    private void OnAnimatorMove()
-    {
-        if (!enabled) return;
-        Vector3 newPos = transform.position + brain.animator.deltaPosition;
-        transform.position = newPos;
     }
 
     Vector3 TargetPos;
 
     private void Update()
     {
-        if (attacking)
-        {
-            Vector3 direction = player.position - transform.position;
-            direction.y = 0f; // Ignore vertical difference
-            transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
-            currentAttack.attackData.AttackUpdate(this);
-        }
-        else
-        {
-            AttackTimer += Time.deltaTime;
-        }
-        TargetPos = Vector3.Lerp(TargetPos, player.position, Time.deltaTime * brain.Accuracy);
-        AimDirection = - TRTools.VecOp.Direction(transform.position, TargetPos);
+
+    }
+
+    public void EnterAttack()
+    {
 
     }
 
     public void ExitAttack()
     {
-        
-        if (currentAttack.attackData.rootMotion)
-        {
-            brain.navMesh.isStopped = false;
-        }
-        brain.navMesh.updateRotation = true;
-        brain.animator.SetInteger("AT", 0);
-        brain.animator.SetBool("Attacking", false);
-        Invoke(nameof(AttackCooldownExit), Mathf.Clamp(currentAttack.attackData.AttackCooldown, 0.1f, 10000000));
-        currentAttack.attackData.ExitAttack(this);
+
     }
 
     private void AttackCooldownExit()
     {
-        attacking = false;
+        
     }
 
-    public void DamagePlayer(PlayerHealth PH)
+    private void DamagePlayer(PlayerHealth ph)
     {
-        currentAttack.attackData.DamageLogic(PH, this);
-        //PH.TakeDamage(currentAttack.attackData.damageValue, brain, currentAttack.attackData.Parryable, currentAttack.attackData.Parryable);
+        float Damage = CalculateDamage();
+        ph.TakeDamage(Damage, ctx.Health, currentAttack.Paryable, currentAttack.Blockable);
     }
+
+    public float CalculateDamage()
+    {
+        return currentAttack.Damage * ctx.cfg.BaseDamage;
+    }
+
+
     [HideInInspector] public Vector3 AimDirection;
+    /*
     public void DoRayCast()
     {
-        
+
         RaycastHit hit;
 
         Debug.DrawRay(transform.position, AimDirection, Color.yellow, 5);
@@ -142,31 +98,37 @@ public class EnemyAttackHandler : MonoBehaviour
         }
         else Debug.LogError("You must set the attack SO DoCollider bool to true to initialize the necesary lists.");
 
-    }
+    }*/
 
     public void RecieveColliderHitCallback(PlayerHealth ph, ColliderDetector col)
     {
         int count = 0;
-        foreach (colliderGroup colGroup in currentAttack.colliderGroups)
+        foreach (colliderGroup colGroup in ColliderGroups)
         {
             if (colGroup.colliderList.Contains(col) && !groupDidDamage[count])
             {
                 DamagePlayer(ph); // Damage player
                 groupDidDamage[count] = true; // Count group as having done damage
             }
-                count++;
+            count++;
         }
     }
+    
+
     public void DisableColliderGroup(int colliderGroupIndex)
     {
         if (currentAttack == null) return;
-        if (currentAttack.colliderGroups.Count < colliderGroupIndex + 1) return;
-        List<ColliderDetector> colliderGroupList = currentAttack.colliderGroups[colliderGroupIndex].colliderList;
-        foreach(ColliderDetector col in colliderGroupList)
+        if (ColliderGroups.Count < colliderGroupIndex + 1) return;
+        List<ColliderDetector> colliderGroupList = ColliderGroups[colliderGroupIndex].colliderList;
+        foreach (ColliderDetector col in colliderGroupList)
         {
             col.DisableCollider();
             col.OnDetectCallback -= RecieveColliderHitCallback;
         }
+    }
+
+    public void DisableAllColliderGroup()
+    {
 
     }
 
@@ -175,12 +137,12 @@ public class EnemyAttackHandler : MonoBehaviour
     {
         yield return new WaitForSeconds(detectionTime);
         col.DisableCollider();
-        col.OnDetectCallback -= RecieveColliderHitCallback; 
+        col.OnDetectCallback -= RecieveColliderHitCallback;
     }
 
     public void SpawnVFX(int index)
     {
-        
+
         if (vfxHandler == null)
         {
             Debug.LogError("There is no VFXHandler on this object!");
@@ -198,17 +160,19 @@ public class EnemyAttackHandler : MonoBehaviour
             VFX = Instantiate(currentAttack.VFXs[index].Prefab, vfxHandler.transform.position, vfxHandler.transform.rotation);
             VFX.transform.localScale = vfxHandler.transform.localScale;
         }
-            
-        
+
+
         vfxHandler.SpawnedVFX.Add(VFX);
     }
 
     public void DestroyVFX()
     {
-        foreach(GameObject vfx in vfxHandler.SpawnedVFX)
+        foreach (GameObject vfx in vfxHandler.SpawnedVFX)
         {
             vfxHandler.SpawnedVFX.Remove(vfx);
             Destroy(vfx);
         }
     }
 }
+
+

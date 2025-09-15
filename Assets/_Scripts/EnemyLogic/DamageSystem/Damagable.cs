@@ -123,7 +123,7 @@ public class Damagable : MonoBehaviour
     {
         if(collision.collider.TryGetComponent<IKnockbackable>(out IKnockbackable knockbackable))
         {
-            knockbackable.GetKnockedBack(KnockBackOnCollisionMult*-collision.impulse / Time.fixedDeltaTime);
+            knockbackable.GetKnockedBack(KnockBackOnCollisionMult*-collision.relativeVelocity);
         }
     }
 

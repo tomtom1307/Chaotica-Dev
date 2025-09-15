@@ -13,17 +13,3 @@ public class EnemyAttack
 
 }
 
-[Serializable]
-public struct colliderGroup
-{
-    [SerializeField] private string Name;
-    [SerializeField] public List<ColliderDetector> colliderList;
-}
-
-[Serializable]
-public struct EnemyVFXs
-{
-    [SerializeField] public string Name;
-    [SerializeField] public GameObject Prefab;
-    [SerializeField] public bool isParentedToHolder;
-}

@@ -105,6 +105,11 @@ public class DamagableEnemy : Damagable
         base.Update();
     }
 
+    public void Stun()
+    {
+        //TODO Implement stun logic
+        Die();
+    }
     
     public GameObject GetClosestEnemy(float Radius)
     {
