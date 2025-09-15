@@ -21,22 +21,26 @@ public class EnemyContext : MonoBehaviour
     [HideInInspector] public EAI_Perception sense;
     [HideInInspector] public float nextBurstAt;
     [HideInInspector] public EAI_StateMachine stateMachine;
-    [HideInInspector] public Animator animator;
-    [HideInInspector] public AnimatorController anim;
+    [HideInInspector] public EAI_AnimatorController anim;
+    [HideInInspector] public DamagableEnemy Health;
 
     void Awake()
     {
         
 
         bb = gameObject.AddComponent<EAI_Blackboard>();
-        stateMachine = gameObject.AddComponent<EAI_StateMachine>();
+        
         abilities = gameObject.AddComponent<EnemyAbilityRunner>();
 
         motor = GetComponent<IGoalMotor>();
         if (motor == null) Debug.LogWarning("Enemy Does not have a motor attached, please attach one");
         aimer = GetComponent<Aimer>();
         sense = GetComponent<EAI_Perception>();
-        anim = GetComponent<AnimatorController>();
+        sense.Init();
+        anim = GetComponent<EAI_AnimatorController>();
+        Health = GetComponent<DamagableEnemy>();
+
+        stateMachine = gameObject.AddComponent<EAI_StateMachine>();
     }
 
     private void Start()

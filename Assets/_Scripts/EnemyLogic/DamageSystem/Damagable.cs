@@ -17,7 +17,8 @@ public class Damagable : MonoBehaviour
     public bool ded;
     public Transform targetPos;
     GenericSoundManager soundManager;
-
+    public bool KnockBackOnCollision = true;
+    public float KnockBackOnCollisionMult = 0.5f;
     public Transform GetTargetPos()
     {
         if (targetPos == null) return this.transform;
@@ -118,7 +119,13 @@ public class Damagable : MonoBehaviour
     }
 
 
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.collider.TryGetComponent<IKnockbackable>(out IKnockbackable knockbackable))
+        {
+            knockbackable.GetKnockedBack(KnockBackOnCollisionMult*-collision.impulse / Time.fixedDeltaTime);
+        }
+    }
 
     // Update is called once per frame
     protected virtual void Update()

@@ -39,6 +39,7 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
         agent.updateRotation = controlRotation;
         agent.autoBraking = true;
         agent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
+        agent.avoidancePriority = Random.Range(0, 100);
     }
 
     Rigidbody rb;
@@ -46,6 +47,7 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
     {
         agent.updateRotation = controlRotation;
         rb = GetComponent<Rigidbody>();
+        rb.interpolation = RigidbodyInterpolation.None;
     }
 
     void Update()
@@ -55,7 +57,7 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
 
     public void MoveTo(Vector3 dest, float stopDistance = 0.25f, float? altitude = null)
     {
-        if (CheckDestination(dest)) 
+        if (CheckDestination(dest, out dest)) 
         {
             if (agent.SetDestination(dest))
             {
@@ -89,9 +91,11 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
     public void SetAltitude(float height, Transform relTo) {}
 
     //Makes Path refresh a bit more chill
-    bool CheckDestination(Vector3 p)
+    bool CheckDestination(Vector3 p, out Vector3 TweakPos)
     {
-        return (Vector3.Distance(p, lastIssuedDest) > repathMoveThreshold || agent.isPathStale) && agent.isActiveAndEnabled;
+        bool ValidPos = TRTools.NavMeshUtil.TryGetNearestOnNavMesh(p, 5, out TweakPos);
+        bool Optim = (Vector3.Distance(p, lastIssuedDest) > repathMoveThreshold || agent.isPathStale) && agent.isActiveAndEnabled;
+        return ValidPos && Optim;
     }
 
     public void EnablePhysics(bool x)
@@ -100,9 +104,15 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
         rb.useGravity = x;
         rb.isKinematic = !x;
         rb.freezeRotation = x;
+        
         if (!x)
         {
             agent.Warp(transform.position);
+            rb.interpolation = RigidbodyInterpolation.None;
+        }
+        else
+        {
+            rb.interpolation = RigidbodyInterpolation.Interpolate;
         }
         agent.enabled = !x;
         MoveTo(lastIssuedDest);

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace TRTools
 {
@@ -50,4 +51,25 @@ namespace TRTools
         }
  
     }
+
+    public static class NavMeshUtil
+    {
+        /// Returns the closest point *on the NavMesh* near `worldPos`.
+        public static bool TryGetNearestOnNavMesh(
+            Vector3 worldPos,
+            float maxSearchDistance,
+            out Vector3 nearest,
+            int areaMask = NavMesh.AllAreas)
+        {
+            if (NavMesh.SamplePosition(worldPos, out var hit, maxSearchDistance, areaMask))
+            {
+                nearest = hit.position; // already on-mesh, with proper Y
+                return true;
+            }
+
+            nearest = worldPos;
+            return false;
+        }
+    }
+
 }

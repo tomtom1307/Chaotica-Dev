@@ -2,6 +2,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.UIElements;
 
 public class EAI_Perception : MonoBehaviour, IPerception
@@ -27,7 +28,16 @@ public class EAI_Perception : MonoBehaviour, IPerception
     EAI_Blackboard bb;
     float t, lastSeenTime;
 
-    void Awake() { bb = GetComponent<EAI_Blackboard>(); }
+    void Awake() { }
+
+    public void Init()
+    {
+        bb = GetComponent<EAI_Blackboard>();
+    }
+    private void Start()
+    {
+        
+    }
 
     void Update()
     {
@@ -38,7 +48,7 @@ public class EAI_Perception : MonoBehaviour, IPerception
         // Get target if missing
         if (!bb.target)
         {
-            var p = GameObject.FindGameObjectWithTag(playerTag);
+            var p = GameManager.instance.player;
             if (p) bb.target = p.transform;
         }
         if (!bb.target) return;

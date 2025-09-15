@@ -12,7 +12,7 @@ public class DamagableEnemy : Damagable
     public float InstantAgro = 5;
     [Tooltip("If enemy is flying how much downforce is applied on hit")]
     public float DropForce;
-
+    
     bool IsFloating = false;
     
 
@@ -20,6 +20,7 @@ public class DamagableEnemy : Damagable
     [HideInInspector] public Vector3 moveDirection;
     public override void OnDamageTaken(float damage, DamageTypeDisplay damageType)
     {
+        ctx.anim.TriggerHit();
         soundSource.PlaySound(EnemySoundSource.SoundType.TakeDamageBladed, 2);
         base.OnDamageTaken(damage, damageType);
         if(ctx.bb.distanceToTarget < InstantAgro)
