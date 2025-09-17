@@ -1,8 +1,11 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace TRTools
 {
+
     public static class VecOp
     {
 
@@ -23,9 +26,9 @@ namespace TRTools
 
         public static Vector3 RandomDir(Vector3 A, Vector3 B)
         {
-            float X = Random.Range(A.x, B.x);
-            float Y = Random.Range(A.y, B.y);
-            float Z = Random.Range(A.z, B.z);
+            float X = UnityEngine.Random.Range(A.x, B.x);
+            float Y = UnityEngine.Random.Range(A.y, B.y);
+            float Z = UnityEngine.Random.Range(A.z, B.z);
 
             return new Vector3(X, Y, Z).normalized;
         }
@@ -33,6 +36,16 @@ namespace TRTools
 
 
     }
+
+    public static class floatOP
+    {
+        public static bool InRange(float x, float min, float max)
+        {
+            if(x>min && x< max) return true;
+            else return false;
+        }
+    }
+
 
     public static class Helpers
     {
@@ -49,7 +62,6 @@ namespace TRTools
             else return false;
             
         }
- 
     }
 
     public static class NavMeshUtil
@@ -84,5 +96,39 @@ namespace TRTools
             }
         }
     }
+
+
+    public static class Weighted_Distribution
+    {
+
+        //Example use -------- var Chosen = Sample_Weighted_Distribution<AbilityEntry>(ValidAttacks, e => e.Weight);
+        public static T Sample_Weighted_Distribution<T>(IList<T> items, Func<T, float> weight, System.Random rng = null)
+        {
+            if (items == null || items.Count == 0) throw new ArgumentException("Empty list");
+
+            float total = 0;
+            for (int i = 0; i < items.Count; i++)
+            {
+                total += Mathf.Max(0, weight(items[i])); //Clamps negatives
+            }
+
+            if(total <= 0)
+                return items[UnityEngine.Random.Range(0, items.Count-1)];
+
+            //Generate RN
+            double r = (rng != null ? rng.NextDouble() : UnityEngine.Random.value) * total;
+
+            //Evaluate
+            for (int i = 0; i < items.Count; i++)
+            {
+                r -= Mathf.Max(0f, weight(items[i]));
+                if (r <= 0.0) return items[i];
+            }
+
+            return items[items.Count - 1]; //Default option
+
+        }
+    }
+
 
 }

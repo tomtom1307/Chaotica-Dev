@@ -3,18 +3,20 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EAI_Attack_Melee", menuName = "AI/Attacks/Melee")]
 public class EAI_Attack_Melee : EAI_AttackSO_Base
 {
-    public override void Enter(GameObject owner, in AbilityContext ctx)
+
+
+    public override void Enter(EnemyContext EC, in AbilityContext ctx)
     {
-        base.Enter(owner, ctx);
+        base.Enter(EC, ctx);
     }
 
-    public override void Execute(GameObject owner, in AbilityContext ctx)
+    public override void Execute(EnemyContext EC, in AbilityContext ctx)
     {
-        base.Execute(owner, ctx);
+        base.Execute(EC, ctx);
     }
 
-    public override void Exit(GameObject owner, in AbilityContext ctx)
+    public override void Exit(EnemyContext EC, in AbilityContext ctx)
     {
-        base.Exit(owner, ctx);
+        base.Exit(EC, ctx);
     }
 }

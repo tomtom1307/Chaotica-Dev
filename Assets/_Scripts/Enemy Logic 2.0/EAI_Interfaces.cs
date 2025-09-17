@@ -25,13 +25,14 @@ public interface IGoalMotor : IMotor
     // Path test: true for hover (always can), or NavMesh.CalculatePath for ground.
     bool CanPathTo(Vector3 dest);
 
+
     void SetPosition(Vector3 dest);
 }
 
 public interface IAbilityRunner
 {
-    bool CanUse(EAI_AbilitySO ability);
-    void Use(EAI_AbilitySO ability, in AbilityContext ctx);
+    bool CanUse(AbilityEntry ability);
+    void Use(AbilityEntry ability, in AbilityContext ctx);
 }
 
 public interface IPerception

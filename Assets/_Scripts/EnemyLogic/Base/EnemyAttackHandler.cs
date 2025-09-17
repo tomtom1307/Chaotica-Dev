@@ -22,7 +22,6 @@ public class EnemyAttackHandler : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-
     }
 
 

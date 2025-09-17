@@ -12,17 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513bf0c075791704ba0a735e5392966f, type: 3}
   m_Name: Test Enemy Config
   m_EditorClassIdentifier: 
-  preferredMin: 4
-  preferredMax: 4
+  preferredMin: 1
+  preferredMax: 1.4
   DefaultGroundAltitude: 2.61
   AltitudeFromPlayer: 0.97
   approachSpeed: 3.2
   orbitSpeedRad: 1.23
   strafeWeight: 0.1
   altitudeOffset: 0.73
-  BaseDamage: 0
+  BaseDamage: 5
   Attacks:
-  - {fileID: 0}
+  - Name: SCHLAP
+    Ability: {fileID: 11400000, guid: 2e8e0d2ed1c625544b20e88f38165921, type: 2}
+    Enabled: 1
+    Weight: 5
+    MinRange: 1
+    MaxRange: 2
+    los: 1
+    CooldownOverride: 0
+    Tag: 
+    Animation_Index: 0
+    Rootmotion: 1
   Abilities: []
   SearchDuration: 10
   SearchRingRadius: 3

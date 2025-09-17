@@ -5,6 +5,7 @@ public class Aimer : MonoBehaviour
     public bool flatRotation = true;
     public bool usePhysics = true;
     public float turnSpeedDegPerSec = 360f;
+    float defaultSpeed;
 
     Rigidbody rb;
 
@@ -20,6 +21,7 @@ public class Aimer : MonoBehaviour
             }
             else rb.freezeRotation = true;
         }
+        defaultSpeed = turnSpeedDegPerSec;
     }
 
     // call this from your other script; pass dt
@@ -46,6 +48,17 @@ public class Aimer : MonoBehaviour
             rb.MoveRotation(Quaternion.RotateTowards(rb.rotation, target, step));
         else
             transform.rotation = Quaternion.RotateTowards(transform.rotation, target, step);
+    }
+
+    public void AimAt(Vector3 worldPoint, float RotSpeed)
+    {
+        turnSpeedDegPerSec = RotSpeed;
+        AimAt(worldPoint);
+    }
+
+    public void ResetSpeedToDefault()
+    {
+        turnSpeedDegPerSec = defaultSpeed;
     }
 
     public void AimSnap(Vector3 worldPoint)

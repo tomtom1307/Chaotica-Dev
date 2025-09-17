@@ -1,8 +1,15 @@
+using NUnit.Framework;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using static TRTools.floatOP;
+using static TRTools.Weighted_Distribution;
 
 public class EnemyAttackState : BaseState
 {
-    bool _locked;
+    public EAI_AttackSO_Base _currentAttack;
+    public AbilityContext _currentAbilityCtx;
+
     public EnemyAttackState(EnemyContext ctx) : base(ctx)
     {
 
@@ -11,23 +18,71 @@ public class EnemyAttackState : BaseState
     public override void OnEnter()
     {
         base.OnEnter();
-        _locked = true;
-    }
 
-    public override void OnExit()
-    {
-        base.OnExit();
+        c.bb.attack_State = EAI_Blackboard.AttackState.attacking;
+        AbilityEntry abilityEntry = DetermineAttack();
+        _currentAttack = abilityEntry.Ability as EAI_AttackSO_Base;
+        if( _currentAttack == null ) { c.bb.attack_State = EAI_Blackboard.AttackState.ready; c.attackHandler.AttackCooldown(0.5f); }
+        
+        //Handles animation and detection priming
+        c.attackHandler.HandleAttackEnter( abilityEntry );
+        c.aimer.AimAt(c.bb.target.position);
+        _currentAbilityCtx = new AbilityContext();
+        _currentAttack.Enter(c, _currentAbilityCtx);
+        
     }
 
     public override void Tick()
     {
+     
         base.Tick();
+        if (_currentAttack != null)
+        {
+            _currentAttack.Tick(c, _currentAbilityCtx);
+        }
     }
 
-
-    public override bool CanBeInterruptedBy(IState next)
+    public override void OnExit()
     {
-        return !_locked;
+        c.anim.ApplyRootMotion(false);
+        base.OnExit();
     }
+
+    public AbilityEntry DetermineAttack()
+    {
+        AbilityEntry Default = new AbilityEntry(); //Gives empty AbilityEntry
+        Default.Ability = null;
+
+        List<AbilityEntry> attacks = new List<AbilityEntry>(c.cfg.Attacks);
+        List<AbilityEntry> ValidAttacks = new List<AbilityEntry>();
+        if (attacks.Count > 0)
+        {
+            foreach (var attack in attacks)
+            {
+                if (c.attackHandler.CanDoAttack(attack))
+                {
+                    ValidAttacks.Add(attack);
+                }
+
+            }
+            if(ValidAttacks.Count > 0) {
+                var Chosen = Sample_Weighted_Distribution<AbilityEntry>(ValidAttacks, e => e.Weight);
+                return Chosen;
+            }
+            else
+            {
+                Debug.LogError("Enemy tried to attack but has no Attacks");
+                return Default; //Gives empty AbilityEntry
+            }
+        }
+        else
+        {
+            Debug.LogError("Enemy tried to attack but has no Attacks");
+            return Default;
+        }
+    }
+
+
+
 
 }

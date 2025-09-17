@@ -5,10 +5,10 @@ using System;
 public class ColliderDetector : MonoBehaviour
 {
 
-    public Collider detectionCollider; 
+    [HideInInspector]public Collider detectionCollider; 
 
     public Action<PlayerHealth, ColliderDetector> OnDetectCallback;
-    public bool playerDetected = false; 
+    [HideInInspector] public bool playerDetected = false; 
     private PlayerHealth ph;
 
     private void Start()

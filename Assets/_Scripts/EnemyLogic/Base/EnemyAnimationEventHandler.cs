@@ -4,7 +4,7 @@ using UnityEngine.Rendering;
 public class EnemyAnimationEventHandler : MonoBehaviour
 {
     public EnemyAttackHandler attackHandler;
-
+    
     //THIS SCRIPT EXISTS TO SIMPLIFY THE UNITY UI WHEN DOING ANIMATION EVENTS
     EnemySoundSource soundSource;
     private void Start()
@@ -48,4 +48,7 @@ public class EnemyAnimationEventHandler : MonoBehaviour
         attackHandler.SpawnVFX(i);
     }
     public void DestroyVFX() => attackHandler.DestroyVFX();
+
+    
+
 }

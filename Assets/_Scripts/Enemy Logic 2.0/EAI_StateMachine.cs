@@ -154,9 +154,7 @@ public abstract class BaseState : IState
     public void AddTransition(Func<bool> when, IState to)
     {
         var Test = (when, to);
-        Debug.Log(Test);
         _transitions.Add((when, to));
-        Debug.Log("Transition Added" + to.Name + _transitions.Count);
 
     }
 

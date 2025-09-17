@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class EAI_AnimatorController : MonoBehaviour
 {
@@ -6,7 +7,7 @@ public class EAI_AnimatorController : MonoBehaviour
     public float SpeedDamp = 0.12f; //For smoother blendtree 
     [HideInInspector] public Animator animator;
     [HideInInspector] public EnemyContext ctx;
-
+    
 
     // Animator param hashes
     static readonly int HashMoveBlend = Animator.StringToHash("MoveBlend");
@@ -21,8 +22,16 @@ public class EAI_AnimatorController : MonoBehaviour
             Debug.LogWarning("Enemy does not have an animator please place one");
         }
         ctx =GetComponent<EnemyContext>();
+        
+    }
+
+    EAI_AnimationEventHandler eventHandler;
+    private void Start()
+    {
+        eventHandler = GetComponentInChildren<EAI_AnimationEventHandler>();
         ApplyRootMotion(false);
     }
+
 
     private void Update()
     {
@@ -54,8 +63,20 @@ public class EAI_AnimatorController : MonoBehaviour
 
     public void ApplyRootMotion(bool x)
     {
-        animator.applyRootMotion = x;
+        eventHandler.ApplyRootMotion = x;
     }
+
+    public void PlayAttack(int AttackInt)
+    {
+        animator.SetBool("Attack", true);
+        animator.SetInteger("AttackInt", AttackInt);
+    }
+
+    public void ResetAttackAnim()
+    {
+        animator.SetBool("Attack", false);
+    }
+
 
     // If you ever enable root motion, push it through your motor here
     void OnAnimatorMove()

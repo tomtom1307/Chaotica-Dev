@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static TRTools.floatOP;
 
 public class EAI_AttackHandler : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class EAI_AttackHandler : MonoBehaviour
     [HideInInspector] public EAI_AttackSO_Base currentAttack;
     public List<colliderGroup> ColliderGroups;
     [HideInInspector] public EnemyVFXHandler vfxHandler;
-    List<bool> groupDidDamage;
+    [HideInInspector] public List<bool> groupDidDamage;
     public bool attacking;
 
     Rigidbody rb;
@@ -20,7 +21,7 @@ public class EAI_AttackHandler : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-
+        ctx = GetComponent<EnemyContext>(); 
     }
 
 
@@ -36,23 +37,15 @@ public class EAI_AttackHandler : MonoBehaviour
 
     private void Update()
     {
+        ctx.bb.AttackAvailable = AttackAvailable();
 
-    }
-
-    public void EnterAttack()
-    {
-
-    }
-
-    public void ExitAttack()
-    {
-
-    }
-
-    private void AttackCooldownExit()
-    {
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            AttackExit();
+        }
         
     }
+
 
     private void DamagePlayer(PlayerHealth ph)
     {
@@ -62,7 +55,33 @@ public class EAI_AttackHandler : MonoBehaviour
 
     public float CalculateDamage()
     {
-        return currentAttack.Damage * ctx.cfg.BaseDamage;
+        return currentAttack.Damage * ctx.cfg.BaseDamage * 0.01f;
+    }
+
+    public void HandleAttackEnter(AbilityEntry abilityEntry)
+    {
+        ctx.anim.PlayAttack(abilityEntry.Animation_Index);
+        ctx.anim.ApplyRootMotion(abilityEntry.Rootmotion);
+        ctx.attackHandler.InitColliders();
+        currentAttack = abilityEntry.Ability as EAI_AttackSO_Base;
+    }
+
+
+    public void InitColliders()
+    {
+        groupDidDamage = Enumerable.Repeat(false, ColliderGroups.Count).ToList();
+    }
+    public void AttackExit()
+    {
+        StartCoroutine(AttackCooldown(0.5f));
+        ctx.anim.ResetAttackAnim();
+    }
+
+    public IEnumerator AttackCooldown(float length)
+    {
+        ctx.bb.attack_State = EAI_Blackboard.AttackState.cooldown;
+        yield return new WaitForSeconds(length);
+        ctx.bb.attack_State = EAI_Blackboard.AttackState.ready;
     }
 
 
@@ -100,6 +119,18 @@ public class EAI_AttackHandler : MonoBehaviour
 
     }*/
 
+    public void DoColliderCheck(int colliderGroupIndex)
+    {
+        List<ColliderDetector> colliderGroupList = ctx.attackHandler.ColliderGroups[colliderGroupIndex].colliderList;
+        foreach (ColliderDetector col in colliderGroupList)
+        {
+            col.TriggerDetection();
+            col.OnDetectCallback += RecieveColliderHitCallback;
+        }
+
+    }
+
+
     public void RecieveColliderHitCallback(PlayerHealth ph, ColliderDetector col)
     {
         int count = 0;
@@ -117,7 +148,6 @@ public class EAI_AttackHandler : MonoBehaviour
 
     public void DisableColliderGroup(int colliderGroupIndex)
     {
-        if (currentAttack == null) return;
         if (ColliderGroups.Count < colliderGroupIndex + 1) return;
         List<ColliderDetector> colliderGroupList = ColliderGroups[colliderGroupIndex].colliderList;
         foreach (ColliderDetector col in colliderGroupList)
@@ -129,7 +159,10 @@ public class EAI_AttackHandler : MonoBehaviour
 
     public void DisableAllColliderGroup()
     {
-
+        for (int i = 0; i < ColliderGroups.Count; i++)
+        {
+            DisableColliderGroup(i);
+        }
     }
 
     // Remove or keep?
@@ -172,6 +205,25 @@ public class EAI_AttackHandler : MonoBehaviour
             vfxHandler.SpawnedVFX.Remove(vfx);
             Destroy(vfx);
         }
+    }
+
+
+    public bool AttackAvailable()
+    {
+        List<AbilityEntry> attacks = new List<AbilityEntry>(ctx.cfg.Attacks);
+        foreach (var attack in attacks)
+        {
+            if (CanDoAttack(attack)) return true;
+        }
+        return false;
+    }
+
+    public bool CanDoAttack(AbilityEntry a)
+    {
+        bool _inRange = InRange(ctx.bb.distanceToTarget, a.MinRange, a.MaxRange);
+        bool _Los = a.los ? ctx.bb.hasLOS : true;
+        bool _enabled = a.Enabled;
+        return _inRange && _enabled && _Los;
     }
 }
 

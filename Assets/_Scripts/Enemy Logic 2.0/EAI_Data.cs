@@ -22,8 +22,8 @@ public class EnemyTuningSO : ScriptableObject
 
     [Header("Combat")]
     public float BaseDamage;
-    public List<EAI_AttackSO_Base> Attacks;
-    public List<EAI_AbilitySO> Abilities;
+    public List<AbilityEntry> Attacks;
+    public List<AbilityEntry> Abilities;
 
     [Header("Detection")]
     public float SearchDuration = 6;
@@ -42,10 +42,12 @@ public class EnemyTuningSO : ScriptableObject
 public abstract class EAI_AbilitySO : ScriptableObject
 {
     public string abilityId = "AbilityID";
+    public float active_duration = 1.0f;
     public float cooldown = 1.0f;
-    public abstract void Enter(GameObject owner, in AbilityContext ctx);
-    public abstract void Execute(GameObject owner, in AbilityContext ctx);
-    public abstract void Exit(GameObject owner, in AbilityContext ctx);
+    public abstract void Enter(EnemyContext EC, in AbilityContext A_ctx);
+    public abstract void Execute(EnemyContext EC, in AbilityContext A_ctx);
+    public abstract void Exit(EnemyContext EC, in AbilityContext A_ctx);
+    public abstract void Tick(EnemyContext EC, in AbilityContext A_ctx);
 }
 
 
@@ -53,7 +55,38 @@ public abstract class EAI_AbilitySO : ScriptableObject
 
 public struct AbilityContext
 {
-    public Vector3 origin;
-    public Vector3 direction;
     public Transform target;
+    public Vector3 targetPos;
+
+    public AbilityContext(Transform target)
+    {
+        this.target = target;
+        targetPos = Vector3.zero;
+    }
+
+    public AbilityContext(Vector3 targetPos)
+    {
+        this.targetPos = targetPos;
+        this.target = null;
+    }
+}
+
+
+[System.Serializable]
+public struct AbilityEntry
+{
+    public string Name;
+    public EAI_AbilitySO Ability;      // the definition
+    public bool Enabled;               // designer toggle
+    public float Weight;               // chooser weight
+    public float MinRange;
+    public float MaxRange;
+    public bool los;
+    
+    public float CooldownOverride;     // optional per-enemy override
+    public string Tag;                 // group/tag for logic (e.g., "AOE","Finisher")
+
+    [Header("Animations")]
+    public int Animation_Index;
+    public bool Rootmotion;
 }

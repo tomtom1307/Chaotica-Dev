@@ -155,6 +155,7 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
 
     public void SetPosition(Vector3 dest)
     {
-        agent.Warp(dest);
+        TRTools.NavMeshUtil.TryGetNearestOnNavMesh(dest, 10, out Vector3 nearest);
+        agent.Warp(nearest);
     }
 }

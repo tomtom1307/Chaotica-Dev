@@ -74,8 +74,8 @@ public class EAI_Perception : MonoBehaviour, IPerception
         if (inRange && inFOV)
         {
             hasLOS = HasLOS(transform.position, bb.target.position, 0.25f);
-            bb.hasLOS = hasLOS;
         }
+        bb.hasLOS = hasLOS;
 
         if (hasLOS)
         {
@@ -89,6 +89,7 @@ public class EAI_Perception : MonoBehaviour, IPerception
             float angW = AngleWeight(ang);
             DetectionMeter += DetectionSpeed * Time.deltaTime;
         }
+        
         else DetectionMeter -= DetectionDecay * Time.deltaTime;
         DetectionMeter = Mathf.Clamp01(DetectionMeter);
         bb.DetectionMeter = DetectionMeter;

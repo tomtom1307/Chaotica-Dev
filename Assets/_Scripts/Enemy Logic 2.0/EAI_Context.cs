@@ -8,6 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(Aimer))]
 [RequireComponent(typeof(EAI_Perception))]
 [RequireComponent (typeof(DamagableEnemy))]
+[RequireComponent (typeof(EAI_AttackHandler))]
 [RequireComponent (typeof(EAI_AnimatorController))]
 public class EnemyContext : MonoBehaviour
 {
@@ -17,20 +18,20 @@ public class EnemyContext : MonoBehaviour
     [HideInInspector] public EAI_Blackboard bb;
     [HideInInspector] public IGoalMotor motor;
     [HideInInspector] public Aimer aimer;
-    [HideInInspector] public IAbilityRunner abilities;
+    [HideInInspector] public EnemyAbilityRunner abilityRunner;
     [HideInInspector] public EAI_Perception sense;
-    [HideInInspector] public float nextBurstAt;
     [HideInInspector] public EAI_StateMachine stateMachine;
     [HideInInspector] public EAI_AnimatorController anim;
     [HideInInspector] public DamagableEnemy Health;
+    [HideInInspector] public EAI_AttackHandler attackHandler;
 
     void Awake()
     {
         
 
         bb = gameObject.AddComponent<EAI_Blackboard>();
-        
-        abilities = gameObject.AddComponent<EnemyAbilityRunner>();
+
+        abilityRunner = gameObject.AddComponent<EnemyAbilityRunner>();
 
         motor = GetComponent<IGoalMotor>();
         if (motor == null) Debug.LogWarning("Enemy Does not have a motor attached, please attach one");
@@ -39,7 +40,7 @@ public class EnemyContext : MonoBehaviour
         sense.Init();
         anim = GetComponent<EAI_AnimatorController>();
         Health = GetComponent<DamagableEnemy>();
-
+        attackHandler = GetComponent<EAI_AttackHandler>();
         stateMachine = gameObject.AddComponent<EAI_StateMachine>();
     }
 
