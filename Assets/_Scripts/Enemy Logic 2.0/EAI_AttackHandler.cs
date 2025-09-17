@@ -74,6 +74,7 @@ public class EAI_AttackHandler : MonoBehaviour
     public void AttackExit()
     {
         StartCoroutine(AttackCooldown(0.5f));
+        ctx.aimer.ResetSpeedToDefault();
         ctx.anim.ResetAttackAnim();
     }
 
