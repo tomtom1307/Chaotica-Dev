@@ -586,9 +586,9 @@ public class PlayerMovement : MonoBehaviour, IKnockbackable
         _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, 0, _rb.linearVelocity.z);
     }
 
-    public void GetKnockedBack(Vector3 force)
+    public void GetKnockedBack(Vector3 force, ForceMode forceMode = ForceMode.Force)
     {
-        _rb.AddForce(force);
+        _rb.AddForce(force, forceMode);
     }
 
     public void GetKnockedBack(Vector3 force, Vector3 point)

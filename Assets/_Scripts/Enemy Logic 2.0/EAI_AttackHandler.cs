@@ -33,7 +33,7 @@ public class EAI_AttackHandler : MonoBehaviour
         vfxHandler = GetComponentInChildren<EnemyVFXHandler>();
     }
 
-    Vector3 TargetPos;
+    Vector3 TargetPos => ctx.bb.target.position;
 
     private void Update()
     {
@@ -51,6 +51,17 @@ public class EAI_AttackHandler : MonoBehaviour
     {
         float Damage = CalculateDamage();
         ph.TakeDamage(Damage, ctx.Health, currentAttack.Paryable, currentAttack.Blockable);
+        KnockbackPlayer(ph.gameObject);
+    }
+
+
+    public void KnockbackPlayer(GameObject player)
+    {
+        float mag = currentAttack.Knockback;
+        Vector3 dir = TRTools.VecOp.Direction(transform.position, TargetPos);
+        dir.y = 0;
+        Vector3 Force = mag * dir.normalized;
+        player.GetComponent<IKnockbackable>().GetKnockedBack(Force);
     }
 
     public float CalculateDamage()

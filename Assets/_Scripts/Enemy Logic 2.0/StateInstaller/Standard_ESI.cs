@@ -25,7 +25,7 @@ public sealed class Standard_ESI : EnemyStateInstaller
         search.AddTransition(() => ctx.bb.DetectionMeter >= 0.9f, chase);
         search.AddTransition(() => search.timeUp, idle);
 
-        attack.AddTransition(() => ctx.bb.attack_State == EAI_Blackboard.AttackState.ready, chase);
+        attack.AddTransition(() => ctx.bb.attack_State == EAI_Blackboard.AttackState.cooldown, chase);
 
         //orbit.AddTransition(() => !ctx.bb.hasLOS && ctx.bb.LastSeenPlayerTime >= ctx.cfg.GoBackToSearchTime, search);
         //orbit.AddTransition(() => ctx.bb.isInRange && ctx.bb.ReadyToAttack, attack);

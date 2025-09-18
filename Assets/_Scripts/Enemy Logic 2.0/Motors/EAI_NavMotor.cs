@@ -118,9 +118,9 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
         MoveTo(lastIssuedDest);
     }
 
-    public void GetKnockedBack(Vector3 force)
+    public void GetKnockedBack(Vector3 force, ForceMode forceMode = ForceMode.Force)
     {
-        StartCoroutine(ApplyKnockBack(force));
+        StartCoroutine(ApplyKnockBack(force, forceMode));
     }
 
     public void GetKnockedBack(Vector3 force, Vector3 point)
@@ -128,12 +128,12 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
         StartCoroutine(ApplyKnockBack(force, point));
     }
 
-    private IEnumerator ApplyKnockBack(Vector3 force)
+    private IEnumerator ApplyKnockBack(Vector3 force, ForceMode forceMode = ForceMode.Force)
     {
         Debug.Log("KB!");
         yield return null;
         EnablePhysics(true);
-        rb.AddForce(force);
+        rb.AddForce(force, forceMode);
 
         yield return new WaitForFixedUpdate();
         yield return new WaitUntil(() => rb.linearVelocity.magnitude < StillThreshold && TRTools.NavMeshUtil.IsOnNavmesh(transform.position,2));

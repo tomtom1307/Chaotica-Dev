@@ -45,7 +45,7 @@ public interface IPerception
 
 public interface IKnockbackable
 {
-    void GetKnockedBack(Vector3 force);
+    void GetKnockedBack(Vector3 force, ForceMode forceMode = ForceMode.Force);
     void GetKnockedBack(Vector3 force, Vector3 point);
 }
 

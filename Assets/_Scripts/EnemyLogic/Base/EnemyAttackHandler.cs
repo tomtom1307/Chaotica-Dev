@@ -82,7 +82,7 @@ public class EnemyAttackHandler : MonoBehaviour
             AttackTimer += Time.deltaTime;
         }
         TargetPos = Vector3.Lerp(TargetPos, player.position, Time.deltaTime * brain.Accuracy);
-        AimDirection = - TRTools.VecOp.Direction(transform.position, TargetPos);
+        AimDirection = TRTools.VecOp.Direction(transform.position, TargetPos);
 
     }
 

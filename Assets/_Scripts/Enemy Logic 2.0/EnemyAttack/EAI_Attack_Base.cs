@@ -7,6 +7,7 @@ public class EAI_AttackSO_Base : EAI_AbilitySO
 {
     [Tooltip("Is a percentage value of the enemy's base damage")]
     public float Damage = 100;
+    public float Knockback = 100;
     public bool Blockable;
     public bool Paryable;
     public bool AimAtTarget;

@@ -390,9 +390,9 @@ public class HoverMotor : MonoBehaviour, IGoalMotor, IKnockbackable
         return;
     }
 
-    public void GetKnockedBack(Vector3 force)
+    public void GetKnockedBack(Vector3 force, ForceMode forceMode = ForceMode.Force)
     {
-        _rb.AddForce(force);
+        _rb.AddForce(force, forceMode);
     }
 
     public void GetKnockedBack(Vector3 force, Vector3 point)

@@ -16,7 +16,8 @@ namespace TRTools
 
         public static Vector3 Direction(Vector3 A, Vector3 B)
         {
-            return (A - B).normalized;
+            //TODO when can be fucked 
+            return (B - A).normalized;
         }
 
         public static Vector3 Direction(Transform A, Transform B)

@@ -4,7 +4,7 @@ public class Knockbackable : MonoBehaviour, IKnockbackable
 {
     public float Mult;
 
-    public virtual void GetKnockedBack(Vector3 force)
+    public virtual void GetKnockedBack(Vector3 force, ForceMode forceMode = ForceMode.Force)
     {
         if (TryGetComponent<Rigidbody>(out Rigidbody rb))
         {
