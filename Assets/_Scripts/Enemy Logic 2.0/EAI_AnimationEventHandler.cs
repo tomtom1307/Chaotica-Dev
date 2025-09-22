@@ -26,6 +26,11 @@ public class EAI_AnimationEventHandler : MonoBehaviour
         TRTools.Helpers.TryFind<EnemyContext>(gameObject, out ctx);
     }
 
+    public void ExecuteCurrentAttack()
+    {
+        ctx.attackHandler.ExecuteCurrentAttack();
+    }
+
     public void DoColliderCheck(int ColGroupIndex)
     {
         ctx.attackHandler.DoColliderCheck(ColGroupIndex);

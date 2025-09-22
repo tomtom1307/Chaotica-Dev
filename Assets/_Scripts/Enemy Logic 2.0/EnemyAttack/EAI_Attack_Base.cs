@@ -5,16 +5,9 @@ using UnityEngine;
 
 public class EAI_AttackSO_Base : EAI_AbilitySO
 {
-    [Tooltip("Is a percentage value of the enemy's base damage")]
-    public float Damage = 100;
-    public float Knockback = 100;
-    public bool Blockable;
-    public bool Paryable;
     public bool AimAtTarget;
-    public float AimSpeed = 100;
-    public bool onHitCancel;
-    public List<EnemyVFXs> VFXs;
-
+    public float AimSpeed;
+    public LayerMask whatIsPlayer = 10;
     public override void Enter(EnemyContext EC, in AbilityContext ctx)
     {
         
@@ -22,7 +15,7 @@ public class EAI_AttackSO_Base : EAI_AbilitySO
 
     public override void Execute(EnemyContext EC, in AbilityContext ctx)
     {
-
+        
     }
 
     public override void Exit(EnemyContext EC, in AbilityContext ctx)

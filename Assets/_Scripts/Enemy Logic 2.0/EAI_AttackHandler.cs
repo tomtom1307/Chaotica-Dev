@@ -8,7 +8,7 @@ using static TRTools.floatOP;
 public class EAI_AttackHandler : MonoBehaviour
 {
     EnemyContext ctx;
-    [HideInInspector] public EAI_AttackSO_Base currentAttack;
+    [HideInInspector] public AbilityEntry currentAttack;
     public List<colliderGroup> ColliderGroups;
     [HideInInspector] public EnemyVFXHandler vfxHandler;
     [HideInInspector] public List<bool> groupDidDamage;
@@ -74,7 +74,13 @@ public class EAI_AttackHandler : MonoBehaviour
         ctx.anim.PlayAttack(abilityEntry.Animation_Index);
         ctx.anim.ApplyRootMotion(abilityEntry.Rootmotion);
         ctx.attackHandler.InitColliders();
-        currentAttack = abilityEntry.Ability as EAI_AttackSO_Base;
+        currentAttack = abilityEntry;
+    }
+
+    public void ExecuteCurrentAttack()
+    {
+        AbilityContext abilityContext = new AbilityContext();
+        currentAttack.Ability.Execute(ctx, abilityContext);
     }
 
 
@@ -84,9 +90,10 @@ public class EAI_AttackHandler : MonoBehaviour
     }
     public void AttackExit()
     {
-        StartCoroutine(AttackCooldown(0.5f));
+        StartCoroutine(AttackCooldown(currentAttack.Cooldown));
         ctx.aimer.ResetSpeedToDefault();
         ctx.anim.ResetAttackAnim();
+        currentAttack = new AbilityEntry(); // Null Entry
     }
 
     public IEnumerator AttackCooldown(float length)
@@ -98,14 +105,14 @@ public class EAI_AttackHandler : MonoBehaviour
 
 
     [HideInInspector] public Vector3 AimDirection;
-    /*
+    
     public void DoRayCast()
     {
 
-        RaycastHit hit;
-
         Debug.DrawRay(transform.position, AimDirection, Color.yellow, 5);
-        if (Physics.Raycast(brain.LookDirectionTransform.position, AimDirection.normalized, out hit, currentAttack.attackData.rayCastRange, currentAttack.attackData.whatIsPlayer))
+        EAI_Attack_Raycast Raycast_Attack = currentAttack.Ability as EAI_Attack_Raycast;
+        if (!Raycast_Attack) return;
+        if (Physics.Raycast(ctx.LookDirection.position, AimDirection.normalized, out RaycastHit hit, Raycast_Attack.AttackRange, Raycast_Attack.whatIsPlayer))
         {
             PlayerHealth PH = hit.collider.gameObject.GetComponent<PlayerHealth>();
             DamagePlayer(PH);
@@ -113,23 +120,10 @@ public class EAI_AttackHandler : MonoBehaviour
 
 
     }
-
+    /*
     public void DoProjectile() { }
 
-    public void DoColliderCheck(int colliderGroupIndex)
-    {
-        if (currentAttack.attackData.doCollider)
-        {
-            List<ColliderDetector> colliderGroupList = currentAttack.colliderGroups[colliderGroupIndex].colliderList;
-            foreach (ColliderDetector col in colliderGroupList)
-            {
-                col.TriggerDetection();
-                col.OnDetectCallback += RecieveColliderHitCallback;
-            }
-        }
-        else Debug.LogError("You must set the attack SO DoCollider bool to true to initialize the necesary lists.");
-
-    }*/
+    */
 
     public void DoColliderCheck(int colliderGroupIndex)
     {

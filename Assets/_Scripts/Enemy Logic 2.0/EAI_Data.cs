@@ -82,9 +82,16 @@ public struct AbilityEntry
     public float MinRange;
     public float MaxRange;
     public bool los;
-    
-    public float CooldownOverride;     // optional per-enemy override
-    public string Tag;                 // group/tag for logic (e.g., "AOE","Finisher")
+
+    [Tooltip("Is a percentage value of the enemy's base damage")]
+    public float Damage;
+    public float Knockback;
+    public bool Blockable;
+    public bool Paryable;
+    public bool onHitCancel;
+    public List<EnemyVFXs> VFXs;
+
+    public float Cooldown;
 
     [Header("Animations")]
     public int Animation_Index;

@@ -28,6 +28,7 @@ public class EAI_AnimatorController : MonoBehaviour
     EAI_AnimationEventHandler eventHandler;
     private void Start()
     {
+
         eventHandler = GetComponentInChildren<EAI_AnimationEventHandler>();
         ApplyRootMotion(false);
     }
@@ -46,6 +47,7 @@ public class EAI_AnimatorController : MonoBehaviour
 
     public void SetMoveBlend(float BLEND)
     {
+        if (!animator) return;
         animator.SetFloat(HashMoveBlend, BLEND, SpeedDamp, Time.deltaTime);
     }
 
@@ -58,22 +60,26 @@ public class EAI_AnimatorController : MonoBehaviour
 
     public void Stunned(bool x)
     {
+        if (!animator) return;
         animator.enabled = x;
     }
 
     public void ApplyRootMotion(bool x)
     {
+        if(!eventHandler) return;
         eventHandler.ApplyRootMotion = x;
     }
 
     public void PlayAttack(int AttackInt)
     {
+        if (!animator) return;
         animator.SetBool("Attack", true);
         animator.SetInteger("AttackInt", AttackInt);
     }
 
     public void ResetAttackAnim()
     {
+        if (!animator) return;
         animator.SetBool("Attack", false);
     }
 

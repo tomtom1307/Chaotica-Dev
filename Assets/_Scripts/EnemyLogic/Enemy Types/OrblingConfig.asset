@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 513bf0c075791704ba0a735e5392966f, type: 3}
-  m_Name: Test Enemy Config
+  m_Name: OrblingConfig
   m_EditorClassIdentifier: 
-  preferredMin: 1
-  preferredMax: 1.4
+  preferredMin: 2.5
+  preferredMax: 6
   DefaultGroundAltitude: 2.61
   AltitudeFromPlayer: 0.97
   approachSpeed: 3.2
@@ -22,23 +22,22 @@ MonoBehaviour:
   altitudeOffset: 0.73
   BaseDamage: 5
   Attacks:
-  - Name: SCHLAP
-    Ability: {fileID: 11400000, guid: 2e8e0d2ed1c625544b20e88f38165921, type: 2}
+  - Name: Laser
+    Ability: {fileID: 11400000, guid: 45feb04ad7dc1524291e4187693c9bdd, type: 2}
     Enabled: 1
-    Weight: 5
-    MinRange: 1
-    MaxRange: 2
+    Weight: 1
+    MinRange: 4
+    MaxRange: 6
     los: 1
     Damage: 100
     Knockback: 400000
-    Blockable: 0
+    Blockable: 1
     Paryable: 0
     onHitCancel: 0
     VFXs: []
-    CooldownOverride: 0
-    Tag: 
+    Cooldown: 1.5
     Animation_Index: 0
-    Rootmotion: 1
+    Rootmotion: 0
   Abilities: []
   SearchDuration: 10
   SearchRingRadius: 3

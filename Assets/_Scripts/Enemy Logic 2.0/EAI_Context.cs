@@ -14,6 +14,7 @@ public class EnemyContext : MonoBehaviour
 {
     public EnemyTuningSO cfg;
     public Transform muzzle;
+    public Transform LookDirection;
     public bool DebugStates;
     [HideInInspector] public EAI_Blackboard bb;
     [HideInInspector] public IGoalMotor motor;
@@ -24,11 +25,10 @@ public class EnemyContext : MonoBehaviour
     [HideInInspector] public EAI_AnimatorController anim;
     [HideInInspector] public DamagableEnemy Health;
     [HideInInspector] public EAI_AttackHandler attackHandler;
-
     void Awake()
     {
-        
 
+        if (LookDirection == null) LookDirection = transform;
         bb = gameObject.AddComponent<EAI_Blackboard>();
 
         abilityRunner = gameObject.AddComponent<EnemyAbilityRunner>();
