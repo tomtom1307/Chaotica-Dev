@@ -25,6 +25,8 @@ public class EnemyContext : MonoBehaviour
     [HideInInspector] public EAI_AnimatorController anim;
     [HideInInspector] public DamagableEnemy Health;
     [HideInInspector] public EAI_AttackHandler attackHandler;
+    [HideInInspector] public EnemySoundSource sound;
+    //Add LineRenderer for Laser logic
     void Awake()
     {
 
@@ -40,6 +42,7 @@ public class EnemyContext : MonoBehaviour
         sense.Init();
         anim = GetComponent<EAI_AnimatorController>();
         Health = GetComponent<DamagableEnemy>();
+        sound = GetComponent<EnemySoundSource>();
         attackHandler = GetComponent<EAI_AttackHandler>();
         stateMachine = gameObject.AddComponent<EAI_StateMachine>();
     }

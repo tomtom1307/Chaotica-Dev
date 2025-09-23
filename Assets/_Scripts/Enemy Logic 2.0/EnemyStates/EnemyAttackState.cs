@@ -27,8 +27,7 @@ public class EnemyAttackState : BaseState
         //Handles animation and detection priming
         c.attackHandler.HandleAttackEnter( abilityEntry );
         c.aimer.AimAt(c.bb.target.position);
-        _currentAbilityCtx = new AbilityContext();
-        _currentAttack.Enter(c, _currentAbilityCtx);
+        _currentAttack.Enter(c);
         
     }
 
@@ -38,7 +37,7 @@ public class EnemyAttackState : BaseState
         base.Tick();
         if (_currentAttack != null)
         {
-            _currentAttack.Tick(c, _currentAbilityCtx);
+            _currentAttack.Tick(c);
         }
     }
 

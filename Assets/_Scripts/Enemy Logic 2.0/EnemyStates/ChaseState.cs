@@ -4,7 +4,7 @@ public class ChaseState : BaseState
 {
     public ChaseState(EnemyContext c) : base(c) { }
 
-    public override void OnEnter() { base.OnEnter(); }
+    public override void OnEnter() { base.OnEnter(); c.aimer.ResetSpeedToDefault(); }
     public override void Tick()
     {
         base.Tick();

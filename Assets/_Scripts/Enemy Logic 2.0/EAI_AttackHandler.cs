@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 using static TRTools.floatOP;
 
 public class EAI_AttackHandler : MonoBehaviour
@@ -17,11 +18,14 @@ public class EAI_AttackHandler : MonoBehaviour
     Rigidbody rb;
     Transform player;
     Rigidbody _playerRb;
+    EAI_AttackIndicatorBase indicator;
+    AbilityContext nullContext = new AbilityContext();
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        ctx = GetComponent<EnemyContext>(); 
+        ctx = GetComponent<EnemyContext>();
+        indicator = ctx.GetComponentInChildren<EAI_AttackIndicatorBase>();
     }
 
 
@@ -34,6 +38,7 @@ public class EAI_AttackHandler : MonoBehaviour
     }
 
     Vector3 TargetPos => ctx.bb.target.position;
+    [HideInInspector] public Vector3 CurrentlyTargetedPos;
 
     private void Update()
     {
@@ -46,6 +51,14 @@ public class EAI_AttackHandler : MonoBehaviour
         
     }
 
+
+    private void LateUpdate()
+    {
+        if (currentAttack.Ability)
+        {
+            currentAttack.Ability.LateTick(ctx);
+        }
+    }
 
     private void DamagePlayer(PlayerHealth ph)
     {
@@ -79,8 +92,8 @@ public class EAI_AttackHandler : MonoBehaviour
 
     public void ExecuteCurrentAttack()
     {
-        AbilityContext abilityContext = new AbilityContext();
-        currentAttack.Ability.Execute(ctx, abilityContext);
+        
+        currentAttack.Ability.Execute(ctx);
     }
 
 
@@ -93,6 +106,7 @@ public class EAI_AttackHandler : MonoBehaviour
         StartCoroutine(AttackCooldown(currentAttack.Cooldown));
         ctx.aimer.ResetSpeedToDefault();
         ctx.anim.ResetAttackAnim();
+        currentAttack.Ability.Exit(ctx);
         currentAttack = new AbilityEntry(); // Null Entry
     }
 
@@ -112,10 +126,13 @@ public class EAI_AttackHandler : MonoBehaviour
         Debug.DrawRay(transform.position, AimDirection, Color.yellow, 5);
         EAI_Attack_Raycast Raycast_Attack = currentAttack.Ability as EAI_Attack_Raycast;
         if (!Raycast_Attack) return;
-        if (Physics.Raycast(ctx.LookDirection.position, AimDirection.normalized, out RaycastHit hit, Raycast_Attack.AttackRange, Raycast_Attack.whatIsPlayer))
+        if (Physics.Raycast(ctx.LookDirection.position, AimDirection.normalized, out RaycastHit hit, Raycast_Attack.AttackRange, Raycast_Attack.RaycastAttackHit))
         {
-            PlayerHealth PH = hit.collider.gameObject.GetComponent<PlayerHealth>();
-            DamagePlayer(PH);
+            if (hit.collider.gameObject.TryGetComponent<PlayerHealth>(out PlayerHealth PH))
+            {
+                DamagePlayer(PH);
+            }
+            
         }
 
 
@@ -124,6 +141,23 @@ public class EAI_AttackHandler : MonoBehaviour
     public void DoProjectile() { }
 
     */
+
+    public void UpdateIndicator(Vector3 position)
+    {
+        if (!indicator) return;
+        indicator.SetPosition(position);
+    }
+
+    public void IndicatorActive(bool x)
+    {
+        if (!indicator) return;
+        indicator.isActive(x);
+    }
+
+    public void SetIndicatorGlow(float lerp)
+    {
+        indicator.SetIndicatorGlow(lerp);
+    }
 
     public void DoColliderCheck(int colliderGroupIndex)
     {
@@ -190,7 +224,6 @@ public class EAI_AttackHandler : MonoBehaviour
         GameObject VFX;
         if (currentAttack.VFXs[index].isParentedToHolder)
         {
-
             VFX = Instantiate(currentAttack.VFXs[index].Prefab, vfxHandler.transform);
             VFX.transform.localPosition = Vector3.zero;
         }
@@ -199,8 +232,6 @@ public class EAI_AttackHandler : MonoBehaviour
             VFX = Instantiate(currentAttack.VFXs[index].Prefab, vfxHandler.transform.position, vfxHandler.transform.rotation);
             VFX.transform.localScale = vfxHandler.transform.localScale;
         }
-
-
         vfxHandler.SpawnedVFX.Add(VFX);
     }
 

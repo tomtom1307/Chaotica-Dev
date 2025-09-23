@@ -5,19 +5,19 @@ public class EAI_Attack_Melee : EAI_AttackSO_Base
 {
 
 
-    public override void Enter(EnemyContext EC, in AbilityContext ctx)
+    public override void Enter(EnemyContext EC)
     {
-        base.Enter(EC, ctx);
+        base.Enter(EC);
     }
 
-    public override void Execute(EnemyContext EC, in AbilityContext ctx)
+    public override void Execute(EnemyContext EC)
     {
-        base.Execute(EC, ctx);
+        base.Execute(EC);
         //Is handled through collider group logic in animation events
     }
 
-    public override void Exit(EnemyContext EC, in AbilityContext ctx)
+    public override void Exit(EnemyContext EC)
     {
-        base.Exit(EC, ctx);
+        base.Exit(EC);
     }
 }

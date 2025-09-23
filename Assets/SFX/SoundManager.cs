@@ -9,7 +9,7 @@ public abstract class SourceSoundManager<T> : MonoBehaviour where T: Enum
         
     }
 
-    private void Start()
+    public virtual void Start()
     {
         audioSource = GetComponent<AudioSource>();
     }
@@ -58,6 +58,17 @@ public abstract class SourceSoundManager<T> : MonoBehaviour where T: Enum
     {
         audioSource.clip = null;
         audioSource.Stop();
+    }
+
+    private void Update()
+    {
+        if(audioSource != null)
+        {
+            if(!audioSource.isPlaying)
+            {
+                audioSource.pitch = 1;
+            }
+        }
     }
 
 

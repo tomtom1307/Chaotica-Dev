@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513bf0c075791704ba0a735e5392966f, type: 3}
   m_Name: OrblingConfig
   m_EditorClassIdentifier: 
-  preferredMin: 2.5
-  preferredMax: 6
+  preferredMin: 5
+  preferredMax: 10
   DefaultGroundAltitude: 2.61
   AltitudeFromPlayer: 0.97
   approachSpeed: 3.2
@@ -26,11 +26,11 @@ MonoBehaviour:
     Ability: {fileID: 11400000, guid: 45feb04ad7dc1524291e4187693c9bdd, type: 2}
     Enabled: 1
     Weight: 1
-    MinRange: 4
-    MaxRange: 6
+    MinRange: 5
+    MaxRange: 10
     los: 1
     Damage: 100
-    Knockback: 400000
+    Knockback: 50000
     Blockable: 1
     Paryable: 0
     onHitCancel: 0

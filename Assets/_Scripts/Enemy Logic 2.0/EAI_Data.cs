@@ -44,10 +44,12 @@ public abstract class EAI_AbilitySO : ScriptableObject
     public string abilityId = "AbilityID";
     public float active_duration = 1.0f;
     public float cooldown = 1.0f;
-    public abstract void Enter(EnemyContext EC, in AbilityContext A_ctx);
-    public abstract void Execute(EnemyContext EC, in AbilityContext A_ctx);
-    public abstract void Exit(EnemyContext EC, in AbilityContext A_ctx);
-    public abstract void Tick(EnemyContext EC, in AbilityContext A_ctx);
+    public abstract void Enter(EnemyContext EC);
+    public abstract void Execute(EnemyContext EC);
+    public abstract void Exit(EnemyContext EC);
+    public abstract void Tick(EnemyContext EC);
+
+    public abstract void LateTick(EnemyContext EC);
 }
 
 

@@ -7,18 +7,18 @@ public class EAI_AttackSO_Base : EAI_AbilitySO
 {
     public bool AimAtTarget;
     public float AimSpeed;
-    public LayerMask whatIsPlayer = 10;
-    public override void Enter(EnemyContext EC, in AbilityContext ctx)
+    public LayerMask RaycastAttackHit;
+    public override void Enter(EnemyContext EC)
     {
         
     }
 
-    public override void Execute(EnemyContext EC, in AbilityContext ctx)
+    public override void Execute(EnemyContext EC)
     {
         
     }
 
-    public override void Exit(EnemyContext EC, in AbilityContext ctx)
+    public override void Exit(EnemyContext EC)
     {
         EC.aimer.ResetSpeedToDefault();
     }
@@ -28,9 +28,14 @@ public class EAI_AttackSO_Base : EAI_AbilitySO
         player.TakeDamage(Damage);
     }
 
-    public override void Tick(EnemyContext EC, in AbilityContext A_ctx)
+    public override void Tick(EnemyContext EC)
     {
         if (AimAtTarget) { EC.aimer.AimAt(EC.bb.target.position, AimSpeed); }
+    }
+
+    public override void LateTick(EnemyContext EC)
+    {
+        
     }
 }
 

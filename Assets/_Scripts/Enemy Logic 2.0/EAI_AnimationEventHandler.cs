@@ -26,6 +26,7 @@ public class EAI_AnimationEventHandler : MonoBehaviour
         TRTools.Helpers.TryFind<EnemyContext>(gameObject, out ctx);
     }
 
+
     public void ExecuteCurrentAttack()
     {
         ctx.attackHandler.ExecuteCurrentAttack();
@@ -50,4 +51,17 @@ public class EAI_AnimationEventHandler : MonoBehaviour
     {
         ctx.attackHandler.AttackExit();
     }
+
+
+    public void PlaySound(EnemySoundSource.SoundType soundType)
+    {
+        ctx.sound.PlaySound(soundType);
+    }
+
+    public void SpawnVFX(int i)
+    {
+        ctx.attackHandler.SpawnVFX(i);
+    }
+
+
 }

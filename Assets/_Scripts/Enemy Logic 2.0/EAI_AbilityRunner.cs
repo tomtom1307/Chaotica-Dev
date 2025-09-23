@@ -38,7 +38,7 @@ public class EnemyAbilityRunner : MonoBehaviour
 
     private void Update()
     {
-        if(current_ability != null && State == AbilityState.Active) { current_ability.Tick(EC, CurrentAbilityCtx); }
+        if(current_ability != null && State == AbilityState.Active) { current_ability.Tick(EC); }
 
 
     }
