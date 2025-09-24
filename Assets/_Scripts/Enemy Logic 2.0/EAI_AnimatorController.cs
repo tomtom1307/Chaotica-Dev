@@ -68,6 +68,7 @@ public class EAI_AnimatorController : MonoBehaviour
     {
         if(!eventHandler) return;
         eventHandler.ApplyRootMotion = x;
+        animator.applyRootMotion = x;
     }
 
     public void PlayAttack(int AttackInt)
@@ -84,16 +85,5 @@ public class EAI_AnimatorController : MonoBehaviour
     }
 
 
-    // If you ever enable root motion, push it through your motor here
-    void OnAnimatorMove()
-    {
-        if (!animator || !animator.applyRootMotion || ctx?.motor == null) return;
-
-        
-        Vector3 delta = animator.deltaPosition;
-        Vector3 desiredVel = delta / Mathf.Max(Time.deltaTime, 0.0001f);
-
-        // Feed your PID / motor (pseudo-code, adapt to your motor API)
-        ctx.motor.MoveTo(delta);
-    }
+    
 }

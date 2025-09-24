@@ -32,7 +32,7 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
         if (agent.isActiveAndEnabled) return agent.velocity;
         else return rb.linearVelocity;
     }
-
+    EnemyContext ctx;
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -45,6 +45,7 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
     Rigidbody rb;
     private void Start()
     {
+        ctx = GetComponent<EnemyContext>();
         agent.updateRotation = controlRotation;
         rb = GetComponent<Rigidbody>();
         rb.interpolation = RigidbodyInterpolation.None;
@@ -109,13 +110,16 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
         {
             agent.Warp(transform.position);
             rb.interpolation = RigidbodyInterpolation.None;
+            
         }
         else
         {
+            ctx.anim.ApplyRootMotion(false);
             rb.interpolation = RigidbodyInterpolation.Interpolate;
         }
         agent.enabled = !x;
-        MoveTo(lastIssuedDest);
+        if(agent.enabled) { MoveTo(lastIssuedDest); }
+
     }
 
     public void GetKnockedBack(Vector3 force, ForceMode forceMode = ForceMode.Force)
@@ -130,24 +134,43 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
 
     private IEnumerator ApplyKnockBack(Vector3 force, ForceMode forceMode = ForceMode.Force)
     {
-        Debug.Log("KB!");
-        yield return null;
         EnablePhysics(true);
-        rb.AddForce(force, forceMode);
+        yield return null;
 
+        //TODO Check Attack Controller for how to handle different attacks
+        if(Physics.Raycast(transform.position + Vector3.up, -Vector3.up, out RaycastHit hit, 2))
+        {
+            Vector3 proj = Vector3.ProjectOnPlane(force, hit.normal).normalized;
+            float mag = force.magnitude;
+            force = mag * proj;
+        }
+        
+        Debug.Log(force.magnitude);
+        rb.AddForce(force, forceMode);
         yield return new WaitForFixedUpdate();
+        yield return new WaitForSeconds(1);
         yield return new WaitUntil(() => rb.linearVelocity.magnitude < StillThreshold && TRTools.NavMeshUtil.IsOnNavmesh(transform.position,2));
         EnablePhysics(false);   
     }
 
     private IEnumerator ApplyKnockBack(Vector3 force, Vector3 point)
     {
-        Debug.Log("KB point!");
-        yield return null;
         EnablePhysics(true);
+        yield return null;
+
+        //TODO Check Attack Controller for how to handle different attacks
+        if (Physics.Raycast(transform.position + Vector3.up, -Vector3.up, out RaycastHit hit, 2))
+        {
+            Vector3 proj = Vector3.ProjectOnPlane(force, hit.normal).normalized;
+            float mag = force.magnitude;
+            force = mag * proj;
+        }
+        EnablePhysics(true);
+        Debug.Log(force.magnitude);
         rb.AddForceAtPosition(force, point);
 
         yield return new WaitForFixedUpdate();
+        yield return new WaitForSeconds(1);
         yield return new WaitUntil(() => rb.linearVelocity.magnitude < StillThreshold && TRTools.NavMeshUtil.IsOnNavmesh(transform.position, 2));
         
         EnablePhysics(false);
@@ -155,6 +178,7 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
 
     public void SetPosition(Vector3 dest)
     {
+        if (!agent.enabled) return;
         TRTools.NavMeshUtil.TryGetNearestOnNavMesh(dest, 10, out Vector3 nearest);
         agent.Warp(nearest);
     }

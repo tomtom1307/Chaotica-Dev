@@ -32,8 +32,6 @@ public class EAI_AttackHandler : MonoBehaviour
     public void Init(EnemyContext ctx)
     {
         this.ctx = ctx;
-        player = GameManager.instance.player;
-        _playerRb = player.GetComponent<Rigidbody>();
         vfxHandler = GetComponentInChildren<EnemyVFXHandler>();
     }
 

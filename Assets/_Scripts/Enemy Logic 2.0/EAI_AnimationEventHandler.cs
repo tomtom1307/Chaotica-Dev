@@ -15,7 +15,6 @@ public class EAI_AnimationEventHandler : MonoBehaviour
         delta.y = 0;
         Vector3 newPos = transform.position + delta;
         ctx.motor.SetPosition(newPos);
-        //transform.position = newPos;
     }
 
 

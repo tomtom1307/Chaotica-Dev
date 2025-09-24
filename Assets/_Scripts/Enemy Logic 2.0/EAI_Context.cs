@@ -44,6 +44,7 @@ public class EnemyContext : MonoBehaviour
         Health = GetComponent<DamagableEnemy>();
         sound = GetComponent<EnemySoundSource>();
         attackHandler = GetComponent<EAI_AttackHandler>();
+        attackHandler.Init(this);
         stateMachine = gameObject.AddComponent<EAI_StateMachine>();
     }
 
@@ -60,7 +61,6 @@ public class EnemyContext : MonoBehaviour
 
     public void HeardNoise(Vector3 pos)
     {
-        Debug.Log("Heard Somet!");
         bb.InvestigateSound = true;
         Search(pos);
     }
@@ -79,7 +79,6 @@ public class EnemyContext : MonoBehaviour
 
     public void Agro(bool x)
     {
-        Debug.Log("Enemy Aggro!");
         if (x)
         {
             bb.POI = bb.target.position;

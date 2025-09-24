@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Assertions.Must;
 
 [Serializable]
 public class Weapon_Attack_Data_Melee : Weapon_Attack_Data_Base
@@ -53,7 +54,7 @@ public class Weapon_Attack_Data_Melee : Weapon_Attack_Data_Base
 
         // PRIMARY TARGET DAMAGE
         RaycastHit hit;
-        Vector3 dirToPrimary = primaryTarget.transform.position - Camera.main.transform.position;
+        Vector3 dirToPrimary = (primaryTarget.transform.position - Camera.main.transform.position).normalized;
 
         Damagable D_primary = Damagable.CheckForDamagable(primaryTarget.gameObject);
 

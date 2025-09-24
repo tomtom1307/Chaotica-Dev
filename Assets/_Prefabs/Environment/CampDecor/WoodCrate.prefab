@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 8692059697031382493}
   - component: {fileID: 8531710972458571460}
   - component: {fileID: 5000778099670733914}
-  - component: {fileID: 8249277729333443232}
   - component: {fileID: 4920653630654981249}
   m_Layer: 8
   m_Name: WoodCrate
@@ -300,19 +299,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Mult: 1.2
---- !u!114 &8249277729333443232
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1348341369236309344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68f6a0da9cacfef47b25cdc9d2fb2a4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Mult: 1
 --- !u!208 &4920653630654981249
 NavMeshObstacle:
   m_ObjectHideFlags: 0
