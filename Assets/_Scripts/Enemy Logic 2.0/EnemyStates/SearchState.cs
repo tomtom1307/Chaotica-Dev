@@ -83,7 +83,7 @@ public class SearchState : BaseState
                 {
                     
                     c.motor.SetVelocity(Vector3.zero);
-                    c.motor.SetAltitude(c.cfg.altitudeOffset, c.bb.target);
+                    c.motor.SetAltitude(c.cfg.DefaultAltitude, c.bb.target);
                     break;
                 }
         }

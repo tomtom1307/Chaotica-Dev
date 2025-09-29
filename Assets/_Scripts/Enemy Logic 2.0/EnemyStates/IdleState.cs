@@ -15,7 +15,7 @@ public class IdleState : BaseState
     {
         base.Tick();
         c.motor.SetVelocity(Vector3.zero);
-        c.motor.SetAltitude(c.cfg.altitudeOffset, null);
+        c.motor.SetAltitude(c.cfg.DefaultAltitude, null);
         if (c.bb.DetectionMeter == 1) c.aimer.AimAt(c.bb.target.position);
     }
 

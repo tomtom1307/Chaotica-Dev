@@ -31,21 +31,8 @@ public class EnemyContext : MonoBehaviour
     {
 
         if (LookDirection == null) LookDirection = transform;
-        bb = gameObject.AddComponent<EAI_Blackboard>();
-
-        abilityRunner = gameObject.AddComponent<EnemyAbilityRunner>();
-
-        motor = GetComponent<IGoalMotor>();
-        if (motor == null) Debug.LogWarning("Enemy Does not have a motor attached, please attach one");
-        aimer = GetComponent<Aimer>();
-        sense = GetComponent<EAI_Perception>();
-        sense.Init();
-        anim = GetComponent<EAI_AnimatorController>();
-        Health = GetComponent<DamagableEnemy>();
-        sound = GetComponent<EnemySoundSource>();
-        attackHandler = GetComponent<EAI_AttackHandler>();
-        attackHandler.Init(this);
-        stateMachine = gameObject.AddComponent<EAI_StateMachine>();
+        GetComponents();
+        SetData();
     }
 
     private void Start()
@@ -93,4 +80,30 @@ public class EnemyContext : MonoBehaviour
         }
     }
 
+
+    public void GetComponents()
+    {
+        bb = gameObject.AddComponent<EAI_Blackboard>();
+
+        abilityRunner = gameObject.AddComponent<EnemyAbilityRunner>();
+
+        motor = GetComponent<IGoalMotor>();
+        if (motor == null) Debug.LogWarning("Enemy Does not have a motor attached, please attach one");
+        aimer = GetComponent<Aimer>();
+        sense = GetComponent<EAI_Perception>();
+        sense.Init();
+        anim = GetComponent<EAI_AnimatorController>();
+        Health = GetComponent<DamagableEnemy>();
+        sound = GetComponent<EnemySoundSource>();
+        attackHandler = GetComponent<EAI_AttackHandler>();
+        attackHandler.Init(this);
+        stateMachine = gameObject.AddComponent<EAI_StateMachine>();
+    }
+
+    
+    public void SetData()
+    {
+        Health.MaxHealth = cfg.MaxHealth;
+        Health.Health = Health.MaxHealth;
+    }
 }

@@ -145,7 +145,7 @@ public class NavMeshMotor : MonoBehaviour, IGoalMotor, IKnockbackable
             force = mag * proj;
         }
         
-        Debug.Log(force.magnitude);
+        
         rb.AddForce(force, forceMode);
         yield return new WaitForFixedUpdate();
         yield return new WaitForSeconds(1);

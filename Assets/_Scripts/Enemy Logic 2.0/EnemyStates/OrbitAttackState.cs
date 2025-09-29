@@ -20,7 +20,7 @@ public class OrbitAttackState : BaseState
         var target = c.bb.target;
         var vel = OrbitLogic(target, self);
         c.motor.SetVelocity(vel);
-        c.motor.SetAltitude(c.cfg.altitudeOffset, c.bb.target);
+        c.motor.SetAltitude(c.cfg.DefaultAltitude, c.bb.target);
     }
 
     public override void OnExit() { }

@@ -8,20 +8,23 @@ using UnityEngine.Experimental.GlobalIllumination;
 [CreateAssetMenu(menuName = "AI/Enemy Tuning")]
 public class EnemyTuningSO : ScriptableObject
 {
+    
+
+
     [Header("Range band")]
     public float preferredMin = 10f;
     public float preferredMax = 16f;
-    public float DefaultGroundAltitude = 4;
     public float AltitudeFromPlayer = 2;
 
     [Header("Motion")]
     public float approachSpeed = 8f;
     public float orbitSpeedRad = 1.3f;
     public float strafeWeight = 1.0f;
-    public float altitudeOffset = 3.5f; // flyers
+    public float DefaultAltitude = 3.5f; // flyers
 
     [Header("Combat")]
-    public float BaseDamage;
+    public float MaxHealth = 20;
+    public float BaseDamage = 5;
     public List<AbilityEntry> Attacks;
     public List<AbilityEntry> Abilities;
 
@@ -33,7 +36,7 @@ public class EnemyTuningSO : ScriptableObject
     public int searchRingSteps = 3;
     public float searchSpeedMult = 0.9f;
     public float searchArrivalDistance = 1;
-    public float GoBackToSearchTime;
+    public float GoBackToSearchTime = 10;
 
 
 
