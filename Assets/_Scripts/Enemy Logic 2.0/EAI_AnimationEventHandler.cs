@@ -31,7 +31,7 @@ public class EAI_AnimationEventHandler : MonoBehaviour
         ctx.attackHandler.ExecuteCurrentAttack();
     }
 
-    public void DoColliderCheck(int ColGroupIndex)
+    public void DoColliderCheckAnim(int ColGroupIndex)
     {
         ctx.attackHandler.DoColliderCheck(ColGroupIndex);
     }
