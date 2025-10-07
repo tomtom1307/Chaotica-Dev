@@ -21,7 +21,12 @@ public class Aimer : MonoBehaviour
             }
             else rb.freezeRotation = true;
         }
-        defaultSpeed = turnSpeedDegPerSec;
+        
+    }
+
+    private void Start()
+    {
+        if(defaultSpeed == 0) defaultSpeed = turnSpeedDegPerSec;
     }
 
     // call this from your other script; pass dt
@@ -59,6 +64,11 @@ public class Aimer : MonoBehaviour
     public void ResetSpeedToDefault()
     {
         turnSpeedDegPerSec = defaultSpeed;
+    }
+
+    public void SetDefaultRotSpeed(float val)
+    {
+        defaultSpeed = val;
     }
 
     public void AimSnap(Vector3 worldPoint)

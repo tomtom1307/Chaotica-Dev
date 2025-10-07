@@ -8928,6 +8928,10 @@ MonoBehaviour:
     onHitCancel: 0
     VFXs: []
     Cooldown: 0
+    MoveToTarget: 0
+    MoveSpeedMultiplier: 0
+    AimAtTarget: 0
+    AimSpeed: 0
     Animation_Index: 0
     Rootmotion: 0
   ColliderGroups: []
@@ -9942,6 +9946,10 @@ MonoBehaviour:
     onHitCancel: 0
     VFXs: []
     Cooldown: 0
+    MoveToTarget: 0
+    MoveSpeedMultiplier: 0
+    AimAtTarget: 0
+    AimSpeed: 0
     Animation_Index: 0
     Rootmotion: 0
   ColliderGroups: []
@@ -16528,7 +16536,7 @@ Transform:
   m_GameObject: {fileID: 9079637529122901292}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 43.341873, y: -3.16, z: -26.86}
+  m_LocalPosition: {x: 43.341873, y: -1.93, z: -26.86}
   m_LocalScale: {x: 0.7192459, y: 0.7192459, z: 0.7192459}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16696,7 +16704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6bae483fd752d24583495e96d253597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 10
+  maxSpeed: 15
   MaxAccel: 50
   accel: 20.9
   arriveRadius: 0
@@ -16708,7 +16716,7 @@ MonoBehaviour:
   Kp_V: 10
   Ki_V: 0
   Kd_V: 3
-  TargetAlt: 15.413087
+  TargetAlt: 15.413086
   MaxI_H: 0
   Kp_H: 9
   Ki_H: 0
@@ -16718,10 +16726,10 @@ MonoBehaviour:
     m_Bits: 3009
   agentRadius: 1.5
   lookAheadBase: 0.26
-  lookAheadPerSpeed: 0.23
+  lookAheadPerSpeed: 0.58
   sideAngle: 64.4
   sideWhiskerScale: 1
-  avoidStrength: 100
+  avoidStrength: 45
   slide: 0.856
   WhiskerAmount: 11
   depenetrationBoost: 12
@@ -16796,6 +16804,10 @@ MonoBehaviour:
     onHitCancel: 0
     VFXs: []
     Cooldown: 0
+    MoveToTarget: 0
+    MoveSpeedMultiplier: 0
+    AimAtTarget: 0
+    AimSpeed: 0
     Animation_Index: 0
     Rootmotion: 0
   ColliderGroups:
@@ -17020,9 +17032,9 @@ MonoBehaviour:
   fovDegrees: 120
   losMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65
   DetectionMeter: 0
-  DetectionSpeed: 1
+  DetectionSpeed: 4
   DetectionDecay: 1.5
 --- !u!114 &9079637529122901301
 MonoBehaviour:
@@ -17059,7 +17071,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9079637529122901292}
   serializedVersion: 4
-  m_Mass: 2.5
+  m_Mass: 5
   m_Drag: 3
   m_AngularDrag: 6
   m_CenterOfMass: {x: 0, y: 0, z: 0}

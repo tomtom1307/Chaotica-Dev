@@ -341,10 +341,9 @@ public class HoverMotor : MonoBehaviour, IGoalMotor, IKnockbackable
 
     }
 
-    // call this right before AddForce
     Vector3 LimitAccelBySpeed(Vector3 acc, float dt)
     {
-        Vector3 v = _rb.linearVelocity;                // or _rb.velocity
+        Vector3 v = _rb.linearVelocity;                
         float vm = v.magnitude;
         if (vm < 1e-4f) return Vector3.ClampMagnitude(acc, MaxAccel);
 

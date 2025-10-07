@@ -5,9 +5,7 @@ using UnityEngine;
 
 public class EAI_AttackSO_Base : EAI_AbilitySO
 {
-    public bool AimAtTarget;
-    public float AimSpeed;
-    public LayerMask RaycastAttackHit;
+    
     public override void Enter(EnemyContext EC)
     {
         
@@ -30,7 +28,7 @@ public class EAI_AttackSO_Base : EAI_AbilitySO
 
     public override void Tick(EnemyContext EC)
     {
-        if (AimAtTarget) { EC.aimer.AimAt(EC.bb.target.position, AimSpeed); }
+        
     }
 
     public override void LateTick(EnemyContext EC)

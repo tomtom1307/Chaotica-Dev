@@ -103,7 +103,7 @@ public class EnemyContext : MonoBehaviour
     
     public void SetData()
     {
-        Health.MaxHealth = cfg.MaxHealth;
-        Health.Health = Health.MaxHealth;
+        Health.SetMaxHealth(cfg.MaxHealth);
+        aimer.SetDefaultRotSpeed(cfg.DefaultRotationSpeed);
     }
 }

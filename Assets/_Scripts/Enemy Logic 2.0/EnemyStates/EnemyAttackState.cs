@@ -38,6 +38,7 @@ public class EnemyAttackState : BaseState
         if (_currentAttack != null)
         {
             _currentAttack.Tick(c);
+            HandleAttackCtx();
         }
     }
 
@@ -81,7 +82,10 @@ public class EnemyAttackState : BaseState
         }
     }
 
-
+    public void HandleAttackCtx()
+    {
+        c.attackHandler.AttackTick();
+    }
 
 
 }

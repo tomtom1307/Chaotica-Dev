@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -39,13 +40,23 @@ namespace Project
         }
 
 
+        public void DoShake()
+        {
+            transform.DOShakePosition(0.5f);
+
+        }
+
+
         public void StartShake(CamShakeProperties properties)
         {
+            /*
             if(currentShakeCorutine != null) {
                 StopCoroutine(currentShakeCorutine);
             }
             currentShakeCorutine = Shake(properties);
             StartCoroutine(currentShakeCorutine);
+            */
+            DoShake();
         }
 
         IEnumerator Shake(CamShakeProperties properties)

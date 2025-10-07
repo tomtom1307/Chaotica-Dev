@@ -111,6 +111,11 @@ public class DamagableEnemy : Damagable
         Die();
     }
     
+    public void SetMaxHealth(float Max)
+    {
+        MaxHealth = Max;
+        Health = MaxHealth;
+    }
     public GameObject GetClosestEnemy(float Radius)
     {
         List<Collider> enemiesInRange = new List<Collider>();

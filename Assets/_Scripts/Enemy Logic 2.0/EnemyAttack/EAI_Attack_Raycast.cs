@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EAI_Attack_Raycast", menuName = "AI/Attacks/Raycast")]
 public class EAI_Attack_Raycast : EAI_AttackSO_Base
 {
+    public LayerMask RaycastLayers;
     public float AttackRange;
     public override void Enter(EnemyContext EC)
     {

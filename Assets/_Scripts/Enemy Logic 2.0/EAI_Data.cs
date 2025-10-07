@@ -11,16 +11,19 @@ public class EnemyTuningSO : ScriptableObject
     
 
 
-    [Header("Range band")]
-    public float preferredMin = 10f;
-    public float preferredMax = 16f;
-    public float AltitudeFromPlayer = 2;
+    
 
     [Header("Motion")]
     public float approachSpeed = 8f;
     public float orbitSpeedRad = 1.3f;
     public float strafeWeight = 1.0f;
     public float DefaultAltitude = 3.5f; // flyers
+    public float DefaultRotationSpeed;
+
+    [Header("Combat Range band")]
+    public float preferredMin = 10f;
+    public float preferredMax = 16f;
+    public float AltitudeFromPlayer = 2;
 
     [Header("Combat")]
     public float MaxHealth = 20;
@@ -82,12 +85,16 @@ public struct AbilityEntry
 {
     public string Name;
     public EAI_AbilitySO Ability;      // the definition
+    
+
+    [Header("Conditions")]
     public bool Enabled;               // designer toggle
     public float Weight;               // chooser weight
     public float MinRange;
     public float MaxRange;
     public bool los;
 
+    [Header("AttackInfo")]
     [Tooltip("Is a percentage value of the enemy's base damage")]
     public float Damage;
     public float Knockback;
@@ -95,8 +102,15 @@ public struct AbilityEntry
     public bool Paryable;
     public bool onHitCancel;
     public List<EnemyVFXs> VFXs;
-
     public float Cooldown;
+
+    [Header("Movement")]
+    public bool MoveToTarget;
+    public float MoveSpeedMultiplier;
+
+    [Header("Aiming")]
+    public bool AimAtTarget;
+    public float AimSpeed;
 
     [Header("Animations")]
     public int Animation_Index;

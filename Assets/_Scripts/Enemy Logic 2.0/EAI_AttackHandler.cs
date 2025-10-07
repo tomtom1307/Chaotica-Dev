@@ -20,6 +20,9 @@ public class EAI_AttackHandler : MonoBehaviour
     Rigidbody _playerRb;
     EAI_AttackIndicatorBase indicator;
     AbilityContext nullContext = new AbilityContext();
+    Vector3 TargetPos => ctx.bb.target.position;
+    [HideInInspector] public Vector3 CurrentlyTargetedPos;
+
 
     private void Start()
     {
@@ -33,26 +36,25 @@ public class EAI_AttackHandler : MonoBehaviour
     {
         this.ctx = ctx;
         vfxHandler = GetComponentInChildren<EnemyVFXHandler>();
+        player = ctx.bb.target;
     }
 
-    Vector3 TargetPos => ctx.bb.target.position;
-    [HideInInspector] public Vector3 CurrentlyTargetedPos;
 
     private void Update()
     {
         ctx.bb.AttackAvailable = AttackAvailable();
 
-        if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            AttackExit();
-        }
-        
+        //Debugging
+        if (Input.GetKeyDown(KeyCode.Alpha8)) AttackExit();
+
     }
 
 
+    
+
     private void LateUpdate()
     {
-        if (currentAttack.Ability)
+        if (IsAttacking())
         {
             currentAttack.Ability.LateTick(ctx);
         }
@@ -60,11 +62,13 @@ public class EAI_AttackHandler : MonoBehaviour
 
     private void DamagePlayer(PlayerHealth ph)
     {
+        if (!IsAttacking()) return;
         float Damage = CalculateDamage();
         ph.TakeDamage(Damage, ctx.Health, currentAttack.Paryable, currentAttack.Blockable);
         KnockbackPlayer(ph.gameObject);
     }
 
+    
 
     public void KnockbackPlayer(GameObject player)
     {
@@ -124,7 +128,7 @@ public class EAI_AttackHandler : MonoBehaviour
         Debug.DrawRay(transform.position, AimDirection, Color.yellow, 5);
         EAI_Attack_Raycast Raycast_Attack = currentAttack.Ability as EAI_Attack_Raycast;
         if (!Raycast_Attack) return;
-        if (Physics.Raycast(ctx.LookDirection.position, AimDirection.normalized, out RaycastHit hit, Raycast_Attack.AttackRange, Raycast_Attack.RaycastAttackHit))
+        if (Physics.Raycast(ctx.LookDirection.position, AimDirection.normalized, out RaycastHit hit, Raycast_Attack.AttackRange, Raycast_Attack.RaycastLayers))
         {
             if (hit.collider.gameObject.TryGetComponent<PlayerHealth>(out PlayerHealth PH))
             {
@@ -144,6 +148,18 @@ public class EAI_AttackHandler : MonoBehaviour
     {
         if (!indicator) return;
         indicator.SetPosition(position);
+    }
+
+    public void UpdateAimer()
+    {
+        if (currentAttack.AimAtTarget) {ctx.aimer.AimAt(ctx.bb.target.position, currentAttack.AimSpeed); }
+    }
+
+
+    public void AttackTick()
+    {
+        UpdateAimer();
+        AttackMovement();
     }
 
     public void IndicatorActive(bool x)
@@ -259,6 +275,22 @@ public class EAI_AttackHandler : MonoBehaviour
         bool _Los = a.los ? ctx.bb.hasLOS : true;
         bool _enabled = a.Enabled;
         return _inRange && _enabled && _Los;
+    }
+
+
+    public bool IsAttacking()
+    {
+        return currentAttack.Ability;
+    }
+
+    public void AttackMovement()
+    {
+        if (currentAttack.MoveToTarget)
+        {
+            Debug.Log("AttackMovement");
+            Vector3 targetPos = SteeringHelpers.KeepRange(transform, ctx.bb.target, currentAttack.MinRange, currentAttack.MaxRange);
+            ctx.motor.MoveTo(targetPos);
+        }
     }
 }
 
