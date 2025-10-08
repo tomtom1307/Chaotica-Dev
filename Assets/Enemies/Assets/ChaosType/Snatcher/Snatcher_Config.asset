@@ -15,7 +15,7 @@ MonoBehaviour:
   approachSpeed: 8
   orbitSpeedRad: 1.3
   strafeWeight: 1
-  DefaultAltitude: 0.19
+  DefaultAltitude: 0.4
   DefaultRotationSpeed: 200
   preferredMin: 0.5
   preferredMax: 1.5
@@ -35,7 +35,10 @@ MonoBehaviour:
     Blockable: 1
     Paryable: 1
     onHitCancel: 0
-    VFXs: []
+    VFXs:
+    - Name: sLASH
+      Prefab: {fileID: 5314773374567602985, guid: 6586875f2a5fdf443bd4bb54ec4a5ce7, type: 3}
+      isParentedToHolder: 0
     Cooldown: 0.3
     MoveToTarget: 1
     MoveSpeedMultiplier: 1

@@ -67,9 +67,9 @@ public class PlayerHealth : MonoBehaviour
             {
                 health -= Amount;
                 UpdateHealthBar();
-                CamShake.instance.StartShake(CamShake.instance.onHit);
-                    PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.TakeDamage);
-                fullScreenFX.currentHurtCorutine = StartCoroutine(fullScreenFX.Hurt());
+                CamShake.instance.HitShake(Amount);
+                PlayerSoundSource.instance.PlaySound(PlayerSoundSource.SoundType.TakeDamage);
+                fullScreenFX.TriggerHurt();
                 if (health <= 0)
                     {
                         Die();
@@ -109,8 +109,8 @@ public class PlayerHealth : MonoBehaviour
         Weapon_Attack_Data_BlockParry weapon_Attack_Data_BlockParry = weaponHolder.CurrentAttackData as Weapon_Attack_Data_BlockParry;
         health -= amount * weapon_Attack_Data_BlockParry.DamageReduction;
         UpdateHealthBar();
-        CamShake.instance.StartShake(CamShake.instance.onHit);
-        fullScreenFX.currentHurtCorutine = StartCoroutine(fullScreenFX.Hurt());
+        CamShake.instance.HitShake(0.1f*amount);
+        fullScreenFX.TriggerHurt();
         if (health <= 0)
         {
             Die();

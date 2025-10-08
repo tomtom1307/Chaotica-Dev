@@ -40,9 +40,9 @@ namespace Project
         }
 
 
-        public void DoShake()
+        public void DoShake(float Mag, float Duration, int Vibrato)
         {
-            transform.DOShakePosition(0.5f);
+            transform.DOShakePosition(Duration, Mag, vibrato: Vibrato);
 
         }
 
@@ -56,9 +56,15 @@ namespace Project
             currentShakeCorutine = Shake(properties);
             StartCoroutine(currentShakeCorutine);
             */
-            DoShake();
+            DoShake(properties.strenght, properties.duration, properties.Vibrato);
         }
 
+        public void HitShake(float Damage)
+        {
+            DoShake(Damage*onHit.strenght, onHit.duration, onHit.Vibrato);
+        }
+
+        /*
         IEnumerator Shake(CamShakeProperties properties)
         {
             float completePercent = 0;
@@ -108,21 +114,15 @@ namespace Project
             float b = 1 - Mathf.Pow(x, a);
             return b * b * b;
         }
+        */
 
 
         [Serializable]
         public class CamShakeProperties
         {
-            public float angle;
             public float strenght;
-            public float speed;
+            public int Vibrato;
             public float duration;
-            [Range(0, 1)]
-            public float NoisePercent;
-            [Range(0, 1)]
-            public float DampedPercent;
-            [Range(0, 1)]
-            public float rotationPercent;
         }
     }
 }

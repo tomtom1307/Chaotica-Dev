@@ -57,7 +57,7 @@ public class EAI_AnimationEventHandler : MonoBehaviour
         ctx.sound.PlaySound(soundType);
     }
 
-    public void SpawnVFX(int i)
+    public void SpawnVFXEvent(int i)
     {
         ctx.attackHandler.SpawnVFX(i);
     }

@@ -27,34 +27,41 @@ public class FullScreenFXController : MonoBehaviour
     {
         
     }
+    private Coroutine currentHurtCoroutine;
 
-    public IEnumerator Hurt()
+    public void TriggerHurt()
     {
-        if(currentHurtCorutine != null)
-        {
-            StopCoroutine(currentHurtCorutine);
-        }
-        
+        // If already running, restart it
+        if (currentHurtCoroutine != null)
+            StopCoroutine(currentHurtCoroutine);
+
+        currentHurtCoroutine = StartCoroutine(Hurt());
+    }
+
+    private IEnumerator Hurt()
+    {
         fullScreenDamage.SetActive(true);
         material.SetFloat(_VoronoiIntensity, VORONOI_INTENSITY_START_AMOUNT);
         material.SetFloat(_VingnetteIntensity, VIGNETTE_INTENSITY_START_AMOUNT);
+
         yield return new WaitForSeconds(HitDisplayTime);
 
         float elapsedTime = 0f;
-        while(elapsedTime < HitFadeoutTime)
+        while (elapsedTime < HitFadeoutTime)
         {
             elapsedTime += Time.deltaTime;
 
-            float lerpedVoronoi = Mathf.Lerp(VORONOI_INTENSITY_START_AMOUNT, 0, (elapsedTime/ HitFadeoutTime));
-            float lerpedVignette = Mathf.Lerp(VIGNETTE_INTENSITY_START_AMOUNT, 0, (elapsedTime / HitFadeoutTime));
-
-            material.SetFloat(_VoronoiIntensity, lerpedVoronoi);
-            material.SetFloat(_VingnetteIntensity, lerpedVignette);
+            float t = elapsedTime / HitFadeoutTime;
+            material.SetFloat(_VoronoiIntensity, Mathf.Lerp(VORONOI_INTENSITY_START_AMOUNT, 0, t));
+            material.SetFloat(_VingnetteIntensity, Mathf.Lerp(VIGNETTE_INTENSITY_START_AMOUNT, 0, t));
 
             yield return null;
         }
 
+        material.SetFloat(_VoronoiIntensity, 0);
+        material.SetFloat(_VingnetteIntensity, 0);
         fullScreenDamage.SetActive(false);
-        currentHurtCorutine = null; // clear reference
+        currentHurtCoroutine = null;
     }
+
 }
