@@ -287,8 +287,8 @@ public class EAI_AttackHandler : MonoBehaviour
     {
         if (currentAttack.MoveToTarget)
         {
-            Debug.Log("AttackMovement");
-            Vector3 targetPos = SteeringHelpers.KeepRange(transform, ctx.bb.target, currentAttack.MinRange, currentAttack.MaxRange);
+            //Vector3 targetPos = SteeringHelpers.KeepRange(transform, ctx.bb.target, currentAttack.MinRange, currentAttack.MaxRange);
+            Vector3 targetPos = ctx.bb.target.position;
             ctx.motor.MoveTo(targetPos);
         }
     }

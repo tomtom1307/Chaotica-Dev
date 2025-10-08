@@ -17,10 +17,10 @@ MonoBehaviour:
   strafeWeight: 1
   DefaultAltitude: 0.4
   DefaultRotationSpeed: 200
-  preferredMin: 0.5
+  preferredMin: 0
   preferredMax: 1.5
   AltitudeFromPlayer: 0.2
-  MaxHealth: 10000
+  MaxHealth: 25
   BaseDamage: 5
   Attacks:
   - Name: Swipe
@@ -28,15 +28,15 @@ MonoBehaviour:
     Enabled: 1
     Weight: 1
     MinRange: 0
-    MaxRange: 2
+    MaxRange: 2.5
     los: 1
     Damage: 100
-    Knockback: 10000
+    Knockback: 30000
     Blockable: 1
     Paryable: 1
     onHitCancel: 0
     VFXs:
-    - Name: sLASH
+    - Name: Slash
       Prefab: {fileID: 5314773374567602985, guid: 6586875f2a5fdf443bd4bb54ec4a5ce7, type: 3}
       isParentedToHolder: 0
     Cooldown: 0.3
